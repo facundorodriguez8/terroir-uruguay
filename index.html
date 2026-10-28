@@ -921,6 +921,95 @@ body.do-z .do-mk span { opacity: 1; }
 .ad-box .cta[disabled] { opacity: .4; cursor: default; }
 .ad-box .cta { border: 0; border-radius: 999px; padding: 10px 18px; font: 600 15px system-ui, sans-serif; background: #a3243a; color: #fff; cursor: pointer; } .ad-box .cta.ghost { background: none; border: 1px solid #e2b46a; color: #f6efdc; }
 @media (max-width: 600px) { #learn .pl-games { grid-template-columns: 1fr 1fr; } #learn .pl-game { min-height: 0; padding: 12px; } #learn .pl-game small { display: none; } #learn .pl-game b { font-size: 14px; } }
+#learn .l-wheel text.wc.sm { font-size: 11px; }
+#learn .l-hero h1 { overflow-wrap: anywhere; hyphens: auto; }
+
+/* ---------- DO / IG: pestañas y marcadores ---------- */
+#learn .do-kinds { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+#learn .do-kinds button { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink2); font: inherit; font-size: 14px; cursor: pointer; }
+#learn .do-kinds button span { font-size: 12px; background: rgba(255,255,255,.08); border-radius: 999px; padding: 1px 8px; }
+#learn .do-kinds button.sel { background: var(--l-acc); border-color: var(--l-acc); color: #1a1213; font-weight: 700; }
+#learn .do-kinds button.sel span { background: rgba(0,0,0,.15); }
+#learn .do-note { font-size: 14px !important; color: var(--l-ink2) !important; border-left: 2px solid var(--l-acc); padding: 2px 0 2px 12px; margin: 0 0 14px !important; }
+.do-mk.ig i { background: transparent; width: 9px; height: 9px; border: 2px solid #e2b46a; box-shadow: 0 0 0 1px #1a1213; }
+
+/* ---------- Portada de Aprender ---------- */
+#learn .li-hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; align-items: center; padding: 26px 0 8px; }
+@media (max-width: 820px) { #learn .li-hero { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
+#learn .li-intro h1 { font-family: var(--f-display); font-size: clamp(42px, 7.5vw, 80px); font-weight: 500; margin: 6px 0 10px; line-height: .98; overflow-wrap: anywhere; text-wrap: balance; }
+#learn .li-intro p { font-size: 18px; line-height: 1.5; color: var(--l-ink2); margin: 0; max-width: 56ch; }
+#learn .li-k { display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--l-acc); font-weight: 700; }
+#learn .li-cont { margin-top: 18px; background: none; border: 1px solid var(--l-line); color: var(--l-ink2); border-radius: 999px; padding: 8px 16px; font: inherit; font-size: 14px; cursor: pointer; }
+#learn .li-cont b { color: var(--l-ink); } #learn .li-cont:hover { border-color: var(--l-acc); }
+#learn .li-today { position: relative; display: flex; gap: 18px; align-items: center; padding: 22px 22px 22px 14px; border-radius: 24px; border: 1px solid rgba(226,180,106,.35); background: radial-gradient(130% 100% at 0% 0%, #7a1a33 0%, #3a0d17 55%, #22080f 100%); overflow: hidden; }
+#learn .li-today.white { background: radial-gradient(130% 100% at 0% 0%, #6b5a24 0%, #3a3014 55%, #201a0b 100%); }
+#learn .li-today > div { min-width: 0; flex: 1; }
+#learn .li-today h2 { font-family: 'Bodoni Moda', Georgia, serif; font-size: clamp(30px, 4vw, 42px); font-weight: 500; margin: 6px 0 6px; color: #f6efdc; line-height: 1.02; }
+#learn .li-today .li-tag { color: rgba(246,239,220,.85); font-size: 15.5px; line-height: 1.45; margin: 0 0 8px; }
+#learn .li-today .li-clue { color: rgba(246,239,220,.7); font-size: 13.5px; line-height: 1.45; margin: 0 0 14px; }
+#learn .li-today .li-clue b { color: #e2b46a; font-weight: 600; }
+#learn .li-glass { width: 110px; flex: none; overflow: visible; }
+#learn .li-glass .cup { fill: none; stroke: rgba(246,239,220,.8); stroke-width: 2.2; stroke-linecap: round; }
+#learn .li-glass .wine { fill: #7d1631; animation: liSwirl 3.2s ease-in-out infinite; }
+#learn .li-glass.white .wine { fill: #e0c25a; }
+#learn .li-glass .sheen { fill: none; stroke: rgba(255,255,255,.35); stroke-width: 3; stroke-linecap: round; }
+@keyframes liSwirl { 0% { transform: translate(0, 0); } 50% { transform: translate(-30px, 3px); } 100% { transform: translate(-60px, 0); } }
+@media (prefers-reduced-motion: reduce) { #learn .li-glass .wine { animation: none; } }
+
+#learn .li-lanes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "g g" "d t"; gap: 16px; margin: 26px 0 18px; }
+@media (max-width: 820px) { #learn .li-lanes { grid-template-columns: minmax(0, 1fr); grid-template-areas: "g" "d" "t"; } }
+#learn .li-lane { display: flex; flex-direction: column; gap: 16px; padding: 22px; border-radius: 22px; border: 1px solid rgba(226,180,106,.25); color: #f6efdc; min-width: 0; }
+#learn .li-lane.grapes { grid-area: g; background: radial-gradient(120% 120% at 100% 0%, #5e1528 0%, #2e0b13 70%); }
+#learn .li-lane.do { grid-area: d; background: radial-gradient(120% 120% at 100% 0%, #4d3614 0%, #241a0b 70%); }
+#learn .li-lane.tasting { grid-area: t; background: radial-gradient(120% 120% at 100% 0%, #24404e 0%, #111e25 70%); }
+#learn .li-head { display: flex; gap: 14px; align-items: flex-start; }
+#learn .li-head .ic { width: 52px; height: 52px; flex: none; color: #e2b46a; } #learn .li-head .ic svg { width: 100%; height: 100%; }
+#learn .li-head h3 { font-family: 'Bodoni Moda', Georgia, serif; font-size: clamp(24px, 2.6vw, 30px); font-weight: 500; margin: 0 0 4px; line-height: 1.05; }
+#learn .li-head p { font-size: 14.5px; color: rgba(246,239,220,.78); margin: 0 0 4px; line-height: 1.45; }
+#learn .li-head small { color: #e2b46a; font-size: 12.5px; letter-spacing: .03em; }
+#learn .li-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+#learn .li-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 10px; border-radius: 999px; border: 1px solid rgba(246,239,220,.18); background: rgba(0,0,0,.22); color: #f6efdc; font: inherit; font-size: 14px; cursor: pointer; transition: transform .15s, background .15s, border-color .15s; }
+#learn .li-chip:hover { transform: translateY(-2px); border-color: #e2b46a; background: rgba(0,0,0,.4); }
+#learn .li-chip .berry { width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #b13a58, #4a0c1d 75%); flex: none; }
+#learn .li-chip.white .berry { background: radial-gradient(circle at 35% 30%, #fff3b8, #b9a24a 75%); }
+#learn .li-chip.seen::after { content: '✓'; font-size: 11px; color: #e2b46a; }
+#learn .li-foot { margin-top: auto; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: space-between; }
+#learn .li-prog { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 160px; }
+#learn .li-prog span { flex: 1; height: 6px; border-radius: 9px; background: rgba(255,255,255,.12); overflow: hidden; max-width: 220px; }
+#learn .li-prog i { display: block; height: 100%; background: #e2b46a; border-radius: 9px; }
+#learn .li-prog small { font-size: 12.5px; color: rgba(246,239,220,.7); white-space: nowrap; }
+#learn .li-go { font: inherit; font-weight: 700; color: #1a1213; background: #e2b46a; border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer; }
+#learn .li-go:hover { background: #f0c87e; }
+#learn .li-world { position: relative; }
+#learn .li-world svg { width: 100%; height: auto; display: block; }
+#learn .li-world .land { fill: rgba(246,239,220,.1); stroke: rgba(246,239,220,.18); stroke-width: .3; }
+#learn .li-world .pt { cursor: pointer; }
+#learn .li-world .hit { fill: transparent; }
+#learn .li-world .pt.do .v { fill: #e2b46a; stroke: #241a0b; stroke-width: .6; }
+#learn .li-world .pt.ig .v { fill: none; stroke: rgba(246,239,220,.6); stroke-width: .6; }
+#learn .li-world .pt.seen .v { fill: #fff; }
+#learn .li-world .pt:hover .v { stroke: #fff; stroke-width: 1.2; }
+#learn .li-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; font-size: 12px; color: rgba(246,239,220,.7); }
+#learn .li-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+#learn .li-legend i.do { background: #e2b46a; } #learn .li-legend i.ig { border: 1.5px solid rgba(246,239,220,.6); }
+#learn .li-cap { font-size: 13.5px !important; color: rgba(246,239,220,.65) !important; margin: 0 !important; min-height: 1.5em; }
+#learn .li-cap.on { color: #f6efdc !important; font-weight: 600; }
+#learn .li-taste { display: flex; gap: 16px; align-items: center; }
+#learn .li-taste .li-glass { width: 92px; }
+#learn .li-steps { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+#learn .li-steps button { display: flex; align-items: center; gap: 10px; text-align: left; padding: 9px 12px; border-radius: 12px; border: 1px solid rgba(246,239,220,.15); background: rgba(0,0,0,.22); color: #f6efdc; font: inherit; font-size: 14.5px; cursor: pointer; transition: border-color .15s, transform .15s; }
+#learn .li-steps button:hover { border-color: #e2b46a; transform: translateX(3px); }
+#learn .li-steps span { width: 24px; height: 24px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; border: 1px solid #e2b46a; color: #e2b46a; }
+#learn .li-steps .seen span { background: #e2b46a; color: #111e25; }
+#learn .li-steps .play { border-style: dashed; }
+#learn .li-play { margin: 8px 0 30px; padding: 20px 22px; border-radius: 22px; border: 1px dashed rgba(226,180,106,.5); background: var(--l-card); }
+#learn .li-play-in { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+#learn .li-play-in > div { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+#learn .li-play-in p { font-size: 14.5px; color: var(--l-ink2); margin: 0; }
+#learn .li-daily { display: flex; align-items: center; gap: 12px; padding: 12px 16px 12px 12px; border-radius: 16px; border: 1px solid rgba(226,180,106,.45); background: rgba(0,0,0,.25); color: #f6efdc; font: inherit; cursor: pointer; text-align: left; flex: 0 1 300px; }
+#learn .li-daily b { flex: 1; font-size: 15px; line-height: 1.25; }
+#learn .li-daily em { font-style: normal; font-weight: 700; color: #e2b46a; white-space: nowrap; }
+#learn .li-daily.done { opacity: .75; }
 
 </style>
 </head>
@@ -1883,6 +1972,9 @@ for (const l in T_ADD33) Object.assign(T[l], T_ADD33[l]);
 const T_ADD34 = {"es": {"learn_enter": "Entrar"}, "en": {"learn_enter": "Enter"}, "pt": {"learn_enter": "Entrar"}, "fr": {"learn_enter": "Entrer"}, "de": {"learn_enter": "Öffnen"}, "ru": {"learn_enter": "Открыть"}, "zh": {"learn_enter": "进入"}, "ja": {"learn_enter": "入る"}, "ko": {"learn_enter": "들어가기"}};
 for (const l in T_ADD34) Object.assign(T[l], T_ADD34[l]);
 
+const T_ADD35 = {"es": {"learn_today": "Uva del día", "learn_meet": "Conocé esta uva", "learn_didyou": "¿Sabías que…?", "learn_continue": "Seguí donde dejaste", "learn_seen": "{n} de {m} vistas", "learn_do_tap": "Pasá o tocá un punto para ver su nombre y abrir su ficha.", "do_kind_do": "Denominaciones de origen", "do_kind_ig": "Indicaciones geográficas y regiones", "do_kind_ig_d": "No son denominaciones de origen: protegen el nombre de una zona con reglas más simples.", "do_kind_do1": "Denominación de origen", "do_kind_ig1": "Indicación geográfica o región", "lang_label": "Idioma", "close": "Cerrar"}, "en": {"learn_today": "Grape of the day", "learn_meet": "Meet this grape", "learn_didyou": "Did you know?", "learn_continue": "Pick up where you left off", "learn_seen": "{n} of {m} seen", "learn_do_tap": "Hover or tap a dot to see its name and open its page.", "do_kind_do": "Appellations of origin", "do_kind_ig": "Geographical indications and regions", "do_kind_ig_d": "These are not appellations of origin: they protect the name of an area with simpler rules.", "do_kind_do1": "Appellation of origin", "do_kind_ig1": "Geographical indication or region", "lang_label": "Language", "close": "Close"}, "pt": {"learn_today": "Uva do dia", "learn_meet": "Conheça esta uva", "learn_didyou": "Você sabia?", "learn_continue": "Continue de onde parou", "learn_seen": "{n} de {m} vistas", "learn_do_tap": "Passe o mouse ou toque num ponto para ver o nome e abrir a ficha.", "do_kind_do": "Denominações de origem", "do_kind_ig": "Indicações geográficas e regiões", "do_kind_ig_d": "Não são denominações de origem: protegem o nome de uma zona com regras mais simples.", "do_kind_do1": "Denominação de origem", "do_kind_ig1": "Indicação geográfica ou região", "lang_label": "Idioma", "close": "Fechar"}, "fr": {"learn_today": "Cépage du jour", "learn_meet": "Découvrir ce cépage", "learn_didyou": "Le saviez-vous ?", "learn_continue": "Reprendre où vous en étiez", "learn_seen": "{n} sur {m} vus", "learn_do_tap": "Survolez ou touchez un point pour voir son nom et ouvrir sa fiche.", "do_kind_do": "Appellations d’origine", "do_kind_ig": "Indications géographiques et régions", "do_kind_ig_d": "Ce ne sont pas des appellations d’origine : elles protègent le nom d’une zone avec des règles plus simples.", "do_kind_do1": "Appellation d’origine", "do_kind_ig1": "Indication géographique ou région", "lang_label": "Langue", "close": "Fermer"}, "de": {"learn_today": "Rebsorte des Tages", "learn_meet": "Diese Rebsorte entdecken", "learn_didyou": "Schon gewusst?", "learn_continue": "Weitermachen, wo du aufgehört hast", "learn_seen": "{n} von {m} gesehen", "learn_do_tap": "Fahre über einen Punkt oder tippe darauf, um den Namen zu sehen und das Profil zu öffnen.", "do_kind_do": "Ursprungsbezeichnungen", "do_kind_ig": "Geografische Angaben und Regionen", "do_kind_ig_d": "Das sind keine Ursprungsbezeichnungen: Sie schützen den Namen eines Gebiets mit einfacheren Regeln.", "do_kind_do1": "Ursprungsbezeichnung", "do_kind_ig1": "Geografische Angabe oder Region", "lang_label": "Sprache", "close": "Schließen"}, "ru": {"learn_today": "Сорт дня", "learn_meet": "Узнать этот сорт", "learn_didyou": "А вы знали?", "learn_continue": "Продолжить с того места", "learn_seen": "Просмотрено {n} из {m}", "learn_do_tap": "Наведите или нажмите на точку, чтобы увидеть название и открыть карточку.", "do_kind_do": "Наименования по происхождению", "do_kind_ig": "Географические указания и регионы", "do_kind_ig_d": "Это не наименования по происхождению: они защищают название зоны по более простым правилам.", "do_kind_do1": "Наименование по происхождению", "do_kind_ig1": "Географическое указание или регион", "lang_label": "Язык", "close": "Закрыть"}, "zh": {"learn_today": "每日葡萄", "learn_meet": "认识这个品种", "learn_didyou": "你知道吗？", "learn_continue": "从上次离开的地方继续", "learn_seen": "已看 {n}/{m}", "learn_do_tap": "悬停或点击圆点，查看名称并打开介绍。", "do_kind_do": "原产地名称", "do_kind_ig": "地理标志与产区", "do_kind_ig_d": "这些不是原产地名称：它们以较简单的规则保护一个产区的名称。", "do_kind_do1": "原产地名称", "do_kind_ig1": "地理标志或产区", "lang_label": "语言", "close": "关闭"}, "ja": {"learn_today": "今日のブドウ", "learn_meet": "この品種を見る", "learn_didyou": "知っていましたか？", "learn_continue": "前回の続きから", "learn_seen": "{m}件中{n}件を閲覧", "learn_do_tap": "点にカーソルを合わせるかタップすると、名前が表示され詳細を開けます。", "do_kind_do": "原産地呼称", "do_kind_ig": "地理的表示と産地", "do_kind_ig_d": "これらは原産地呼称ではありません。より簡単なルールで地域名を保護するものです。", "do_kind_do1": "原産地呼称", "do_kind_ig1": "地理的表示または産地", "lang_label": "言語", "close": "閉じる"}, "ko": {"learn_today": "오늘의 포도", "learn_meet": "이 품종 알아보기", "learn_didyou": "알고 계셨나요?", "learn_continue": "이어서 보기", "learn_seen": "{m}개 중 {n}개 봄", "learn_do_tap": "점에 마우스를 올리거나 탭하면 이름이 보이고 상세 페이지가 열립니다.", "do_kind_do": "원산지 명칭", "do_kind_ig": "지리적 표시와 산지", "do_kind_ig_d": "원산지 명칭이 아닙니다: 더 단순한 규칙으로 지역 이름을 보호합니다.", "do_kind_do1": "원산지 명칭", "do_kind_ig1": "지리적 표시 또는 산지", "lang_label": "언어", "close": "닫기"}};
+for (const l in T_ADD35) Object.assign(T[l], T_ADD35[l]);
+
 (() => {
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -1929,7 +2021,7 @@ const t = (k, v) => {
 const nf = (x, d = 0) => new Intl.NumberFormat(LOCALE[L], { maximumFractionDigits: d, minimumFractionDigits: d }).format(x);
 const gname = g => g === 'all' ? t('all_grapes') : ((GRAPE_NAMES[g] && GRAPE_NAMES[g][L]) || g);
 const wkOf = g => g < 1667 ? 2 : g < 1944 ? 3 : g < 2222 ? 4 : 5;
-const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const CJK_FONT = { zh: 'Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500', ja: 'Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500', ko: 'Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500', ru: 'Noto+Serif:ital,wght@0,500;1,500' };
 function loadFont(l) {
   if (!CJK_FONT[l] || document.getElementById('font-' + l)) return;
@@ -1948,8 +2040,8 @@ let FILT = false, PREM = {}, WORLD = null, WVAR = 'all', COUNTRY = null, flat = 
 let D, n, AREA, CELLS, CLAT, CLNG, cellIdx, M, P, SIM = null, deps = [], depByName = {}, units = [], WIN = [], INAVI, selCell = -1, selWin = -1, view = 'world', is3D = true, tourStep = -1;
 const markers = [];
 let coachStep = -1;   // paso de la ayuda de primera vez (-1: cerrada)
-let learnRoute = null, DEPS_GJ = null; const UVA = {};
-let doSys = 'France', doLv = -1, doFilt = 'all', doOn = false, doMk = [], doCtry = 'all';   // denominaciones de origen: país, nivel y filtro elegidos; marcadores en el mundo   // sección Aprender: ruta abierta y fichas cargadas
+let learnRoute = null, DEPS_GJ = null, learnSeq = 0, NT = 0, CTT = null; const UVA = {};
+let doSys = 'France', doLv = -1, doFilt = 'all', doOn = false, doMk = [], doCtry = 'all', doKind = 'do';   // denominaciones de origen: país, nivel y filtro elegidos; marcadores en el mundo   // sección Aprender: ruta abierta y fichas cargadas
 
 /* ---------- mapa ---------- */
 const EMPTY = { type: 'FeatureCollection', features: [] };
@@ -2165,7 +2257,7 @@ function applyFilters() {
   // contador
   $('#cArea').innerHTML = nf(cnt * AREA) + '<small>' + t('km2') + '</small>';
   $('#cPct').textContent = nf(cnt / n * 100, cnt && cnt / n < 0.01 ? 2 : 1) + ' %';
-  const wm = WIN.filter(w => w.cell >= 0 && M[w.cell]).sort((a, b) => (b.profile ? 1 : 0) - (a.profile ? 1 : 0));
+  const wm = WIN.filter(w => !w.unconf && w.cell >= 0 && M[w.cell]).sort((a, b) => (b.profile ? 1 : 0) - (a.profile ? 1 : 0));
   $('#cWin').textContent = nf(wm.length);
   // resultados
   const rd = $('#resDeps'); rd.innerHTML = '';
@@ -2333,7 +2425,8 @@ function translateStatic() {
   $('#dimBtn').textContent = is3D ? t('d2') : t('d3'); $('#dimBtn').title = is3D ? t('d2_tip') : t('d3_tip');
   $('#projBtn').title = flat ? t('flat_tip_off') : t('flat_tip_on');
   if (view === 'uy') $('#vUy').textContent = t('view_uy'); else if (COUNTRY) $('#vUy').textContent = COUNTRY.name;
-  document.title = t('brand'); projUI(); if (learnRoute) openLearn(learnRoute);
+  document.title = t('brand'); projUI(); if (learnRoute) openLearn(learnRoute, true); if (doMk.length && DOD[L]) doMarkers(DOD[L]);
+  $('#lang') && $('#lang').setAttribute('aria-label', t('lang_label'));
   { const hb = $('#helpBtn'); if (hb) { hb.title = t('help'); hb.setAttribute('aria-label', t('help')); } if (coachStep >= 0) coachShow(coachStep); }
 }
 function buildUI() {
@@ -2447,7 +2540,7 @@ function openCard(html) {
 function selLine(i) { map.getSource('selhex').setData(i >= 0 ? { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: h3.cellToBoundary(CELLS[i], true) } } : EMPTY); }
 function legendBack() { $('#legend').hidden = !(view === 'uy' && $('#card').hidden && $('#tour').hidden); }
 function closeCard() { $('#card').hidden = true; legendBack(); selCell = -1; selWin = -1; selReg = -1; cardMode = null; if (typeof zoneSel === 'function' && map.getLayer('reg-sel')) zoneSel(); selLine(-1); map.setFilter('win-sel', ['==', ['id'], -1]); sealVis(); }
-const X_BTN = '<button class="x" aria-label="close"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>';
+const X_BTN_ = () => '<button class="x" aria-label="' + esc(t('close')) + '"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>';
 function showZone(i) {
   if (i == null || i < 0) return;
   if (SIM && SIM.origin !== i) clearSim();
@@ -2556,7 +2649,7 @@ function wineryCard(w) {
     (hero ? '<div class="hero">' + hero + credit + '</div>' : '') +
     '<div class="w-row">' + sealHTML(w, 'big') + '<div class="w-ht"><div class="eyebrow">' + esc(t('winery_title')) + ' · ' + esc(w.dep) + '</div><h2>' + esc(w.name) + '</h2>' +
     (w.aliases && w.aliases.length ? '<div class="meta">' + esc(w.aliases.join(' · ')) + '</div>' : '') +
-    (p ? '<span class="tag conf-' + p.conf + '">' + esc(t('conf_' + p.conf)) + '</span>' : '') + (w.unconf ? '<span class="tag unconf" title="' + esc(t('unconf_tip')) + '">' + esc(t('unconf')) + '</span>' : '') + '</div></div>' + X_BTN + '</header><div class="body">';
+    (p ? '<span class="tag conf-' + p.conf + '">' + esc(t('conf_' + p.conf)) + '</span>' : '') + (w.unconf ? '<span class="tag unconf" title="' + esc(t('unconf_tip')) + '">' + esc(t('unconf')) + '</span>' : '') + '</div></div>' + X_BTN_() + '</header><div class="body">';
   if (p) {
     const f = [];
     if (p.founded) f.push(['founded', t('founded'), String(p.founded)]);
@@ -2609,7 +2702,7 @@ function refreshCard() {
     const chipsZ = [['alt', nf(D.alt[i]) + ' m'], ['soil', D.tex[i] >= 0 ? t('tex_' + D.tex[i]) : null], ['clim', g >= 0 ? 'Winkler ' + t('wk_' + wkOf(g)) : null], ['sea', D.sea[i] >= 0 ? nf(D.sea[i]) + ' km' : null]]
       .filter(x => x[1]).map(([k, v]) => '<span class="zc">' + ZI[k] + esc(v) + '</span>').join('');
     const rk = deps[D.dep[i]] ? regOf(deps[D.dep[i]].name) : -1;
-    openCard('<header><div class="eyebrow">' + esc(t('zone_title')) + ' · ' + esc(deps[D.dep[i]] ? deps[D.dep[i]].name : '') + (rk >= 0 ? ' · <button class="link-btn reg-link" data-reg="' + rk + '">' + esc(REG.regions[rk].name) + '</button>' : '') + '</div><h2>' + esc(r >= 0 ? t('rock_' + r) : t('missing')) + '</h2><div class="zchips">' + chipsZ + '</div>' + X_BTN + '</header><div class="body">' +
+    openCard('<header><div class="eyebrow">' + esc(t('zone_title')) + ' · ' + esc(deps[D.dep[i]] ? deps[D.dep[i]].name : '') + (rk >= 0 ? ' · <button class="link-btn reg-link" data-reg="' + rk + '">' + esc(REG.regions[rk].name) + '</button>' : '') + '</div><h2>' + esc(r >= 0 ? t('rock_' + r) : t('missing')) + '</h2><div class="zchips">' + chipsZ + '</div>' + X_BTN_() + '</header><div class="body">' +
       leadAporte(i) + '<div><h4>' + esc(t('zt_more')) + '</h4><ul class="aporte">' + aporte(i).filter(([k]) => k !== 'rock').map(([k, txt], j) => {
         const m = txt.match(/^(.{2,80}?)([:：])\s*([\s\S]+)$/);
         const cap = x => x.charAt(0).toLocaleUpperCase(LOCALE[L]) + x.slice(1);
@@ -2658,7 +2751,7 @@ function showRegion(k, fly) {
 function regionCard(k) {
   const r = REG.regions[k], set = new Set(r.deps), ha = regHa(r);
   const vy = r.deps.reduce((a, d) => a + ((INAVI.vy || {})[d] || 0), 0);
-  const wins = WIN.filter(w => set.has(w.dep));
+  const wins = WIN.filter(w => !w.unconf && set.has(w.dep));
   // terroir: donde están sus bodegas (si hay al menos 3 ubicadas); si no, toda la superficie de la región
   const wl = wins.filter(w => !w.unconf && w.cell >= 0), wc = wl.map(w => w.cell), byWin = wl.length >= 3;
   const cells = byWin ? wc : [...Array(n).keys()].filter(i => deps[D.dep[i]] && set.has(deps[D.dep[i]].name));
@@ -2677,7 +2770,7 @@ function regionCard(k) {
   const best = wins.filter(w => !w.unconf).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999)).slice(0, 6);
   const pctRows = arr => arr.map(([k2, p, lab]) => esc(lab) + ' <span class="num">' + p + ' %</span>').join('<br>');
   let h = '<header><div class="eyebrow">' + esc(t('reg_title')) + '</div><h2>' + esc(r.name) + '</h2><div class="zchips">' +
-    '<span class="zc">' + ZI.soil + esc(nf(ha, ha < 10 ? 1 : 0) + ' ' + t('ha')) + '</span><span class="zc">' + ZI.alt + esc(nf(vy) + ' ' + t('reg_vy')) + '</span><span class="zc">' + ZI.rock + esc(nf(wins.length) + ' ' + t('reg_wineries')) + '</span></div>' + X_BTN + '</header><div class="body">';
+    '<span class="zc">' + ZI.soil + esc(nf(ha, ha < 10 ? 1 : 0) + ' ' + t('ha')) + '</span><span class="zc">' + ZI.alt + esc(nf(vy) + ' ' + t('reg_vy')) + '</span><span class="zc">' + ZI.rock + esc(nf(wins.length) + ' ' + t('reg_wineries')) + '</span></div>' + X_BTN_() + '</header><div class="body">';
   h += '<div class="lead-aporte reg"><div class="la-k">' + ZI.rock + esc(r.deps.join(' · ')) + '</div><p>' + esc(t('reg_desc_' + r.id)) + '</p></div>';
   if (r.note) h += '<p class="hint">' + esc(t('reg_note_' + r.note)) + '</p>';
   if (grapes.length) h += '<div><h4>' + esc(t('reg_grapes')) + '</h4><div class="bars">' + grapes.map(([g, v]) => '<div class="bar"><span>' + gLink(g, gname(g)) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / gm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>';
@@ -2756,7 +2849,7 @@ function showCountry(f) {
   const top = Object.entries(vt).sort((a, b) => b[1] - a[1]).slice(0, 6), mx = top.length ? top[0][1] : 1;
   const lab = v => ((WORLD.varieties.find(x => x.id === v) || {}).label || v);
   const c = $('#country');
-  c.innerHTML = '<div class="eyebrow">' + esc(t('country')) + '</div><h2>' + esc(COUNTRY.name) + '</h2>' + X_BTN +
+  c.innerHTML = '<div class="eyebrow">' + esc(t('country')) + '</div><h2>' + esc(COUNTRY.name) + '</h2>' + X_BTN_() +
     (tot ? '<div class="big">' + nf(tot) + '<small>' + esc(t('ha_vines')) + '</small></div><div class="meta">' + esc(t('world_regions_n', { n: nf(rs.length) })) + '</div>' +
       '<div class="bars">' + top.map(([v, ha]) => '<div class="bar"><span>' + gLink(v, lab(v), null, key) + '</span><span class="num">' + nf(ha) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (ha / mx * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div>' +
       (WVAR !== 'all' && vt[WVAR] ? '<p class="hint">' + esc(lab(WVAR)) + ': ' + nf(vt[WVAR]) + ' ' + esc(t('ha')) + '</p>' : '')
@@ -2951,7 +3044,7 @@ function buildBodegaUI() {
   const cs = $('#bChips'); cs.innerHTML = '';
   [['top', 'w_top'], ['prof', 'f_profile'], ['tours', 'svc_tours'], ['rest', 'svc_rest'], ['lodge', 'svc_lodge'], ['unconf', 'unconf']].forEach(([k, lab]) => cs.appendChild(chip(t(lab), null, B[k], () => { B[k] = !B[k]; applyBodegas(); })));
   const ds = $('#bDep'); ds.innerHTML = '<option value="">' + esc(t('all_country')) + '</option>';
-  const cnt = {}; WIN.forEach(w => cnt[w.dep] = (cnt[w.dep] || 0) + 1);
+  const cnt = {}; WIN.forEach(w => { if (!w.unconf) cnt[w.dep] = (cnt[w.dep] || 0) + 1; });
   Object.keys(cnt).sort((a, b) => a.localeCompare(b, 'es')).forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d + ' · ' + nf(cnt[d]); ds.appendChild(o); });
   ds.value = B.dep;
   const gs = $('#bGrape'); gs.innerHTML = '<option value="">' + esc(t('w_any')) + '</option>'; setTimeout(() => learnSelBtn('bGrape'), 0);
@@ -3071,9 +3164,9 @@ function flyDep(d) {
 /* ---------- recorrido ---------- */
 function renderTour() {
   const d = depByName[TOUR[tourStep]]; const tc = $('#tour');
-  const wc = WIN.filter(w => w.dep === d.name).length;
+  const wc = WIN.filter(w => !w.unconf && w.dep === d.name).length;
   const u = units[d.unit];
-  tc.innerHTML = '<header><div class="eyebrow">' + esc(t('tour_btn')) + ' · ' + (tourStep + 1) + ' / ' + TOUR.length + '</div><h2>' + esc(d.name) + '</h2><div class="steps">' + TOUR.map((_, k) => '<i class="' + (k <= tourStep ? 'on' : '') + '"></i>').join('') + '</div>' + X_BTN + '</header>' +
+  tc.innerHTML = '<header><div class="eyebrow">' + esc(t('tour_btn')) + ' · ' + (tourStep + 1) + ' / ' + TOUR.length + '</div><h2>' + esc(d.name) + '</h2><div class="steps">' + TOUR.map((_, k) => '<i class="' + (k <= tourStep ? 'on' : '') + '"></i>').join('') + '</div>' + X_BTN_() + '</header>' +
     '<div class="body"><ul class="lines">' +
     '<li>' + esc(t('tour_l1', { ha: nf(d.ha), pct: nf(d.ha / INAVI.total * 100, 1) + ' %', w: nf(wc) })) + '</li>' +
     '<li>' + esc(t('tour_l2', { rock: t('rock_' + d.rock), unit: u ? u.n : '' })) + '</li>' +
@@ -3252,24 +3345,31 @@ let learnTab = 'red', JUEGOS = null, UVAMUNDO = null;
 const getUva = id => UVA[id] ? Promise.resolve(UVA[id]) : get('data/uvas/' + id + '.json').then(d => (UVA[id] = d));
 const getJuegos = () => JUEGOS ? Promise.resolve(JUEGOS) : get('data/uvas/_juegos.json').then(d => (JUEGOS = d));
 const getUvaMundo = () => UVAMUNDO ? Promise.resolve(UVAMUNDO) : get('data/uvas_mundo.json').then(d => (UVAMUNDO = d)).catch(() => (UVAMUNDO = { grapes: {}, prime: {} }));
-function openLearn(route) {
-  clearInterval(GT); if (doMini) { doMini.remove(); doMini = null; } if (doCMap && route !== 'do') { doCMap.remove(); doCMap = null; } learnRoute = route || 'index'; const el = $('#learn'); el.hidden = false; document.body.classList.add('learning');
+// detiene todo lo que pueda seguir corriendo de la pantalla anterior (timers, minimapas, cargas pendientes)
+function learnStop() { learnSeq++; clearInterval(GT); clearInterval(CTT); clearTimeout(NT); if (doMini) { doMini.remove(); doMini = null; } if (doCMap) { doCMap.remove(); doCMap = null; } }
+const ROUTES = ['index', 'uvas', 'catar', 'do', 'jugar', 'ideal'];
+const okRoute = r => ROUTES.includes(r) || (r.startsWith('do-') && r.length > 3) || LEARN_GRAPES.some(g => g.id === r);
+// navegación iniciada por la persona: deja historial para que "Atrás" funcione
+function learnNav(route) { const h = '#aprender' + (route && route !== 'index' ? '/' + route : ''); if (location.hash !== h) location.hash = h; else openLearn(route); }
+function openLearn(route, keep) {
+  if (!okRoute(route || 'index')) route = 'index';
+  learnStop(); stopOrbit(); learnRoute = route || 'index'; seenRoute(learnRoute); const el = $('#learn'); el.hidden = false; document.body.classList.add('learning');
   if (location.hash !== '#aprender' + (route && route !== 'index' ? '/' + route : '')) history.replaceState(null, '', '#aprender' + (route && route !== 'index' ? '/' + route : ''));
   if (learnRoute === 'index') return renderLearnIndex();
   if (learnRoute === 'uvas') return renderGrapeList();
   if (learnRoute === 'catar') return renderTasting();
   if (learnRoute === 'do') return renderDOIndex();
   if (learnRoute === 'jugar') return renderPlay();
-  if (learnRoute === 'ideal') { QZ = { i: 0, a: [], q: [] }; return renderQuiz(); }
+  if (learnRoute === 'ideal') { if (!keep || !QZ.q.length) QZ = { i: 0, a: [], q: [] }; return renderQuiz(); }
   if (learnRoute.startsWith('do-')) return renderDOSheet(learnRoute.slice(3));
-  const gk = (LEARN_GRAPES.find(g => g.id === learnRoute) || {}).kind || 'red'; learnTab = gk;
+  const id = learnRoute, gk = (LEARN_GRAPES.find(g => g.id === id) || {}).kind || 'red', seq = learnSeq; learnTab = gk;
   el.className = 'theme-' + (gk === 'white' ? 'white' : 'red');
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
-  Promise.all([getUva(learnRoute), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => renderGrape(d)).catch(e => { console.error(e); renderLearnIndex(); });
+  Promise.all([getUva(id), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => { if (seq === learnSeq) renderGrape(d, id); }).catch(e => { console.error(e); if (seq === learnSeq) learnNav('index'); });
 }
-function closeLearn() { clearInterval(GT); if (doCMap) { doCMap.remove(); doCMap = null; } clearInterval(CTT); if (doMini) { doMini.remove(); doMini = null; } learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
-const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : back === 'do' ? 'learn_sub_do' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
-function learnWire(el) { el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => b.dataset.l === 'map' ? closeLearn() : openLearn(b.dataset.l)); }
+function closeLearn() { learnStop(); learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
+const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : back === 'do' ? 'learn_sub_do' : 'learn_back')) + '</button><button class="x l-x" aria-label="' + esc(t('close')) + '" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
+function learnWire(el) { el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => b.dataset.l === 'map' ? closeLearn() : learnNav(b.dataset.l)); }
 // ícono grande de cada subtema (SVG)
 const ICON_GLASS = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 6h24c1 14-3 26-12 27C23 32 19 20 20 6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M21 16h22c-1 9-4 15-11 15s-10-6-11-15z" fill="currentColor" opacity=".55"/><path d="M32 33v20M22 58h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M46 10c4 2 7 6 7 11M50 6c5 3 9 8 9 15" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".6"/></svg>';
 const ICON_GRAPE = '<svg viewBox="0 0 64 64" aria-hidden="true">' + [[26,22],[38,22],[20,32],[32,32],[44,32],[26,42],[38,42],[32,52]].map(([x, y]) => '<circle cx="' + x + '" cy="' + y + '" r="6.5" fill="currentColor" opacity=".55" stroke="currentColor" stroke-width="1.6"/>').join('') + '<path d="M32 15V6M32 9c5-4 11-3 14 1-5 3-10 2-14-1z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>';
@@ -3291,7 +3391,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-grape],[data-greg],[data-gdo]'); if (!b || b.closest('#learn')) return;
   e.preventDefault(); e.stopPropagation();
   if (coachStep >= 0) coachEnd();
-  if (b.dataset.grape) openLearn(b.dataset.grape); else if (b.dataset.gdo) { doFilt = b.dataset.gdo; doSys = doFilt; doLv = -1; openLearn('do'); } else showRegion(+b.dataset.greg, true);
+  if (b.dataset.grape) learnNav(b.dataset.grape); else if (b.dataset.gdo) { doFilt = b.dataset.gdo; doSys = doFilt; doLv = -1; learnNav('do'); } else showRegion(+b.dataset.greg, true);
 }, true);
 // botón "Aprender" al lado de los selectores de uva del mapa
 function learnSelBtn(selId, val) { try { learnSelBtn0(selId, val); } catch (e) {} }
@@ -3310,7 +3410,7 @@ const seeded = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t2 =
 const today = () => new Date().toISOString().slice(0, 10);
 const LEVELS = [0, 300, 1000, 2500, 5000, 10000];
 const ACH = ['first', 'stars3', 'streak5', 'daily', 'days3', 'days7', 'quiz', 'blind', 'hint', 'level3'];
-const PL = (() => { let p; try { p = JSON.parse(localStorage.getItem('terroir-player') || 'null'); } catch (e) {} return Object.assign({ xp: 0, corks: 3, days: [], ach: {}, daily: '' }, p || {}); })();
+const PL = (() => { let p; try { p = JSON.parse(localStorage.getItem('terroir-player') || 'null'); } catch (e) {} const o = Object.assign({ xp: 0, corks: 3, days: [], ach: {}, daily: '' }, p && typeof p === 'object' ? p : {}); if (!Array.isArray(o.days)) o.days = []; if (!o.ach || typeof o.ach !== 'object') o.ach = {}; o.xp = +o.xp || 0; o.corks = +o.corks || 0; return o; })();
 const plSave = () => { try { localStorage.setItem('terroir-player', JSON.stringify(PL)); } catch (e) {} };
 const plLevel = () => { let i = 0; while (i < LEVELS.length - 1 && PL.xp >= LEVELS[i + 1]) i++; return i; };
 const plStreak = () => { const s = new Set(PL.days); let n = 0, d = new Date(); if (!s.has(today())) d.setDate(d.getDate() - 1); while (s.has(d.toISOString().slice(0, 10))) { n++; d.setDate(d.getDate() - 1); } return n; };
@@ -3348,7 +3448,9 @@ function rewardedAd(onReward) {
 let playTab = 'all';
 function renderPlay() {
   const el = $('#learn'); el.className = 'theme-index';
+  const seq = learnSeq;
   getJuegos().then(J0 => {
+    if (seq !== learnSeq) return;
     const dailyDone = PL.daily === today();
     const games = [['guess', '?', 'g_guess', 'g_guess_d'], ['order', '↗', 'g_order', 'g_order_d'], ['smell', '❀', 'g_smell', 'g_smell_d'], ['blind', '🍷', 'pl_blind', 'pl_blind_d'], ['ideal', '✦', 'learn_sub_ideal', 'learn_sub_ideal_d']];
     el.innerHTML = learnTop('index') + '<div class="lw play"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('g_title')) + '</h1><p>' + esc(t('pl_intro')) + '</p></header>' + plCard(true) +
@@ -3362,22 +3464,63 @@ function renderPlay() {
     const J = () => (J0[L] || J0.es).filter(g => playTab === 'all' || g.white === (playTab === 'white'));
     el.querySelectorAll('[data-pk]').forEach(b => b.onclick = () => { playTab = b.dataset.pk; renderPlay(); });
     el.querySelectorAll('[data-pg]').forEach(b => b.onclick = () => { const k = b.dataset.pg;
-      if (k === 'ideal') return openLearn('ideal');
+      if (k === 'ideal') return learnNav('ideal');
       if (k === 'blind') { CT.tab = 4; openLearn('catar'); return; }
       RNG = Math.random; learnTab = playTab; el.querySelectorAll('[data-pg]').forEach(x => x.classList.toggle('sel', x === b)); GAMES[k](J()); $('#lGame').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     $('#plDaily').onclick = () => { if (PL.daily === today()) return; const d = today(); RNG = seeded(+d.replace(/-/g, '')); learnTab = 'all'; GAMES.guess((J0[L] || J0.es), true); $('#lGame').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
   });
 }
+// lo que la persona ya recorrió en Aprender (solo en su navegador): uvas, DO y fases de cata vistas, y la última pantalla
+const SEEN = (() => { let s; try { s = JSON.parse(localStorage.getItem('terroir-seen') || 'null'); } catch (e) {} s = s && typeof s === 'object' ? s : {}; ['g', 'd', 'c'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.last !== 'string') s.last = ''; return s; })();
+function seenAdd(k, v) { if (k && !SEEN[k].includes(v)) SEEN[k].push(v); try { localStorage.setItem('terroir-seen', JSON.stringify(SEEN)); } catch (e) {} }
+function seenRoute(r) { if (!r || r === 'index') return; SEEN.last = r; if (LEARN_GRAPES.some(g => g.id === r)) seenAdd('g', r); else if (r.startsWith('do-')) seenAdd('d', r.slice(3)); else seenAdd(null); }
+// copa animada (el vino se mueve); n hace único el clipPath cuando hay varias copas
+const glassArt = (kind, n) => '<svg class="li-glass ' + kind + '" viewBox="0 0 120 170" aria-hidden="true"><defs><clipPath id="gq' + n + '"><path d="M28 14h64c3 40-9 70-32 72C37 84 25 54 28 14z"/></clipPath></defs>' +
+  '<g clip-path="url(#gq' + n + ')"><path class="wine" d="M-60 54q15-7 30 0t30 0 30 0 30 0 30 0 30 0 30 0 30 0V100H-60z"/><path class="sheen" d="M36 22c-2 22 2 40 10 52" /></g>' +
+  '<path class="cup" d="M28 14h64c3 40-9 70-32 72C37 84 25 54 28 14z"/><path class="cup" d="M60 86v58M36 152c8-5 40-5 48 0"/></svg>';
+const MINI = { d: null };
+const getMini = () => MINI.d ? Promise.resolve(MINI.d) : get('data/mundo_mini.json').then(d => (MINI.d = d.d)).catch(() => '');
 function renderLearnIndex() {
-  const el = $('#learn'); el.className = 'theme-index';
-  const pillar = (k, l, ic, n, sub) => '<button class="l-pillar ' + k + '" data-l="' + l + '"><span class="ic">' + ic + '</span><div><b>' + esc(t(n)) + '</b><p>' + esc(t(n + '_d')) + '</p><small>' + esc(sub) + '</small></div><em>' + esc(t('learn_enter')) + ' →</em></button>';
-  el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p></header>' +
-    '<h2 class="l-h2">' + esc(t('learn_pillars')) + '</h2><div class="l-pillars">' +
-    pillar('grapes', 'uvas', ICON_GRAPE, 'learn_sub_grapes', t('learn_n_grapes', { n: LEARN_GRAPES.length })) +
-    pillar('do', 'do', ICON_SEAL, 'learn_sub_do', t('learn_n_do', { n: 70, m: 14 })) +
-    pillar('tasting', 'catar', ICON_GLASS, 'learn_sub_tasting', t('learn_n_tasting')) + '</div>' +
-    '<h2 class="l-h2">' + esc(t('g_title')) + '</h2><button class="l-play" data-l="jugar"><div>' + plCard() + '<p>' + esc(t('pl_teaser')) + '</p></div><em>' + esc(t('pl_go')) + ' →</em></button></div>';
+  const el = $('#learn'); el.className = 'theme-index li-page'; const seq = learnSeq;
+  const prog = (n, m) => '<div class="li-prog"><span><i style="width:' + Math.round(100 * Math.min(n, m) / m) + '%"></i></span><small>' + esc(t('learn_seen', { n: Math.min(n, m), m })) + '</small></div>';
+  const head = (k, ic, n, sub) => '<div class="li-head"><span class="ic">' + ic + '</span><div><h3>' + esc(t(n)) + '</h3><p>' + esc(t(n + '_d')) + '</p><small>' + esc(sub) + '</small></div></div>';
+  // uva del día: la misma para todos ese día
+  const gd = LEARN_GRAPES[Math.floor(seeded(+today().replace(/-/g, ''))() * LEARN_GRAPES.length)];
+  const chips = LEARN_GRAPES.map(g => '<button class="li-chip ' + g.kind + (SEEN.g.includes(g.id) ? ' seen' : '') + '" data-l="' + g.id + '"><span class="berry"></span>' + esc(g.name) + '</button>').join('');
+  el.innerHTML = learnTop('map') + '<div class="lw">' +
+    '<section class="li-hero"><div class="li-intro"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p><div id="liCont"></div></div>' +
+    '<article class="li-today ' + gd.kind + '">' + glassArt(gd.kind, 1) + '<div><small class="li-k">✦ ' + esc(t('learn_today')) + '</small><h2>' + esc(gd.name) + '</h2><p class="li-tag" id="liTag">&nbsp;</p><p class="li-clue" id="liClue"></p>' +
+    '<button class="cta" data-l="' + gd.id + '"><span>' + esc(t('learn_meet', { g: gd.name })) + ' →</span></button></div></article></section>' +
+    '<div class="li-lanes">' +
+    '<section class="li-lane grapes">' + head('grapes', ICON_GRAPE, 'learn_sub_grapes', t('learn_n_grapes', { n: LEARN_GRAPES.length })) +
+      '<div class="li-chips">' + chips + '</div><div class="li-foot">' + prog(SEEN.g.filter(id => LEARN_GRAPES.some(g => g.id === id)).length, LEARN_GRAPES.length) + '<button class="li-go" data-l="uvas">' + esc(t('learn_enter')) + ' →</button></div></section>' +
+    '<section class="li-lane do">' + head('do', ICON_SEAL, 'learn_sub_do', '…') + '<div class="li-world" id="liWorld"></div><p class="li-cap" id="liCap">' + esc(t('learn_do_tap')) + '</p><div class="li-foot" id="liDoFoot"><button class="li-go" data-l="do">' + esc(t('learn_enter')) + ' →</button></div></section>' +
+    '<section class="li-lane tasting">' + head('tasting', ICON_GLASS, 'learn_sub_tasting', t('learn_n_tasting')) + '<div class="li-taste">' + glassArt('red', 2) + '<div class="li-steps" id="liSteps"></div></div><div class="li-foot">' + prog(SEEN.c.filter(i => i < 4).length, 4) + '<button class="li-go" data-l="catar">' + esc(t('learn_enter')) + ' →</button></div></section>' +
+    '</div>' +
+    '<section class="li-play"><div class="li-play-in"><div><small class="li-k">🎮 ' + esc(t('g_title')) + '</small>' + plCard() + '<p>' + esc(t('pl_teaser')) + '</p></div>' +
+    '<button class="li-daily' + (PL.daily === today() ? ' done' : '') + '" data-l="jugar"><span class="pl-cal">' + new Date().getDate() + '</span><b>' + esc(t(PL.daily === today() ? 'pl_daily_done' : 'pl_daily_t')) + '</b><em>' + esc(t('pl_go')) + ' →</em></button></div></section></div>';
   learnWire(el);
+  // seguí donde dejaste
+  const last = SEEN.last && okRoute(SEEN.last) && SEEN.last !== 'index' ? SEEN.last : '';
+  const contName = (D) => { const g = LEARN_GRAPES.find(x => x.id === last); if (g) return g.name; if (last.startsWith('do-')) { const x = D && doById(D, last.slice(3)); return x ? x.name : ''; } return t({ uvas: 'learn_sub_grapes', do: 'learn_sub_do', catar: 'learn_sub_tasting', jugar: 'g_title', ideal: 'learn_sub_ideal' }[last]); };
+  // uva del día: frase y una pista al azar del día
+  getUva(gd.id).then(d => { if (seq !== learnSeq) return; const x = d[L] || d.es, cl = x.clues || []; $('#liTag').textContent = x.tagline || ''; if (cl.length) $('#liClue').innerHTML = '<b>' + esc(t('learn_didyou')) + '</b> ' + esc(cl[Math.floor(seeded(+today().replace(/-/g, '') + 7)() * cl.length)]); }).catch(() => {});
+  getCata().then(C => { if (seq !== learnSeq) return; const box = $('#liSteps');
+    box.innerHTML = C.steps_t.slice(0, 4).map((s, i) => '<button data-ct="' + i + '" class="' + (SEEN.c.includes(i) ? 'seen' : '') + '"><span>' + (i + 1) + '</span>' + esc(s) + '</button>').join('') + '<button data-ct="4" class="play"><span>?</span>' + esc(C.game.t) + '</button>';
+    box.querySelectorAll('[data-ct]').forEach(b => b.onclick = () => { CT.tab = +b.dataset.ct; learnNav('catar'); }); }).catch(() => {});
+  Promise.all([getDO(), getMini()]).then(([D, land]) => {
+    if (seq !== learnSeq) return;
+    const isDO = x => !DO_NOT.includes(x.level), dos = D.dos.filter(isDO), nC = new Set(dos.map(x => x.c)).size, nIG = D.dos.length - dos.length;
+    el.querySelector('.li-lane.do .li-head small').textContent = t('learn_n_do', { n: dos.length, m: nC });
+    $('#liDoFoot').insertAdjacentHTML('afterbegin', prog(SEEN.d.filter(id => dos.some(x => x.id === id)).length, dos.length));
+    const P = x => [x.pt[0] + 180, 75 - x.pt[1]];
+    const dot = x => { const [cx, cy] = P(x), d = isDO(x); return '<g class="pt ' + (d ? 'do' : 'ig') + (SEEN.d.includes(x.id) ? ' seen' : '') + '" data-l="do-' + esc(x.id) + '" data-n="' + esc(x.name + ' · ' + t(d ? 'do_kind_do1' : 'do_kind_ig1')) + '"><circle class="hit" cx="' + cx + '" cy="' + cy + '" r="5"/><circle class="v" cx="' + cx + '" cy="' + cy + '" r="' + (d ? 2.3 : 1.7) + '"/></g>'; };
+    $('#liWorld').innerHTML = '<svg viewBox="40 8 300 112" role="img" aria-label="' + esc(t('learn_sub_do')) + '">' + (land ? '<path class="land" d="' + land + '"/>' : '') +
+      D.dos.filter(x => x.pt && !isDO(x)).map(dot).join('') + dos.filter(x => x.pt).map(dot).join('') + '</svg><div class="li-legend"><span><i class="do"></i>' + esc(t('do_kind_do')) + '</span><span><i class="ig"></i>' + esc(t('do_kind_ig')) + ' (' + nIG + ')</span></div>';
+    const cap = $('#liCap');
+    $('#liWorld').querySelectorAll('.pt').forEach(g => { g.onmouseenter = () => { cap.textContent = g.dataset.n; cap.classList.add('on'); }; g.onmouseleave = () => { cap.textContent = t('learn_do_tap'); cap.classList.remove('on'); }; g.onclick = () => learnNav(g.dataset.l); });
+    if (last) $('#liCont').innerHTML = '<button class="li-cont" data-l="' + esc(last) + '">↺ ' + esc(t('learn_continue')) + ': <b>' + esc(contName(D)) + '</b></button>', learnWire($('#liCont'));
+  }).catch(e => console.error(e));
 }
 function renderGrapeList() {
   const el = $('#learn'); el.className = 'theme-' + (learnTab === 'white' ? 'white' : 'red');
@@ -3408,10 +3551,10 @@ function gameShell(kind, J, rounds, play, daily) {
     setHint(fn) { st.hint = fn; },
     // suma puntos con racha; ok=false resta una vida
     result(ok, pts) { st.hint = null; if (ok) { st.streak++; st.best = Math.max(st.best, st.streak); const m = Math.min(3, 1 + (st.streak - 1) * .5), add = Math.round(pts * m); st.score += add; pop('+' + add, true); } else { st.streak = 0; st.lives--; pop(t('g_miss'), false); box.querySelector('.l-game').classList.add('shake'); setTimeout(() => box.querySelector('.l-game') && box.querySelector('.l-game').classList.remove('shake'), 400); } },
-    next(delay) { clearInterval(GT); setTimeout(() => { st.round++; if (st.round >= rounds || st.lives <= 0) end(); else play(api); }, delay || 1100); }
+    next(delay) { clearInterval(GT); clearTimeout(NT); NT = setTimeout(() => { if (!box.isConnected) return; st.round++; if (st.round >= rounds || st.lives <= 0) end(); else play(api); }, delay || 1100); }
   };
   const end = () => {
-    clearInterval(GT);
+    clearInterval(GT); if (!box.isConnected) return;
     const key = 'terroir-best-' + kind + '-' + learnTab, best = recall2(key), rec = st.score > best; if (rec) store2(key, st.score);
     const stars = st.max ? Math.round(3 * st.score / st.max) : 0;
     award(kind, st.score, stars, { streak: st.best, daily }); RNG = Math.random;
@@ -3512,7 +3655,9 @@ function annotGlass(kind, tone, int) {
 }
 function renderTasting() {
   const el = $('#learn'); el.className = 'theme-index';
+  const seq = learnSeq;
   getCata().then(C => {
+    if (seq !== learnSeq) return;
     const tabs = C.steps_t.concat([C.game.t, C.sheet.t]);
     el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(C.title) + '</h1><p>' + esc(C.intro) + '</p></header>' +
       '<nav class="ct-tabs">' + tabs.map((x, i) => '<button data-tab="' + i + '" class="' + (i === CT.tab ? 'sel' : '') + (i > 3 ? ' play' : '') + '"><span>' + (i < 4 ? i + 1 : i === 4 ? '?' : '✎') + '</span>' + esc(x) + '</button>').join('') + '</nav><div id="ctBody"></div>' +
@@ -3526,6 +3671,7 @@ const ctNav = (C) => '<div class="ct-nav">' + (CT.tab > 0 ? '<button class="cta 
   (CT.tab < 5 ? '<button class="cta" data-go="' + (CT.tab + 1) + '"><span>' + esc(C.steps_t.concat([C.game.t, C.sheet.t])[CT.tab + 1]) + ' →</span></button>' : '') + '</div>';
 function ctTab(C) {
   clearInterval(CTT); const B = $('#ctBody'); if (!B) return;
+  if (CT.tab < 4) seenAdd('c', CT.tab);
   const phase = (P, body) => '<section class="l-sec ct-phase"><h2>' + esc(P.t) + '</h2><p class="l-tag">' + esc(P.lead) + '</p><ol class="ct-how">' + P.how.map(x => '<li>' + esc(x) + '</li>').join('') + '</ol>' + body + '<h3>' + esc(t('ct_keys')) + '</h3>' + keyChips(P.keys) + '</section>';
   if (CT.tab === 0) {
     const E = C.eye, tones = E.tones[CT.kind]; CT.tone = Math.min(CT.tone, tones.length - 1);
@@ -3536,7 +3682,9 @@ function ctTab(C) {
       '<h3>' + esc(E.int_t) + ': <b class="ct-val">' + esc(E.ints[CT.int]) + '</b></h3><input type="range" id="ctInt" min="0" max="2" value="' + CT.int + '">' +
       '<p class="l-hint">' + esc(E.tears_txt) + '</p></div></div>') + ctNav(C);
     B.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { CT.kind = b.dataset.kind; ctTab(C); });
-    $('#ctTone').oninput = e => { CT.tone = +e.target.value; ctTab(C); }; $('#ctInt').oninput = e => { CT.int = +e.target.value; ctTab(C); };
+    // al arrastrar solo se actualiza la copa y los textos (si se re-renderiza todo, el control se corta)
+    const eyeUpd = () => { const st = B.querySelector('.ct-eye .ct-stage svg'); if (st) st.outerHTML = annotGlass(CT.kind, CT.tone, CT.int); const v = B.querySelectorAll('.ct-eye .ct-val'); v[0].textContent = tones[CT.tone]; v[1].textContent = E.ints[CT.int]; B.querySelector('.ct-eye .l-detail').textContent = E.tone_txt[CT.kind][CT.tone]; };
+    $('#ctTone').oninput = e => { CT.tone = +e.target.value; eyeUpd(); }; $('#ctInt').oninput = e => { CT.int = +e.target.value; eyeUpd(); };
     wireKeys(B, E.keys);
   } else if (CT.tab === 1) {
     const N = C.nose, all = N.layers.flatMap(l => l.ex.map(x => [x, l.k])), shown = CT.nose === 0 ? [] : CT.nose === 1 ? all.filter((_, i) => i % 4 === 0) : all;
@@ -3554,7 +3702,7 @@ function ctTab(C) {
         return '<div class="ct-comp"><div class="ct-ch"><b>' + esc(c.t) + '</b><span class="ct-val" id="ctv' + i + '">' + esc(c.scale[v]) + '</span></div><input type="range" data-c="' + i + '" min="0" max="' + (c.scale.length - 1) + '" value="' + v + '"><div class="ct-meter"><i style="width:' + (v / (c.scale.length - 1) * 100) + '%" id="ctm' + i + '"></i></div><p>' + esc(c.feel) + '</p></div>'; }).join('') + '</div>' +
       '<div class="ct-timer"><b>' + esc(M.timer) + '</b><div class="ct-clock" id="ctClock">0,0 s</div><button class="cta" id="ctTimer"><span>' + esc(M.timer_start) + '</span></button><p class="l-hint" id="ctTimerRes"></p></div>') + ctNav(C);
     B.querySelectorAll('[data-c]').forEach(r => r.oninput = () => { const i = +r.dataset.c, c = M.comps[i], v = +r.value; CT.mv[c.k] = v; $('#ctv' + i).textContent = c.scale[v]; $('#ctm' + i).style.width = (v / (c.scale.length - 1) * 100) + '%'; });
-    let t0 = 0; $('#ctTimer').onclick = () => { if (!t0) { t0 = Date.now(); $('#ctTimer span').textContent = M.timer_stop; $('#ctTimerRes').textContent = ''; CTT = setInterval(() => { $('#ctClock').textContent = ((Date.now() - t0) / 1000).toFixed(1).replace('.', ',') + ' s'; }, 100); }
+    let t0 = 0; $('#ctTimer').onclick = () => { if (!t0) { t0 = Date.now(); $('#ctTimer span').textContent = M.timer_stop; $('#ctTimerRes').textContent = ''; CTT = setInterval(() => { if (!$('#ctClock')) return clearInterval(CTT); $('#ctClock').textContent = ((Date.now() - t0) / 1000).toFixed(1).replace('.', ',') + ' s'; }, 100); }
       else { clearInterval(CTT); const s = Math.round((Date.now() - t0) / 1000); t0 = 0; $('#ctTimer span').textContent = M.timer_start; $('#ctTimerRes').textContent = M.timer_res.replace('{s}', s); } };
     wireKeys(B, M.keys);
   } else if (CT.tab === 3) {
@@ -3568,7 +3716,6 @@ function ctTab(C) {
   else ctSheet(C, B);
   B.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { CT.tab = +b.dataset.go; document.querySelectorAll('.ct-tabs [data-tab]').forEach(x => x.classList.toggle('sel', +x.dataset.tab === CT.tab)); ctTab(C); $('.ct-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
 }
-let CTT = null;
 // cata a ciegas: un vino al azar de las fichas (uva, edad y crianza) y una hoja para completar
 function ctGame(C, B) {
   const G = C.game;
@@ -3615,7 +3762,7 @@ function ctGame(C, B) {
 }
 // hoja de cata: se completa, se guarda en el navegador y se imprime
 const CK = 'terroir-catas';
-const catasGet = () => { try { return JSON.parse(localStorage.getItem(CK) || '[]'); } catch (e) { return []; } };
+const catasGet = () => { try { const a = JSON.parse(localStorage.getItem(CK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } };
 const catasSet = a => { try { localStorage.setItem(CK, JSON.stringify(a)); } catch (e) {} };
 function ctSheet(C, B, edit) {
   const S = C.sheet, E = C.eye, M = C.mouth, N = C.nose, F = edit || { id: Date.now(), date: new Date().toISOString().slice(0, 10), kind: 'red', m: {}, aro: [], blic: [] };
@@ -3645,7 +3792,7 @@ function ctSheet(C, B, edit) {
   sh.querySelectorAll('[data-mc]').forEach(b => b.onclick = () => { F.m[b.dataset.mc] = +b.dataset.v; redraw(); });
   sh.querySelectorAll('[data-bl]').forEach(b => b.onclick = () => { const i = +b.dataset.bl; F.blic = F.blic.includes(i) ? F.blic.filter(x => x !== i) : F.blic.concat(i); redraw(); });
   sh.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { F.stars = +b.dataset.st; redraw(); });
-  $('#ctSave').onclick = () => { const a = catasGet().filter(x => x.id !== F.id); a.push(F); catasSet(a); $('#ctSave span').textContent = S.saved + ' ✓'; setTimeout(redraw, 700); };
+  $('#ctSave').onclick = () => { const a = catasGet().filter(x => x.id !== F.id); a.push(F); catasSet(a); $('#ctSave span').textContent = S.saved + ' ✓'; setTimeout(() => { if (B.isConnected) redraw(); }, 700); };
   $('#ctPrint').onclick = () => { document.body.classList.add('print-sheet'); setTimeout(() => { window.print(); document.body.classList.remove('print-sheet'); }, 50); };
   $('#ctNew').onclick = () => ctSheet(C, B);
   B.querySelectorAll('[data-open]').forEach(b => b.onclick = () => { const x = catasGet().find(y => y.id === +b.dataset.open); if (x) ctSheet(C, B, x); });
@@ -3681,9 +3828,9 @@ let GLN = 0; const glassSVG = (wine, rim) => { const gid = 'lgW' + (++GLN); retu
 const AGE_COL = [['#3d0a33', '#7c3a8e'], ['#5a0c1e', '#8c1d2f'], ['#5e1a14', '#a5502a'], ['#5a2414', '#b9733f']];
 const AGE_COL_W = [['#e8e2a2', '#f3f0cf'], ['#e4cd72', '#f0e2a6'], ['#d5a845', '#e8c77c'], ['#b8792c', '#d8a35c']];
 const AROMA_COL = { black: '#3b1430', red: '#b3263b', floral: '#8a5cb5', spice: '#b0662c', oak: '#8b5a2b', aged: '#6b4a32', herbal: '#5f8a4a', earth: '#7a5c45', citrus: '#c9b22e', stone: '#d99a4e', tropical: '#e0a32a', mineral: '#8a949a' };
-function renderGrape(all) {
+function renderGrape(all, gid) {
   // textos en el idioma elegido; los datos (coordenadas, modificadores, temperaturas) siempre del español
-  const d = all[L] || all.es, E = all.es, id = learnRoute, el = $('#learn');
+  const d = all[L] || all.es, E = all.es, id = gid || learnRoute, el = $('#learn');
   const gn = d.name, gk = E.name, white = (LEARN_GRAPES.find(g => g.id === id) || {}).kind === 'white';   // gn: nombre a mostrar; gk: clave en los datos
   const prime = (UVAMUNDO.prime || {})[gk] || gk, onMap = WORLD && WORLD.varieties.some(v => v.id === prime);
   // superficie por país (Univ. of Adelaide); el centro de cada país sale de las regiones del mapa del mundo, si las hay
@@ -3699,7 +3846,7 @@ function renderGrape(all) {
     return 'M' + p(R, a0) + 'A' + R + ' ' + R + ' 0 0 1 ' + p(R, a1) + 'L' + p(r0, a1) + 'A' + r0 + ' ' + r0 + ' 0 0 0 ' + p(r0, a0) + 'Z'; };
   const lab = (i) => { const a = ((i + .5) / n6) * 2 * Math.PI - Math.PI / 2; return [(100 + 71 * Math.cos(a)).toFixed(1), (100 + 71 * Math.sin(a)).toFixed(1)]; };
   const wheel = '<svg class="l-wheel" viewBox="0 0 200 200">' + d.aromas.map((a, i) => '<path class="ws" data-a="' + i + '" d="' + seg(i) + '" fill="' + (AROMA_COL[a.k] || '#555') + '"/>').join('') +
-    d.aromas.map((a, i) => { const [x, y] = lab(i), w = a.label.split(' '), l1 = w.length > 2 ? w.slice(0, -1).join(' ') : w[0], l2 = w.length > 2 ? w[w.length - 1] : (w[1] || ''); return '<text x="' + x + '" y="' + y + '" text-anchor="middle"' + (a.label.length > 16 ? ' class="sm"' : '') + '>' + (l2 ? '<tspan x="' + x + '" dy="-0.25em">' + esc(l1) + '</tspan><tspan x="' + x + '" dy="1.1em">' + esc(l2) + '</tspan>' : '<tspan dy="0.35em">' + esc(l1) + '</tspan>') + '</text>'; }).join('') + '<text class="wc" x="100" y="100" text-anchor="middle" dominant-baseline="middle">' + esc(gn) + '</text></svg>';
+    d.aromas.map((a, i) => { const [x, y] = lab(i), w = a.label.split(' '), l1 = w.length > 2 ? w.slice(0, -1).join(' ') : w[0], l2 = w.length > 2 ? w[w.length - 1] : (w[1] || ''); return '<text x="' + x + '" y="' + y + '" text-anchor="middle"' + (a.label.length > 16 || a.label.split(' ').some(w => w.length > 9) ? ' class="sm"' : '') + '>' + (l2 ? '<tspan x="' + x + '" dy="-0.25em">' + esc(l1) + '</tspan><tspan x="' + x + '" dy="1.1em">' + esc(l2) + '</tspan>' : '<tspan dy="0.35em">' + esc(l1) + '</tspan>') + '</text>'; }).join('') + (gn.length > 10 && gn.includes(' ') ? '<text class="wc sm" x="100" y="100" text-anchor="middle">' + (w => '<tspan x="100" dy="-0.2em">' + esc(w.slice(0, Math.ceil(w.length / 2)).join(' ')) + '</tspan><tspan x="100" dy="1.1em">' + esc(w.slice(Math.ceil(w.length / 2)).join(' ')) + '</tspan>')(gn.split(' ')) + '</text>' : '<text class="wc' + (gn.length > 8 ? ' sm' : '') + '" x="100" y="100" text-anchor="middle" dominant-baseline="middle">' + esc(gn) + '</text>') + '</svg>';
   const T0 = E.temp || [16, 18];
   let h = learnTop('uvas') + '<div class="lw">' +
     '<header class="l-hero"><div class="eyebrow">' + esc(d.kind) + '</div><h1>' + esc(gn) + '</h1><p class="l-tag">' + esc(d.tagline) + '</p><p class="l-orig">' + esc(d.origin) + '</p>' +
@@ -3849,7 +3996,9 @@ function renderQuiz() {
 }
 function quizResult() {
   const el = $('#learn'); el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
+  const seq = learnSeq;
   Promise.all(LEARN_GRAPES.map(g => getUva(g.id))).then(all => {
+    if (seq !== learnSeq) return;
     // perfil buscado
     const T = { color: 3, tannin: 3, body: 3, acid: 3, alc: 3 }, w = { red: 0, white: 0, rose: 0, oak: 0, bubbles: 0, sweet: 0 }, fams = [], why = [], pair = [];
     QZ.q.forEach((q, i) => { const o = q.o[QZ.a[i]]; if (!o) return; const m = o[2];
@@ -3897,15 +4046,15 @@ const COL_IC = { tinto: '#8c1d2f', blanco: '#e6d47a', rosado: '#e79aa6', espumos
 const colChips = cs => '<div class="do-cols">' + (cs || []).map(c => '<span><i style="background:' + (COL_IC[c] || '#888') + '"></i>' + esc(t('col_' + c)) + '</span>').join('') + '</div>';
 // marcadores de las DO en el mapa del mundo (solo en la vista mundo)
 function doMarkers(D, sel) {
-  if (!doMk.length) D.dos.forEach(x => { const el = document.createElement('button'); el.className = 'do-mk'; el.innerHTML = '<i></i><span>' + esc(x.name) + '</span>'; el.title = x.name;
-    el.onclick = ev => { ev.stopPropagation(); openLearn('do-' + x.id); };
+  if (!doMk.length) D.dos.forEach(x => { const el = document.createElement('button'); el.className = 'do-mk' + (DO_NOT.includes(x.level) ? ' ig' : ''); el.innerHTML = '<i></i><span>' + esc(x.name) + '</span>'; el.title = x.name;
+    el.onclick = ev => { ev.stopPropagation(); learnNav('do-' + x.id); };
     doMk.push({ id: x.id, el, m: new maplibregl.Marker({ element: el }).setLngLat(x.pt).addTo(map) }); });
-  doMk.forEach(k => k.el.classList.toggle('sel', k.id === sel)); if (sel) doCtry = 'all';
+  doMk.forEach(k => { k.el.classList.toggle('sel', k.id === sel); const o = doById(D, k.id); if (o) { k.el.querySelector('span').textContent = o.name; k.el.title = o.name; } }); if (sel) doCtry = 'all';
   doVis();
 }
 function doVis() { const D = DOD[L] || DOD.es; doMk.forEach(k => { const x = D && doById(D, k.id); k.el.style.display = doOn && view === 'world' && (doCtry === 'all' || (x && x.c === doCtry)) ? '' : 'none'; }); const tg = $('#doToggle'); if (tg) tg.checked = doOn; }
 function showDOMap(id) { getDO().then(D => { const x = doById(D, id); closeLearn(); doOn = true; if (view !== 'world') goWorld(true); doMarkers(D, id);
-  if (x) map.flyTo({ center: x.pt, zoom: 6.6, pitch: 0, bearing: 0, duration: 2600, essential: true }); }); }
+  if (x) map.flyTo({ center: x.pt, zoom: x.c === 'Uruguay' ? 5.4 : 6.6, pitch: 0, bearing: 0, duration: 2600, essential: true }); }); }
 // mapa de un país con todas sus DO, cada una con su color; se puede pasar el mouse y tocar para abrir la ficha
 const DO_PAL = ['#e2b46a', '#c0394f', '#6fa8dc', '#8fd694', '#d08ad8', '#f08a5d', '#5fc9c0', '#e6d47a', '#a98bdb', '#ef8fb0', '#9ccf6a', '#d9a066'];
 let doCMap = null;
@@ -3923,11 +4072,12 @@ function mapHover(m, pop, onHover, onClick) {
 }
 function doCountryMap(D, c) {
   if (doCMap) { doCMap.remove(); doCMap = null; }
-  const box = $('#doCMap'); if (!box || !window.maplibregl) return;
-  const list = D.dos.filter(o => o.c === c).sort((a, b) => a.name.localeCompare(b.name)), col = {};
+  const box = $('#doCMap'), seq = learnSeq; if (!box || !window.maplibregl) return;
+  const list = D.dos.filter(o => o.c === c && (DO_NOT.includes(o.level) ? 'ig' : 'do') === doKind).sort((a, b) => a.name.localeCompare(b.name)), col = {};
   list.forEach((o, i) => col[o.id] = DO_PAL[i % DO_PAL.length]);
   Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => Promise.all(list.map(o => IX[o.id] ? get('data/do/geo/' + o.id + '.json').then(f => (f.id = list.indexOf(o), f.properties = { id: o.id, name: o.name, col: col[o.id] }, f)).catch(() => null) : null))).then(fs => {
-    if (!$('#doCMap')) return;
+    if (seq !== learnSeq || !box.isConnected) return;
+    if (doCMap) { doCMap.remove(); doCMap = null; }
     fs = fs.filter(Boolean);
     const pts = { type: 'FeatureCollection', features: list.map((o, i) => ({ type: 'Feature', id: i, properties: { id: o.id, name: o.name, col: col[o.id], geo: fs.some(f => f.properties.id === o.id) ? 1 : 0 }, geometry: { type: 'Point', coordinates: o.pt } })) };
     const b = [180, 90, -180, -90], ext = ([x, y]) => { b[0] = Math.min(b[0], x); b[1] = Math.min(b[1], y); b[2] = Math.max(b[2], x); b[3] = Math.max(b[3], y); };
@@ -3949,14 +4099,14 @@ function doCountryMap(D, c) {
       hov = i >= 0 ? i : null; if (hov != null) { doCMap.setFeatureState({ source: 'd', id: hov }, { hover: true }); doCMap.setFeatureState({ source: 'p', id: hov }, { hover: true }); }
       document.querySelectorAll('.do-leg [data-dl]').forEach(x => x.classList.toggle('on', x.dataset.dl === id)); };
     doCMap.on('load', () => {
-      mapHover(doCMap, pop, f => { setHover(f ? f.properties.id : null); return !!f; }, f => openLearn('do-' + f.properties.id));
+      mapHover(doCMap, pop, f => { setHover(f ? f.properties.id : null); return !!f; }, f => learnNav('do-' + f.properties.id));
     });
     document.querySelectorAll('.do-leg [data-dl]').forEach(x => { x.onmouseenter = () => setHover(x.dataset.dl); x.onmouseleave = () => setHover(null); });
   });
 }
 function renderDOIndex() {
   const el = $('#learn'); el.className = 'theme-index';
-  getDO().then(D => {
+  const seq = learnSeq; getDO().then(D => { if (seq !== learnSeq) return;
     if (!D.systems.some(s => s.c === doSys)) doSys = D.systems[0].c;
     const S0 = sysOf(D, doSys), N = S0.levels.length;
     // pirámide: el nivel más exigente arriba (más angosto)
@@ -3964,10 +4114,16 @@ function renderDOIndex() {
       return '<g class="pl' + (i === doLv ? ' sel' : '') + '" data-lv="' + i + '"><path d="M' + (150 - w0 / 2) + ' ' + y + 'H' + (150 + w0 / 2) + 'L' + (150 + w1 / 2) + ' ' + (y + 42) + 'H' + (150 - w1 / 2) + 'Z" style="fill-opacity:' + (1 - i * .16).toFixed(2) + '"/><text x="150" y="' + (y + 26) + '" text-anchor="middle">' + esc(l.label) + '</text></g>'; }).join('') + '</svg>';
     const L0 = S0.levels[doLv], inLv = L0 ? D.dos.filter(x => x.c === doSys && x.level === L0.k) : [];
     const ex = S0.label_example || {}, exDo = doById(D, ex.do) || {}, exG = (exDo.grapes || [])[0];
-    const list = D.dos.filter(x => doFilt === 'all' || x.c === doFilt).sort((a, b) => (b.icon - a.icon) || a.name.localeCompare(b.name));
+    // solo denominaciones de origen; las indicaciones geográficas y regiones van en su propia pestaña
+    const isDO = x => !DO_NOT.includes(x.level), kindOf = x => isDO(x) ? 'do' : 'ig';
+    if (doFilt !== 'all' && !D.dos.some(x => x.c === doFilt && kindOf(x) === doKind)) doKind = doKind === 'do' ? 'ig' : 'do';
+    const pool = D.dos.filter(x => kindOf(x) === doKind), ctrs = [...new Set(pool.map(x => x.c))];
+    if (doFilt !== 'all' && !ctrs.includes(doFilt)) doFilt = 'all';
+    const list = pool.filter(x => doFilt === 'all' || x.c === doFilt).sort((a, b) => (b.icon - a.icon) || a.name.localeCompare(b.name));
+    const nDO = D.dos.filter(isDO).length;
     el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_do')) + '</h1><p>' + esc(t('do_intro')) + '</p></header>' +
       // lista
-      '<section class="l-sec" id="doExplore"><h2>' + esc(t('do_list_t')) + ' <span class="num">' + nf(D.dos.length) + '</span></h2><div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c)).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
+      '<section class="l-sec" id="doExplore"><div class="do-kinds">' + [['do', nDO], ['ig', D.dos.length - nDO]].map(([k, n]) => '<button data-kind="' + k + '" class="' + (k === doKind ? 'sel' : '') + '"><b>' + esc(t('do_kind_' + k)) + '</b><span>' + nf(n) + '</span></button>').join('') + '</div>' + (doKind === 'ig' ? '<p class="do-note">' + esc(t('do_kind_ig_d')) + '</p>' : '') + '<div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c).filter(c => ctrs.includes(c))).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
       (doFilt !== 'all' ? '<div id="doCMap" class="do-cmap"></div><p class="l-hint">' + esc(t('do_cmap_hint')) + '</p><div class="do-leg">' + list.slice().sort((a, b) => a.name.localeCompare(b.name)).map((x, i) => '<button data-l="do-' + x.id + '" data-dl="' + x.id + '"><i style="background:' + DO_PAL[i % DO_PAL.length] + '"></i>' + esc(x.name) + '<small>' + esc(lvOf(D, x).label) + '</small></button>').join('') + '</div>' + doCountBox(D, doFilt, list.length) :
       '<div class="do-grid">' + list.map(x => '<button class="do-card" data-l="do-' + x.id + '"><small>' + esc(sysOf(D, x.c).name) + ' · ' + esc(lvOf(D, x).label) + (x.icon ? ' · ★' : '') + '</small><b>' + esc(x.name) + '</b>' + colChips(x.colors) + '</button>').join('') + '</div>') +
       '<div class="l-btns"><button class="cta ghost" id="doAllMap"><span>' + esc(t('do_map_all')) + '</span></button></div></section>' +
@@ -3986,15 +4142,16 @@ function renderDOIndex() {
 
     learnWire(el);
     el.querySelectorAll('[data-sys]').forEach(b => b.onclick = () => { doSys = b.dataset.sys; doLv = -1; renderDOIndex(); });
+    el.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { doKind = b.dataset.kind; renderDOIndex(); requestAnimationFrame(() => $('#doExplore') && $('#doExplore').scrollIntoView({ block: 'start' })); });
     el.querySelectorAll('.pl').forEach(g => g.onclick = () => { doLv = +g.dataset.lv; renderDOIndex(); });
     el.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { doFilt = b.dataset.f; if (doFilt !== 'all') { doSys = doFilt; doLv = -1; } const y = el.scrollTop; renderDOIndex(); requestAnimationFrame(() => { if (doFilt !== 'all') $('#doExplore').scrollIntoView({ block: 'start' }); else el.scrollTop = y; }); });
     if (doFilt !== 'all') doCountryMap(D, doFilt); else if (doCMap) { doCMap.remove(); doCMap = null; }
     $('#doAllMap').onclick = () => { closeLearn(); doOn = true; doCtry = doFilt; if (view !== 'world') goWorld(doFilt !== 'all'); doMarkers(D);
-      if (doFilt !== 'all') { const xs = list.map(o => o.pt[0]), ys = list.map(o => o.pt[1]); map.fitBounds([[Math.min(...xs) - 1.5, Math.min(...ys) - 1.5], [Math.max(...xs) + 1.5, Math.max(...ys) + 1.5]], { padding: 60, duration: 2400, maxZoom: 7 }); } };
+      if (doFilt !== 'all') { const xs = list.map(o => o.pt[0]), ys = list.map(o => o.pt[1]); map.fitBounds([[Math.min(...xs) - 1.5, Math.min(...ys) - 1.5], [Math.max(...xs) + 1.5, Math.max(...ys) + 1.5]], { padding: 60, duration: 2400, maxZoom: doFilt === 'Uruguay' ? 5.4 : 7 }); } };
     // etiqueta: primero encontrá la DO; después tocá cualquier parte para ver qué es
     let found = false; const lab = el.querySelector('.do-label');
     lab.querySelectorAll('[data-h]').forEach(s => s.onclick = () => { const h = s.dataset.h;
-      if (!found && h !== 'do') { s.classList.add('miss'); setTimeout(() => s.classList.remove('miss'), 600); $('#labA').innerHTML = '<b class="no">✗ ' + esc(t('do_label_no')) + '</b><p>' + esc(t('lab_' + h)) + '</p>'; return; }
+      if (!found && h !== 'do') { s.classList.add('miss'); setTimeout(() => s.classList.remove('miss'), 600); $('#labA').innerHTML = '<b class="no">✗ ' + esc(t('do_label_no')) + '</b><p>' + esc(h === 'extra' ? (ex.extra_txt || '') : t('lab_' + h)) + '</p>'; return; }
       if (!found) { found = true; lab.classList.add('found'); $('#labQ').textContent = t('do_label_explore'); }
       lab.querySelectorAll('[data-h]').forEach(x => x.classList.toggle('sel', x === s));
       $('#labA').innerHTML = (h === 'do' && !lab.dataset.ok ? '<b class="yes">✓ ' + esc(t('do_label_ok')) + '</b>' : '<b>' + esc(t('labn_' + h)) + '</b>') + '<p>' + esc(h === 'extra' ? (ex.extra_txt || '') : t('lab_' + h)) + '</p>' +
@@ -4047,10 +4204,12 @@ const getDOGeo = () => DOGEO ? Promise.resolve(DOGEO) : get('data/do/geo/_index.
 const circleGeo = (pt, km) => ({ type: 'Polygon', coordinates: [Array.from({ length: 49 }, (_, i) => { const a = i / 48 * 2 * Math.PI; return [pt[0] + km / 111 / Math.cos(pt[1] * Math.PI / 180) * Math.cos(a), pt[1] + km / 111 * Math.sin(a)]; })] });
 function doMiniMap(D, x) {
   if (doMini) { doMini.remove(); doMini = null; }
-  const box = $('#doMini'); if (!box || !window.maplibregl) return;
+  const box = $('#doMini'), seq = learnSeq; if (!box || !window.maplibregl) return;
   getDOGeo().then(IX => {
     const same = D.dos.filter(o => o.c === x.c), withGeo = same.filter(o => IX[o.id]);
     Promise.all(withGeo.map(o => get('data/do/geo/' + o.id + '.json').then(f => (f.properties = { id: o.id, name: o.name, sel: o.id === x.id ? 1 : 0 }, f)).catch(() => null))).then(fs => {
+      if (seq !== learnSeq || !box.isConnected) return;
+      if (doMini) { doMini.remove(); doMini = null; }
       fs = fs.filter(Boolean);
       const mine = fs.find(f => f.properties.id === x.id), q = IX[x.id];
       const approx = mine ? null : { type: 'Feature', properties: { id: x.id }, geometry: circleGeo(x.pt, 25) };
@@ -4075,7 +4234,7 @@ function doMiniMap(D, x) {
       doMini.scrollZoom.disable(); box.addEventListener('wheel', e => { if (e.ctrlKey || e.metaKey) return; }, { passive: true });
       new maplibregl.Marker({ element: Object.assign(document.createElement('div'), { className: 'mini-lbl', textContent: x.name }) }).setLngLat(x.pt).setOffset([0, -18]).addTo(doMini);
       const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'mini-pop' });
-      mapHover(doMini, pop, f => !!(f && !f.properties.sel), f => { if (!f.properties.sel) openLearn('do-' + f.properties.id); });
+      mapHover(doMini, pop, f => !!(f && !f.properties.sel), f => { if (!f.properties.sel) learnNav('do-' + f.properties.id); });
       const cap = $('#doMiniCap');
       if (cap) cap.textContent = q ? t(q.quality === 'aprox' ? 'do_geo_aprox' : q.quality === 'oficial-admin' ? 'do_geo_admin' : 'do_geo_ok', { s: q.source }) : t('do_geo_none');
     });
@@ -4110,7 +4269,7 @@ function fillDOImg(D, x) {
 }
 function renderDOSheet(id) {
   const el = $('#learn'); el.className = 'theme-index';
-  getDO().then(D => {
+  const seq = learnSeq; getDO().then(D => { if (seq !== learnSeq) return;
     const x = doById(D, id); if (!x) return renderDOIndex();
     const S0 = sysOf(D, x.c), lv = lvOf(D, x), li = S0.levels.findIndex(l => l.k === x.level);
     const more = D.dos.filter(o => o.c === x.c && o.id !== x.id);
@@ -4134,8 +4293,8 @@ function renderDOSheet(id) {
 }
 map.on('zoomend', () => document.body.classList.toggle('do-z', map.getZoom() >= 5));
 $('#doToggle').onchange = e => { doOn = e.target.checked; doCtry = 'all'; if (doOn) getDO().then(D => doMarkers(D)); else doVis(); };
-$('#learnBtn').onclick = () => { if (coachStep >= 0) coachEnd(); openLearn('index'); };
-addEventListener('hashchange', () => { const m = location.hash.match(/^#aprender\/?([\w-]*)/); if (m) openLearn(m[1] || 'index'); else if (learnRoute) closeLearn(); });
+$('#learnBtn').onclick = () => { if (coachStep >= 0) coachEnd(); learnNav('index'); };
+addEventListener('hashchange', () => { if (!D) return; const m = location.hash.match(/^#aprender\/?([\w-]*)/); if (m) openLearn(m[1] || 'index'); else if (learnRoute) closeLearn(); });
 addEventListener('keydown', e => { if (learnRoute && e.key === 'Escape' && coachStep < 0) closeLearn(); });
 
 })();
