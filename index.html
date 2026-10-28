@@ -854,6 +854,20 @@ body.do-z .do-mk span { opacity: 1; }
 @keyframes rise2 { from { transform: translateY(30px) scale(.8); opacity: 0; } to { transform: none; opacity: 1; } }
 #learn .ct-blind .off { opacity: .45; }
 #learn .ct-sheet .l-seg.sm { flex-wrap: wrap; border-radius: 12px; gap: 4px; border: 0; background: none; } #learn .ct-sheet .l-seg.sm button { border: 1px solid #d8ccb0; border-radius: 999px; flex: 0 1 auto; }
+#learn .ct-annot { width: 100%; height: auto; display: block; border-radius: 14px; }
+#learn .ct-annot .an { opacity: 0; animation: anIn 8s infinite; }
+@keyframes anIn { 0% { opacity: 0; } 6% { opacity: 1; } 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+#learn .ct-annot .an-t { fill: none; stroke: #c0394f; stroke-width: 2.5; animation: anPulse 1.2s infinite; }
+@keyframes anPulse { 50% { stroke-width: 5; stroke-opacity: .5; } }
+#learn .ct-annot .an-a { fill: none; stroke: #2a2116; stroke-width: 1.6; stroke-dasharray: 3 3; marker-end: none; }
+#learn .ct-annot text { fill: #2a2116; } #learn .ct-annot .an-l { font-size: 14px; font-weight: 700; } #learn .ct-annot .an-s { font-size: 12px; fill: #6b5a40; }
+#learn .ct-annot .tear { animation: tear2 2.6s ease-in infinite; } @keyframes tear2 { from { transform: translateY(0); opacity: 0; } 20% { opacity: .6; } to { transform: translateY(26px); opacity: 0; } }
+#learn .ct-annot .shine { animation: shine 3s ease-in-out infinite; } @keyframes shine { 50% { opacity: .75; } }
+#learn .do-cmap { width: 100%; height: min(62vh, 480px); border-radius: 14px; overflow: hidden; border: 1px solid var(--l-line); margin-top: 12px; }
+#learn .do-leg { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+#learn .do-leg button { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink); font: inherit; font-size: 13px; cursor: pointer; }
+#learn .do-leg button i { width: 10px; height: 10px; border-radius: 3px; } #learn .do-leg button small { color: var(--l-ink2); font-size: 11px; }
+#learn .do-leg button.on, #learn .do-leg button:hover { border-color: #fff; background: rgba(255,255,255,.08); }
 
 </style>
 </head>
@@ -1806,6 +1820,9 @@ for (const l in T_ADD30) Object.assign(T[l], T_ADD30[l]);
 
 const T_ADD31 = {"es": {"ct_keys": "Palabras clave", "ct_classify": "Tocá cada aroma para clasificarlo: primario, secundario o terciario."}, "en": {"ct_keys": "Key words", "ct_classify": "Tap each aroma to classify it: primary, secondary or tertiary."}, "pt": {"ct_keys": "Palavras-chave", "ct_classify": "Toque em cada aroma para classificá-lo: primário, secundário ou terciário."}, "fr": {"ct_keys": "Mots clés", "ct_classify": "Touchez chaque arôme pour le classer : primaire, secondaire ou tertiaire."}, "de": {"ct_keys": "Schlüsselwörter", "ct_classify": "Tippe auf jedes Aroma, um es einzuordnen: primär, sekundär oder tertiär."}, "ru": {"ct_keys": "Ключевые слова", "ct_classify": "Нажмите на каждый аромат, чтобы отнести его к первичным, вторичным или третичным."}, "zh": {"ct_keys": "关键词", "ct_classify": "点击每种香气进行分类：一类、二类或三类香气。"}, "ja": {"ct_keys": "キーワード", "ct_classify": "それぞれの香りをタップして、第1・第2・第3アロマに分類してください。"}, "ko": {"ct_keys": "핵심 용어", "ct_classify": "각 향을 눌러 1차, 2차, 3차 향으로 분류해 보세요."}};
 for (const l in T_ADD31) Object.assign(T[l], T_ADD31[l]);
+
+const T_ADD32 = {"es": {"ct_an_center": "Centro", "ct_an_center_s": "intensidad del color", "ct_an_rim": "Ribete (borde)", "ct_an_rim_s": "tono y edad", "ct_an_shine": "Reflejos", "ct_an_shine_s": "brillo y limpidez", "ct_an_tears": "Lágrimas", "ct_an_tears_s": "alcohol y azúcar", "ct_an_hint": "Así se mira: copa inclinada sobre un fondo blanco. Mové el tono y la intensidad y mirá cómo cambia.", "do_cmap_hint": "Pasá el mouse o tocá una zona para ver su nombre y abrir la ficha."}, "en": {"ct_an_center": "Core", "ct_an_center_s": "colour intensity", "ct_an_rim": "Rim (edge)", "ct_an_rim_s": "hue and age", "ct_an_shine": "Reflections", "ct_an_shine_s": "brightness and clarity", "ct_an_tears": "Tears", "ct_an_tears_s": "alcohol and sugar", "ct_an_hint": "How to look: tilt the glass over a white background. Move the hue and intensity and watch it change.", "do_cmap_hint": "Hover or tap an area to see its name and open its page."}, "pt": {"ct_an_center": "Centro", "ct_an_center_s": "intensidade da cor", "ct_an_rim": "Halo (borda)", "ct_an_rim_s": "tom e idade", "ct_an_shine": "Reflexos", "ct_an_shine_s": "brilho e limpidez", "ct_an_tears": "Lágrimas", "ct_an_tears_s": "álcool e açúcar", "ct_an_hint": "Como olhar: taça inclinada sobre um fundo branco. Mude o tom e a intensidade e veja como muda.", "do_cmap_hint": "Passe o mouse ou toque numa área para ver o nome e abrir a ficha."}, "fr": {"ct_an_center": "Cœur", "ct_an_center_s": "intensité de la couleur", "ct_an_rim": "Disque (bord)", "ct_an_rim_s": "teinte et âge", "ct_an_shine": "Reflets", "ct_an_shine_s": "brillance et limpidité", "ct_an_tears": "Larmes", "ct_an_tears_s": "alcool et sucre", "ct_an_hint": "Comment regarder : verre incliné sur un fond blanc. Changez la teinte et l’intensité et observez.", "do_cmap_hint": "Survolez ou touchez une zone pour voir son nom et ouvrir sa fiche."}, "de": {"ct_an_center": "Kern", "ct_an_center_s": "Farbtiefe", "ct_an_rim": "Rand", "ct_an_rim_s": "Farbton und Alter", "ct_an_shine": "Reflexe", "ct_an_shine_s": "Glanz und Klarheit", "ct_an_tears": "Tränen", "ct_an_tears_s": "Alkohol und Zucker", "ct_an_hint": "So schaut man: Glas über weißem Hintergrund neigen. Ändere Farbton und Tiefe und sieh, was passiert.", "do_cmap_hint": "Fahre über ein Gebiet oder tippe darauf, um den Namen zu sehen und die Seite zu öffnen."}, "ru": {"ct_an_center": "Центр", "ct_an_center_s": "интенсивность цвета", "ct_an_rim": "Ободок (край)", "ct_an_rim_s": "оттенок и возраст", "ct_an_shine": "Блики", "ct_an_shine_s": "блеск и прозрачность", "ct_an_tears": "Слёзы", "ct_an_tears_s": "алкоголь и сахар", "ct_an_hint": "Как смотреть: наклоните бокал над белым фоном. Меняйте оттенок и интенсивность и наблюдайте.", "do_cmap_hint": "Наведите курсор или нажмите на зону, чтобы увидеть название и открыть карточку."}, "zh": {"ct_an_center": "中心", "ct_an_center_s": "颜色深浅", "ct_an_rim": "边缘", "ct_an_rim_s": "色调与年份", "ct_an_shine": "光泽", "ct_an_shine_s": "亮度与澄清度", "ct_an_tears": "酒泪", "ct_an_tears_s": "酒精与糖分", "ct_an_hint": "观察方法：在白色背景上倾斜酒杯。调整色调和深浅，看看变化。", "do_cmap_hint": "将鼠标移到或点击某个区域，查看名称并打开详情。"}, "ja": {"ct_an_center": "中心", "ct_an_center_s": "色の濃さ", "ct_an_rim": "縁（リム）", "ct_an_rim_s": "色調と熟成", "ct_an_shine": "輝き", "ct_an_shine_s": "明るさと透明度", "ct_an_tears": "脚（涙）", "ct_an_tears_s": "アルコールと糖分", "ct_an_hint": "見かた：白い背景の上でグラスを傾けます。色調と濃さを変えて、違いを見てみましょう。", "do_cmap_hint": "エリアにカーソルを合わせるかタップすると、名前が表示され詳細が開きます。"}, "ko": {"ct_an_center": "중심", "ct_an_center_s": "색의 진하기", "ct_an_rim": "가장자리(림)", "ct_an_rim_s": "색조와 숙성", "ct_an_shine": "광택", "ct_an_shine_s": "밝기와 투명도", "ct_an_tears": "눈물(레그)", "ct_an_tears_s": "알코올과 당분", "ct_an_hint": "보는 법: 흰 배경 위에서 잔을 기울이세요. 색조와 진하기를 바꾸며 변화를 보세요.", "do_cmap_hint": "지역에 마우스를 올리거나 누르면 이름이 보이고 상세 페이지가 열립니다."}};
+for (const l in T_ADD32) Object.assign(T[l], T_ADD32[l]);
 
 (() => {
 'use strict';
@@ -3177,7 +3194,7 @@ const getUva = id => UVA[id] ? Promise.resolve(UVA[id]) : get('data/uvas/' + id 
 const getJuegos = () => JUEGOS ? Promise.resolve(JUEGOS) : get('data/uvas/_juegos.json').then(d => (JUEGOS = d));
 const getUvaMundo = () => UVAMUNDO ? Promise.resolve(UVAMUNDO) : get('data/uvas_mundo.json').then(d => (UVAMUNDO = d)).catch(() => (UVAMUNDO = { grapes: {}, prime: {} }));
 function openLearn(route) {
-  clearInterval(GT); if (doMini) { doMini.remove(); doMini = null; } learnRoute = route || 'index'; const el = $('#learn'); el.hidden = false; document.body.classList.add('learning');
+  clearInterval(GT); if (doMini) { doMini.remove(); doMini = null; } if (doCMap && route !== 'do') { doCMap.remove(); doCMap = null; } learnRoute = route || 'index'; const el = $('#learn'); el.hidden = false; document.body.classList.add('learning');
   if (location.hash !== '#aprender' + (route && route !== 'index' ? '/' + route : '')) history.replaceState(null, '', '#aprender' + (route && route !== 'index' ? '/' + route : ''));
   if (learnRoute === 'index') return renderLearnIndex();
   if (learnRoute === 'uvas') return renderGrapeList();
@@ -3190,7 +3207,7 @@ function openLearn(route) {
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
   Promise.all([getUva(learnRoute), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => renderGrape(d)).catch(e => { console.error(e); renderLearnIndex(); });
 }
-function closeLearn() { clearInterval(GT); clearInterval(CTT); if (doMini) { doMini.remove(); doMini = null; } learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
+function closeLearn() { clearInterval(GT); if (doCMap) { doCMap.remove(); doCMap = null; } clearInterval(CTT); if (doMini) { doMini.remove(); doMini = null; } learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
 const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : back === 'do' ? 'learn_sub_do' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
 function learnWire(el) { el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => b.dataset.l === 'map' ? closeLearn() : openLearn(b.dataset.l)); }
 // ícono grande de cada subtema (SVG)
@@ -3343,6 +3360,22 @@ function tiltGlass(kind, tone, int, tilted) {
 }
 const keyChips = (keys) => '<div class="ct-keys">' + keys.map((k, i) => '<button class="ct-key" data-k="' + i + '">' + esc(k.w) + '</button>').join('') + '</div><p class="l-detail ct-keyd" hidden></p>';
 function wireKeys(box, keys) { box.querySelectorAll('.ct-key').forEach(b => b.onclick = () => { box.querySelectorAll('.ct-key').forEach(x => x.classList.toggle('sel', x === b)); const d = box.querySelector('.ct-keyd'); d.hidden = false; d.innerHTML = '<b>' + esc(keys[+b.dataset.k].w) + '</b><p>' + esc(keys[+b.dataset.k].t) + '</p>'; }); }
+// copa inclinada con flechas animadas: centro (intensidad), ribete (tono y edad), reflejos (brillo) y lágrimas
+function annotGlass(kind, tone, int) {
+  const c = TONE_COL[kind][Math.min(tone, TONE_COL[kind].length - 1)], k = [.5, 0, -.3][int];
+  const core = shade(c[0], k), rim = shade(c[1], int === 0 ? .55 : int === 1 ? .2 : 0);
+  const call = (i, tx, ty, lx, ly, lab, sub) => '<g class="an" style="animation-delay:' + i * 1.8 + 's"><circle class="an-t" cx="' + tx + '" cy="' + ty + '" r="13"/><path class="an-a" d="M' + lx + ' ' + (ly + 4) + 'Q' + ((lx + tx) / 2) + ' ' + (ly + 4) + ' ' + (tx + (lx > tx ? 14 : -14)) + ' ' + ty + '"/>' +
+    '<text x="' + lx + '" y="' + ly + '" text-anchor="' + (lx > tx ? 'start' : 'end') + '"><tspan class="an-l">' + esc(lab) + '</tspan><tspan x="' + lx + '" dy="15" class="an-s">' + esc(sub) + '</tspan></text></g>';
+  return '<svg class="ct-annot" viewBox="0 0 400 240" role="img" aria-label="' + esc(t('ct_an_center')) + '"><rect width="400" height="240" rx="14" fill="#fbf8f1"/>' +
+    '<defs><radialGradient id="anW" cx="45%" cy="50%" r="60%"><stop offset="0" stop-color="' + core + '"/><stop offset=".6" stop-color="' + core + '"/><stop offset=".85" stop-color="' + rim + '"/><stop offset="1" stop-color="' + rim + '" stop-opacity=".3"/></radialGradient></defs>' +
+    // pared de la copa con lágrimas
+    '<path d="M48 70 Q150 18 250 70" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="2"/>' + [80, 112, 146, 180, 214].map((x, i) => '<path class="tear" style="animation-delay:' + i * .5 + 's" d="M' + x + ' ' + (52 - (i === 2 ? 10 : i % 2 ? 6 : 0)) + 'q3 10 0 16q-3 -6 0 -16z" fill="' + core + '" opacity=".55"/>').join('') +
+    '<ellipse cx="150" cy="138" rx="118" ry="66" fill="url(#anW)" stroke="rgba(0,0,0,.12)"/><ellipse class="shine" cx="112" cy="112" rx="32" ry="9" fill="#fff" opacity=".45"/>' +
+    call(0, 150, 140, 300, 120, t('ct_an_center'), t('ct_an_center_s')) +
+    call(1, 262, 150, 300, 178, t('ct_an_rim'), t('ct_an_rim_s')) +
+    call(2, 112, 112, 300, 62, t('ct_an_shine'), t('ct_an_shine_s')) +
+    call(3, 146, 46, 300, 22, t('ct_an_tears'), t('ct_an_tears_s')) + '</svg>';
+}
 function renderTasting() {
   const el = $('#learn'); el.className = 'theme-index';
   getCata().then(C => {
@@ -3362,15 +3395,14 @@ function ctTab(C) {
   const phase = (P, body) => '<section class="l-sec ct-phase"><h2>' + esc(P.t) + '</h2><p class="l-tag">' + esc(P.lead) + '</p><ol class="ct-how">' + P.how.map(x => '<li>' + esc(x) + '</li>').join('') + '</ol>' + body + '<h3>' + esc(t('ct_keys')) + '</h3>' + keyChips(P.keys) + '</section>';
   if (CT.tab === 0) {
     const E = C.eye, tones = E.tones[CT.kind]; CT.tone = Math.min(CT.tone, tones.length - 1);
-    B.innerHTML = phase(E, '<div class="l-two eq ct-eye"><div class="ct-stage"><div id="ctG">' + tiltGlass(CT.kind, CT.tone, CT.int, CT.tilt) + '</div><div class="ct-tears" ' + (CT.tears ? '' : 'hidden') + '>' + Array.from({ length: 7 }, (_, i) => '<i style="left:' + (14 + i * 11) + '%;animation-delay:' + (i * .35) + 's"></i>').join('') + '</div></div><div>' +
+    B.innerHTML = phase(E, '<div class="l-two eq ct-eye"><div class="ct-stage">' + annotGlass(CT.kind, CT.tone, CT.int) + '<p class="l-hint">' + esc(t('ct_an_hint')) + '</p></div><div>' +
       '<h3>' + esc(E.kind_t) + '</h3><div class="l-seg">' + ['red', 'white', 'rose'].map(k => '<button data-kind="' + k + '" class="' + (k === CT.kind ? 'sel' : '') + '">' + esc(E.kinds[k]) + '</button>').join('') + '</div>' +
       '<h3>' + esc(E.tone_t) + ': <b class="ct-val">' + esc(tones[CT.tone]) + '</b></h3><input type="range" id="ctTone" min="0" max="' + (tones.length - 1) + '" value="' + CT.tone + '"><div class="l-ticks">' + tones.map(x => '<span>' + esc(x) + '</span>').join('') + '</div>' +
       '<p class="l-detail">' + esc(E.tone_txt[CT.kind][CT.tone]) + '</p>' +
       '<h3>' + esc(E.int_t) + ': <b class="ct-val">' + esc(E.ints[CT.int]) + '</b></h3><input type="range" id="ctInt" min="0" max="2" value="' + CT.int + '">' +
-      '<div class="l-btns"><button class="cta ghost" id="ctTilt"><span>' + esc(E.tilt) + '</span></button><button class="cta ghost" id="ctTears"><span>' + esc(E.tears) + '</span></button></div>' + (CT.tears ? '<p class="l-hint">' + esc(E.tears_txt) + '</p>' : '') + '</div></div>') + ctNav(C);
+      '<p class="l-hint">' + esc(E.tears_txt) + '</p></div></div>') + ctNav(C);
     B.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { CT.kind = b.dataset.kind; ctTab(C); });
     $('#ctTone').oninput = e => { CT.tone = +e.target.value; ctTab(C); }; $('#ctInt').oninput = e => { CT.int = +e.target.value; ctTab(C); };
-    $('#ctTilt').onclick = () => { CT.tilt = !CT.tilt; ctTab(C); }; $('#ctTears').onclick = () => { CT.tears = !CT.tears; ctTab(C); };
     wireKeys(B, E.keys);
   } else if (CT.tab === 1) {
     const N = C.nose, all = N.layers.flatMap(l => l.ex.map(x => [x, l.k])), shown = CT.nose === 0 ? [] : CT.nose === 1 ? all.filter((_, i) => i % 4 === 0) : all;
@@ -3737,6 +3769,46 @@ function doMarkers(D, sel) {
 function doVis() { const D = DOD[L] || DOD.es; doMk.forEach(k => { const x = D && doById(D, k.id); k.el.style.display = doOn && view === 'world' && (doCtry === 'all' || (x && x.c === doCtry)) ? '' : 'none'; }); const tg = $('#doToggle'); if (tg) tg.checked = doOn; }
 function showDOMap(id) { getDO().then(D => { const x = doById(D, id); closeLearn(); doOn = true; if (view !== 'world') goWorld(true); doMarkers(D, id);
   if (x) map.flyTo({ center: x.pt, zoom: 6.6, pitch: 0, bearing: 0, duration: 2600, essential: true }); }); }
+// mapa de un país con todas sus DO, cada una con su color; se puede pasar el mouse y tocar para abrir la ficha
+const DO_PAL = ['#e2b46a', '#c0394f', '#6fa8dc', '#8fd694', '#d08ad8', '#f08a5d', '#5fc9c0', '#e6d47a', '#a98bdb', '#ef8fb0', '#9ccf6a', '#d9a066'];
+let doCMap = null;
+function doCountryMap(D, c) {
+  if (doCMap) { doCMap.remove(); doCMap = null; }
+  const box = $('#doCMap'); if (!box || !window.maplibregl) return;
+  const list = D.dos.filter(o => o.c === c).sort((a, b) => a.name.localeCompare(b.name)), col = {};
+  list.forEach((o, i) => col[o.id] = DO_PAL[i % DO_PAL.length]);
+  Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => Promise.all(list.map(o => IX[o.id] ? get('data/do/geo/' + o.id + '.json').then(f => (f.id = list.indexOf(o), f.properties = { id: o.id, name: o.name, col: col[o.id] }, f)).catch(() => null) : null))).then(fs => {
+    if (!$('#doCMap')) return;
+    fs = fs.filter(Boolean);
+    const pts = { type: 'FeatureCollection', features: list.map((o, i) => ({ type: 'Feature', id: i, properties: { id: o.id, name: o.name, col: col[o.id], geo: fs.some(f => f.properties.id === o.id) ? 1 : 0 }, geometry: { type: 'Point', coordinates: o.pt } })) };
+    const b = [180, 90, -180, -90], ext = ([x, y]) => { b[0] = Math.min(b[0], x); b[1] = Math.min(b[1], y); b[2] = Math.max(b[2], x); b[3] = Math.max(b[3], y); };
+    list.forEach(o => ext(o.pt)); fs.forEach(f => (f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates).forEach(pl => pl[0].forEach(ext)));
+    const hi = ['boolean', ['feature-state', 'hover'], false];
+    doCMap = new maplibregl.Map({ container: box, attributionControl: false, dragRotate: false, pitchWithRotate: false, maxZoom: 11, bounds: [[b[0] - .3, b[1] - .3], [b[2] + .3, b[3] + .3]], fitBoundsOptions: { padding: 30 },
+      style: { version: 8, sources: { c: { type: 'geojson', data: COUNTRIES_GJ }, d: { type: 'geojson', data: { type: 'FeatureCollection', features: fs } }, p: { type: 'geojson', data: pts } }, layers: [
+        { id: 'bg', type: 'background', paint: { 'background-color': '#0d1a22' } },
+        { id: 'cf', type: 'fill', source: 'c', paint: { 'fill-color': ['case', ['==', ['get', 'n'], RA2[c] || c], '#3a2a2c', '#231d1e'] } },
+        { id: 'cl', type: 'line', source: 'c', paint: { 'line-color': ['case', ['==', ['get', 'n'], RA2[c] || c], '#8a6a3a', '#3e3436'], 'line-width': 1 } },
+        { id: 'df', type: 'fill', source: 'd', paint: { 'fill-color': ['get', 'col'], 'fill-opacity': ['case', hi, .85, .5] } },
+        { id: 'dl', type: 'line', source: 'd', paint: { 'line-color': ['case', hi, '#ffffff', ['get', 'col']], 'line-width': ['case', hi, 2.5, 1] } },
+        { id: 'pt', type: 'circle', source: 'p', filter: ['==', ['get', 'geo'], 0], paint: { 'circle-radius': ['case', hi, 9, 6], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }] } });
+    doCMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right'); doCMap.scrollZoom.disable();
+    const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'mini-pop' });
+    let hov = null;
+    const setHover = (id) => { const i = list.findIndex(o => o.id === id);
+      if (hov != null) { doCMap.setFeatureState({ source: 'd', id: hov }, { hover: false }); doCMap.setFeatureState({ source: 'p', id: hov }, { hover: false }); }
+      hov = i >= 0 ? i : null; if (hov != null) { doCMap.setFeatureState({ source: 'd', id: hov }, { hover: true }); doCMap.setFeatureState({ source: 'p', id: hov }, { hover: true }); }
+      document.querySelectorAll('.do-leg [data-dl]').forEach(x => x.classList.toggle('on', x.dataset.dl === id)); };
+    doCMap.on('load', () => {
+      ['df', 'pt'].forEach(l => {
+        doCMap.on('mousemove', l, e => { const f = e.features[0]; doCMap.getCanvas().style.cursor = 'pointer'; setHover(f.properties.id); pop.setLngLat(e.lngLat).setText(f.properties.name).addTo(doCMap); });
+        doCMap.on('mouseleave', l, () => { doCMap.getCanvas().style.cursor = ''; setHover(null); pop.remove(); });
+        doCMap.on('click', l, e => openLearn('do-' + e.features[0].properties.id));
+      });
+    });
+    document.querySelectorAll('.do-leg [data-dl]').forEach(x => { x.onmouseenter = () => setHover(x.dataset.dl); x.onmouseleave = () => setHover(null); });
+  });
+}
 function renderDOIndex() {
   const el = $('#learn'); el.className = 'theme-index';
   getDO().then(D => {
@@ -3764,12 +3836,14 @@ function renderDOIndex() {
       // lista
       '<section class="l-sec"><h2>' + esc(t('do_list_t')) + ' <span class="num">' + nf(D.dos.length) + '</span></h2><div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c)).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
       (doFilt !== 'all' ? doCountBox(D, doFilt, list.length) : '') +
-      '<div class="do-grid">' + list.map(x => '<button class="do-card" data-l="do-' + x.id + '"><small>' + esc(sysOf(D, x.c).name) + ' · ' + esc(lvOf(D, x).label) + (x.icon ? ' · ★' : '') + '</small><b>' + esc(x.name) + '</b>' + colChips(x.colors) + '</button>').join('') + '</div>' +
+      (doFilt !== 'all' ? '<div id="doCMap" class="do-cmap"></div><p class="l-hint">' + esc(t('do_cmap_hint')) + '</p><div class="do-leg">' + list.slice().sort((a, b) => a.name.localeCompare(b.name)).map((x, i) => '<button data-l="do-' + x.id + '" data-dl="' + x.id + '"><i style="background:' + DO_PAL[i % DO_PAL.length] + '"></i>' + esc(x.name) + '<small>' + esc(lvOf(D, x).label) + '</small></button>').join('') + '</div>' :
+      '<div class="do-grid">' + list.map(x => '<button class="do-card" data-l="do-' + x.id + '"><small>' + esc(sysOf(D, x.c).name) + ' · ' + esc(lvOf(D, x).label) + (x.icon ? ' · ★' : '') + '</small><b>' + esc(x.name) + '</b>' + colChips(x.colors) + '</button>').join('') + '</div>') +
       '<div class="l-btns"><button class="cta ghost" id="doAllMap"><span>' + esc(t('do_map_all')) + '</span></button></div></section></div>';
     learnWire(el);
     el.querySelectorAll('[data-sys]').forEach(b => b.onclick = () => { doSys = b.dataset.sys; doLv = -1; renderDOIndex(); });
     el.querySelectorAll('.pl').forEach(g => g.onclick = () => { doLv = +g.dataset.lv; renderDOIndex(); });
     el.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { doFilt = b.dataset.f; if (doFilt !== 'all') { doSys = doFilt; doLv = -1; } const y = el.scrollTop; renderDOIndex(); requestAnimationFrame(() => { el.scrollTop = y; }); });
+    if (doFilt !== 'all') doCountryMap(D, doFilt); else if (doCMap) { doCMap.remove(); doCMap = null; }
     $('#doAllMap').onclick = () => { closeLearn(); doOn = true; doCtry = doFilt; if (view !== 'world') goWorld(doFilt !== 'all'); doMarkers(D);
       if (doFilt !== 'all') { const xs = list.map(o => o.pt[0]), ys = list.map(o => o.pt[1]); map.fitBounds([[Math.min(...xs) - 1.5, Math.min(...ys) - 1.5], [Math.max(...xs) + 1.5, Math.max(...ys) + 1.5]], { padding: 60, duration: 2400, maxZoom: 7 }); } };
     // etiqueta: primero encontrá la DO; después tocá cualquier parte para ver qué es
