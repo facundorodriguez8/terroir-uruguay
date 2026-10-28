@@ -791,6 +791,69 @@ body.do-z .do-mk span { opacity: 1; }
 #learn .do-img-ph { aspect-ratio: 1; border-radius: 14px; background: var(--l-card); animation: lph 1.2s infinite alternate; } @keyframes lph { to { opacity: .5; } }
 #learn .do-note { border-left: 3px solid var(--l-acc); padding: 8px 12px; background: var(--l-card); border-radius: 0 10px 10px 0; font-size: 14px; margin: 10px 0; }
 #learn .do-img .halo { display: none; } #learn .do-img { align-items: start; }
+/* aprender a catar */
+#learn .ct-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin: 8px 0 4px; position: sticky; top: 52px; z-index: 3; background: var(--l-topbg); backdrop-filter: blur(8px); padding: 8px 0; }
+#learn .ct-tabs button { flex: none; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink); font: inherit; font-size: 14px; cursor: pointer; }
+#learn .ct-tabs button span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--l-line); font-size: 12px; font-weight: 700; }
+#learn .ct-tabs button.sel { background: var(--l-acc); color: #1a1213; border-color: var(--l-acc); font-weight: 600; } #learn .ct-tabs button.sel span { background: #1a1213; color: var(--l-acc); }
+#learn .ct-tabs button.play { border-color: rgba(226,180,106,.6); }
+#learn .ct-how { padding-left: 20px; } #learn .ct-how li { margin: 6px 0; font-size: 15px; }
+#learn .ct-stage { position: relative; }
+#learn .ct-glass { width: 100%; height: auto; display: block; border-radius: 14px; transition: transform .6s; }
+#learn .ct-glass .ct-g { transform-origin: 120px 90px; transition: transform .6s; } #learn .ct-glass.tilt .ct-g { transform: rotate(-18deg); }
+#learn .ct-val { color: var(--l-acc); font-weight: 600; }
+#learn .ct-eye input[type=range], #learn .ct-comp input[type=range] { width: 100%; accent-color: var(--l-acc); }
+#learn .ct-tears { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 14px; }
+#learn .ct-tears i { position: absolute; top: 6%; width: 5px; height: 14px; border-radius: 3px 3px 6px 6px; background: rgba(140,29,47,.55); animation: tear 2.4s ease-in infinite; }
+@keyframes tear { from { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } to { transform: translateY(120px); opacity: 0; } }
+#learn .ct-swirl { max-width: 160px; margin: 0 auto; } #learn .ct-swirl .l-glass { width: 100%; height: auto; }
+#learn .ct-swirl.spin { animation: swirl 1.2s ease-in-out 2; } @keyframes swirl { 25% { transform: rotate(8deg) translateX(6px); } 50% { transform: rotate(0) translateX(0); } 75% { transform: rotate(-8deg) translateX(-6px); } }
+#learn .ct-cloud { position: relative; min-height: 120px; }
+#learn .ct-aro { position: absolute; left: var(--x); top: 0; font-size: 13px; padding: 3px 9px; border-radius: 999px; background: var(--l-card); border: 1px solid var(--l-line); animation: rise 3.5s var(--d) ease-out both; white-space: nowrap; }
+#learn .ct-aro.primario { border-color: #b3263b; } #learn .ct-aro.secundario { border-color: #8b5a2b; } #learn .ct-aro.terciario { border-color: #6b4a32; }
+@keyframes rise { from { transform: translateY(110px); opacity: 0; } 30% { opacity: 1; } to { transform: translateY(var(--y, 20px)); opacity: 1; } }
+#learn .ct-cloud .ct-aro:nth-child(3n) { --y: 50px; } #learn .ct-cloud .ct-aro:nth-child(3n+1) { --y: 85px; }
+#learn .ct-layers { display: grid; gap: 8px; } #learn .ct-layer { background: var(--l-card); border-left: 4px solid; border-radius: 10px; padding: 10px 12px; }
+#learn .ct-layer.primario { border-color: #b3263b; } #learn .ct-layer.secundario { border-color: #8b5a2b; } #learn .ct-layer.terciario { border-color: #6b4a32; }
+#learn .ct-layer p { font-size: 13px !important; margin: 2px 0 6px !important; }
+#learn .ct-keys { display: flex; flex-wrap: wrap; gap: 6px; } #learn .ct-key { border: 1px dashed var(--l-acc); background: none; color: var(--l-ink); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; } #learn .ct-key.sel { background: var(--l-acc); color: #1a1213; border-style: solid; }
+#learn .ct-comps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+#learn .ct-comp { background: var(--l-card); border: 1px solid var(--l-line); border-radius: 12px; padding: 12px; } #learn .ct-comp p { font-size: 13px !important; margin-top: 6px !important; color: var(--l-ink2); }
+#learn .ct-ch { display: flex; justify-content: space-between; gap: 8px; }
+#learn .ct-meter { height: 6px; background: var(--l-line); border-radius: 3px; overflow: hidden; } #learn .ct-meter i { display: block; height: 100%; background: linear-gradient(90deg, #6fbf73, var(--l-acc), #c0394f); transition: width .2s; }
+#learn .ct-timer { margin-top: 14px; text-align: center; background: var(--l-card); border-radius: 14px; padding: 14px; } #learn .ct-clock { font-size: 40px; color: var(--l-acc); font-variant-numeric: tabular-nums; margin: 6px 0; }
+#learn .ct-blic { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 12px 0; }
+#learn .ct-b { text-align: left; background: var(--l-card); border: 1px solid var(--l-line); border-radius: 14px; padding: 14px; color: var(--l-ink); font: inherit; cursor: pointer; position: relative; }
+#learn .ct-b span { position: absolute; right: 12px; top: 8px; font-size: 28px; opacity: .2; font-weight: 800; } #learn .ct-b.sel { border-color: #6fbf73; background: rgba(111,191,115,.15); } #learn .ct-b.sel::after { content: '✓'; position: absolute; right: 14px; bottom: 10px; color: #8fd694; font-size: 20px; }
+#learn .ct-b p { font-size: 13px !important; margin-top: 4px !important; }
+#learn .ct-lvbar { display: flex; gap: 4px; flex-wrap: wrap; } #learn .ct-lvbar span { flex: 1; min-width: 80px; text-align: center; padding: 8px 4px; border-radius: 8px; background: var(--l-card); font-size: 12px; opacity: .5; } #learn .ct-lvbar span.on { background: var(--l-acc); color: #1a1213; font-weight: 700; opacity: 1; }
+#learn .ct-nav { display: flex; justify-content: space-between; gap: 10px; margin: 24px 0 6px; }
+#learn .ct-blind .ct-stage { max-width: 320px; }
+#learn .ct-cls { display: flex; flex-wrap: wrap; gap: 8px; }
+#learn .ct-ab { display: flex; flex-direction: column; align-items: center; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink); font: inherit; cursor: pointer; } #learn .ct-ab small { font-size: 11px; color: var(--l-ink2); }
+#learn .ct-ab.primario { border-color: #b3263b; } #learn .ct-ab.secundario { border-color: #8b5a2b; } #learn .ct-ab.terciario { border-color: #a07a50; }
+#learn .ct-sense { font-style: italic; color: var(--l-ink) !important; font-size: 15px !important; margin: 0 0 6px !important; }
+#learn .good { box-shadow: 0 0 0 2px #6fbf73 !important; } #learn .bad { box-shadow: 0 0 0 2px #e07a5f !important; } #learn .half { box-shadow: 0 0 0 2px #e2b46a !important; }
+#learn .ct-res { display: flex; gap: 18px; align-items: center; margin-top: 18px; background: var(--l-card); border: 1px solid var(--l-acc); border-radius: 16px; padding: 16px; } #learn .ct-res-g { width: 90px; flex: none; } #learn .ct-res-g .l-glass { width: 100%; height: auto; }
+#learn .ct-res .g-final { font-size: 24px; }
+#learn .ct-sheet { background: #fbf8f1; color: #2a2116; border-radius: 14px; padding: 18px; }
+#learn .ct-sheet h3 { color: #8a6420; margin: 16px 0 6px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+#learn .ct-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
+#learn .ct-f { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: #6b5a40; } #learn .ct-f.wide { margin-top: 12px; }
+#learn .ct-f input, #learn .ct-f textarea, #learn .ct-row input { font: inherit; font-size: 15px; padding: 7px 9px; border-radius: 8px; border: 1px solid #d8ccb0; background: #fff; color: #2a2116; }
+#learn .ct-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 6px 0; border-bottom: 1px dashed #e4d9bf; } #learn .ct-row > span { min-width: 140px; font-size: 13px; color: #6b5a40; } #learn .ct-row.col { flex-direction: column; align-items: stretch; }
+#learn .ct-sheet .l-seg.sm button, #learn .ct-sheet .l-chip { background: #fff; color: #2a2116; border-color: #d8ccb0; } #learn .ct-sheet .l-seg.sm button.sel, #learn .ct-sheet .l-chip.sel { background: #8a6420; color: #fff; border-color: #8a6420; }
+#learn .l-seg.sm button { padding: 5px 10px; font-size: 13px; }
+#learn .ct-stars button { background: none; border: 0; font-size: 26px; color: #d8ccb0; cursor: pointer; } #learn .ct-stars button.on { color: #c99a2e; }
+#learn .ct-sheet .cta.ghost { color: #2a2116; border-color: #8a6420; }
+#learn .ct-mine > div { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--l-line); padding: 6px 0; }
+#learn .ct-open { background: none; border: 0; color: var(--l-ink); font: inherit; text-align: left; cursor: pointer; display: flex; flex-direction: column; } #learn .ct-open small { color: var(--l-ink2); }
+@media print { body.print-sheet * { visibility: hidden !important; } body.print-sheet #ctSheet, body.print-sheet #ctSheet * { visibility: visible !important; } body.print-sheet #learn { position: static; overflow: visible; } body.print-sheet #ctSheet { position: absolute; left: 0; top: 0; width: 100%; } body.print-sheet .ct-noprint { display: none !important; } }
+#learn .ct-cloud { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; min-height: 60px; margin-top: 10px; }
+#learn .ct-aro { position: static; animation: rise2 .6s var(--d) ease-out both; }
+@keyframes rise2 { from { transform: translateY(30px) scale(.8); opacity: 0; } to { transform: none; opacity: 1; } }
+#learn .ct-blind .off { opacity: .45; }
+#learn .ct-sheet .l-seg.sm { flex-wrap: wrap; border-radius: 12px; gap: 4px; border: 0; background: none; } #learn .ct-sheet .l-seg.sm button { border: 1px solid #d8ccb0; border-radius: 999px; flex: 0 1 auto; }
 
 </style>
 </head>
@@ -1740,6 +1803,9 @@ for (const l in T_ADD29) Object.assign(T[l], T_ADD29[l]);
 
 const T_ADD30 = {"es": {"do_is_ig": "Ojo: {l} es una indicación geográfica, no una denominación de origen. Garantiza de dónde vienen las uvas, pero con reglas menos estrictas que una denominación de origen.", "do_geo_approx_s": "zona aproximada"}, "en": {"do_is_ig": "Note: {l} is a geographical indication, not a designation of origin. It guarantees where the grapes come from, with looser rules.", "do_geo_approx_s": "approximate area"}, "pt": {"do_is_ig": "Atenção: {l} é uma indicação geográfica, não uma denominação de origem. Garante de onde vêm as uvas, com regras menos rígidas.", "do_geo_approx_s": "área aproximada"}, "fr": {"do_is_ig": "Attention : {l} est une indication géographique, pas une appellation d’origine. Elle garantit la provenance des raisins, avec des règles moins strictes.", "do_geo_approx_s": "zone approximative"}, "de": {"do_is_ig": "Achtung: {l} ist eine geografische Angabe, keine Ursprungsbezeichnung. Sie garantiert die Herkunft der Trauben, mit lockereren Regeln.", "do_geo_approx_s": "ungefähres Gebiet"}, "ru": {"do_is_ig": "Обратите внимание: {l} — это географическое указание, а не наименование места происхождения. Оно гарантирует, откуда виноград, но правила мягче.", "do_geo_approx_s": "примерная зона"}, "zh": {"do_is_ig": "注意：{l} 是地理标志，而不是原产地命名。它保证葡萄的来源，但规则较宽松。", "do_geo_approx_s": "大致区域"}, "ja": {"do_is_ig": "注意：{l} は地理的表示であり、原産地呼称ではありません。ブドウの産地は保証しますが、規則はゆるやかです。", "do_geo_approx_s": "おおよその地域"}, "ko": {"do_is_ig": "참고: {l}은 지리적 표시이며 원산지 명칭이 아닙니다. 포도의 산지는 보장하지만 규정이 덜 엄격합니다.", "do_geo_approx_s": "대략적인 지역"}};
 for (const l in T_ADD30) Object.assign(T[l], T_ADD30[l]);
+
+const T_ADD31 = {"es": {"ct_keys": "Palabras clave", "ct_classify": "Tocá cada aroma para clasificarlo: primario, secundario o terciario."}, "en": {"ct_keys": "Key words", "ct_classify": "Tap each aroma to classify it: primary, secondary or tertiary."}, "pt": {"ct_keys": "Palavras-chave", "ct_classify": "Toque em cada aroma para classificá-lo: primário, secundário ou terciário."}, "fr": {"ct_keys": "Mots clés", "ct_classify": "Touchez chaque arôme pour le classer : primaire, secondaire ou tertiaire."}, "de": {"ct_keys": "Schlüsselwörter", "ct_classify": "Tippe auf jedes Aroma, um es einzuordnen: primär, sekundär oder tertiär."}, "ru": {"ct_keys": "Ключевые слова", "ct_classify": "Нажмите на каждый аромат, чтобы отнести его к первичным, вторичным или третичным."}, "zh": {"ct_keys": "关键词", "ct_classify": "点击每种香气进行分类：一类、二类或三类香气。"}, "ja": {"ct_keys": "キーワード", "ct_classify": "それぞれの香りをタップして、第1・第2・第3アロマに分類してください。"}, "ko": {"ct_keys": "핵심 용어", "ct_classify": "각 향을 눌러 1차, 2차, 3차 향으로 분류해 보세요."}};
+for (const l in T_ADD31) Object.assign(T[l], T_ADD31[l]);
 
 (() => {
 'use strict';
@@ -3124,7 +3190,7 @@ function openLearn(route) {
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
   Promise.all([getUva(learnRoute), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => renderGrape(d)).catch(e => { console.error(e); renderLearnIndex(); });
 }
-function closeLearn() { clearInterval(GT); if (doMini) { doMini.remove(); doMini = null; } learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
+function closeLearn() { clearInterval(GT); clearInterval(CTT); if (doMini) { doMini.remove(); doMini = null; } learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
 const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : back === 'do' ? 'learn_sub_do' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
 function learnWire(el) { el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => b.dataset.l === 'map' ? closeLearn() : openLearn(b.dataset.l)); }
 // ícono grande de cada subtema (SVG)
@@ -3168,7 +3234,7 @@ function renderLearnIndex() {
     '<button class="l-sub grapes" data-l="uvas"><span class="ic">' + ICON_GRAPE + '</span><b>' + esc(t('learn_sub_grapes')) + '</b><p>' + esc(t('learn_sub_grapes_d')) + '</p><small>' + esc(t('learn_ready', { n: ready, m: LEARN_GRAPES.length })) + ' →</small></button>' +
     '<button class="l-sub ideal" data-l="ideal"><span class="ic">' + ICON_GLASS + '</span><b>' + esc(t('learn_sub_ideal')) + '</b><p>' + esc(t('learn_sub_ideal_d')) + '</p><small>' + esc(t('qz_start')) + ' →</small></button>' +
     '<button class="l-sub do" data-l="do"><span class="ic">' + ICON_SEAL + '</span><b>' + esc(t('learn_sub_do')) + '</b><p>' + esc(t('learn_sub_do_d')) + '</p><small>' + esc(t('learn_open')) + ' →</small></button>' +
-    '<button class="l-sub tasting" data-l="catar"><span class="ic">' + ICON_GLASS + '</span><b>' + esc(t('learn_sub_tasting')) + '</b><p>' + esc(t('learn_sub_tasting_d')) + '</p><small>' + esc(t('learn_soon')) + '</small></button>' +
+    '<button class="l-sub tasting" data-l="catar"><span class="ic">' + ICON_GLASS + '</span><b>' + esc(t('learn_sub_tasting')) + '</b><p>' + esc(t('learn_sub_tasting_d')) + '</p><small>' + esc(t('learn_open')) + ' →</small></button>' +
     '</div></div>';
   learnWire(el);
 }
@@ -3257,11 +3323,165 @@ const GAMES = {
     });
   }
 };
+/* ---------- Aprender a catar: vista, nariz, boca, conclusión, cata a ciegas y hoja de cata ---------- */
+const CATA = {};
+const getCata = () => CATA[L] ? Promise.resolve(CATA[L]) : get('data/cata/' + L + '.json').then(d => (CATA[L] = d)).catch(() => get('data/cata/es.json').then(d => (CATA[L] = d)));
+let CT = { tab: 0, kind: 'red', tone: 1, int: 1, nose: 0, blic: [], ready: -1 };
+const TONE_COL = {
+  red: [['#3d0a33', '#7d3a8e'], ['#6b0f1f', '#a3243a'], ['#5e1a14', '#a5502a'], ['#6a2d16', '#c07a3f'], ['#4e2e16', '#8a5a30']],
+  white: [['#e3e6a0', '#f4f7d6'], ['#ecdf7a', '#f6f0bf'], ['#d9a93c', '#ecd08a'], ['#c07a22', '#dca660'], ['#8a5520', '#b98448']],
+  rose: [['#e06d8a', '#f3b0c0'], ['#ec957a', '#f6c5b2'], ['#dd8648', '#efb88e']]
+};
+const mixW = (hex, k) => shade(hex, k);
+// copa vista desde arriba, inclinada sobre un mantel blanco: centro (intensidad) y ribete (tono)
+function tiltGlass(kind, tone, int, tilted) {
+  const c = TONE_COL[kind][Math.min(tone, TONE_COL[kind].length - 1)], k = [.5, 0, -.3][int];
+  const core = mixW(c[0], k), rim = mixW(c[1], int === 0 ? .55 : int === 1 ? .2 : 0);
+  return '<svg class="ct-glass' + (tilted ? ' tilt' : '') + '" viewBox="0 0 240 180" aria-hidden="true"><rect width="240" height="180" rx="14" fill="#fbf8f1"/>' +
+    '<defs><radialGradient id="ctW" cx="45%" cy="50%" r="60%"><stop offset="0" stop-color="' + core + '"/><stop offset=".62" stop-color="' + core + '"/><stop offset=".86" stop-color="' + rim + '"/><stop offset="1" stop-color="' + rim + '" stop-opacity=".35"/></radialGradient></defs>' +
+    '<g class="ct-g"><ellipse cx="120" cy="90" rx="92" ry="' + (tilted ? 52 : 70) + '" fill="url(#ctW)" stroke="rgba(0,0,0,.12)"/><ellipse cx="96" cy="70" rx="26" ry="8" fill="#fff" opacity=".35"/></g></svg>';
+}
+const keyChips = (keys) => '<div class="ct-keys">' + keys.map((k, i) => '<button class="ct-key" data-k="' + i + '">' + esc(k.w) + '</button>').join('') + '</div><p class="l-detail ct-keyd" hidden></p>';
+function wireKeys(box, keys) { box.querySelectorAll('.ct-key').forEach(b => b.onclick = () => { box.querySelectorAll('.ct-key').forEach(x => x.classList.toggle('sel', x === b)); const d = box.querySelector('.ct-keyd'); d.hidden = false; d.innerHTML = '<b>' + esc(keys[+b.dataset.k].w) + '</b><p>' + esc(keys[+b.dataset.k].t) + '</p>'; }); }
 function renderTasting() {
   const el = $('#learn'); el.className = 'theme-index';
-  el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_tasting')) + '</h1><p>' + esc(t('learn_sub_tasting_d')) + '</p></header>' +
-    '<div class="l-cards three">' + ['eye', 'nose', 'mouth'].map(k => '<div><b>' + esc(t('learn_' + k)) + '</b><p>' + esc(t('learn_soon')) + '</p></div>').join('') + '</div></div>';
-  learnWire(el);
+  getCata().then(C => {
+    const tabs = C.steps_t.concat([C.game.t, C.sheet.t]);
+    el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(C.title) + '</h1><p>' + esc(C.intro) + '</p></header>' +
+      '<nav class="ct-tabs">' + tabs.map((x, i) => '<button data-tab="' + i + '" class="' + (i === CT.tab ? 'sel' : '') + (i > 3 ? ' play' : '') + '"><span>' + (i < 4 ? i + 1 : i === 4 ? '?' : '✎') + '</span>' + esc(x) + '</button>').join('') + '</nav><div id="ctBody"></div>' +
+      '<details class="l-src"><summary>' + esc(t('sources_t')) + '</summary><p>' + esc(C.sources) + '</p></details></div>';
+    learnWire(el);
+    el.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { CT.tab = +b.dataset.tab; el.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('sel', x === b)); ctTab(C); });
+    ctTab(C);
+  });
+}
+const ctNav = (C) => '<div class="ct-nav">' + (CT.tab > 0 ? '<button class="cta ghost" data-go="' + (CT.tab - 1) + '"><span>← ' + esc(C.steps_t.concat([C.game.t, C.sheet.t])[CT.tab - 1]) + '</span></button>' : '<span></span>') +
+  (CT.tab < 5 ? '<button class="cta" data-go="' + (CT.tab + 1) + '"><span>' + esc(C.steps_t.concat([C.game.t, C.sheet.t])[CT.tab + 1]) + ' →</span></button>' : '') + '</div>';
+function ctTab(C) {
+  clearInterval(CTT); const B = $('#ctBody'); if (!B) return;
+  const phase = (P, body) => '<section class="l-sec ct-phase"><h2>' + esc(P.t) + '</h2><p class="l-tag">' + esc(P.lead) + '</p><ol class="ct-how">' + P.how.map(x => '<li>' + esc(x) + '</li>').join('') + '</ol>' + body + '<h3>' + esc(t('ct_keys')) + '</h3>' + keyChips(P.keys) + '</section>';
+  if (CT.tab === 0) {
+    const E = C.eye, tones = E.tones[CT.kind]; CT.tone = Math.min(CT.tone, tones.length - 1);
+    B.innerHTML = phase(E, '<div class="l-two eq ct-eye"><div class="ct-stage"><div id="ctG">' + tiltGlass(CT.kind, CT.tone, CT.int, CT.tilt) + '</div><div class="ct-tears" ' + (CT.tears ? '' : 'hidden') + '>' + Array.from({ length: 7 }, (_, i) => '<i style="left:' + (14 + i * 11) + '%;animation-delay:' + (i * .35) + 's"></i>').join('') + '</div></div><div>' +
+      '<h3>' + esc(E.kind_t) + '</h3><div class="l-seg">' + ['red', 'white', 'rose'].map(k => '<button data-kind="' + k + '" class="' + (k === CT.kind ? 'sel' : '') + '">' + esc(E.kinds[k]) + '</button>').join('') + '</div>' +
+      '<h3>' + esc(E.tone_t) + ': <b class="ct-val">' + esc(tones[CT.tone]) + '</b></h3><input type="range" id="ctTone" min="0" max="' + (tones.length - 1) + '" value="' + CT.tone + '"><div class="l-ticks">' + tones.map(x => '<span>' + esc(x) + '</span>').join('') + '</div>' +
+      '<p class="l-detail">' + esc(E.tone_txt[CT.kind][CT.tone]) + '</p>' +
+      '<h3>' + esc(E.int_t) + ': <b class="ct-val">' + esc(E.ints[CT.int]) + '</b></h3><input type="range" id="ctInt" min="0" max="2" value="' + CT.int + '">' +
+      '<div class="l-btns"><button class="cta ghost" id="ctTilt"><span>' + esc(E.tilt) + '</span></button><button class="cta ghost" id="ctTears"><span>' + esc(E.tears) + '</span></button></div>' + (CT.tears ? '<p class="l-hint">' + esc(E.tears_txt) + '</p>' : '') + '</div></div>') + ctNav(C);
+    B.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { CT.kind = b.dataset.kind; ctTab(C); });
+    $('#ctTone').oninput = e => { CT.tone = +e.target.value; ctTab(C); }; $('#ctInt').oninput = e => { CT.int = +e.target.value; ctTab(C); };
+    $('#ctTilt').onclick = () => { CT.tilt = !CT.tilt; ctTab(C); }; $('#ctTears').onclick = () => { CT.tears = !CT.tears; ctTab(C); };
+    wireKeys(B, E.keys);
+  } else if (CT.tab === 1) {
+    const N = C.nose, all = N.layers.flatMap(l => l.ex.map(x => [x, l.k])), shown = CT.nose === 0 ? [] : CT.nose === 1 ? all.filter((_, i) => i % 4 === 0) : all;
+    B.innerHTML = phase(N, '<div class="l-two eq ct-nose"><div class="ct-stage"><div class="ct-swirl' + (CT.nose === 2 ? ' spin' : '') + '">' + glassSVG('#6b0f1f', '#a3243a') + '</div><div class="ct-cloud">' + shown.map(([x, k], i) => '<span class="ct-aro ' + k + '" style="--d:' + (i * .12) + 's">' + esc(x) + '</span>').join('') + '</div></div><div>' +
+      '<div class="l-btns"><button class="cta' + (CT.nose === 1 ? '' : ' ghost') + '" id="ctStill"><span>' + esc(N.still) + '</span></button><button class="cta' + (CT.nose === 2 ? '' : ' ghost') + '" id="ctSwirl"><span>' + esc(N.swirl) + '</span></button></div>' +
+      (CT.nose ? '<p class="l-detail">' + esc(CT.nose === 1 ? N.still_txt : N.swirl_txt) + '</p>' : '') +
+      '<h3>' + esc(N.layers_t) + '</h3><div class="ct-layers">' + N.layers.map(l => '<div class="ct-layer ' + l.k + '"><b>' + esc(l.t) + '</b><p>' + esc(l.d) + '</p><div class="l-tags">' + l.ex.map(x => '<span>' + esc(x) + '</span>').join('') + '</div></div>').join('') + '</div></div></div>' +
+      '<h3>' + esc(N.faults_t) + '</h3><div class="l-cards flip">' + N.faults.map(f => '<button class="l-card"><b>' + esc(f.w) + '</b><p>' + esc(f.t) + '</p></button>').join('') + '</div>') + ctNav(C);
+    $('#ctStill').onclick = () => { CT.nose = 1; ctTab(C); }; $('#ctSwirl').onclick = () => { CT.nose = 2; ctTab(C); };
+    B.querySelectorAll('.l-card').forEach(b => b.onclick = () => b.classList.toggle('open'));
+    wireKeys(B, N.keys);
+  } else if (CT.tab === 2) {
+    const M = C.mouth; CT.mv = CT.mv || {};
+    B.innerHTML = phase(M, '<p class="do-note">' + esc(M.myth) + '</p><h3>' + esc(M.comp_t) + '</h3><div class="ct-comps">' + M.comps.map((c, i) => { const v = CT.mv[c.k] ?? Math.floor((c.scale.length - 1) / 2);
+        return '<div class="ct-comp"><div class="ct-ch"><b>' + esc(c.t) + '</b><span class="ct-val" id="ctv' + i + '">' + esc(c.scale[v]) + '</span></div><input type="range" data-c="' + i + '" min="0" max="' + (c.scale.length - 1) + '" value="' + v + '"><div class="ct-meter"><i style="width:' + (v / (c.scale.length - 1) * 100) + '%" id="ctm' + i + '"></i></div><p>' + esc(c.feel) + '</p></div>'; }).join('') + '</div>' +
+      '<div class="ct-timer"><b>' + esc(M.timer) + '</b><div class="ct-clock" id="ctClock">0,0 s</div><button class="cta" id="ctTimer"><span>' + esc(M.timer_start) + '</span></button><p class="l-hint" id="ctTimerRes"></p></div>') + ctNav(C);
+    B.querySelectorAll('[data-c]').forEach(r => r.oninput = () => { const i = +r.dataset.c, c = M.comps[i], v = +r.value; CT.mv[c.k] = v; $('#ctv' + i).textContent = c.scale[v]; $('#ctm' + i).style.width = (v / (c.scale.length - 1) * 100) + '%'; });
+    let t0 = 0; $('#ctTimer').onclick = () => { if (!t0) { t0 = Date.now(); $('#ctTimer span').textContent = M.timer_stop; $('#ctTimerRes').textContent = ''; CTT = setInterval(() => { $('#ctClock').textContent = ((Date.now() - t0) / 1000).toFixed(1).replace('.', ',') + ' s'; }, 100); }
+      else { clearInterval(CTT); const s = Math.round((Date.now() - t0) / 1000); t0 = 0; $('#ctTimer span').textContent = M.timer_start; $('#ctTimerRes').textContent = M.timer_res.replace('{s}', s); } };
+    wireKeys(B, M.keys);
+  } else if (CT.tab === 3) {
+    const E = C.end, n = CT.blic.length, lv = n ? n + 1 : -1;
+    B.innerHTML = '<section class="l-sec"><h2>' + esc(E.t) + '</h2><p class="l-tag">' + esc(E.lead) + '</p><div class="ct-blic">' + E.blic.map((b, i) => '<button class="ct-b' + (CT.blic.includes(i) ? ' sel' : '') + '" data-b="' + i + '"><span>' + esc(b.w[0]) + '</span><b>' + esc(b.w) + '</b><p>' + esc(b.t) + '</p></button>').join('') + '</div>' +
+      '<div class="ct-level"><div class="ct-lvbar">' + E.levels.map((x, i) => '<span class="' + (i === lv ? 'on' : '') + '">' + esc(x) + '</span>').join('') + '</div><p class="l-detail">' + esc(lv < 0 ? E.levels_txt[0] : E.levels_txt[lv]) + '</p></div>' +
+      '<h3>' + esc(E.ready_t) + '</h3><div class="l-chips">' + E.ready.map((x, i) => '<button class="l-chip' + (CT.ready === i ? ' sel' : '') + '" data-r="' + i + '">' + esc(x) + '</button>').join('') + '</div></section>' + ctNav(C);
+    B.querySelectorAll('[data-b]').forEach(b => b.onclick = () => { const i = +b.dataset.b; CT.blic = CT.blic.includes(i) ? CT.blic.filter(x => x !== i) : CT.blic.concat(i); ctTab(C); });
+    B.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { CT.ready = +b.dataset.r; ctTab(C); });
+  } else if (CT.tab === 4) ctGame(C, B);
+  else ctSheet(C, B);
+  B.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { CT.tab = +b.dataset.go; document.querySelectorAll('.ct-tabs [data-tab]').forEach(x => x.classList.toggle('sel', +x.dataset.tab === CT.tab)); ctTab(C); $('.ct-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+}
+let CTT = null;
+// cata a ciegas: un vino al azar de las fichas (uva, edad y crianza) y una hoja para completar
+function ctGame(C, B) {
+  const G = C.game;
+  B.innerHTML = '<section class="l-sec ct-game"><h2>' + esc(G.t) + '</h2><p class="l-tag">' + esc(G.d) + '</p><div id="ctG2"><button class="cta" id="ctServe"><span>' + esc(G.start) + '</span></button></div></section>' + ctNav(C);
+  $('#ctServe').onclick = () => Promise.all(LEARN_GRAPES.map(g => getUva(g.id))).then(all => {
+    const gi = Math.floor(Math.random() * LEARN_GRAPES.length), g = LEARN_GRAPES[gi], U = all[gi], e = U.es, d = U[L] || e, white = g.kind === 'white';
+    const age = Math.floor(Math.random() * 3), oak = Math.random() < .5 && age > 0, kind = white ? 'white' : 'red';
+    const toneOk = age === 0 ? (white ? 1 : 0) : age === 1 ? (white ? 1 : 1) : (white ? 2 : 2);
+    const fams = d.aromas.filter(a => a.stage === 'primario').slice(0, 2).concat(oak ? d.aromas.filter(a => a.k === 'oak') : []).concat(age === 2 ? d.aromas.filter(a => a.k === 'aged') : []);
+    const aros = shuffle(fams.flatMap(a => a.items.slice(0, 2).map(x => [x, a.stage]))).slice(0, 5);
+    const P = Object.fromEntries(e.profile.map(p => [p.k, p.v])), sc = v => Math.max(0, Math.min(4, Math.round(v - 1))), sense = (k, v) => G.sense[k][Math.min(3, Math.floor((v - 1) / 1.1))];
+    const mouthK = white ? ['acid', 'body'] : ['tannin', 'acid', 'body'];
+    const opts = shuffle([g].concat(shuffle(LEARN_GRAPES.filter(x => x.kind === g.kind && x.id !== g.id)).slice(0, 3)));
+    const A = { tone: -1, aro: {}, m: {}, age: -1, grape: '' }, M = C.mouth.comps, tones = C.eye.tones[kind];
+    const draw = (done) => {
+      const sc1 = (ok, sel, half) => done ? (ok ? ' good' : half ? ' half' : sel ? ' bad' : ' off') : '';
+      $('#ctG2').innerHTML = '<div class="ct-blind"><div class="ct-stage">' + tiltGlass(kind, toneOk, 1, true) + '</div>' +
+        '<h3>1 · ' + esc(G.q_tone) + '</h3><div class="l-chips">' + tones.map((x, i) => '<button class="l-chip' + (A.tone === i ? ' sel' : '') + sc1(i === toneOk, A.tone === i, Math.abs(i - toneOk) === 1 && A.tone === i) + '" data-tone="' + i + '">' + esc(x) + '</button>').join('') + '</div>' +
+        '<h3>2 · ' + esc(G.q_aromas) + '</h3><p class="l-hint">' + esc(t('ct_classify')) + '</p><div class="ct-cls">' + aros.map(([x, st], i) => { const a = A.aro[i]; return '<button class="ct-ab' + (a ? ' ' + a : '') + sc1(a === st, true) + '" data-ab="' + i + '">' + esc(x) + '<small>' + esc(a ? C.nose.layers.find(l => l.k === a).t : '·') + '</small></button>'; }).join('') + '</div>' +
+        '<h3>3 · ' + esc(G.q_mouth) + '</h3><div class="ct-comps">' + mouthK.map(k => { const c = M.find(x => x.k === k), v = A.m[k] ?? 2, ok = sc(P[k]);
+          return '<div class="ct-comp"><p class="ct-sense">«' + esc(sense(k, P[k])) + '»</p><div class="ct-ch"><b>' + esc(c.t) + '</b><span class="ct-val">' + esc(c.scale[v]) + (done ? ' → ' + esc(c.scale[ok]) : '') + '</span></div><input type="range" data-mk="' + k + '" min="0" max="4" value="' + v + '"' + (done ? ' disabled class="' + (Math.abs(v - ok) <= 1 ? 'good' : 'bad') + '"' : '') + '></div>'; }).join('') + '</div>' +
+        '<h3>4 · ' + esc(G.q_age) + '</h3><div class="l-chips">' + G.age.map((x, i) => '<button class="l-chip' + (A.age === i ? ' sel' : '') + sc1(i === age, A.age === i) + '" data-age="' + i + '">' + esc(x) + '</button>').join('') + '</div>' +
+        '<h3>5 · ' + esc(G.q_grape) + '</h3><div class="g-opts">' + opts.map(o => '<button class="g-opt ' + (o.kind === 'white' ? 'w' : 'r') + (A.grape === o.id ? ' sel' : '') + sc1(o.id === g.id, A.grape === o.id) + '" data-gr="' + o.id + '"><span class="berry"></span>' + esc(o.name) + '</button>').join('') + '</div>' +
+        (done ? res() : '<button class="cta" id="ctCheck"><span>' + esc(G.check) + '</span></button>') + '</div>';
+      if (done) { learnWire($('#ctG2')); $('#ctAgain').onclick = () => { ctGame(C, B); $('#ctServe').click(); }; return; }
+      $('#ctG2').querySelectorAll('[data-tone]').forEach(b => b.onclick = () => { A.tone = +b.dataset.tone; draw(); });
+      $('#ctG2').querySelectorAll('[data-ab]').forEach(b => b.onclick = () => { const i = +b.dataset.ab, o = ['primario', 'secundario', 'terciario'], c = A.aro[i]; A.aro[i] = o[(o.indexOf(c) + 1) % 3]; draw(); });
+      $('#ctG2').querySelectorAll('[data-mk]').forEach(r => r.oninput = () => { A.m[r.dataset.mk] = +r.value; r.previousElementSibling.querySelector('.ct-val').textContent = M.find(x => x.k === r.dataset.mk).scale[+r.value]; });
+      $('#ctG2').querySelectorAll('[data-age]').forEach(b => b.onclick = () => { A.age = +b.dataset.age; draw(); });
+      $('#ctG2').querySelectorAll('[data-gr]').forEach(b => b.onclick = () => { A.grape = b.dataset.gr; draw(); });
+      $('#ctCheck').onclick = () => draw(true);
+    };
+    const res = () => {
+      let hit = 0, tot = 0; const add = ok => { tot++; if (ok) hit++; };
+      add(A.tone === toneOk); aros.forEach(([, st], i) => add(A.aro[i] === st)); mouthK.forEach(k => add(Math.abs((A.m[k] ?? 2) - sc(P[k])) <= 1)); add(A.age === age); add(A.grape === g.id);
+      const sty = oak ? t('sim_oak1') : t('sim_oak0');
+      return '<div class="ct-res"><div class="ct-res-g">' + glassSVG(...(white ? AGE_COL_W : AGE_COL)[Math.min(3, age + (age === 2 ? 1 : 0))]) + '</div><div><small>' + esc(G.res_t) + '</small><h3>' + esc(d.name) + '</h3><p>' + esc(G.age[age]) + ' · ' + esc(sty) + '</p><div class="g-final">' + esc(G.hit.replace('{n}', hit).replace('{m}', tot)) + '</div>' +
+        '<div class="l-btns"><button class="cta" data-l="' + g.id + '"><span>' + esc(t('g_open', { g: d.name })) + '</span></button><button class="cta ghost" id="ctAgain"><span>' + esc(G.again) + '</span></button></div></div></div>';
+    };
+    draw();
+  });
+}
+// hoja de cata: se completa, se guarda en el navegador y se imprime
+const CK = 'terroir-catas';
+const catasGet = () => { try { return JSON.parse(localStorage.getItem(CK) || '[]'); } catch (e) { return []; } };
+const catasSet = a => { try { localStorage.setItem(CK, JSON.stringify(a)); } catch (e) {} };
+function ctSheet(C, B, edit) {
+  const S = C.sheet, E = C.eye, M = C.mouth, N = C.nose, F = edit || { id: Date.now(), date: new Date().toISOString().slice(0, 10), kind: 'red', m: {}, aro: [], blic: [] };
+  const seg = (k, opts) => '<div class="l-seg sm">' + opts.map((x, i) => '<button data-f="' + k + '" data-v="' + i + '" class="' + (F[k] === i ? 'sel' : '') + '">' + esc(x) + '</button>').join('') + '</div>';
+  const inp = (k, lab, type) => '<label class="ct-f"><span>' + esc(lab) + '</span><input data-i="' + k + '" type="' + (type || 'text') + '" value="' + esc(F[k] || '') + '"></label>';
+  const AROS = [...new Set(N.layers.flatMap(l => l.ex))];
+  const list = catasGet();
+  B.innerHTML = '<section class="l-sec"><h2>' + esc(S.t) + '</h2><p class="l-tag">' + esc(S.d) + '</p><div class="ct-sheet" id="ctSheet">' +
+    '<div class="ct-grid">' + inp('wine', S.wine) + inp('producer', S.producer) + inp('vintage', S.vintage, 'number') + inp('grape', S.grape) + inp('region', S.region) + inp('date', S.date, 'date') + '</div>' +
+    '<h3>👁 ' + esc(C.steps_t[0]) + '</h3><div class="ct-row"><span>' + esc(S.clarity) + '</span>' + seg('clarity', S.clarity_o) + '</div><div class="ct-row"><span>' + esc(E.kind_t) + '</span><div class="l-seg sm">' + ['red', 'white', 'rose'].map(k => '<button data-kind="' + k + '" class="' + (F.kind === k ? 'sel' : '') + '">' + esc(E.kinds[k]) + '</button>').join('') + '</div></div>' +
+    '<div class="ct-row"><span>' + esc(E.int_t) + '</span>' + seg('int', E.ints) + '</div><div class="ct-row"><span>' + esc(E.tone_t) + '</span>' + seg('tone', E.tones[F.kind]) + '</div>' +
+    '<h3>👃 ' + esc(C.steps_t[1]) + '</h3><div class="ct-row"><span>' + esc(S.nose_cond) + '</span>' + seg('cond', S.cond_o) + '</div><div class="ct-row"><span>' + esc(S.nose_int) + '</span>' + seg('nint', S.nose_int_o) + '</div>' +
+    '<div class="ct-row col"><span>' + esc(S.aromas) + '</span><div class="l-chips">' + AROS.map(a => '<button class="l-chip sm' + (F.aro.includes(a) ? ' sel' : '') + '" data-aro="' + esc(a) + '">' + esc(a) + '</button>').join('') + '</div><input data-i="aro_txt" type="text" placeholder="' + esc(S.aromas_ph) + '" value="' + esc(F.aro_txt || '') + '"></div>' +
+    '<div class="ct-row"><span>' + esc(S.dev) + '</span>' + seg('dev', S.dev_o) + '</div>' +
+    '<h3>👄 ' + esc(C.steps_t[2]) + '</h3>' + M.comps.map(c => { const v = F.m[c.k] ?? -1; return '<div class="ct-row"><span>' + esc(c.t) + '</span><div class="l-seg sm">' + c.scale.map((x, i) => '<button data-mc="' + c.k + '" data-v="' + i + '" class="' + (v === i ? 'sel' : '') + '">' + esc(x) + '</button>').join('') + '</div></div>'; }).join('') +
+    '<h3>✓ ' + esc(C.steps_t[3]) + '</h3><div class="ct-row"><span>BLIC</span><div class="l-chips">' + C.end.blic.map((b, i) => '<button class="l-chip sm' + (F.blic.includes(i) ? ' sel' : '') + '" data-bl="' + i + '">' + esc(b.w) + '</button>').join('') + '</div></div>' +
+    '<div class="ct-row"><span>' + esc(C.end.ready_t) + '</span>' + seg('ready', C.end.ready) + '</div>' +
+    '<div class="ct-row"><span>' + esc(S.stars) + '</span><div class="ct-stars">' + [1, 2, 3, 4, 5].map(k => '<button data-st="' + k + '" class="' + ((F.stars || 0) >= k ? 'on' : '') + '">★</button>').join('') + '</div></div>' +
+    '<label class="ct-f wide"><span>' + esc(S.notes) + '</span><textarea data-i="notes" rows="3">' + esc(F.notes || '') + '</textarea></label>' +
+    '<div class="l-btns ct-noprint"><button class="cta" id="ctSave"><span>' + esc(S.save) + '</span></button><button class="cta ghost" id="ctPrint"><span>' + esc(S.print) + '</span></button><button class="cta ghost" id="ctNew"><span>' + esc(S.new) + '</span></button></div></div>' +
+    '<h3 class="ct-noprint">' + esc(S.mine) + '</h3><div class="ct-mine ct-noprint">' + (list.length ? list.slice().reverse().map(x => '<div><button class="ct-open" data-open="' + x.id + '"><b>' + esc(x.wine || '—') + '</b><small>' + esc([x.producer, x.vintage, x.date].filter(Boolean).join(' · ')) + ' ' + '★'.repeat(x.stars || 0) + '</small></button><button class="l-more" data-del="' + x.id + '">' + esc(S.del) + '</button></div>').join('') : '<p class="l-hint">' + esc(S.none) + '</p>') + '</div></section>' + ctNav(C);
+  const sh = $('#ctSheet'), redraw = () => ctSheet(C, B, F);
+  sh.querySelectorAll('[data-i]').forEach(i => i.oninput = () => { F[i.dataset.i] = i.value; });
+  sh.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { F[b.dataset.f] = F[b.dataset.f] === +b.dataset.v ? undefined : +b.dataset.v; redraw(); });
+  sh.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { F.kind = b.dataset.kind; F.tone = undefined; redraw(); });
+  sh.querySelectorAll('[data-aro]').forEach(b => b.onclick = () => { const a = b.dataset.aro; F.aro = F.aro.includes(a) ? F.aro.filter(x => x !== a) : F.aro.concat(a); redraw(); });
+  sh.querySelectorAll('[data-mc]').forEach(b => b.onclick = () => { F.m[b.dataset.mc] = +b.dataset.v; redraw(); });
+  sh.querySelectorAll('[data-bl]').forEach(b => b.onclick = () => { const i = +b.dataset.bl; F.blic = F.blic.includes(i) ? F.blic.filter(x => x !== i) : F.blic.concat(i); redraw(); });
+  sh.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { F.stars = +b.dataset.st; redraw(); });
+  $('#ctSave').onclick = () => { const a = catasGet().filter(x => x.id !== F.id); a.push(F); catasSet(a); $('#ctSave span').textContent = S.saved + ' ✓'; setTimeout(redraw, 700); };
+  $('#ctPrint').onclick = () => { document.body.classList.add('print-sheet'); setTimeout(() => { window.print(); document.body.classList.remove('print-sheet'); }, 50); };
+  $('#ctNew').onclick = () => ctSheet(C, B);
+  B.querySelectorAll('[data-open]').forEach(b => b.onclick = () => { const x = catasGet().find(y => y.id === +b.dataset.open); if (x) ctSheet(C, B, x); });
+  B.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { catasSet(catasGet().filter(y => y.id !== +b.dataset.del)); ctSheet(C, B, F); });
 }
 // aclara (+) u oscurece (-) un color hex
 const shade = (hex, k) => { const n = parseInt(hex.slice(1), 16), f = x => Math.max(0, Math.min(255, Math.round(k >= 0 ? x + (255 - x) * k : x * (1 + k)))); return '#' + [n >> 16, (n >> 8) & 255, n & 255].map(f).map(x => x.toString(16).padStart(2, '0')).join(''); };
