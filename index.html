@@ -519,6 +519,42 @@ details.adv[open] > summary { margin-bottom: 12px; }
 #learn .l-load { padding: 40px 0; color: var(--l-ink2); }
 body.learning #coach { display: none; }
 
+/* Aprender: subtemas, lista de uvas, simulador y mini mapa */
+#learn.theme-index { --l-bg: radial-gradient(110% 70% at 85% 0%, #3a1520 0%, #1f1214 55%, #161011 100%); }
+#learn .l-hero.sm h1 { font-size: clamp(36px, 6vw, 60px); }
+#learn .l-subs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 28px; }
+#learn .l-sub { position: relative; overflow: hidden; text-align: left; border-radius: 22px; padding: 26px 24px 22px; min-height: 250px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; border: 1px solid rgba(255,255,255,.14); color: #f6ece2; transition: transform .25s, box-shadow .25s; }
+#learn .l-sub:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+#learn .l-sub.grapes { background: linear-gradient(140deg, #6e1a2c 0%, #3a0d17 70%); }
+#learn .l-sub.tasting { background: linear-gradient(140deg, #6b5426 0%, #2b2112 70%); }
+#learn .l-sub .ic { width: 64px; height: 64px; color: #f2d79b; }
+#learn .l-sub .ic svg { width: 100%; height: 100%; }
+#learn .l-sub b { font-family: var(--f-display); font-size: 30px; font-weight: 500; line-height: 1.1; }
+#learn .l-sub p { margin: 0; font-size: 15px; line-height: 1.5; color: rgba(246,236,226,.8); }
+#learn .l-sub small { margin-top: auto; font-size: 13px; color: #f2d79b; letter-spacing: .04em; }
+#learn .l-gcard .berry { width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #a2324f, #4a0c1d 70%); box-shadow: 10px 6px 0 -3px #5a1022, -2px 10px 0 -4px #6b1428; margin-bottom: 8px; }
+#learn .l-gcard.white .berry { background: radial-gradient(circle at 35% 30%, #fff3b8, #b9a24a 75%); box-shadow: 10px 6px 0 -3px #c9b45a, -2px 10px 0 -4px #d6c36e; }
+#learn .l-gcard.ready { transition: transform .2s; }
+#learn .l-gcard.ready:hover { transform: translateY(-2px); }
+#learn .l-cards.three { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 24px; }
+#learn .l-sim { }
+#learn .sim-grid { display: grid; grid-template-columns: 1fr minmax(260px, 380px); gap: 24px; align-items: center; }
+@media (max-width: 760px) { #learn .sim-grid { grid-template-columns: 1fr; } }
+#learn .sim-ctl h3 { margin: 16px 0 8px !important; }
+#learn .sim-out { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 6px; }
+#learn .l-seg { display: inline-flex; border: 1px solid var(--l-line); border-radius: 999px; overflow: hidden; }
+#learn .l-seg button { background: none; border: 0; color: var(--l-ink2); padding: 8px 16px; font-size: 14px; cursor: pointer; }
+#learn .l-seg button.sel { background: var(--l-acc); color: #1a1213; }
+#learn .l-radar { width: 100%; color: var(--l-ink); }
+#learn .l-radar .rv { fill: rgba(226,180,106,.35); stroke: var(--l-acc); stroke-width: 2; transition: all .4s ease; }
+#learn .l-radar text { fill: var(--l-ink2); font-size: 9px; }
+#learn .l-detail p { margin: 6px 0 0 !important; font-size: 14.5px !important; }
+#learn .l-detail .l-tags span { border-width: 1.5px; }
+#learn .map2 { align-items: start; }
+#learn .mm { width: 100%; max-width: 320px; display: block; }
+#learn .mm path { fill: #c0304f; stroke: rgba(255,255,255,.35); stroke-width: .8; cursor: pointer; transition: fill .2s; }
+#learn .mm path:hover { fill: var(--l-acc); fill-opacity: 1 !important; }
+
 </style>
 </head>
 <body>
@@ -1439,6 +1475,10 @@ for (const l in T_ADD19) Object.assign(T[l], T_ADD19[l]);
 // sección Aprender
 const T_ADD20 = {"es": {"learn_btn": "Aprender", "learn_title": "Aprender sobre vino", "learn_intro": "Estudiá cada uva, qué le aporta al vino y cómo cambia según el suelo, el clima y los años. Todo conectado con el mapa.", "learn_grapes": "Uvas", "learn_tasting": "Cómo degustar", "learn_tasting_card": "Visual, olfativa y gustativa", "learn_soon": "Próximamente", "learn_red": "Tinta", "learn_white": "Blanca", "learn_back": "Uvas", "learn_back_map": "Volver al mapa", "learn_eye": "Vista", "learn_nose": "Nariz", "learn_mouth": "Boca"}, "en": {"learn_btn": "Learn", "learn_title": "Learn about wine", "learn_intro": "Study each grape, what it brings to the wine and how it changes with soil, climate and age. All connected to the map.", "learn_grapes": "Grapes", "learn_tasting": "How to taste", "learn_tasting_card": "Sight, smell and taste", "learn_soon": "Coming soon", "learn_red": "Red", "learn_white": "White", "learn_back": "Grapes", "learn_back_map": "Back to the map", "learn_eye": "Eye", "learn_nose": "Nose", "learn_mouth": "Palate"}, "pt": {"learn_btn": "Aprender", "learn_title": "Aprender sobre vinho", "learn_intro": "Estude cada uva, o que ela traz ao vinho e como muda com o solo, o clima e os anos. Tudo conectado ao mapa.", "learn_grapes": "Uvas", "learn_tasting": "Como degustar", "learn_tasting_card": "Visual, olfativa e gustativa", "learn_soon": "Em breve", "learn_red": "Tinta", "learn_white": "Branca", "learn_back": "Uvas", "learn_back_map": "Voltar ao mapa", "learn_eye": "Visual", "learn_nose": "Nariz", "learn_mouth": "Boca"}, "fr": {"learn_btn": "Apprendre", "learn_title": "Apprendre le vin", "learn_intro": "Étudiez chaque cépage, ce qu’il apporte au vin et comment il change selon le sol, le climat et l’âge. Le tout relié à la carte.", "learn_grapes": "Cépages", "learn_tasting": "Comment déguster", "learn_tasting_card": "Visuel, olfactif et gustatif", "learn_soon": "Bientôt", "learn_red": "Rouge", "learn_white": "Blanc", "learn_back": "Cépages", "learn_back_map": "Retour à la carte", "learn_eye": "Œil", "learn_nose": "Nez", "learn_mouth": "Bouche"}, "de": {"learn_btn": "Lernen", "learn_title": "Wein verstehen", "learn_intro": "Lerne jede Rebsorte kennen: was sie dem Wein gibt und wie sie sich mit Boden, Klima und Alter verändert. Alles mit der Karte verbunden.", "learn_grapes": "Rebsorten", "learn_tasting": "Richtig verkosten", "learn_tasting_card": "Auge, Nase und Gaumen", "learn_soon": "Demnächst", "learn_red": "Rot", "learn_white": "Weiß", "learn_back": "Rebsorten", "learn_back_map": "Zurück zur Karte", "learn_eye": "Auge", "learn_nose": "Nase", "learn_mouth": "Gaumen"}, "ru": {"learn_btn": "Учиться", "learn_title": "Учимся понимать вино", "learn_intro": "Изучайте каждый сорт: что он даёт вину и как меняется в зависимости от почвы, климата и возраста. Всё связано с картой.", "learn_grapes": "Сорта", "learn_tasting": "Как дегустировать", "learn_tasting_card": "Цвет, аромат и вкус", "learn_soon": "Скоро", "learn_red": "Красный", "learn_white": "Белый", "learn_back": "Сорта", "learn_back_map": "Вернуться к карте", "learn_eye": "Цвет", "learn_nose": "Нос", "learn_mouth": "Вкус"}, "zh": {"learn_btn": "学习", "learn_title": "学习葡萄酒", "learn_intro": "了解每个葡萄品种为葡萄酒带来什么，以及它如何随土壤、气候和陈年而变化。一切都与地图相连。", "learn_grapes": "葡萄品种", "learn_tasting": "如何品酒", "learn_tasting_card": "观色、闻香、品味", "learn_soon": "即将推出", "learn_red": "红葡萄", "learn_white": "白葡萄", "learn_back": "葡萄品种", "learn_back_map": "返回地图", "learn_eye": "外观", "learn_nose": "香气", "learn_mouth": "口感"}, "ja": {"learn_btn": "学ぶ", "learn_title": "ワインを学ぶ", "learn_intro": "品種ごとに、ワインに何をもたらし、土壌・気候・熟成でどう変わるかを学べます。すべて地図とつながっています。", "learn_grapes": "ブドウ品種", "learn_tasting": "テイスティングの方法", "learn_tasting_card": "外観・香り・味わい", "learn_soon": "近日公開", "learn_red": "黒ブドウ", "learn_white": "白ブドウ", "learn_back": "ブドウ品種", "learn_back_map": "地図に戻る", "learn_eye": "外観", "learn_nose": "香り", "learn_mouth": "味わい"}, "ko": {"learn_btn": "배우기", "learn_title": "와인 배우기", "learn_intro": "품종마다 와인에 무엇을 주는지, 토양·기후·숙성에 따라 어떻게 변하는지 배워 보세요. 모두 지도와 연결됩니다.", "learn_grapes": "포도 품종", "learn_tasting": "시음하는 법", "learn_tasting_card": "외관, 향, 맛", "learn_soon": "곧 공개", "learn_red": "레드", "learn_white": "화이트", "learn_back": "포도 품종", "learn_back_map": "지도로 돌아가기", "learn_eye": "외관", "learn_nose": "향", "learn_mouth": "맛"}};
 for (const l in T_ADD20) Object.assign(T[l], T_ADD20[l]);
+const T_ADD21 = {"es": {"ob_w_t": "El mundo del vino", "ob_w_b": "Con este botón cambiás entre el globo terráqueo y el planisferio. El mapa de calor muestra dónde están los viñedos: elegí una variedad para ver dónde se planta cada uva. Probalo.", "ob_6_t": "Aprender", "ob_6_b": "Además del mapa, en Aprender estudiás cada uva (qué aporta, cómo cambia con el suelo y los años) y cómo catar un vino. Tocá el botón para entrar."}, "en": {"ob_w_t": "The world of wine", "ob_w_b": "This button switches between the globe and the flat map. The heatmap shows where vineyards are: pick a variety to see where each grape is planted. Try it.", "ob_6_t": "Learn", "ob_6_b": "Beyond the map, in Learn you study each grape (what it brings, how it changes with soil and age) and how to taste a wine. Tap the button to go in."}, "pt": {"ob_w_t": "O mundo do vinho", "ob_w_b": "Este botão alterna entre o globo e o planisfério. O mapa de calor mostra onde estão os vinhedos: escolha uma variedade para ver onde cada uva é plantada. Experimente.", "ob_6_t": "Aprender", "ob_6_b": "Além do mapa, em Aprender você estuda cada uva (o que traz, como muda com o solo e os anos) e como degustar um vinho. Toque no botão para entrar."}, "fr": {"ob_w_t": "Le monde du vin", "ob_w_b": "Ce bouton passe du globe au planisphère. La carte de chaleur montre où sont les vignobles : choisissez un cépage pour voir où il est planté. Essayez.", "ob_6_t": "Apprendre", "ob_6_b": "Au-delà de la carte, la section Apprendre explique chaque cépage (ce qu’il apporte, comment il change selon le sol et l’âge) et comment déguster un vin. Touchez le bouton pour entrer."}, "de": {"ob_w_t": "Die Welt des Weins", "ob_w_b": "Diese Taste wechselt zwischen Globus und Weltkarte. Die Heatmap zeigt, wo Weinberge liegen: Wähle eine Rebsorte, um zu sehen, wo sie wächst. Probier es aus.", "ob_6_t": "Lernen", "ob_6_b": "Neben der Karte lernst du unter Lernen jede Rebsorte kennen (was sie bringt, wie sie sich mit Boden und Alter verändert) und wie man Wein verkostet. Tippe auf die Taste."}, "ru": {"ob_w_t": "Мир вина", "ob_w_b": "Эта кнопка переключает глобус и плоскую карту. Тепловая карта показывает, где виноградники: выберите сорт, чтобы увидеть, где его выращивают. Попробуйте.", "ob_6_t": "Учиться", "ob_6_b": "Кроме карты, в разделе «Учиться» можно изучить каждый сорт (что он даёт, как меняется с почвой и возрастом) и то, как дегустировать вино. Нажмите кнопку."}, "zh": {"ob_w_t": "葡萄酒的世界", "ob_w_b": "用这个按钮在地球仪和平面地图之间切换。热力图显示葡萄园的分布：选择一个品种，看看它种在哪里。试试看。", "ob_6_t": "学习", "ob_6_b": "除了地图，在“学习”中可以了解每个葡萄品种（它带来什么、如何随土壤和陈年变化）以及如何品酒。点按钮进入。"}, "ja": {"ob_w_t": "ワインの世界", "ob_w_b": "このボタンで地球儀と平面地図を切り替えます。ヒートマップはブドウ畑の場所を示します。品種を選ぶと栽培地が分かります。試してみてください。", "ob_6_t": "学ぶ", "ob_6_b": "地図のほかに「学ぶ」では、品種ごとの特徴（ワインに与えるもの、土壌や熟成による変化）とテイスティングの方法を学べます。ボタンを押して入ってください。"}, "ko": {"ob_w_t": "와인의 세계", "ob_w_b": "이 버튼으로 지구본과 평면 지도를 전환합니다. 히트맵은 포도밭의 위치를 보여 줍니다. 품종을 골라 어디서 재배되는지 확인해 보세요.", "ob_6_t": "배우기", "ob_6_b": "지도 외에도 배우기에서 품종별 특징(와인에 주는 것, 토양과 숙성에 따른 변화)과 시음하는 법을 배울 수 있습니다. 버튼을 눌러 들어가세요."}};
+for (const l in T_ADD21) Object.assign(T[l], T_ADD21[l]);
+const T_ADD22 = {"es": {"learn_sub_grapes": "Aprender sobre cada uva", "learn_sub_grapes_d": "Qué aporta cada variedad al vino, cómo cambia con el suelo, el clima y los años, y dónde se planta en el mapa.", "learn_sub_tasting": "Aprender a catar", "learn_sub_tasting_d": "Las tres fases de la cata —visual, olfativa y gustativa— paso a paso y con ejercicios.", "learn_ready": "{n} de {m} uvas listas", "learn_open": "Abrir ficha", "learn_reds": "Tintas", "learn_whites": "Blancas", "sim_t": "Simulador: armá tu {g}", "sim_hint": "Elegí el terroir, la crianza y la edad: la copa, el perfil y los aromas cambian al instante.", "sim_terroir": "Terroir", "sim_oak": "Crianza", "sim_oak0": "Sin madera", "sim_oak1": "Con roble", "sim_note": "Simulación orientativa: muestra tendencias, no un vino en particular.", "mini_hint": "Tocá un departamento para verlo en el mapa."}, "en": {"learn_sub_grapes": "Learn about each grape", "learn_sub_grapes_d": "What each variety brings to the wine, how it changes with soil, climate and age, and where it is planted on the map.", "learn_sub_tasting": "Learn to taste", "learn_sub_tasting_d": "The three stages of tasting —sight, smell and palate— step by step, with exercises.", "learn_ready": "{n} of {m} grapes ready", "learn_open": "Open sheet", "learn_reds": "Reds", "learn_whites": "Whites", "sim_t": "Simulator: build your {g}", "sim_hint": "Choose the terroir, the ageing and the age: the glass, the profile and the aromas change instantly.", "sim_terroir": "Terroir", "sim_oak": "Ageing", "sim_oak0": "No oak", "sim_oak1": "Oak-aged", "sim_note": "Indicative simulation: it shows tendencies, not a specific wine.", "mini_hint": "Tap a department to see it on the map."}, "pt": {"learn_sub_grapes": "Aprender sobre cada uva", "learn_sub_grapes_d": "O que cada variedade traz ao vinho, como muda com o solo, o clima e os anos, e onde é plantada no mapa.", "learn_sub_tasting": "Aprender a degustar", "learn_sub_tasting_d": "As três fases da degustação —visual, olfativa e gustativa— passo a passo e com exercícios.", "learn_ready": "{n} de {m} uvas prontas", "learn_open": "Abrir ficha", "learn_reds": "Tintas", "learn_whites": "Brancas", "sim_t": "Simulador: monte seu {g}", "sim_hint": "Escolha o terroir, o envelhecimento e a idade: a taça, o perfil e os aromas mudam na hora.", "sim_terroir": "Terroir", "sim_oak": "Envelhecimento", "sim_oak0": "Sem madeira", "sim_oak1": "Com carvalho", "sim_note": "Simulação orientativa: mostra tendências, não um vinho específico.", "mini_hint": "Toque em um departamento para vê-lo no mapa."}, "fr": {"learn_sub_grapes": "Apprendre chaque cépage", "learn_sub_grapes_d": "Ce que chaque cépage apporte au vin, comment il change selon le sol, le climat et l’âge, et où il est planté sur la carte.", "learn_sub_tasting": "Apprendre à déguster", "learn_sub_tasting_d": "Les trois étapes de la dégustation —visuelle, olfactive et gustative— pas à pas, avec des exercices.", "learn_ready": "{n} sur {m} cépages prêts", "learn_open": "Ouvrir la fiche", "learn_reds": "Rouges", "learn_whites": "Blancs", "sim_t": "Simulateur : composez votre {g}", "sim_hint": "Choisissez le terroir, l’élevage et l’âge : le verre, le profil et les arômes changent aussitôt.", "sim_terroir": "Terroir", "sim_oak": "Élevage", "sim_oak0": "Sans bois", "sim_oak1": "Élevé en fût", "sim_note": "Simulation indicative : elle montre des tendances, pas un vin précis.", "mini_hint": "Touchez un département pour le voir sur la carte."}, "de": {"learn_sub_grapes": "Jede Rebsorte kennenlernen", "learn_sub_grapes_d": "Was jede Rebsorte dem Wein gibt, wie sie sich mit Boden, Klima und Alter verändert und wo sie auf der Karte wächst.", "learn_sub_tasting": "Verkosten lernen", "learn_sub_tasting_d": "Die drei Phasen der Verkostung —Auge, Nase und Gaumen— Schritt für Schritt, mit Übungen.", "learn_ready": "{n} von {m} Rebsorten fertig", "learn_open": "Steckbrief öffnen", "learn_reds": "Rote", "learn_whites": "Weiße", "sim_t": "Simulator: Stell deinen {g} zusammen", "sim_hint": "Wähle Terroir, Ausbau und Alter: Glas, Profil und Aromen ändern sich sofort.", "sim_terroir": "Terroir", "sim_oak": "Ausbau", "sim_oak0": "Ohne Holz", "sim_oak1": "Im Holzfass", "sim_note": "Orientierende Simulation: Sie zeigt Tendenzen, keinen bestimmten Wein.", "mini_hint": "Tippe auf ein Departamento, um es auf der Karte zu sehen."}, "ru": {"learn_sub_grapes": "Изучать каждый сорт", "learn_sub_grapes_d": "Что каждый сорт даёт вину, как он меняется в зависимости от почвы, климата и возраста и где его выращивают на карте.", "learn_sub_tasting": "Учиться дегустировать", "learn_sub_tasting_d": "Три этапа дегустации — цвет, аромат и вкус — шаг за шагом, с упражнениями.", "learn_ready": "Готово {n} из {m} сортов", "learn_open": "Открыть", "learn_reds": "Красные", "learn_whites": "Белые", "sim_t": "Симулятор: соберите свой {g}", "sim_hint": "Выберите терруар, выдержку и возраст: бокал, профиль и ароматы меняются сразу.", "sim_terroir": "Терруар", "sim_oak": "Выдержка", "sim_oak0": "Без дуба", "sim_oak1": "В дубе", "sim_note": "Ориентировочная симуляция: показывает тенденции, а не конкретное вино.", "mini_hint": "Нажмите на департамент, чтобы увидеть его на карте."}, "zh": {"learn_sub_grapes": "了解每个葡萄品种", "learn_sub_grapes_d": "每个品种为葡萄酒带来什么、如何随土壤、气候和陈年而变化，以及在地图上种在哪里。", "learn_sub_tasting": "学习品酒", "learn_sub_tasting_d": "品酒的三个阶段——观色、闻香、品味——循序渐进，并附练习。", "learn_ready": "已完成 {n}/{m} 个品种", "learn_open": "打开", "learn_reds": "红葡萄", "learn_whites": "白葡萄", "sim_t": "模拟器：打造你的 {g}", "sim_hint": "选择风土、陈酿方式和酒龄：酒杯、风味结构和香气即时变化。", "sim_terroir": "风土", "sim_oak": "陈酿", "sim_oak0": "不过桶", "sim_oak1": "橡木桶陈酿", "sim_note": "示意性模拟：展示趋势，并非某一款具体的酒。", "mini_hint": "点击一个省份，在地图上查看。"}, "ja": {"learn_sub_grapes": "品種ごとに学ぶ", "learn_sub_grapes_d": "各品種がワインにもたらすもの、土壌・気候・熟成による変化、そして地図上の栽培地。", "learn_sub_tasting": "テイスティングを学ぶ", "learn_sub_tasting_d": "テイスティングの3段階（外観・香り・味わい）を、練習問題とともにステップごとに。", "learn_ready": "{m} 品種中 {n} 品種公開中", "learn_open": "開く", "learn_reds": "黒ブドウ", "learn_whites": "白ブドウ", "sim_t": "シミュレーター：あなたの {g} をつくる", "sim_hint": "テロワール、熟成方法、熟成年数を選ぶと、グラス・プロファイル・香りがすぐに変わります。", "sim_terroir": "テロワール", "sim_oak": "熟成", "sim_oak0": "樽なし", "sim_oak1": "樽熟成", "sim_note": "目安のシミュレーションです。特定のワインではなく傾向を示します。", "mini_hint": "県をタップすると地図で表示します。"}, "ko": {"learn_sub_grapes": "품종별로 배우기", "learn_sub_grapes_d": "각 품종이 와인에 주는 것, 토양·기후·숙성에 따른 변화, 지도 위의 재배지.", "learn_sub_tasting": "시음 배우기", "learn_sub_tasting_d": "시음의 세 단계(외관·향·맛)를 단계별로 연습과 함께.", "learn_ready": "{m}개 중 {n}개 품종 공개", "learn_open": "열기", "learn_reds": "레드", "learn_whites": "화이트", "sim_t": "시뮬레이터: 나만의 {g} 만들기", "sim_hint": "테루아, 숙성 방식, 숙성 기간을 고르면 잔·프로필·향이 바로 바뀝니다.", "sim_terroir": "테루아", "sim_oak": "숙성", "sim_oak0": "오크 없음", "sim_oak1": "오크 숙성", "sim_note": "참고용 시뮬레이션: 특정 와인이 아니라 경향을 보여 줍니다.", "mini_hint": "주를 누르면 지도에서 볼 수 있습니다."}};
+for (const l in T_ADD22) Object.assign(T[l], T_ADD22[l]);
 
 (() => {
 'use strict';
@@ -1505,7 +1545,7 @@ let FILT = false, PREM = {}, WORLD = null, WVAR = 'all', COUNTRY = null, flat = 
 let D, n, AREA, CELLS, CLAT, CLNG, cellIdx, M, P, SIM = null, deps = [], depByName = {}, units = [], WIN = [], INAVI, selCell = -1, selWin = -1, view = 'world', is3D = true, tourStep = -1;
 const markers = [];
 let coachStep = -1;   // paso de la ayuda de primera vez (-1: cerrada)
-let learnRoute = null; const UVA = {};   // sección Aprender: ruta abierta y fichas cargadas
+let learnRoute = null, DEPS_GJ = null; const UVA = {};   // sección Aprender: ruta abierta y fichas cargadas
 
 /* ---------- mapa ---------- */
 const EMPTY = { type: 'FeatureCollection', features: [] };
@@ -1647,7 +1687,7 @@ async function load() {
   await ready;
   map.getSource('land').setData(land);
   map.getSource('neighbors').setData(nbr);
-  map.getSource('deps').setData(depsGj);
+  map.getSource('deps').setData(depsGj); DEPS_GJ = depsGj;
   const dl = [];
   depsGj.features.forEach(f => { const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates; polys.forEach(pl => pl.forEach(r => dl.push({ type: 'Feature', properties: { id: f.properties.id }, geometry: { type: 'LineString', coordinates: r } }))); });
   map.getSource('deplines').setData({ type: 'FeatureCollection', features: dl });
@@ -2593,7 +2633,7 @@ map.on('moveend', () => {
   if (!D) return;
   const z = map.getZoom();
   if (view === 'world' && z >= 5.8 && inUY(map.getCenter())) goUruguay(true);
-  else if (view === 'uy' && z < 4.2 && tourStep < 0) goWorld(true);
+  else if (view === 'uy' && z < 4.2 && tourStep < 0 && coachStep < 0) goWorld(true);
 });
 function goUruguay(quick) {
   view = 'uy'; viewLayers();
@@ -2732,14 +2772,14 @@ load().catch(err => {
 
 /* ---------- ayuda de primera vez: 5 pasos que muestran y dejan probar cada acción; se recuerda en este navegador ---------- */
 const COACH = [
-  { el: '#projBtn', k: 1, world: true },
-  { el: '#intro', k: 2, world: true },
+  { el: ['#projBtn', '#intro'], k: 'w', world: true },
   { el: '#country', k: 3, world: true, enter: () => {           // muestra la ficha de Uruguay en el globo
     const f = COUNTRIES_GJ && COUNTRIES_GJ.features.find(x => x.properties.a2 === 'UY');
     if (f) { showCountry(f); map.flyTo({ center: [-56, -32.8], zoom: flat ? 3.2 : 2.6, duration: 1400, essential: true }); }
   }, leave: () => { if (view === 'world') closeCountry(); } },
   { el: '#panel .tabs', k: 4, uy: true },
-  { el: ['#tourBtn', '#dimBtn', '#tour'], k: 5, uy: true, enter: () => { if (tourStep < 0) startTour(); }, back: () => endTour() }
+  { el: ['#tourBtn', '#dimBtn', '#tour'], k: 5, uy: true, enter: () => { if (tourStep < 0) startTour(); }, back: () => endTour() },
+  { el: '#learnBtn', k: 6, enter: () => endTour() }
 ];
 let COUNTRIES_GJ = null;
 function coachShow(s) {
@@ -2789,7 +2829,7 @@ function coachPlace() {
 function coachEnd(done) { coachStep = -1; $('#coach').hidden = true; store('terroir-ayuda', '1'); }
 { const box = $('#coach'), d = document.createElement('div'); d.className = 'coach-dim'; box.prepend(d);
   // si en el paso 3 el usuario entra a Uruguay desde la ficha, la ayuda sigue sola al paso 4
-  document.addEventListener('click', () => setTimeout(() => { if (coachStep === 2 && view === 'uy') coachShow(3); else coachPlace(); }, 450), true); }
+  document.addEventListener('click', () => setTimeout(() => { if (COACH[coachStep] && COACH[coachStep].k === 3 && view === 'uy') coachShow(coachStep + 1); else coachPlace(); }, 450), true); }
 addEventListener('resize', coachPlace);
 map.on('moveend', coachPlace);
 addEventListener('keydown', e => { if (coachStep >= 0 && e.key === 'Escape') coachEnd(false); });
@@ -2807,19 +2847,62 @@ function openLearn(route) {
   learnRoute = route || 'index'; const el = $('#learn'); el.hidden = false; document.body.classList.add('learning');
   if (location.hash !== '#aprender' + (route && route !== 'index' ? '/' + route : '')) history.replaceState(null, '', '#aprender' + (route && route !== 'index' ? '/' + route : ''));
   if (learnRoute === 'index') return renderLearnIndex();
+  if (learnRoute === 'uvas') return renderGrapeList();
+  if (learnRoute === 'catar') return renderTasting();
   el.className = 'theme-' + ((LEARN_GRAPES.find(g => g.id === learnRoute) || {}).kind || 'red');
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
   getUva(learnRoute).then(renderGrape).catch(() => renderLearnIndex());
 }
 function closeLearn() { learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
-const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
+const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
 function learnWire(el) { el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => b.dataset.l === 'map' ? closeLearn() : openLearn(b.dataset.l)); }
+// ícono grande de cada subtema (SVG)
+const ICON_GLASS = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 6h24c1 14-3 26-12 27C23 32 19 20 20 6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M21 16h22c-1 9-4 15-11 15s-10-6-11-15z" fill="currentColor" opacity=".55"/><path d="M32 33v20M22 58h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M46 10c4 2 7 6 7 11M50 6c5 3 9 8 9 15" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".6"/></svg>';
+const ICON_GRAPE = '<svg viewBox="0 0 64 64" aria-hidden="true">' + [[26,22],[38,22],[20,32],[32,32],[44,32],[26,42],[38,42],[32,52]].map(([x, y]) => '<circle cx="' + x + '" cy="' + y + '" r="6.5" fill="currentColor" opacity=".55" stroke="currentColor" stroke-width="1.6"/>').join('') + '<path d="M32 15V6M32 9c5-4 11-3 14 1-5 3-10 2-14-1z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>';
 function renderLearnIndex() {
   const el = $('#learn'); el.className = 'theme-index';
-  el.innerHTML = learnTop('map') + '<div class="lw">' + '<header class="l-hero"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p></header>' +
-    '<h2 class="l-h2">' + esc(t('learn_grapes')) + '</h2><div class="l-grid">' + LEARN_GRAPES.map(g => '<button class="l-gcard ' + g.kind + (g.ready ? '' : ' soon') + '" ' + (g.ready ? 'data-l="' + g.id + '"' : 'disabled') + '><span class="dot"></span><b>' + esc(g.name) + '</b><small>' + esc(g.ready ? t(g.kind === 'red' ? 'learn_red' : 'learn_white') : t('learn_soon')) + '</small></button>').join('') + '</div>' +
-    '<h2 class="l-h2">' + esc(t('learn_tasting')) + '</h2><div class="l-grid"><button class="l-gcard soon" disabled><span class="dot"></span><b>' + esc(t('learn_tasting_card')) + '</b><small>' + esc(t('learn_soon')) + '</small></button></div></div>';
+  const ready = LEARN_GRAPES.filter(g => g.ready).length;
+  el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p></header>' +
+    '<div class="l-subs">' +
+    '<button class="l-sub grapes" data-l="uvas"><span class="ic">' + ICON_GRAPE + '</span><b>' + esc(t('learn_sub_grapes')) + '</b><p>' + esc(t('learn_sub_grapes_d')) + '</p><small>' + esc(t('learn_ready', { n: ready, m: LEARN_GRAPES.length })) + ' →</small></button>' +
+    '<button class="l-sub tasting" data-l="catar"><span class="ic">' + ICON_GLASS + '</span><b>' + esc(t('learn_sub_tasting')) + '</b><p>' + esc(t('learn_sub_tasting_d')) + '</p><small>' + esc(t('learn_soon')) + '</small></button>' +
+    '</div></div>';
   learnWire(el);
+}
+function renderGrapeList() {
+  const el = $('#learn'); el.className = 'theme-index';
+  const grp = kind => LEARN_GRAPES.filter(g => g.kind === kind).map(g => { const ha = (INAVI.nat || {})[g.name];
+    return '<button class="l-gcard ' + g.kind + (g.ready ? ' ready' : ' soon') + '" ' + (g.ready ? 'data-l="' + g.id + '"' : 'disabled') + '><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc(g.ready ? (ha ? nf(ha) + ' ' + t('ha') + ' · ' : '') + t('learn_open') : t('learn_soon')) + '</small></button>'; }).join('');
+  el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_grapes')) + '</h1><p>' + esc(t('learn_sub_grapes_d')) + '</p></header>' +
+    '<h2 class="l-h2">' + esc(t('learn_reds')) + '</h2><div class="l-grid">' + grp('red') + '</div><h2 class="l-h2">' + esc(t('learn_whites')) + '</h2><div class="l-grid">' + grp('white') + '</div></div>';
+  learnWire(el);
+}
+function renderTasting() {
+  const el = $('#learn'); el.className = 'theme-index';
+  el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_tasting')) + '</h1><p>' + esc(t('learn_sub_tasting_d')) + '</p></header>' +
+    '<div class="l-cards three">' + ['eye', 'nose', 'mouth'].map(k => '<div><b>' + esc(t('learn_' + k)) + '</b><p>' + esc(t('learn_soon')) + '</p></div>').join('') + '</div></div>';
+  learnWire(el);
+}
+// aclara (+) u oscurece (-) un color hex
+const shade = (hex, k) => { const n = parseInt(hex.slice(1), 16), f = x => Math.max(0, Math.min(255, Math.round(k >= 0 ? x + (255 - x) * k : x * (1 + k)))); return '#' + [n >> 16, (n >> 8) & 255, n & 255].map(f).map(x => x.toString(16).padStart(2, '0')).join(''); };
+// gráfico de radar del perfil (0–5)
+function radar(labels, vals) {
+  const N = labels.length, R = 70, cx = 100, cy = 92, pt = (i, r) => [cx + r * Math.sin(2 * Math.PI * i / N), cy - r * Math.cos(2 * Math.PI * i / N)];
+  const ring = r => labels.map((_, i) => pt(i, r).map(x => x.toFixed(1)).join(',')).join(' ');
+  return '<svg class="l-radar" viewBox="0 0 200 190">' + [1, 2, 3, 4, 5].map(k => '<polygon points="' + ring(R * k / 5) + '" fill="none" stroke="currentColor" opacity=".15"/>').join('') +
+    labels.map((_, i) => { const [x, y] = pt(i, R); return '<line x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="currentColor" opacity=".15"/>'; }).join('') +
+    '<polygon class="rv" points="' + vals.map((v, i) => pt(i, R * v / 5).map(x => x.toFixed(1)).join(',')).join(' ') + '"/>' +
+    labels.map((l, i) => { const [x, y] = pt(i, R + 14); return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" text-anchor="middle" dominant-baseline="middle">' + esc(l) + '</text>'; }).join('') + '</svg>';
+}
+// mapa chico de Uruguay con los departamentos coloreados por hectáreas de la uva
+function miniMap(gn) {
+  if (!DEPS_GJ) return '';
+  const ha = (INAVI.grapes || {})[gn] || {}, mx = Math.max(1, ...Object.values(ha));
+  const x0 = -58.5, x1 = -53.1, y0 = -35.05, y1 = -30.05, k = Math.cos(32.5 * Math.PI / 180), W = 300, H = Math.round(W * (y1 - y0) / ((x1 - x0) * k));
+  const P = ([x, y]) => (((x - x0) / (x1 - x0)) * W).toFixed(1) + ' ' + (((y1 - y) / (y1 - y0)) * H).toFixed(1);
+  const path = g => (g.type === 'Polygon' ? [g.coordinates] : g.coordinates).map(pl => pl.map(r => 'M' + r.filter((_, j) => j % 3 === 0).map(P).join('L') + 'Z').join('')).join('');
+  return '<svg class="mm" viewBox="0 0 ' + W + ' ' + H + '">' + DEPS_GJ.features.map(f => { const n = f.properties.name, h = ha[n] || 0, a = h ? .18 + .82 * Math.sqrt(h / mx) : .06;
+    return '<path data-d="' + f.properties.id + '" data-n="' + esc(n) + '" data-h="' + h + '" d="' + path(f.geometry) + '" style="fill-opacity:' + a.toFixed(2) + '"><title>' + esc(n) + ' · ' + nf(h, h < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</title></path>'; }).join('') + '</svg>';
 }
 // copa de vino en SVG: el color del vino cambia con la edad
 const glassSVG = (wine, rim) => '<svg class="l-glass" viewBox="0 0 120 170" aria-hidden="true"><defs><radialGradient id="lgW" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="' + wine + '" stop-opacity=".85"/><stop offset=".78" stop-color="' + wine + '"/><stop offset="1" stop-color="' + rim + '"/></radialGradient></defs>' +
@@ -2841,18 +2924,21 @@ function renderGrape(all) {
   const lab = (i) => { const a = ((i + .5) / n6) * 2 * Math.PI - Math.PI / 2; return [(100 + 71 * Math.cos(a)).toFixed(1), (100 + 71 * Math.sin(a)).toFixed(1)]; };
   const wheel = '<svg class="l-wheel" viewBox="0 0 200 200">' + d.aromas.map((a, i) => '<path class="ws" data-a="' + i + '" d="' + seg(i) + '" fill="' + (AROMA_COL[a.k] || '#555') + '"/>').join('') +
     d.aromas.map((a, i) => { const [x, y] = lab(i), w = a.label.split(' '), l1 = w.length > 2 ? w.slice(0, -1).join(' ') : w[0], l2 = w.length > 2 ? w[w.length - 1] : (w[1] || ''); return '<text x="' + x + '" y="' + y + '" text-anchor="middle">' + (l2 ? '<tspan x="' + x + '" dy="-0.25em">' + esc(l1) + '</tspan><tspan x="' + x + '" dy="1.1em">' + esc(l2) + '</tspan>' : '<tspan dy="0.35em">' + esc(l1) + '</tspan>') + '</text>'; }).join('') + '<text class="wc" x="100" y="100" text-anchor="middle" dominant-baseline="middle">' + esc(gn) + '</text></svg>';
-  let h = learnTop('index') + '<div class="lw">' +
+  let h = learnTop('uvas') + '<div class="lw">' +
     '<header class="l-hero"><div class="eyebrow">' + esc(d.kind) + '</div><h1>' + esc(gn) + '</h1><p class="l-tag">' + esc(d.tagline) + '</p>' +
     '<div class="l-stats"><div><b>' + nf(uyHa) + '</b><span>' + esc(d.stats.uy) + '</span></div><div><b>' + nf(uyShare, 1) + ' %</b><span>' + esc(d.stats.uy_share) + '</span></div>' +
     (wHa ? '<div><b>' + nf(wHa) + '</b><span>' + esc(d.stats.world) + '</span></div><div><b>' + nf(uyHa / wHa * 100, 0) + ' %</b><span>' + esc(d.stats.world_share) + '</span></div>' : '') + '</div></header>' +
     '<section class="l-sec"><h2>' + esc(d.origin_t) + '</h2><p>' + esc(d.origin) + '</p></section>' +
     '<section class="l-sec"><h2>' + esc(d.profile_t) + '</h2><p class="l-hint">' + esc(d.profile_hint) + '</p><div class="l-bars">' + d.profile.map((p, i) => '<button class="l-bar" data-p="' + i + '"><span>' + esc(p.label) + '</span><i>' + [1, 2, 3, 4, 5].map(k => '<em class="' + (k <= p.v ? 'on' : '') + '"></em>').join('') + '</i></button>').join('') + '</div><p class="l-detail" id="lProf">' + esc(d.profile[0].txt) + '</p></section>' +
     '<section class="l-sec l-two"><div>' + wheel + '</div><div><h2>' + esc(d.aroma_t) + '</h2><p class="l-hint">' + esc(d.aroma_hint) + '</p><div id="lAroma" class="l-detail"></div></div></section>' +
-    '<section class="l-sec l-two"><div id="lGlass"></div><div><h2>' + esc(d.age_t) + '</h2><p class="l-hint">' + esc(d.age_hint) + '</p><input type="range" id="lAge" min="0" max="' + (d.age.length - 1) + '" step="1" value="0"><div class="l-ticks">' + d.age.map(a => '<span>' + esc(a.label) + '</span>').join('') + '</div><div id="lAgeTxt" class="l-detail"></div></div></section>' +
-    '<section class="l-sec"><h2>' + esc(d.soil_t) + '</h2><p class="l-hint">' + esc(d.soil_hint) + '</p><div class="l-chips">' + d.soils.map((s, i) => '<button class="l-chip" data-s="' + i + '">' + esc(s.label) + '</button>').join('') + '</div><p class="l-detail" id="lSoil"></p><button class="cta l-cta" id="lSoilMap"><span>' + esc(d.soil_btn) + '</span></button></section>' +
+    '<section class="l-sec l-sim"><h2>' + esc(t('sim_t', { g: gn })) + '</h2><p class="l-hint">' + esc(t('sim_hint')) + '</p><div class="sim-grid"><div class="sim-ctl">' +
+    '<h3>' + esc(t('sim_terroir')) + '</h3><div class="l-chips">' + d.soils.map((s, i) => '<button class="l-chip" data-s="' + i + '">' + esc(s.label) + '</button>').join('') + '</div>' +
+    '<h3>' + esc(t('sim_oak')) + '</h3><div class="l-seg"><button data-o="0">' + esc(t('sim_oak0')) + '</button><button data-o="1">' + esc(t('sim_oak1')) + '</button></div>' +
+    '<h3>' + esc(d.age_t) + '</h3><input type="range" id="lAge" min="0" max="' + (d.age.length - 1) + '" step="1" value="0"><div class="l-ticks">' + d.age.map(x => '<span>' + esc(x.label) + '</span>').join('') + '</div>' +
+    '</div><div class="sim-out"><div id="lGlass"></div><div id="lRadar"></div></div></div><div id="lSimTxt" class="l-detail"></div><p class="l-hint">' + esc(t('sim_note')) + '</p><button class="cta l-cta" id="lSoilMap"><span>' + esc(d.soil_btn) + '</span></button></section>' +
     '<section class="l-sec"><h2>' + esc(d.styles_t) + '</h2><div class="l-cards">' + d.styles.map(s => '<div><b>' + esc(s.label) + '</b><p>' + esc(s.txt) + '</p></div>').join('') + '</div></section>' +
     '<section class="l-sec"><h2>' + esc(d.serve_t) + '</h2><div class="l-cards">' + d.serve.map(s => '<div><b>' + esc(s.label) + '</b><p>' + esc(s.txt) + '</p></div>').join('') + '</div></section>' +
-    '<section class="l-sec l-map"><h2>' + esc(d.map_t) + '</h2><h3>' + esc(d.map_uy) + '</h3><div class="bars">' + deps2.slice(0, 8).map(([dn, v]) => '<div class="bar"><span>' + esc(dn) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / dm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div>' +
+    '<section class="l-sec l-map"><h2>' + esc(d.map_t) + '</h2><h3>' + esc(d.map_uy) + '</h3><div class="l-two map2"><div>' + miniMap(gn) + '<p class="l-hint" id="lMiniTxt">' + esc(t('mini_hint')) + '</p></div><div class="bars">' + deps2.slice(0, 8).map(([dn, v]) => '<div class="bar"><span>' + esc(dn) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / dm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>' +
     '<div class="l-btns"><button class="cta" id="lMapUy"><span>' + esc(d.map_btn_uy) + '</span></button>' + (wHa ? '<button class="cta ghost" id="lMapW"><span>' + esc(d.map_btn_world) + '</span></button>' : '') + '</div>' +
     (wins.length ? '<h3>' + esc(d.map_wineries) + ' <span class="num">' + nf(wins.length) + '</span></h3><div class="l-wins">' + wins.slice(0, 24).map(w => '<button data-w="' + w.id + '">' + esc(w.name) + '<small>' + esc(w.dep) + '</small></button>').join('') + '</div>' : '') +
     '</section><p class="l-src">' + esc(d.sources) + '</p></div>';
@@ -2863,12 +2949,37 @@ function renderGrape(all) {
   // aromas
   const showA = i => { const a = d.aromas[i]; el.querySelectorAll('.ws').forEach(s => s.classList.toggle('sel', +s.dataset.a === i)); $('#lAroma').innerHTML = '<b style="color:' + (AROMA_COL[a.k] === '#3b1430' ? 'var(--l-ink)' : AROMA_COL[a.k]) + '">' + esc(a.label) + '</b><div class="l-tags">' + a.items.map(x => '<span>' + esc(x) + '</span>').join('') + '</div><small>' + esc(d.stages[a.stage] || '') + '</small>'; };
   el.querySelectorAll('.ws').forEach(s => s.onclick = () => showA(+s.dataset.a)); showA(0);
-  // edad
-  const showAge = k => { const a = d.age[k], c = AGE_COL[Math.min(k, AGE_COL.length - 1)]; $('#lGlass').innerHTML = glassSVG(c[0], c[1]); $('#lAgeTxt').innerHTML = '<b>' + esc(a.label) + ' · ' + esc(a.range) + '</b><dl><dt>' + esc(t('learn_eye')) + '</dt><dd>' + esc(a.color) + '</dd><dt>' + esc(t('learn_nose')) + '</dt><dd>' + esc(a.nose) + '</dd><dt>' + esc(t('learn_mouth')) + '</dt><dd>' + esc(a.mouth) + '</dd></dl>'; };
-  $('#lAge').oninput = e => showAge(+e.target.value); showAge(0);
-  // suelo
-  let soilK = 0; const showS = i => { soilK = i; el.querySelectorAll('.l-chip').forEach(c => c.classList.toggle('sel', +c.dataset.s === i)); $('#lSoil').textContent = d.soils[i].txt; };
-  el.querySelectorAll('.l-chip').forEach(c => c.onclick = () => showS(+c.dataset.s)); showS(0);
+  // simulador: terroir + crianza + edad cambian la copa, el perfil y los aromas (orientativo)
+  let soilK = 0, oak = 0, ageK = 0;
+  const MOD = { loess: { body: .5 }, granite: { acid: 1, tannin: -.5, alc: -.5, color: -.3 }, sand: { alc: 1, color: .5, body: .5, acid: -.5 }, alluvial: { tannin: .3, body: .3 } };
+  const FAM = { loess: ['black', 'spice'], granite: ['red', 'floral'], sand: ['black', 'spice'], alluvial: ['black', 'red'] };
+  const sim = () => {
+    const s = d.soils[soilK], m = MOD[s.k] || {}, base = Object.fromEntries(d.profile.map(p => [p.k, p.v]));
+    const v = d.profile.map(p => { let x = base[p.k] + (m[p.k] || 0);
+      if (oak) { if (p.k === 'tannin') x -= .5; if (p.k === 'body') x += .5; }
+      if (p.k === 'tannin') x -= ageK * .6; if (p.k === 'color') x -= ageK * .45; if (p.k === 'acid') x -= ageK * .2;
+      return Math.max(.5, Math.min(5, x)); });
+    const c = AGE_COL[Math.min(ageK, AGE_COL.length - 1)], dk = s.k === 'sand' ? -.12 : s.k === 'granite' ? .1 : 0;
+    $('#lGlass').innerHTML = glassSVG(shade(c[0], dk), shade(c[1], dk));
+    $('#lRadar').innerHTML = radar(d.profile.map(p => p.label), v);
+    const am = k => d.aromas.find(x => x.k === k), fam = (FAM[s.k] || ['black']).map(am).filter(Boolean);
+    let fams = ageK <= 1 ? fam.slice() : ageK === 2 ? [fam[0]] : [];
+    if (oak && ageK >= 1) fams.push(am('oak')); if (ageK >= 2) fams.push(am('aged'));
+    const ag = d.age[ageK];
+    $('#lSimTxt').innerHTML = '<b>' + esc(s.label) + ' · ' + esc(t(oak ? 'sim_oak1' : 'sim_oak0')) + ' · ' + esc(ag.label) + ' (' + esc(ag.range) + ')</b><p>' + esc(s.txt) + '</p>' +
+      '<dl><dt>' + esc(t('learn_eye')) + '</dt><dd>' + esc(ag.color) + '</dd><dt>' + esc(t('learn_nose')) + '</dt><dd>' + esc(ag.nose) + '</dd><dt>' + esc(t('learn_mouth')) + '</dt><dd>' + esc(ag.mouth) + '</dd></dl>' +
+      '<div class="l-tags">' + fams.filter(Boolean).map(f => f.items.slice(0, 3).map(x => '<span style="border-color:' + (AROMA_COL[f.k] || '#888') + '">' + esc(x) + '</span>').join('')).join('') + '</div>';
+    el.querySelectorAll('.l-chip').forEach(b => b.classList.toggle('sel', +b.dataset.s === soilK));
+    el.querySelectorAll('.l-seg button').forEach(b => b.classList.toggle('sel', +b.dataset.o === oak));
+  };
+  el.querySelectorAll('.l-chip').forEach(b => b.onclick = () => { soilK = +b.dataset.s; sim(); });
+  el.querySelectorAll('.l-seg button').forEach(b => b.onclick = () => { oak = +b.dataset.o; sim(); });
+  $('#lAge').oninput = e => { ageK = +e.target.value; sim(); }; sim();
+  // mini mapa: tocar un departamento lo abre en el mapa con la uva elegida
+  el.querySelectorAll('.mm path[data-d]').forEach(p => {
+    p.onmouseenter = () => { $('#lMiniTxt').textContent = p.dataset.n + ' · ' + nf(+p.dataset.h, +p.dataset.h < 10 ? 1 : 0) + ' ' + t('ha'); };
+    p.onclick = () => toUy(() => { S.dep = +p.dataset.d; S.reg = -1; S.grape = gn; S.cols = true; $('#grapeSel').value = gn; $('#colsToggle').checked = true; $('#depSel').value = S.dep; zoneSel(); buildColumns(); renderLegend(); schedule(); flyDep(deps[S.dep]); });
+  });
   // conexión con el mapa
   const toUy = (fn) => { closeLearn(); if (view !== 'uy') goUruguay(); setMode('terroir'); fn(); };
   $('#lSoilMap').onclick = () => toUy(() => { const s = d.soils[soilK]; S.rock = new Set(s.rock); S.wk = new Set(s.wk); S.grape = gn; $('#grapeSel').value = gn; buildChips(); buildColumns(); renderLegend(); clearSim(); schedule(); });
@@ -2877,7 +2988,7 @@ function renderGrape(all) {
   el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); if (view !== 'uy') goUruguay(true); setMode('bodegas'); showWinery(+b.dataset.w, true); });
   el.scrollTop = 0;
 }
-$('#learnBtn').onclick = () => openLearn('index');
+$('#learnBtn').onclick = () => { if (coachStep >= 0) coachEnd(); openLearn('index'); };
 addEventListener('hashchange', () => { const m = location.hash.match(/^#aprender\/?([\w-]*)/); if (m) openLearn(m[1] || 'index'); else if (learnRoute) closeLearn(); });
 addEventListener('keydown', e => { if (learnRoute && e.key === 'Escape' && coachStep < 0) closeLearn(); });
 
