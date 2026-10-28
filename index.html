@@ -3360,21 +3360,23 @@ function tiltGlass(kind, tone, int, tilted) {
 }
 const keyChips = (keys) => '<div class="ct-keys">' + keys.map((k, i) => '<button class="ct-key" data-k="' + i + '">' + esc(k.w) + '</button>').join('') + '</div><p class="l-detail ct-keyd" hidden></p>';
 function wireKeys(box, keys) { box.querySelectorAll('.ct-key').forEach(b => b.onclick = () => { box.querySelectorAll('.ct-key').forEach(x => x.classList.toggle('sel', x === b)); const d = box.querySelector('.ct-keyd'); d.hidden = false; d.innerHTML = '<b>' + esc(keys[+b.dataset.k].w) + '</b><p>' + esc(keys[+b.dataset.k].t) + '</p>'; }); }
-// copa inclinada con flechas animadas: centro (intensidad), ribete (tono y edad), reflejos (brillo) y lágrimas
+// copa inclinada sobre mantel blanco (vista de costado) con flechas animadas: centro, ribete, reflejos y lágrimas
 function annotGlass(kind, tone, int) {
-  const c = TONE_COL[kind][Math.min(tone, TONE_COL[kind].length - 1)], k = [.5, 0, -.3][int];
-  const core = shade(c[0], k), rim = shade(c[1], int === 0 ? .55 : int === 1 ? .2 : 0);
-  const call = (i, tx, ty, lx, ly, lab, sub) => '<g class="an" style="animation-delay:' + i * 1.8 + 's"><circle class="an-t" cx="' + tx + '" cy="' + ty + '" r="13"/><path class="an-a" d="M' + lx + ' ' + (ly + 4) + 'Q' + ((lx + tx) / 2) + ' ' + (ly + 4) + ' ' + (tx + (lx > tx ? 14 : -14)) + ' ' + ty + '"/>' +
-    '<text x="' + lx + '" y="' + ly + '" text-anchor="' + (lx > tx ? 'start' : 'end') + '"><tspan class="an-l">' + esc(lab) + '</tspan><tspan x="' + lx + '" dy="15" class="an-s">' + esc(sub) + '</tspan></text></g>';
-  return '<svg class="ct-annot" viewBox="0 0 400 240" role="img" aria-label="' + esc(t('ct_an_center')) + '"><rect width="400" height="240" rx="14" fill="#fbf8f1"/>' +
-    '<defs><radialGradient id="anW" cx="45%" cy="50%" r="60%"><stop offset="0" stop-color="' + core + '"/><stop offset=".6" stop-color="' + core + '"/><stop offset=".85" stop-color="' + rim + '"/><stop offset="1" stop-color="' + rim + '" stop-opacity=".3"/></radialGradient></defs>' +
-    // pared de la copa con lágrimas
-    '<path d="M48 70 Q150 18 250 70" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="2"/>' + [80, 112, 146, 180, 214].map((x, i) => '<path class="tear" style="animation-delay:' + i * .5 + 's" d="M' + x + ' ' + (52 - (i === 2 ? 10 : i % 2 ? 6 : 0)) + 'q3 10 0 16q-3 -6 0 -16z" fill="' + core + '" opacity=".55"/>').join('') +
-    '<ellipse cx="150" cy="138" rx="118" ry="66" fill="url(#anW)" stroke="rgba(0,0,0,.12)"/><ellipse class="shine" cx="112" cy="112" rx="32" ry="9" fill="#fff" opacity=".45"/>' +
-    call(0, 150, 140, 300, 120, t('ct_an_center'), t('ct_an_center_s')) +
-    call(1, 262, 150, 300, 178, t('ct_an_rim'), t('ct_an_rim_s')) +
-    call(2, 112, 112, 300, 62, t('ct_an_shine'), t('ct_an_shine_s')) +
-    call(3, 146, 46, 300, 22, t('ct_an_tears'), t('ct_an_tears_s')) + '</svg>';
+  const c = TONE_COL[kind][Math.min(tone, TONE_COL[kind].length - 1)], k = [.45, 0, -.3][int];
+  const core = shade(c[0], k), rim = shade(c[1], int === 0 ? .5 : int === 1 ? .2 : .05), edge = shade(c[1], .6);
+  const call = (i, tx, ty, lx, ly, lab, sub, left) => '<g class="an" style="animation-delay:' + i * 1.8 + 's"><circle class="an-t" cx="' + tx + '" cy="' + ty + '" r="11"/><path class="an-a" d="M' + (left ? (ty < ly ? lx - 34 : lx + 5) : lx - 5) + ' ' + (left && ty < ly ? ly - 17 : ly - 4) + 'Q' + ((lx + tx) / 2) + ' ' + (ly - 4) + ' ' + tx + ' ' + (ty + (ly > ty ? 12 : -12)) + '"/>' +
+    '<text x="' + lx + '" y="' + ly + '" text-anchor="' + (left ? 'end' : 'start') + '"><tspan class="an-l">' + esc(lab) + '</tspan><tspan x="' + lx + '" dy="14" class="an-s">' + esc(sub) + '</tspan></text></g>';
+  const bowl = 'M98 52 C92 120 104 186 150 194 C196 186 208 120 202 52', R = 'rotate(-50 150 150)';
+  return '<svg class="ct-annot" viewBox="0 0 400 260" role="img" aria-label="' + esc(t('ct_an_center')) + '"><rect width="400" height="260" rx="14" fill="#fbf8f1"/>' +
+    '<defs><clipPath id="anBowl"><path transform="' + R + '" d="' + bowl + ' Z"/></clipPath><linearGradient id="anW" x1="200" y1="0" x2="42" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="' + shade(core, -.1) + '"/><stop offset=".5" stop-color="' + core + '"/><stop offset=".8" stop-color="' + rim + '"/><stop offset="1" stop-color="' + edge + '" stop-opacity=".55"/></linearGradient></defs>' +
+    '<ellipse cx="160" cy="246" rx="120" ry="6" fill="rgba(0,0,0,.06)"/>' +
+    '<rect x="0" y="128" width="400" height="140" fill="url(#anW)" clip-path="url(#anBowl)"/><path d="M44 128 H190" stroke="' + shade(rim, .35) + '" stroke-width="1.5" opacity=".7" clip-path="url(#anBowl)"/>' +
+    [0, 1, 2].map(i => '<path class="tear" style="animation-delay:' + i * .7 + 's" d="M' + (150 + i * 14) + ' ' + (92 + i * 13) + 'q2.5 7 0 11q-2.5 -4 0 -11z" fill="' + rim + '" opacity=".6"/>').join('') +
+    '<g transform="' + R + '" fill="none" stroke="rgba(60,40,30,.55)" stroke-width="2"><path d="' + bowl + '"/><path d="M150 194 V256 M120 258 H180"/><path class="shine" d="M192 66 C196 104 192 140 182 162" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/></g>' +
+    call(0, 168, 162, 262, 168, t('ct_an_center'), t('ct_an_center_s')) +
+    call(1, 60, 134, 112, 226, t('ct_an_rim'), t('ct_an_rim_s'), true) +
+    call(2, 140, 84, 104, 36, t('ct_an_shine'), t('ct_an_shine_s'), true) +
+    call(3, 165, 108, 262, 70, t('ct_an_tears'), t('ct_an_tears_s')) + '</svg>';
 }
 function renderTasting() {
   const el = $('#learn'); el.className = 'theme-index';
@@ -3821,6 +3823,11 @@ function renderDOIndex() {
     const ex = S0.label_example || {}, exDo = doById(D, ex.do) || {}, exG = (exDo.grapes || [])[0];
     const list = D.dos.filter(x => doFilt === 'all' || x.c === doFilt).sort((a, b) => (b.icon - a.icon) || a.name.localeCompare(b.name));
     el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_do')) + '</h1><p>' + esc(t('do_intro')) + '</p></header>' +
+      // lista
+      '<section class="l-sec" id="doExplore"><h2>' + esc(t('do_list_t')) + ' <span class="num">' + nf(D.dos.length) + '</span></h2><div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c)).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
+      (doFilt !== 'all' ? '<div id="doCMap" class="do-cmap"></div><p class="l-hint">' + esc(t('do_cmap_hint')) + '</p><div class="do-leg">' + list.slice().sort((a, b) => a.name.localeCompare(b.name)).map((x, i) => '<button data-l="do-' + x.id + '" data-dl="' + x.id + '"><i style="background:' + DO_PAL[i % DO_PAL.length] + '"></i>' + esc(x.name) + '<small>' + esc(lvOf(D, x).label) + '</small></button>').join('') + '</div>' + doCountBox(D, doFilt, list.length) :
+      '<div class="do-grid">' + list.map(x => '<button class="do-card" data-l="do-' + x.id + '"><small>' + esc(sysOf(D, x.c).name) + ' · ' + esc(lvOf(D, x).label) + (x.icon ? ' · ★' : '') + '</small><b>' + esc(x.name) + '</b>' + colChips(x.colors) + '</button>').join('') + '</div>') +
+      '<div class="l-btns"><button class="cta ghost" id="doAllMap"><span>' + esc(t('do_map_all')) + '</span></button></div></section>' +
       '<section class="l-sec"><h2>' + esc(t('do_pyr_t')) + '</h2><p class="l-hint">' + esc(t('do_pyr_hint')) + '</p><div class="l-chips">' + D.systems.map(s => '<button class="l-chip' + (s.c === doSys ? ' sel' : '') + '" data-sys="' + esc(s.c) + '">' + esc(s.name) + '</button>').join('') + '</div>' +
       '<div class="l-two eq do-sys"><div>' + pyr + '</div><div><p>' + esc(S0.intro) + '</p>' + (L0 ? '<div class="l-detail"><b>' + esc(L0.label) + '</b>' + (L0.full && L0.full !== L0.label ? ' <small>· ' + esc(L0.full) + '</small>' : '') + '<p>' + esc(L0.txt) + '</p>' +
         (inLv.length ? '<div class="l-chips">' + inLv.map(x => '<button class="l-chip" data-l="do-' + x.id + '">' + esc(x.name) + '</button>').join('') + '</div>' : '') + '</div>' : '<p class="l-hint">' + esc(t('do_lv_hint')) + '</p>') + '</div></div></section>' +
@@ -3832,17 +3839,12 @@ function renderDOIndex() {
         (exG ? '<span class="lb-grape" data-h="grape">' + esc(exG.name) + '</span>' : '') +
         '<span class="lb-do" data-h="do">' + esc(ex.mention || exDo.name || '') + '</span>' +
         (ex.extra ? '<span class="lb-extra" data-h="extra">' + esc(ex.extra) + '</span>' : '') +
-        '<span class="lb-foot"><b data-h="alc">13,5 % vol</b><b data-h="vol">750 ml</b></span></div><div class="l-detail" id="labA"><small>' + esc(t('do_label_fake')) + '</small></div></div></section>' +
-      // lista
-      '<section class="l-sec"><h2>' + esc(t('do_list_t')) + ' <span class="num">' + nf(D.dos.length) + '</span></h2><div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c)).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
-      (doFilt !== 'all' ? doCountBox(D, doFilt, list.length) : '') +
-      (doFilt !== 'all' ? '<div id="doCMap" class="do-cmap"></div><p class="l-hint">' + esc(t('do_cmap_hint')) + '</p><div class="do-leg">' + list.slice().sort((a, b) => a.name.localeCompare(b.name)).map((x, i) => '<button data-l="do-' + x.id + '" data-dl="' + x.id + '"><i style="background:' + DO_PAL[i % DO_PAL.length] + '"></i>' + esc(x.name) + '<small>' + esc(lvOf(D, x).label) + '</small></button>').join('') + '</div>' :
-      '<div class="do-grid">' + list.map(x => '<button class="do-card" data-l="do-' + x.id + '"><small>' + esc(sysOf(D, x.c).name) + ' · ' + esc(lvOf(D, x).label) + (x.icon ? ' · ★' : '') + '</small><b>' + esc(x.name) + '</b>' + colChips(x.colors) + '</button>').join('') + '</div>') +
-      '<div class="l-btns"><button class="cta ghost" id="doAllMap"><span>' + esc(t('do_map_all')) + '</span></button></div></section></div>';
+        '<span class="lb-foot"><b data-h="alc">13,5 % vol</b><b data-h="vol">750 ml</b></span></div><div class="l-detail" id="labA"><small>' + esc(t('do_label_fake')) + '</small></div></div></section></div>';
+
     learnWire(el);
     el.querySelectorAll('[data-sys]').forEach(b => b.onclick = () => { doSys = b.dataset.sys; doLv = -1; renderDOIndex(); });
     el.querySelectorAll('.pl').forEach(g => g.onclick = () => { doLv = +g.dataset.lv; renderDOIndex(); });
-    el.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { doFilt = b.dataset.f; if (doFilt !== 'all') { doSys = doFilt; doLv = -1; } const y = el.scrollTop; renderDOIndex(); requestAnimationFrame(() => { el.scrollTop = y; }); });
+    el.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { doFilt = b.dataset.f; if (doFilt !== 'all') { doSys = doFilt; doLv = -1; } const y = el.scrollTop; renderDOIndex(); requestAnimationFrame(() => { if (doFilt !== 'all') $('#doExplore').scrollIntoView({ block: 'start' }); else el.scrollTop = y; }); });
     if (doFilt !== 'all') doCountryMap(D, doFilt); else if (doCMap) { doCMap.remove(); doCMap = null; }
     $('#doAllMap').onclick = () => { closeLearn(); doOn = true; doCtry = doFilt; if (view !== 'world') goWorld(doFilt !== 'all'); doMarkers(D);
       if (doFilt !== 'all') { const xs = list.map(o => o.pt[0]), ys = list.map(o => o.pt[1]); map.fitBounds([[Math.min(...xs) - 1.5, Math.min(...ys) - 1.5], [Math.max(...xs) + 1.5, Math.max(...ys) + 1.5]], { padding: 60, duration: 2400, maxZoom: 7 }); } };
