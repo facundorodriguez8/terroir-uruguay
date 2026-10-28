@@ -868,6 +868,7 @@ body.do-z .do-mk span { opacity: 1; }
 #learn .do-leg button { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink); font: inherit; font-size: 13px; cursor: pointer; }
 #learn .do-leg button i { width: 10px; height: 10px; border-radius: 3px; } #learn .do-leg button small { color: var(--l-ink2); font-size: 11px; }
 #learn .do-leg button.on, #learn .do-leg button:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+.mini-pop { pointer-events: none; }
 
 </style>
 </head>
@@ -3372,10 +3373,12 @@ function annotGlass(kind, tone, int) {
     '<ellipse cx="160" cy="246" rx="120" ry="6" fill="rgba(0,0,0,.06)"/>' +
     '<rect x="0" y="128" width="400" height="140" fill="url(#anW)" clip-path="url(#anBowl)"/><path d="M44 128 H190" stroke="' + shade(rim, .35) + '" stroke-width="1.5" opacity=".7" clip-path="url(#anBowl)"/>' +
     [0, 1, 2].map(i => '<path class="tear" style="animation-delay:' + i * .7 + 's" d="M' + (150 + i * 14) + ' ' + (92 + i * 13) + 'q2.5 7 0 11q-2.5 -4 0 -11z" fill="' + rim + '" opacity=".6"/>').join('') +
-    '<g transform="' + R + '" fill="none" stroke="rgba(60,40,30,.55)" stroke-width="2"><path d="' + bowl + '"/><path d="M150 194 V256 M120 258 H180"/><path class="shine" d="M192 66 C196 104 192 140 182 162" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/></g>' +
+    '<g transform="' + R + '" fill="none" stroke="rgba(60,40,30,.55)" stroke-width="2"><path d="' + bowl + '"/><path d="M150 194 V256 M120 258 H180"/><path d="M196 70 C199 100 197 126 190 146" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".55"/></g>' +
+    // reflejos: brillos de luz sobre la superficie del vino
+    '<g class="shine"><ellipse cx="112" cy="133" rx="30" ry="3.2" fill="#fff" opacity=".6"/><ellipse cx="150" cy="135" rx="9" ry="1.8" fill="#fff" opacity=".45"/><circle cx="92" cy="132" r="1.8" fill="#fff" opacity=".8"/></g>' +
     call(0, 168, 162, 262, 168, t('ct_an_center'), t('ct_an_center_s')) +
     call(1, 60, 134, 112, 226, t('ct_an_rim'), t('ct_an_rim_s'), true) +
-    call(2, 140, 84, 104, 36, t('ct_an_shine'), t('ct_an_shine_s'), true) +
+    call(2, 112, 133, 104, 36, t('ct_an_shine'), t('ct_an_shine_s'), true) +
     call(3, 165, 108, 262, 70, t('ct_an_tears'), t('ct_an_tears_s')) + '</svg>';
 }
 function renderTasting() {
@@ -3774,6 +3777,18 @@ function showDOMap(id) { getDO().then(D => { const x = doById(D, id); closeLearn
 // mapa de un país con todas sus DO, cada una con su color; se puede pasar el mouse y tocar para abrir la ficha
 const DO_PAL = ['#e2b46a', '#c0394f', '#6fa8dc', '#8fd694', '#d08ad8', '#f08a5d', '#5fc9c0', '#e6d47a', '#a98bdb', '#ef8fb0', '#9ccf6a', '#d9a066'];
 let doCMap = null;
+// un solo manejador de mouse para los mapas chicos: el cursor y el cartel cambian solo cuando cambia la zona (sin parpadeo)
+function mapHover(m, pop, onHover, onClick) {
+  let cur, show = false;
+  const pick = p => m.queryRenderedFeatures(p, { layers: ['df', 'pt'].filter(l => m.getLayer(l)) }).sort((a, b) => (a.layer.id === 'pt' ? -1 : 1))[0] || null;
+  m.on('mousemove', e => {
+    const f = pick(e.point), id = f ? f.properties.id : null;
+    if (id !== cur) { cur = id; show = onHover(f); m.getCanvas().style.cursor = show ? 'pointer' : ''; if (show) pop.setText(f.properties.name).addTo(m); else pop.remove(); }
+    if (show) pop.setLngLat(e.lngLat);
+  });
+  m.on('mouseout', () => { cur = undefined; show = false; onHover(null); m.getCanvas().style.cursor = ''; pop.remove(); });
+  m.on('click', e => { const f = pick(e.point); if (f) onClick(f); });
+}
 function doCountryMap(D, c) {
   if (doCMap) { doCMap.remove(); doCMap = null; }
   const box = $('#doCMap'); if (!box || !window.maplibregl) return;
@@ -3795,18 +3810,14 @@ function doCountryMap(D, c) {
         { id: 'dl', type: 'line', source: 'd', paint: { 'line-color': ['case', hi, '#ffffff', ['get', 'col']], 'line-width': ['case', hi, 2.5, 1] } },
         { id: 'pt', type: 'circle', source: 'p', filter: ['==', ['get', 'geo'], 0], paint: { 'circle-radius': ['case', hi, 9, 6], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }] } });
     doCMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right'); doCMap.scrollZoom.disable();
-    const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'mini-pop' });
+    const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'mini-pop', offset: 14 });
     let hov = null;
     const setHover = (id) => { const i = list.findIndex(o => o.id === id);
       if (hov != null) { doCMap.setFeatureState({ source: 'd', id: hov }, { hover: false }); doCMap.setFeatureState({ source: 'p', id: hov }, { hover: false }); }
       hov = i >= 0 ? i : null; if (hov != null) { doCMap.setFeatureState({ source: 'd', id: hov }, { hover: true }); doCMap.setFeatureState({ source: 'p', id: hov }, { hover: true }); }
       document.querySelectorAll('.do-leg [data-dl]').forEach(x => x.classList.toggle('on', x.dataset.dl === id)); };
     doCMap.on('load', () => {
-      ['df', 'pt'].forEach(l => {
-        doCMap.on('mousemove', l, e => { const f = e.features[0]; doCMap.getCanvas().style.cursor = 'pointer'; setHover(f.properties.id); pop.setLngLat(e.lngLat).setText(f.properties.name).addTo(doCMap); });
-        doCMap.on('mouseleave', l, () => { doCMap.getCanvas().style.cursor = ''; setHover(null); pop.remove(); });
-        doCMap.on('click', l, e => openLearn('do-' + e.features[0].properties.id));
-      });
+      mapHover(doCMap, pop, f => { setHover(f ? f.properties.id : null); return !!f; }, f => openLearn('do-' + f.properties.id));
     });
     document.querySelectorAll('.do-leg [data-dl]').forEach(x => { x.onmouseenter = () => setHover(x.dataset.dl); x.onmouseleave = () => setHover(null); });
   });
@@ -3932,11 +3943,7 @@ function doMiniMap(D, x) {
       doMini.scrollZoom.disable(); box.addEventListener('wheel', e => { if (e.ctrlKey || e.metaKey) return; }, { passive: true });
       new maplibregl.Marker({ element: Object.assign(document.createElement('div'), { className: 'mini-lbl', textContent: x.name }) }).setLngLat(x.pt).setOffset([0, -18]).addTo(doMini);
       const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'mini-pop' });
-      ['df', 'pt'].forEach(l => {
-        doMini.on('mousemove', l, e => { const f = e.features[0]; if (!f || f.properties.sel) { pop.remove(); return; } doMini.getCanvas().style.cursor = 'pointer'; pop.setLngLat(e.lngLat).setText(f.properties.name).addTo(doMini); });
-        doMini.on('mouseleave', l, () => { doMini.getCanvas().style.cursor = ''; pop.remove(); });
-        doMini.on('click', l, e => { const f = e.features[0]; if (f && !f.properties.sel) openLearn('do-' + f.properties.id); });
-      });
+      mapHover(doMini, pop, f => !!(f && !f.properties.sel), f => { if (!f.properties.sel) openLearn('do-' + f.properties.id); });
       const cap = $('#doMiniCap');
       if (cap) cap.textContent = q ? t(q.quality === 'aprox' ? 'do_geo_aprox' : q.quality === 'oficial-admin' ? 'do_geo_admin' : 'do_geo_ok', { s: q.source }) : t('do_geo_none');
     });
