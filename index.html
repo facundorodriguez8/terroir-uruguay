@@ -1011,6 +1011,139 @@ body.do-z .do-mk span { opacity: 1; }
 #learn .li-daily em { font-style: normal; font-weight: 700; color: #e2b46a; white-space: nowrap; }
 #learn .li-daily.done { opacity: .75; }
 
+/* ---------- Aprender inmersivo (portada) ---------- */
+#learn.lx { background: #140a0d; }
+#learn.lx .l-top { position: fixed; left: 0; right: 0; background: linear-gradient(rgba(20,8,12,.75), rgba(20,8,12,0)); border-bottom: 1px solid transparent; backdrop-filter: none; transition: background .3s, border-color .3s; }
+#learn.lx.scrolled .l-top { background: rgba(20,8,12,.88); backdrop-filter: blur(10px); border-bottom-color: rgba(255,246,230,.08); }
+.lx-in { max-width: 1100px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+/* héroe */
+.lx-hero { position: relative; min-height: max(620px, 100vh); min-height: max(620px, 100svh); display: flex; align-items: center; overflow: hidden; color: #fff6e6; --sy: 0; }
+.lx-sky { position: absolute; inset: 0; }
+.lx-land { width: 100%; height: 100%; display: block; }
+.lx-land .ly { transform: translateY(calc(var(--sy) * 1px * var(--k))); }
+.lx-land .ly1 { --k: .45; } .lx-land .ly2 { --k: .3; } .lx-land .ly3 { --k: .18; } .lx-land .ly4 { --k: .06; }
+.lx-land .ly1 { animation: lxSun 9s ease-in-out infinite alternate; transform-origin: 760px 330px; }
+@keyframes lxSun { from { opacity: .85; } to { opacity: 1; } }
+.lx-land .vines path { fill: none; stroke: #4c5a22; stroke-width: 3.2; stroke-dasharray: 2 5; stroke-linecap: round; opacity: .9; }
+.lx-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,8,12,.82) 0%, rgba(20,8,12,.45) 45%, rgba(20,8,12,0) 75%), linear-gradient(0deg, #140a0d 0%, rgba(20,8,12,0) 28%); pointer-events: none; }
+.lx-hero-in { position: relative; z-index: 2; width: 100%; max-width: 1100px; margin: 0 auto; padding: 90px max(20px, env(safe-area-inset-right, 0px)) 120px max(20px, env(safe-area-inset-left, 0px)); }
+.lx-hero .eyebrow { color: #f6c27a !important; letter-spacing: .2em; text-transform: uppercase; font-size: 13px; font-weight: 700; }
+.lx-hero h1 { font-family: var(--f-display); font-weight: 500; font-size: clamp(54px, 10vw, 128px); line-height: .92; margin: 10px 0 18px; max-width: 9ch; text-wrap: balance; overflow-wrap: anywhere; text-shadow: 0 4px 30px rgba(0,0,0,.4); animation: lxUp .9s cubic-bezier(.2,.7,.2,1) both; }
+.lx-hero p { font-size: clamp(17px, 2vw, 21px); line-height: 1.5; max-width: 34ch; color: rgba(255,246,230,.85); margin: 0 0 30px; animation: lxUp .9s .15s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes lxUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.lx-hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; animation: lxUp .9s .3s cubic-bezier(.2,.7,.2,1) both; }
+.lx-today { display: flex; align-items: center; gap: 14px; max-width: 460px; padding: 10px 22px 10px 10px; border-radius: 22px; border: 1px solid rgba(246,194,122,.55); background: rgba(30,10,16,.55); backdrop-filter: blur(10px); color: #fff6e6; font: inherit; text-align: left; cursor: pointer; transition: transform .25s, background .25s; }
+.lx-today:hover { transform: translateY(-3px); background: rgba(60,18,30,.7); }
+.lx-today .lx-cl { width: 64px; height: 80px; flex: none; animation: lxSway 4s ease-in-out infinite; transform-origin: 50% 8%; }
+@keyframes lxSway { 50% { transform: rotate(4deg); } }
+.lx-today span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.lx-today small { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: #f6c27a; font-weight: 700; }
+.lx-today b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 28px; font-weight: 500; line-height: 1.05; }
+.lx-today i { font-style: normal; font-size: 14px; color: rgba(255,246,230,.75); line-height: 1.35; }
+.lx-today em { font-style: normal; font-size: 24px; color: #f6c27a; margin-left: auto; padding-left: 8px; }
+.lx-cont { background: none; border: 0; color: rgba(255,246,230,.75); font: inherit; font-size: 14px; cursor: pointer; padding: 4px 2px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(246,194,122,.5); }
+.lx-cont b { color: #fff6e6; }
+.lx-down { position: absolute; z-index: 2; bottom: 26px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255,246,230,.75); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; }
+.lx-down i { width: 22px; height: 36px; border: 1.5px solid rgba(255,246,230,.6); border-radius: 12px; position: relative; }
+.lx-down i::after { content: ''; position: absolute; left: 50%; top: 7px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: #f6c27a; animation: lxScroll 1.6s ease-in-out infinite; }
+@keyframes lxScroll { 0% { opacity: 0; transform: translateY(0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+/* secciones */
+.lx-sec { position: relative; padding: 90px 0; color: #fff6e6; }
+.lx-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px 26px; align-items: end; margin-bottom: 34px; }
+@media (max-width: 760px) { .lx-head { grid-template-columns: minmax(0, 1fr); } .lx-sec { padding: 64px 0; } }
+.lx-num { font-family: var(--f-display); font-size: clamp(64px, 9vw, 120px); line-height: .8; color: transparent; -webkit-text-stroke: 1.5px rgba(246,194,122,.7); }
+.lx-head h2, .lx-play h2 { font-family: var(--f-display); font-weight: 500; font-size: clamp(36px, 5.5vw, 64px); line-height: 1; margin: 0 0 10px; text-wrap: balance; overflow-wrap: anywhere; }
+.lx-head p, .lx-play p { font-size: 17px; line-height: 1.55; color: rgba(255,246,230,.75); margin: 0; max-width: 54ch; }
+.lx-prog { display: flex; align-items: center; gap: 10px; }
+.lx-prog span { width: 140px; height: 6px; border-radius: 9px; background: rgba(255,255,255,.14); overflow: hidden; }
+.lx-prog i { display: block; height: 100%; background: linear-gradient(90deg, #f6c27a, #e07a5a); border-radius: 9px; }
+.lx-prog small { font-size: 13px; color: rgba(255,246,230,.7); white-space: nowrap; }
+.lx-go { margin-top: 30px; font: inherit; font-weight: 700; font-size: 15px; color: #1a0b10; background: linear-gradient(135deg, #f6c27a, #e2a052); border: 0; border-radius: 999px; padding: 14px 26px; cursor: pointer; box-shadow: 0 10px 30px rgba(226,160,82,.25); transition: transform .2s, box-shadow .2s; }
+.lx-go:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(226,160,82,.4); }
+/* aparición */
+.rv { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+/* uvas */
+.lx-grapes { background: radial-gradient(80% 60% at 85% 10%, rgba(140,29,60,.45), transparent 70%), linear-gradient(#140a0d, #24080f 50%, #140a0d); }
+.lx-clue { font-family: 'Bodoni Moda', Georgia, serif; font-style: italic; font-size: clamp(19px, 2.4vw, 26px); line-height: 1.4; color: #fff6e6; margin: -6px 0 30px; max-width: 46ch; border-left: 3px solid #f6c27a; padding-left: 18px; }
+.lx-clue:empty { display: none; }
+.lx-clue b { font-style: normal; font-family: inherit; color: #f6c27a; font-weight: 500; } .lx-clue span { font-size: .7em; color: rgba(255,246,230,.6); font-style: normal; }
+.lx-rail { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 14px max(20px, calc((100% - 1060px) / 2)) 22px; scroll-padding-inline: max(20px, calc((100% - 1060px) / 2)); scrollbar-width: thin; scrollbar-color: rgba(246,194,122,.4) transparent; }
+.lx-gc { position: relative; flex: 0 0 220px; scroll-snap-align: start; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; padding: 18px 18px 20px; min-height: 330px; border-radius: 24px; border: 1px solid rgba(255,246,230,.12); background: linear-gradient(160deg, #4a1226, #1e070d 75%); color: #fff6e6; font: inherit; cursor: pointer; transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .3s, box-shadow .35s; }
+.lx-gc.white { background: linear-gradient(160deg, #5c4c1c, #221b09 75%); }
+.lx-gc:hover { transform: translateY(-8px) rotate(-1deg); border-color: rgba(246,194,122,.7); box-shadow: 0 24px 50px rgba(0,0,0,.5); }
+.lx-gc .lx-cl { width: 120px; height: 140px; align-self: center; margin: 4px 0 6px; filter: drop-shadow(0 12px 18px rgba(0,0,0,.5)); transition: transform .5s; transform-origin: 50% 10%; }
+.lx-gc:hover .lx-cl { transform: rotate(-6deg) scale(1.06); }
+.lx-gc small { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #f6c27a; font-weight: 700; }
+.lx-gc b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 26px; font-weight: 500; line-height: 1.05; }
+.lx-gc .tg { font-size: 13.5px; line-height: 1.4; color: rgba(255,246,230,.72); margin: 4px 0 0; }
+.lx-gc em { margin-top: auto; padding-top: 10px; font-style: normal; font-size: 12.5px; color: rgba(255,246,230,.6); }
+.lx-gc.seen::after { content: '✓'; position: absolute; top: 14px; right: 16px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: rgba(246,194,122,.2); color: #f6c27a; }
+.lx-gc.today { border-color: #f6c27a; box-shadow: 0 0 0 1px #f6c27a, 0 18px 50px rgba(246,194,122,.18); }
+.lx-badge { position: absolute; top: -11px; left: 16px; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; color: #1a0b10; background: #f6c27a; border-radius: 999px; padding: 4px 10px; }
+/* DO */
+.lx-do { background: radial-gradient(70% 50% at 15% 20%, rgba(150,100,30,.35), transparent 70%), #120c08; }
+.lx-stats { display: flex; flex-wrap: wrap; gap: 14px 50px; margin: 0 0 24px; }
+.lx-stats div { display: flex; flex-direction: column; }
+.lx-stats b { font-family: var(--f-display); font-size: clamp(54px, 8vw, 96px); font-weight: 500; line-height: .9; background: linear-gradient(180deg, #ffe2a0, #d98a3a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lx-stats div:last-child b { background: none; color: transparent; -webkit-text-stroke: 1.5px rgba(255,226,160,.6); }
+.lx-stats span { font-size: 14px; color: rgba(255,246,230,.7); max-width: 18ch; }
+.lx-world { border-radius: 26px; background: radial-gradient(90% 90% at 50% 40%, #2a1d10, #120c08); border: 1px solid rgba(246,194,122,.18); padding: 10px; overflow: hidden; }
+.lx-world svg { width: 100%; height: auto; display: block; }
+.lx-world .land { fill: rgba(255,226,160,.09); stroke: rgba(255,226,160,.22); stroke-width: .3; }
+.lx-world .pt { cursor: pointer; } .lx-world .hit { fill: transparent; }
+.lx-world .pt.do .v { fill: #f6c27a; stroke: #120c08; stroke-width: .5; }
+.lx-world .pt.ig .v { fill: none; stroke: rgba(255,246,230,.55); stroke-width: .6; }
+.lx-world .pt.seen .v { fill: #fff; }
+.lx-world .pulse { fill: none; stroke: #f6c27a; stroke-width: .35; transform-box: fill-box; transform-origin: center; animation: lxPulse 3s var(--d) ease-out infinite; }
+@keyframes lxPulse { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
+.lx-world .pt:hover .v { stroke: #fff; stroke-width: 1.2; }
+.lx-legend { display: flex; gap: 18px; flex-wrap: wrap; padding: 8px 8px 4px; font-size: 12.5px; color: rgba(255,246,230,.7); }
+.lx-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+.lx-legend i.do { background: #f6c27a; } .lx-legend i.ig { border: 1.5px solid rgba(255,246,230,.6); }
+.lx-cap { margin: 14px 0 0; font-size: 15px; color: rgba(255,246,230,.6); min-height: 1.5em; }
+.lx-cap.on { color: #fff6e6; font-weight: 600; }
+/* cata */
+.lx-taste { background: radial-gradient(70% 60% at 80% 30%, rgba(40,90,110,.4), transparent 70%), #0c1418; }
+.lx-stage { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; align-items: center; }
+@media (max-width: 760px) { .lx-stage { grid-template-columns: minmax(0, 1fr); gap: 20px; } }
+.lx-glass { position: relative; display: grid; place-items: center; aspect-ratio: 1; max-width: 100%; border-radius: 50%; background: radial-gradient(circle, rgba(246,194,122,.12), transparent 65%); }
+.lx-glass .li-glass { width: 72%; max-width: 300px; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.lx-glass .li-glass .wine { transition: fill .6s; }
+.lx-glass .fx { position: absolute; inset: 0; pointer-events: none; }
+.lx-glass .fx i { position: absolute; left: 50%; top: 42%; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(#ffd9a0, rgba(255,217,160,0)); opacity: 0; }
+.lx-glass .fx .eye { position: absolute; left: 14%; top: 18%; width: 54px; height: 30px; border: 2px solid #f6c27a; border-radius: 50% 0; transform: rotate(45deg); opacity: 0; transition: opacity .5s; }
+.lx-glass .fx .eye::after { content: ''; position: absolute; inset: 7px 18px; border-radius: 50%; background: #f6c27a; }
+.lx-glass .fx .wave { position: absolute; left: 25%; right: 25%; bottom: 14%; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, #f6c27a, transparent); opacity: 0; }
+.lx-stage[data-st="0"] .li-glass { transform: rotate(-24deg); } .lx-stage[data-st="0"] .fx .eye { opacity: 1; }
+.lx-stage[data-st="1"] .fx i { animation: lxAroma 2.4s ease-out infinite; }
+.lx-stage[data-st="1"] .fx i:nth-child(2) { --x: -40px; animation-delay: .2s; } .lx-stage[data-st="1"] .fx i:nth-child(3) { --x: 30px; animation-delay: .5s; } .lx-stage[data-st="1"] .fx i:nth-child(4) { --x: -12px; animation-delay: .9s; }
+.lx-stage[data-st="1"] .fx i:nth-child(5) { --x: 48px; animation-delay: 1.2s; } .lx-stage[data-st="1"] .fx i:nth-child(6) { --x: -55px; animation-delay: 1.5s; } .lx-stage[data-st="1"] .fx i:nth-child(7) { --x: 14px; animation-delay: 1.8s; } .lx-stage[data-st="1"] .fx i:nth-child(8) { --x: -26px; animation-delay: 2.1s; }
+@keyframes lxAroma { 0% { opacity: 0; transform: translate(0, 0) scale(.6); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--x, 0), -150px) scale(2.2); } }
+.lx-stage[data-st="2"] .li-glass { transform: rotate(14deg); } .lx-stage[data-st="2"] .li-glass .wine { animation-duration: 1.1s; } .lx-stage[data-st="2"] .fx .wave { opacity: 1; animation: lxWave 1.4s ease-in-out infinite; }
+@keyframes lxWave { 50% { transform: scaleX(.4); } }
+.lx-stage[data-st="3"] .li-glass { transform: scale(1.08); } .lx-stage[data-st="3"] .li-glass .wine { fill: #a3243f; }
+.lx-steps { display: flex; flex-direction: column; gap: 10px; }
+.lx-steps button { display: flex; gap: 16px; align-items: flex-start; text-align: left; padding: 16px 18px; border-radius: 18px; border: 1px solid rgba(255,246,230,.1); background: rgba(255,255,255,.03); color: #fff6e6; font: inherit; cursor: pointer; transition: background .3s, border-color .3s, transform .3s; }
+.lx-steps button:hover, .lx-steps button.sel { background: rgba(246,194,122,.08); border-color: rgba(246,194,122,.5); transform: translateX(4px); }
+.lx-steps span { width: 34px; height: 34px; flex: none; border-radius: 50%; display: grid; place-items: center; font-weight: 800; border: 1.5px solid #f6c27a; color: #f6c27a; }
+.lx-steps .seen span { background: #f6c27a; color: #0c1418; }
+.lx-steps div { min-width: 0; } .lx-steps b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 22px; font-weight: 500; }
+.lx-steps p { font-size: 14px; line-height: 1.45; color: rgba(255,246,230,.7); margin: 4px 0 0; display: none; }
+.lx-steps em { display: none; font-style: normal; font-size: 13px; font-weight: 700; color: #f6c27a; margin-top: 8px; }
+.lx-steps .sel p, .lx-steps .sel em { display: block; }
+.lx-steps .play { border-style: dashed; align-items: center; }
+/* jugá */
+.lx-play { background: linear-gradient(135deg, #2a0d18, #4a1a12 60%, #6b3510); }
+.lx-play .lx-in { display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: space-between; }
+.lx-play .lx-in > div { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.lx-play .lx-num { font-size: 64px; }
+.lx-daily { flex: 0 1 340px; display: flex; align-items: center; gap: 14px; padding: 18px 20px 18px 16px; border-radius: 22px; border: 0; background: #f6c27a; color: #1a0b10; font: inherit; text-align: left; cursor: pointer; box-shadow: 0 18px 40px rgba(0,0,0,.35); transition: transform .25s; }
+.lx-daily:hover { transform: translateY(-4px) rotate(-.5deg); }
+.lx-daily b { flex: 1; font-size: 17px; line-height: 1.25; } .lx-daily em { font-style: normal; font-weight: 800; white-space: nowrap; }
+.lx-daily.done { background: rgba(255,246,230,.12); color: #fff6e6; box-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } .lx-land .ly { transform: none; } .lx-world .pulse, .lx-today .lx-cl, .lx-glass .fx i { animation: none; } }
+
 </style>
 </head>
 <body>
@@ -1974,6 +2107,9 @@ for (const l in T_ADD34) Object.assign(T[l], T_ADD34[l]);
 
 const T_ADD35 = {"es": {"learn_today": "Uva del día", "learn_meet": "Conocé esta uva", "learn_didyou": "¿Sabías que…?", "learn_continue": "Seguí donde dejaste", "learn_seen": "{n} de {m} vistas", "learn_do_tap": "Pasá o tocá un punto para ver su nombre y abrir su ficha.", "do_kind_do": "Denominaciones de origen", "do_kind_ig": "Indicaciones geográficas y regiones", "do_kind_ig_d": "No son denominaciones de origen: protegen el nombre de una zona con reglas más simples.", "do_kind_do1": "Denominación de origen", "do_kind_ig1": "Indicación geográfica o región", "lang_label": "Idioma", "close": "Cerrar"}, "en": {"learn_today": "Grape of the day", "learn_meet": "Meet this grape", "learn_didyou": "Did you know?", "learn_continue": "Pick up where you left off", "learn_seen": "{n} of {m} seen", "learn_do_tap": "Hover or tap a dot to see its name and open its page.", "do_kind_do": "Appellations of origin", "do_kind_ig": "Geographical indications and regions", "do_kind_ig_d": "These are not appellations of origin: they protect the name of an area with simpler rules.", "do_kind_do1": "Appellation of origin", "do_kind_ig1": "Geographical indication or region", "lang_label": "Language", "close": "Close"}, "pt": {"learn_today": "Uva do dia", "learn_meet": "Conheça esta uva", "learn_didyou": "Você sabia?", "learn_continue": "Continue de onde parou", "learn_seen": "{n} de {m} vistas", "learn_do_tap": "Passe o mouse ou toque num ponto para ver o nome e abrir a ficha.", "do_kind_do": "Denominações de origem", "do_kind_ig": "Indicações geográficas e regiões", "do_kind_ig_d": "Não são denominações de origem: protegem o nome de uma zona com regras mais simples.", "do_kind_do1": "Denominação de origem", "do_kind_ig1": "Indicação geográfica ou região", "lang_label": "Idioma", "close": "Fechar"}, "fr": {"learn_today": "Cépage du jour", "learn_meet": "Découvrir ce cépage", "learn_didyou": "Le saviez-vous ?", "learn_continue": "Reprendre où vous en étiez", "learn_seen": "{n} sur {m} vus", "learn_do_tap": "Survolez ou touchez un point pour voir son nom et ouvrir sa fiche.", "do_kind_do": "Appellations d’origine", "do_kind_ig": "Indications géographiques et régions", "do_kind_ig_d": "Ce ne sont pas des appellations d’origine : elles protègent le nom d’une zone avec des règles plus simples.", "do_kind_do1": "Appellation d’origine", "do_kind_ig1": "Indication géographique ou région", "lang_label": "Langue", "close": "Fermer"}, "de": {"learn_today": "Rebsorte des Tages", "learn_meet": "Diese Rebsorte entdecken", "learn_didyou": "Schon gewusst?", "learn_continue": "Weitermachen, wo du aufgehört hast", "learn_seen": "{n} von {m} gesehen", "learn_do_tap": "Fahre über einen Punkt oder tippe darauf, um den Namen zu sehen und das Profil zu öffnen.", "do_kind_do": "Ursprungsbezeichnungen", "do_kind_ig": "Geografische Angaben und Regionen", "do_kind_ig_d": "Das sind keine Ursprungsbezeichnungen: Sie schützen den Namen eines Gebiets mit einfacheren Regeln.", "do_kind_do1": "Ursprungsbezeichnung", "do_kind_ig1": "Geografische Angabe oder Region", "lang_label": "Sprache", "close": "Schließen"}, "ru": {"learn_today": "Сорт дня", "learn_meet": "Узнать этот сорт", "learn_didyou": "А вы знали?", "learn_continue": "Продолжить с того места", "learn_seen": "Просмотрено {n} из {m}", "learn_do_tap": "Наведите или нажмите на точку, чтобы увидеть название и открыть карточку.", "do_kind_do": "Наименования по происхождению", "do_kind_ig": "Географические указания и регионы", "do_kind_ig_d": "Это не наименования по происхождению: они защищают название зоны по более простым правилам.", "do_kind_do1": "Наименование по происхождению", "do_kind_ig1": "Географическое указание или регион", "lang_label": "Язык", "close": "Закрыть"}, "zh": {"learn_today": "每日葡萄", "learn_meet": "认识这个品种", "learn_didyou": "你知道吗？", "learn_continue": "从上次离开的地方继续", "learn_seen": "已看 {n}/{m}", "learn_do_tap": "悬停或点击圆点，查看名称并打开介绍。", "do_kind_do": "原产地名称", "do_kind_ig": "地理标志与产区", "do_kind_ig_d": "这些不是原产地名称：它们以较简单的规则保护一个产区的名称。", "do_kind_do1": "原产地名称", "do_kind_ig1": "地理标志或产区", "lang_label": "语言", "close": "关闭"}, "ja": {"learn_today": "今日のブドウ", "learn_meet": "この品種を見る", "learn_didyou": "知っていましたか？", "learn_continue": "前回の続きから", "learn_seen": "{m}件中{n}件を閲覧", "learn_do_tap": "点にカーソルを合わせるかタップすると、名前が表示され詳細を開けます。", "do_kind_do": "原産地呼称", "do_kind_ig": "地理的表示と産地", "do_kind_ig_d": "これらは原産地呼称ではありません。より簡単なルールで地域名を保護するものです。", "do_kind_do1": "原産地呼称", "do_kind_ig1": "地理的表示または産地", "lang_label": "言語", "close": "閉じる"}, "ko": {"learn_today": "오늘의 포도", "learn_meet": "이 품종 알아보기", "learn_didyou": "알고 계셨나요?", "learn_continue": "이어서 보기", "learn_seen": "{m}개 중 {n}개 봄", "learn_do_tap": "점에 마우스를 올리거나 탭하면 이름이 보이고 상세 페이지가 열립니다.", "do_kind_do": "원산지 명칭", "do_kind_ig": "지리적 표시와 산지", "do_kind_ig_d": "원산지 명칭이 아닙니다: 더 단순한 규칙으로 지역 이름을 보호합니다.", "do_kind_do1": "원산지 명칭", "do_kind_ig1": "지리적 표시 또는 산지", "lang_label": "언어", "close": "닫기"}};
 for (const l in T_ADD35) Object.assign(T[l], T_ADD35[l]);
+
+const T_ADD36 = {"es": {"learn_scroll": "Bajá para explorar", "learn_n_ha": "{n} ha en Uruguay", "learn_go_step": "Ir a esta fase", "learn_countries": "países"}, "en": {"learn_scroll": "Scroll to explore", "learn_n_ha": "{n} ha in Uruguay", "learn_go_step": "Go to this stage", "learn_countries": "countries"}, "pt": {"learn_scroll": "Role para explorar", "learn_n_ha": "{n} ha no Uruguai", "learn_go_step": "Ir para esta fase", "learn_countries": "países"}, "fr": {"learn_scroll": "Faites défiler pour explorer", "learn_n_ha": "{n} ha en Uruguay", "learn_go_step": "Aller à cette étape", "learn_countries": "pays"}, "de": {"learn_scroll": "Scrollen zum Entdecken", "learn_n_ha": "{n} ha in Uruguay", "learn_go_step": "Zu dieser Phase", "learn_countries": "Länder"}, "ru": {"learn_scroll": "Прокрутите вниз", "learn_n_ha": "{n} га в Уругвае", "learn_go_step": "Перейти к этапу", "learn_countries": "стран"}, "zh": {"learn_scroll": "向下滚动探索", "learn_n_ha": "乌拉圭 {n} 公顷", "learn_go_step": "进入这一步", "learn_countries": "个国家"}, "ja": {"learn_scroll": "スクロールして探索", "learn_n_ha": "ウルグアイで{n} ha", "learn_go_step": "この段階へ", "learn_countries": "か国"}, "ko": {"learn_scroll": "스크롤하여 둘러보기", "learn_n_ha": "우루과이 {n} ha", "learn_go_step": "이 단계로", "learn_countries": "개국"}};
+for (const l in T_ADD36) Object.assign(T[l], T_ADD36[l]);
 
 (() => {
 'use strict';
@@ -3346,7 +3482,7 @@ const getUva = id => UVA[id] ? Promise.resolve(UVA[id]) : get('data/uvas/' + id 
 const getJuegos = () => JUEGOS ? Promise.resolve(JUEGOS) : get('data/uvas/_juegos.json').then(d => (JUEGOS = d));
 const getUvaMundo = () => UVAMUNDO ? Promise.resolve(UVAMUNDO) : get('data/uvas_mundo.json').then(d => (UVAMUNDO = d)).catch(() => (UVAMUNDO = { grapes: {}, prime: {} }));
 // detiene todo lo que pueda seguir corriendo de la pantalla anterior (timers, minimapas, cargas pendientes)
-function learnStop() { learnSeq++; clearInterval(GT); clearInterval(CTT); clearTimeout(NT); if (doMini) { doMini.remove(); doMini = null; } if (doCMap) { doCMap.remove(); doCMap = null; } }
+function learnStop() { learnSeq++; const lE = $('#learn'); if (lE) lE.onscroll = null; clearInterval(GT); clearInterval(CTT); clearTimeout(NT); if (doMini) { doMini.remove(); doMini = null; } if (doCMap) { doCMap.remove(); doCMap = null; } }
 const ROUTES = ['index', 'uvas', 'catar', 'do', 'jugar', 'ideal'];
 const okRoute = r => ROUTES.includes(r) || (r.startsWith('do-') && r.length > 3) || LEARN_GRAPES.some(g => g.id === r);
 // navegación iniciada por la persona: deja historial para que "Atrás" funcione
@@ -3480,46 +3616,82 @@ const glassArt = (kind, n) => '<svg class="li-glass ' + kind + '" viewBox="0 0 1
   '<path class="cup" d="M28 14h64c3 40-9 70-32 72C37 84 25 54 28 14z"/><path class="cup" d="M60 86v58M36 152c8-5 40-5 48 0"/></svg>';
 const MINI = { d: null };
 const getMini = () => MINI.d ? Promise.resolve(MINI.d) : get('data/mundo_mini.json').then(d => (MINI.d = d.d)).catch(() => '');
+// racimo dibujado (bayas con volumen, hoja y tallo); kind red/white
+const clusterArt = kind => { const rows = [5, 5, 4, 4, 3, 2, 1]; let b = '';
+  rows.forEach((n, r) => { for (let i = 0; i < n; i++) { const x = 60 + (i - (n - 1) / 2) * 15 + (r % 2 ? 2 : -2), y = 46 + r * 13; b += '<circle cx="' + x + '" cy="' + y + '" r="8.6" fill="url(#cl' + kind + ')"/><circle cx="' + (x - 2.6) + '" cy="' + (y - 3) + '" r="2" fill="#fff" opacity=".35"/>'; } });
+  return '<svg class="lx-cl" viewBox="0 0 120 150" aria-hidden="true"><defs><radialGradient id="cl' + kind + '" cx="35%" cy="30%" r="75%">' + (kind === 'white' ? '<stop offset="0" stop-color="#fbf0a8"/><stop offset=".6" stop-color="#c9b04c"/><stop offset="1" stop-color="#7d6a22"/>' : '<stop offset="0" stop-color="#a8456a"/><stop offset=".55" stop-color="#5a1430"/><stop offset="1" stop-color="#25060f"/>') + '</radialGradient></defs>' +
+    '<path d="M60 36V12M60 18c10-12 30-12 40-2-12 10-28 10-40 2z" stroke="#7a8b3a" stroke-width="3" fill="#56702a" stroke-linecap="round"/><path d="M60 20c-6-6-6-12 0-16" stroke="#7a8b3a" stroke-width="2" fill="none"/>' + b + '</svg>'; };
+// paisaje del héroe: cielo al atardecer, sol, cerros y viñedo en perspectiva (capas con parallax)
+const heroArt = () => { let rows = ''; for (let i = -16; i <= 16; i++) rows += '<path d="M' + (600 + i * 9) + ' 372 Q ' + (600 + i * 40) + ' 470 ' + (600 + i * 130) + ' 640" />';
+  return '<svg class="lx-land" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs>' +
+    '<linearGradient id="lxSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c0a14"/><stop offset=".45" stop-color="#5a1a2c"/><stop offset=".75" stop-color="#b8543a"/><stop offset="1" stop-color="#f0a55a"/></linearGradient>' +
+    '<radialGradient id="lxSun"><stop offset="0" stop-color="#ffe7a8"/><stop offset=".5" stop-color="#f6b65e" stop-opacity=".9"/><stop offset="1" stop-color="#f6b65e" stop-opacity="0"/></radialGradient>' +
+    '<linearGradient id="lxNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1a12"/><stop offset="1" stop-color="#120707"/></linearGradient>' +
+    '<clipPath id="lxClip"><path d="M0 380 Q 300 350 600 372 T 1200 368 V640 H0z"/></clipPath></defs>' +
+    '<rect width="1200" height="640" fill="url(#lxSky)"/><g class="ly ly1"><circle cx="760" cy="330" r="150" fill="url(#lxSun)"/><circle cx="760" cy="330" r="46" fill="#ffe2a0"/></g>' +
+    '<g class="ly ly2"><path d="M0 330 Q 180 270 360 318 T 720 300 T 1200 310 V640 H0z" fill="#4a1a2a"/></g>' +
+    '<g class="ly ly3"><path d="M0 360 Q 250 320 520 352 T 1200 345 V640 H0z" fill="#2c1018"/></g>' +
+    '<g class="ly ly4"><path d="M0 380 Q 300 350 600 372 T 1200 368 V640 H0z" fill="url(#lxNear)"/><g clip-path="url(#lxClip)" class="vines">' + rows + '</g></g></svg>'; };
 function renderLearnIndex() {
-  const el = $('#learn'); el.className = 'theme-index li-page'; const seq = learnSeq;
-  const prog = (n, m) => '<div class="li-prog"><span><i style="width:' + Math.round(100 * Math.min(n, m) / m) + '%"></i></span><small>' + esc(t('learn_seen', { n: Math.min(n, m), m })) + '</small></div>';
-  const head = (k, ic, n, sub) => '<div class="li-head"><span class="ic">' + ic + '</span><div><h3>' + esc(t(n)) + '</h3><p>' + esc(t(n + '_d')) + '</p><small>' + esc(sub) + '</small></div></div>';
-  // uva del día: la misma para todos ese día
-  const gd = LEARN_GRAPES[Math.floor(seeded(+today().replace(/-/g, ''))() * LEARN_GRAPES.length)];
-  const chips = LEARN_GRAPES.map(g => '<button class="li-chip ' + g.kind + (SEEN.g.includes(g.id) ? ' seen' : '') + '" data-l="' + g.id + '"><span class="berry"></span>' + esc(g.name) + '</button>').join('');
-  el.innerHTML = learnTop('map') + '<div class="lw">' +
-    '<section class="li-hero"><div class="li-intro"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p><div id="liCont"></div></div>' +
-    '<article class="li-today ' + gd.kind + '">' + glassArt(gd.kind, 1) + '<div><small class="li-k">✦ ' + esc(t('learn_today')) + '</small><h2>' + esc(gd.name) + '</h2><p class="li-tag" id="liTag">&nbsp;</p><p class="li-clue" id="liClue"></p>' +
-    '<button class="cta" data-l="' + gd.id + '"><span>' + esc(t('learn_meet', { g: gd.name })) + ' →</span></button></div></article></section>' +
-    '<div class="li-lanes">' +
-    '<section class="li-lane grapes">' + head('grapes', ICON_GRAPE, 'learn_sub_grapes', t('learn_n_grapes', { n: LEARN_GRAPES.length })) +
-      '<div class="li-chips">' + chips + '</div><div class="li-foot">' + prog(SEEN.g.filter(id => LEARN_GRAPES.some(g => g.id === id)).length, LEARN_GRAPES.length) + '<button class="li-go" data-l="uvas">' + esc(t('learn_enter')) + ' →</button></div></section>' +
-    '<section class="li-lane do">' + head('do', ICON_SEAL, 'learn_sub_do', '…') + '<div class="li-world" id="liWorld"></div><p class="li-cap" id="liCap">' + esc(t('learn_do_tap')) + '</p><div class="li-foot" id="liDoFoot"><button class="li-go" data-l="do">' + esc(t('learn_enter')) + ' →</button></div></section>' +
-    '<section class="li-lane tasting">' + head('tasting', ICON_GLASS, 'learn_sub_tasting', t('learn_n_tasting')) + '<div class="li-taste">' + glassArt('red', 2) + '<div class="li-steps" id="liSteps"></div></div><div class="li-foot">' + prog(SEEN.c.filter(i => i < 4).length, 4) + '<button class="li-go" data-l="catar">' + esc(t('learn_enter')) + ' →</button></div></section>' +
-    '</div>' +
-    '<section class="li-play"><div class="li-play-in"><div><small class="li-k">🎮 ' + esc(t('g_title')) + '</small>' + plCard() + '<p>' + esc(t('pl_teaser')) + '</p></div>' +
-    '<button class="li-daily' + (PL.daily === today() ? ' done' : '') + '" data-l="jugar"><span class="pl-cal">' + new Date().getDate() + '</span><b>' + esc(t(PL.daily === today() ? 'pl_daily_done' : 'pl_daily_t')) + '</b><em>' + esc(t('pl_go')) + ' →</em></button></div></section></div>';
+  const el = $('#learn'); el.className = 'theme-index lx'; const seq = learnSeq;
+  const prog = (n, m) => '<div class="lx-prog"><span><i style="width:' + Math.round(100 * Math.min(n, m) / m) + '%"></i></span><small>' + esc(t('learn_seen', { n: Math.min(n, m), m })) + '</small></div>';
+  const dseed = +today().replace(/-/g, ''), gd = LEARN_GRAPES[Math.floor(seeded(dseed)() * LEARN_GRAPES.length)];
+  const nat = INAVI.nat || {};
+  const gcards = LEARN_GRAPES.map((g, i) => '<button class="lx-gc ' + g.kind + (SEEN.g.includes(g.id) ? ' seen' : '') + (g.id === gd.id ? ' today' : '') + '" data-l="' + g.id + '" style="--d:' + (i * 40) + 'ms">' + (g.id === gd.id ? '<span class="lx-badge">✦ ' + esc(t('learn_today')) + '</span>' : '') + clusterArt(g.kind) +
+    '<small>' + esc(t(g.kind === 'white' ? 'learn_whites' : 'learn_reds')) + '</small><b>' + esc(g.name) + '</b><p class="tg" data-tg="' + g.id + '"></p>' + (nat[g.name] ? '<em>' + esc(t('learn_n_ha', { n: nf(nat[g.name]) })) + '</em>' : '') + '</button>').join('');
+  el.innerHTML = learnTop('map') +
+    // 1 · héroe
+    '<section class="lx-hero"><div class="lx-sky">' + heroArt() + '</div><div class="lx-hero-in"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p>' +
+    '<div class="lx-hero-cta"><button class="lx-today" data-l="' + gd.id + '">' + clusterArt(gd.kind) + '<span><small>✦ ' + esc(t('learn_today')) + '</small><b>' + esc(gd.name) + '</b><i id="liTag"></i></span><em>→</em></button><div id="liCont"></div></div></div>' +
+    '<a class="lx-down" href="#" aria-label="' + esc(t('learn_scroll')) + '"><span>' + esc(t('learn_scroll')) + '</span><i></i></a></section>' +
+    // 2 · uvas
+    '<section class="lx-sec lx-grapes"><div class="lx-in"><div class="lx-head rv"><span class="lx-num">01</span><div><h2>' + esc(t('learn_sub_grapes')) + '</h2><p>' + esc(t('learn_sub_grapes_d')) + '</p></div>' + prog(SEEN.g.filter(id => LEARN_GRAPES.some(g => g.id === id)).length, LEARN_GRAPES.length) + '</div>' +
+    '<p class="lx-clue rv" id="liClue"></p></div><div class="lx-rail rv">' + gcards + '</div><div class="lx-in"><button class="lx-go" data-l="uvas">' + esc(t('learn_enter')) + ' · ' + esc(t('learn_sub_grapes')) + ' →</button></div></section>' +
+    // 3 · DO
+    '<section class="lx-sec lx-do"><div class="lx-in"><div class="lx-head rv"><span class="lx-num">02</span><div><h2>' + esc(t('learn_sub_do')) + '</h2><p>' + esc(t('learn_sub_do_d')) + '</p></div><div id="liDoProg"></div></div>' +
+    '<div class="lx-stats rv" id="liStats"></div><div class="lx-world rv" id="liWorld"></div><p class="lx-cap" id="liCap">' + esc(t('learn_do_tap')) + '</p><button class="lx-go" data-l="do">' + esc(t('learn_enter')) + ' · ' + esc(t('learn_sub_do')) + ' →</button></div></section>' +
+    // 4 · cata
+    '<section class="lx-sec lx-taste"><div class="lx-in"><div class="lx-head rv"><span class="lx-num">03</span><div><h2>' + esc(t('learn_sub_tasting')) + '</h2><p>' + esc(t('learn_sub_tasting_d')) + '</p></div>' + prog(SEEN.c.filter(i => i < 4).length, 4) + '</div>' +
+    '<div class="lx-stage rv" data-st="0"><div class="lx-glass">' + glassArt('red', 3) + '<div class="fx"><span class="eye"></span>' + '<i></i>'.repeat(7) + '<span class="wave"></span></div></div><div class="lx-steps" id="liSteps"></div></div></div></section>' +
+    // 5 · jugá
+    '<section class="lx-sec lx-play"><div class="lx-in rv"><div><span class="lx-num">04</span><h2>' + esc(t('g_title')) + '</h2><p>' + esc(t('pl_teaser')) + '</p>' + plCard() + '</div>' +
+    '<button class="lx-daily' + (PL.daily === today() ? ' done' : '') + '" data-l="jugar"><span class="pl-cal">' + new Date().getDate() + '</span><b>' + esc(t(PL.daily === today() ? 'pl_daily_done' : 'pl_daily_t')) + '</b><em>' + esc(t('pl_go')) + ' →</em></button></div></section>';
   learnWire(el);
-  // seguí donde dejaste
+  el.scrollTop = 0;
+  // parallax del paisaje y aparición de secciones al bajar
+  const hero = el.querySelector('.lx-hero');
+  el.onscroll = () => { const y = Math.min(el.scrollTop, 900); hero.style.setProperty('--sy', y); el.classList.toggle('scrolled', el.scrollTop > 80); };
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { root: el, threshold: .12 }) : null;
+  el.querySelectorAll('.rv').forEach(x => io ? io.observe(x) : x.classList.add('in'));
+  el.querySelector('.lx-down').onclick = e => { e.preventDefault(); el.scrollTo({ top: hero.offsetHeight - 50, behavior: 'smooth' }); };
   const last = SEEN.last && okRoute(SEEN.last) && SEEN.last !== 'index' ? SEEN.last : '';
-  const contName = (D) => { const g = LEARN_GRAPES.find(x => x.id === last); if (g) return g.name; if (last.startsWith('do-')) { const x = D && doById(D, last.slice(3)); return x ? x.name : ''; } return t({ uvas: 'learn_sub_grapes', do: 'learn_sub_do', catar: 'learn_sub_tasting', jugar: 'g_title', ideal: 'learn_sub_ideal' }[last]); };
-  // uva del día: frase y una pista al azar del día
-  getUva(gd.id).then(d => { if (seq !== learnSeq) return; const x = d[L] || d.es, cl = x.clues || []; $('#liTag').textContent = x.tagline || ''; if (cl.length) $('#liClue').innerHTML = '<b>' + esc(t('learn_didyou')) + '</b> ' + esc(cl[Math.floor(seeded(+today().replace(/-/g, '') + 7)() * cl.length)]); }).catch(() => {});
-  getCata().then(C => { if (seq !== learnSeq) return; const box = $('#liSteps');
-    box.innerHTML = C.steps_t.slice(0, 4).map((s, i) => '<button data-ct="' + i + '" class="' + (SEEN.c.includes(i) ? 'seen' : '') + '"><span>' + (i + 1) + '</span>' + esc(s) + '</button>').join('') + '<button data-ct="4" class="play"><span>?</span>' + esc(C.game.t) + '</button>';
-    box.querySelectorAll('[data-ct]').forEach(b => b.onclick = () => { CT.tab = +b.dataset.ct; learnNav('catar'); }); }).catch(() => {});
+  const contName = D => { const g = LEARN_GRAPES.find(x => x.id === last); if (g) return g.name; if (last.startsWith('do-')) { const x = D && doById(D, last.slice(3)); return x ? x.name : ''; } return t({ uvas: 'learn_sub_grapes', do: 'learn_sub_do', catar: 'learn_sub_tasting', jugar: 'g_title', ideal: 'learn_sub_ideal' }[last]); };
+  // frases de cada uva (en el idioma actual)
+  LEARN_GRAPES.forEach(g => getUva(g.id).then(d => { if (seq !== learnSeq) return; const x = d[L] || d.es, p = el.querySelector('[data-tg="' + g.id + '"]'); if (p) p.textContent = x.tagline || '';
+    if (g.id === gd.id) { $('#liTag').textContent = x.tagline || ''; const cl = x.clues || []; if (cl.length) $('#liClue').innerHTML = '<b>' + esc(t('learn_didyou')) + '</b> ' + esc(cl[Math.floor(seeded(dseed + 7)() * cl.length)]); } }).catch(() => {}));
+  // cata: la copa cambia según la fase elegida
+  getCata().then(C => { if (seq !== learnSeq) return; const box = $('#liSteps'), stage = el.querySelector('.lx-stage'), P = [C.eye, C.nose, C.mouth, C.end];
+    box.innerHTML = C.steps_t.slice(0, 4).map((s, i) => '<button data-ct="' + i + '" class="' + (i === 0 ? 'sel' : '') + (SEEN.c.includes(i) ? ' seen' : '') + '"><span>' + (i + 1) + '</span><div><b>' + esc(s) + '</b><p>' + esc((P[i] && P[i].lead) || '') + '</p><em>' + esc(t('learn_go_step')) + ' →</em></div></button>').join('') +
+      '<button data-ct="4" class="play"><span>?</span><div><b>' + esc(C.game.t) + '</b></div></button>';
+    box.querySelectorAll('[data-ct]').forEach(b => { const i = +b.dataset.ct;
+      b.onmouseenter = () => { if (i < 4) stage.dataset.st = i; };
+      b.onclick = () => { if (i < 4 && !b.classList.contains('sel')) { box.querySelectorAll('[data-ct]').forEach(x => x.classList.toggle('sel', x === b)); stage.dataset.st = i; if (matchMedia('(hover: none)').matches) return; } CT.tab = i; learnNav('catar'); }; }); }).catch(() => {});
+  // DO: cifras grandes y mapa con puntos
   Promise.all([getDO(), getMini()]).then(([D, land]) => {
     if (seq !== learnSeq) return;
     const isDO = x => !DO_NOT.includes(x.level), dos = D.dos.filter(isDO), nC = new Set(dos.map(x => x.c)).size, nIG = D.dos.length - dos.length;
-    el.querySelector('.li-lane.do .li-head small').textContent = t('learn_n_do', { n: dos.length, m: nC });
-    $('#liDoFoot').insertAdjacentHTML('afterbegin', prog(SEEN.d.filter(id => dos.some(x => x.id === id)).length, dos.length));
+    $('#liDoProg').outerHTML = prog(SEEN.d.filter(id => dos.some(x => x.id === id)).length, dos.length);
+    $('#liStats').innerHTML = [[dos.length, 'do_kind_do'], [nC, 'learn_countries'], [nIG, 'do_kind_ig']].map(([n, k]) => '<div><b data-n="' + n + '">0</b><span>' + esc(t(k)) + '</span></div>').join('');
+    // contador animado al aparecer
+    const cnt = $('#liStats'); const run = () => cnt.querySelectorAll('b').forEach(b => { const n = +b.dataset.n, t0 = performance.now(); const f = now => { const k = Math.min(1, (now - t0) / 1100); b.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1 && b.isConnected) requestAnimationFrame(f); }; requestAnimationFrame(f); });
+    if (io) { const o2 = new IntersectionObserver(es => { if (es[0].isIntersecting) { run(); o2.disconnect(); } }, { root: el, threshold: .4 }); o2.observe(cnt); } else run();
     const P = x => [x.pt[0] + 180, 75 - x.pt[1]];
-    const dot = x => { const [cx, cy] = P(x), d = isDO(x); return '<g class="pt ' + (d ? 'do' : 'ig') + (SEEN.d.includes(x.id) ? ' seen' : '') + '" data-l="do-' + esc(x.id) + '" data-n="' + esc(x.name + ' · ' + t(d ? 'do_kind_do1' : 'do_kind_ig1')) + '"><circle class="hit" cx="' + cx + '" cy="' + cy + '" r="5"/><circle class="v" cx="' + cx + '" cy="' + cy + '" r="' + (d ? 2.3 : 1.7) + '"/></g>'; };
+    const dot = (x, i) => { const [cx, cy] = P(x), d = isDO(x); return '<g class="pt ' + (d ? 'do' : 'ig') + (SEEN.d.includes(x.id) ? ' seen' : '') + '" data-l="do-' + esc(x.id) + '" data-n="' + esc(x.name + ' · ' + t(d ? 'do_kind_do1' : 'do_kind_ig1')) + '" style="--d:' + (i % 12) * 0.25 + 's"><circle class="hit" cx="' + cx + '" cy="' + cy + '" r="5"/>' + (d ? '<circle class="pulse" cx="' + cx + '" cy="' + cy + '" r="2.3"/>' : '') + '<circle class="v" cx="' + cx + '" cy="' + cy + '" r="' + (d ? 2.3 : 1.7) + '"/></g>'; };
     $('#liWorld').innerHTML = '<svg viewBox="40 8 300 112" role="img" aria-label="' + esc(t('learn_sub_do')) + '">' + (land ? '<path class="land" d="' + land + '"/>' : '') +
-      D.dos.filter(x => x.pt && !isDO(x)).map(dot).join('') + dos.filter(x => x.pt).map(dot).join('') + '</svg><div class="li-legend"><span><i class="do"></i>' + esc(t('do_kind_do')) + '</span><span><i class="ig"></i>' + esc(t('do_kind_ig')) + ' (' + nIG + ')</span></div>';
+      D.dos.filter(x => x.pt && !isDO(x)).map(dot).join('') + dos.filter(x => x.pt).map(dot).join('') + '</svg><div class="lx-legend"><span><i class="do"></i>' + esc(t('do_kind_do')) + '</span><span><i class="ig"></i>' + esc(t('do_kind_ig')) + '</span></div>';
     const cap = $('#liCap');
     $('#liWorld').querySelectorAll('.pt').forEach(g => { g.onmouseenter = () => { cap.textContent = g.dataset.n; cap.classList.add('on'); }; g.onmouseleave = () => { cap.textContent = t('learn_do_tap'); cap.classList.remove('on'); }; g.onclick = () => learnNav(g.dataset.l); });
-    if (last) $('#liCont').innerHTML = '<button class="li-cont" data-l="' + esc(last) + '">↺ ' + esc(t('learn_continue')) + ': <b>' + esc(contName(D)) + '</b></button>', learnWire($('#liCont'));
+    if (last) { $('#liCont').innerHTML = '<button class="lx-cont" data-l="' + esc(last) + '">↺ ' + esc(t('learn_continue')) + ': <b>' + esc(contName(D)) + '</b></button>'; learnWire($('#liCont')); }
   }).catch(e => console.error(e));
 }
 function renderGrapeList() {
