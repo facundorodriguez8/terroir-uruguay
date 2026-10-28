@@ -601,6 +601,48 @@ body.learning #coach { display: none; }
 @media (max-width: 640px) { #learn .l-def { grid-template-columns: 1fr; } }
 #learn .l-two.eq, #learn .l-two.serve2 { grid-template-columns: 1fr 1fr; align-items: start; }
 @media (max-width: 720px) { #learn .l-two.eq, #learn .l-two.serve2 { grid-template-columns: 1fr; } }
+/* v4: blancas, pestañas, comparar, juegos */
+#learn { --l-glass: rgba(255,255,255,.55); }
+#learn.theme-white { --l-glass: rgba(70,50,25,.5); }
+#learn.theme-white .l-radar .rv { fill: rgba(138,100,32,.25); }
+#learn .l-radar .rv2 { fill: rgba(120,170,220,.25); stroke: #6fa8dc; stroke-width: 2; stroke-dasharray: 4 3; }
+#learn .l-tabs { display: flex; gap: 8px; margin: 6px 0 18px; }
+#learn .l-tabs button { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink); font: inherit; font-size: 15px; cursor: pointer; }
+#learn .l-tabs button.sel { background: var(--l-acc); border-color: var(--l-acc); color: #1a1213; font-weight: 600; }
+#learn .l-tabs .berry { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+#learn .l-tabs .berry.red { background: #6b1630; box-shadow: inset -2px -2px 0 rgba(0,0,0,.3); }
+#learn .l-tabs .berry.white { background: #d9cf72; box-shadow: inset -2px -2px 0 rgba(0,0,0,.15); }
+#learn .l-cmp { margin-top: 16px; }
+#learn .l-cmp select { margin-left: 6px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink); font: inherit; }
+#learn.theme-white .l-cmp select option, #learn .l-cmp select option { color: #222; }
+#learn .cmp-out { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+#learn .cmp-g { display: flex; gap: 4px; }
+#learn .cmp-g > div { text-align: center; width: 70px; }
+#learn .cmp-g .l-glass { width: 60px; height: auto; }
+#learn .cmp-g b { display: block; font-size: 12px; } #learn .cmp-g .k1 { color: var(--l-acc); } #learn .cmp-g .k2 { color: #6fa8dc; }
+#learn .cmp-out .l-radar { flex: 1; max-width: 260px; }
+#learn .l-more { background: none; border: 0; color: var(--l-acc); font: inherit; font-size: 14px; cursor: pointer; padding: 8px 0; text-decoration: underline; text-underline-offset: 3px; }
+#learn .l-gamebtns { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
+#learn .l-gamebtns button { text-align: left; background: var(--l-card); border: 1px solid var(--l-line); border-radius: 14px; padding: 14px; color: var(--l-ink); font: inherit; cursor: pointer; display: grid; grid-template-columns: 40px 1fr; column-gap: 10px; }
+#learn .l-gamebtns button.sel { border-color: var(--l-acc); box-shadow: 0 0 0 1px var(--l-acc); }
+#learn .l-gamebtns .ic { grid-row: span 2; width: 40px; height: 40px; border-radius: 50%; background: var(--l-acc); color: #1a1213; display: grid; place-items: center; font-size: 20px; font-weight: 700; }
+#learn .l-gamebtns small { color: var(--l-ink2); font-size: 13px; }
+#learn .l-game { margin-top: 16px; background: var(--l-card); border: 1px solid var(--l-line); border-radius: 16px; padding: 18px; scroll-margin-top: 70px; }
+#learn .l-game h3 { font-size: 18px; margin-bottom: 8px; }
+#learn .l-game .l-chips { margin: 12px 0; }
+#learn .l-clues { padding-left: 20px; margin: 8px 0; } #learn .l-clues li { margin: 6px 0; animation: lpop .3s ease; }
+#learn .l-chip.good { background: rgba(111,191,115,.2); border-color: #6fbf73; } #learn .l-chip.bad { background: rgba(224,122,95,.2); border-color: #e07a5f; } #learn .l-chip.off { opacity: .45; }
+#learn .l-chip:disabled { opacity: .35; cursor: default; }
+#learn .l-chip.r::before, #learn .l-chip.w::before { content: ''; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; background: #8c1d2f; } #learn .l-chip.w::before { background: #d9cf72; }
+#learn .l-ladder { list-style: none; padding: 0; margin: 8px 0; display: grid; gap: 6px; }
+#learn .l-ladder li { display: flex; gap: 10px; align-items: center; min-height: 38px; border: 1px dashed var(--l-line); border-radius: 10px; padding: 6px 10px; }
+#learn .l-ladder li span { width: 24px; height: 24px; border-radius: 50%; background: var(--l-line); display: grid; place-items: center; font-size: 12px; }
+#learn .l-ladder li.yes { border-style: solid; border-color: #6fbf73; } #learn .l-ladder li.no { border-style: solid; border-color: #e07a5f; }
+#learn .l-ladder li small { color: var(--l-ink2); }
+#learn .l-scale { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--l-ink2); }
+#learn .l-scale i { flex: 1; height: 4px; border-radius: 2px; background: linear-gradient(90deg, rgba(226,180,106,.2), var(--l-acc)); }
+#learn .l-game .cta[disabled] { opacity: .45; }
+#learn .l-wheel text.sm { font-size: 6.8px; }
 
 </style>
 </head>
@@ -1531,6 +1573,12 @@ for (const l in T_ADD23) Object.assign(T[l], T_ADD23[l]);
 
 const T_ADD24 = {"es": {"sim_region": "Región", "f_alt": "Altitud", "f_rain": "Lluvia al año", "f_amp": "Amplitud térmica", "f_soil": "Suelo", "f_climate": "Clima", "temp_t": "Temperatura de servicio", "temp_cold": "Muy frío: el aroma se cierra y los taninos se sienten más duros y amargos.", "temp_cool": "Un poco frío: dejalo unos minutos en la copa.", "temp_ok": "Temperatura justa: fruta, taninos y alcohol en equilibrio.", "temp_warm": "Algo caliente: empieza a notarse el alcohol.", "temp_hot": "Demasiado caliente: el alcohol tapa la fruta y el vino se siente pesado.", "pair_yes": "Funciona", "pair_no": "Mejor no", "sources_t": "Fuentes", "sim_hint": "Elegí la región, la crianza y la edad: la copa, el perfil y los aromas cambian al instante."}, "en": {"sim_region": "Region", "f_alt": "Altitude", "f_rain": "Annual rainfall", "f_amp": "Diurnal range", "f_soil": "Soil", "f_climate": "Climate", "temp_t": "Serving temperature", "temp_cold": "Too cold: the aromas close up and the tannins feel harder and more bitter.", "temp_cool": "A little cool: give it a few minutes in the glass.", "temp_ok": "Just right: fruit, tannins and alcohol in balance.", "temp_warm": "A bit warm: the alcohol starts to show.", "temp_hot": "Too warm: the alcohol masks the fruit and the wine feels heavy.", "pair_yes": "Works", "pair_no": "Better not", "sources_t": "Sources", "sim_hint": "Pick the region, the ageing and the age: the glass, the profile and the aromas change instantly."}, "pt": {"sim_region": "Região", "f_alt": "Altitude", "f_rain": "Chuva anual", "f_amp": "Amplitude térmica", "f_soil": "Solo", "f_climate": "Clima", "temp_t": "Temperatura de serviço", "temp_cold": "Muito frio: o aroma se fecha e os taninos parecem mais duros e amargos.", "temp_cool": "Um pouco frio: deixe alguns minutos na taça.", "temp_ok": "Temperatura ideal: fruta, taninos e álcool em equilíbrio.", "temp_warm": "Um pouco quente: o álcool começa a aparecer.", "temp_hot": "Quente demais: o álcool encobre a fruta e o vinho fica pesado.", "pair_yes": "Combina", "pair_no": "Melhor não", "sources_t": "Fontes", "sim_hint": "Escolha a região, o estágio em madeira e a idade: a taça, o perfil e os aromas mudam na hora."}, "fr": {"sim_region": "Région", "f_alt": "Altitude", "f_rain": "Pluie annuelle", "f_amp": "Amplitude thermique", "f_soil": "Sol", "f_climate": "Climat", "temp_t": "Température de service", "temp_cold": "Trop froid : les arômes se ferment et les tanins paraissent plus durs et amers.", "temp_cool": "Un peu frais : laissez-le quelques minutes dans le verre.", "temp_ok": "Température idéale : fruit, tanins et alcool en équilibre.", "temp_warm": "Un peu chaud : l’alcool commence à se faire sentir.", "temp_hot": "Trop chaud : l’alcool masque le fruit et le vin paraît lourd.", "pair_yes": "Ça marche", "pair_no": "Plutôt non", "sources_t": "Sources", "sim_hint": "Choisissez la région, l’élevage et l’âge : le verre, le profil et les arômes changent instantanément."}, "de": {"sim_region": "Region", "f_alt": "Höhe", "f_rain": "Jahresniederschlag", "f_amp": "Temperaturamplitude", "f_soil": "Boden", "f_climate": "Klima", "temp_t": "Trinktemperatur", "temp_cold": "Zu kalt: Das Aroma verschließt sich, die Tannine wirken härter und bitterer.", "temp_cool": "Etwas kühl: Lass ihn ein paar Minuten im Glas.", "temp_ok": "Genau richtig: Frucht, Tannine und Alkohol im Gleichgewicht.", "temp_warm": "Etwas warm: Der Alkohol macht sich bemerkbar.", "temp_hot": "Zu warm: Der Alkohol überdeckt die Frucht, der Wein wirkt schwer.", "pair_yes": "Passt", "pair_no": "Lieber nicht", "sources_t": "Quellen", "sim_hint": "Wähle Region, Ausbau und Alter: Glas, Profil und Aromen ändern sich sofort."}, "ru": {"sim_region": "Регион", "f_alt": "Высота", "f_rain": "Осадки в год", "f_amp": "Суточный перепад температур", "f_soil": "Почва", "f_climate": "Климат", "temp_t": "Температура подачи", "temp_cold": "Слишком холодно: аромат закрывается, а танины кажутся жёстче и горче.", "temp_cool": "Чуть прохладно: дайте вину постоять несколько минут в бокале.", "temp_ok": "Идеальная температура: фрукты, танины и алкоголь в балансе.", "temp_warm": "Тепловато: начинает чувствоваться алкоголь.", "temp_hot": "Слишком тепло: алкоголь заглушает фрукты, вино кажется тяжёлым.", "pair_yes": "Подходит", "pair_no": "Лучше не надо", "sources_t": "Источники", "sim_hint": "Выберите регион, выдержку и возраст: бокал, профиль и ароматы меняются сразу."}, "zh": {"sim_region": "产区", "f_alt": "海拔", "f_rain": "年降水量", "f_amp": "昼夜温差", "f_soil": "土壤", "f_climate": "气候", "temp_t": "侍酒温度", "temp_cold": "太冷：香气封闭，单宁显得更硬、更苦。", "temp_cool": "略凉：在杯中放几分钟再喝。", "temp_ok": "温度正好：果味、单宁和酒精达到平衡。", "temp_warm": "略热：酒精感开始显现。", "temp_hot": "太热：酒精盖过果味，酒喝起来沉重。", "pair_yes": "适合", "pair_no": "最好不要", "sources_t": "资料来源", "sim_hint": "选择产区、陈酿方式和酒龄：酒杯、风味特征和香气会即时变化。"}, "ja": {"sim_region": "産地", "f_alt": "標高", "f_rain": "年間降水量", "f_amp": "日較差", "f_soil": "土壌", "f_climate": "気候", "temp_t": "サービス温度", "temp_cold": "冷えすぎ：香りが閉じ、タンニンが硬く苦く感じられます。", "temp_cool": "少し冷たい：グラスで数分置いてください。", "temp_ok": "適温：果実味、タンニン、アルコールのバランスが取れています。", "temp_warm": "やや高め：アルコールが感じられ始めます。", "temp_hot": "高すぎ：アルコールが果実味を覆い、重く感じられます。", "pair_yes": "合う", "pair_no": "避けたい", "sources_t": "出典", "sim_hint": "産地、熟成、年数を選んでください。グラス、プロフィール、香りがすぐに変わります。"}, "ko": {"sim_region": "산지", "f_alt": "고도", "f_rain": "연간 강수량", "f_amp": "일교차", "f_soil": "토양", "f_climate": "기후", "temp_t": "서빙 온도", "temp_cold": "너무 차가움: 향이 닫히고 타닌이 더 거칠고 쓰게 느껴집니다.", "temp_cool": "조금 차가움: 잔에서 몇 분 기다려 주세요.", "temp_ok": "적정 온도: 과실, 타닌, 알코올이 균형을 이룹니다.", "temp_warm": "조금 따뜻함: 알코올이 느껴지기 시작합니다.", "temp_hot": "너무 따뜻함: 알코올이 과실 향을 가리고 와인이 무겁게 느껴집니다.", "pair_yes": "잘 어울림", "pair_no": "피하세요", "sources_t": "출처", "sim_hint": "산지, 숙성, 연령을 선택하세요. 잔, 프로필, 향이 바로 바뀝니다."}};
 for (const l in T_ADD24) Object.assign(T[l], T_ADD24[l]);
+
+const T_ADD25 = {"es": {"in_uy": "en Uruguay", "uy_nodep": "INAVI no publica esta uva por departamento.", "cmp_t": "Comparar con", "g_title": "Jugá y aprendé", "g_hint": "Tres juegos para conocer las uvas sin saber nada de vino.", "g_guess": "Adiviná la uva", "g_guess_d": "Pistas de a una: cuantas menos uses, más puntos.", "g_order": "Ordená de liviano a potente", "g_order_d": "Tocá las uvas en orden, de la más liviana a la más potente.", "g_smell": "¿A qué huele?", "g_smell_d": "Elegí los aromas que son de verdad de esa uva.", "g_more": "Otra pista", "g_right": "¡Correcto! {p} puntos", "g_wrong": "No: era {g}", "g_open": "Ver la ficha de {g}", "g_again": "Jugar otra vez", "g_order_hint": "Tocá primero la más liviana.", "g_light": "Liviano", "g_strong": "Potente", "g_undo": "Deshacer", "g_order_ok": "¡Perfecto!", "g_order_bad": "Casi: mirá las correcciones.", "g_order_why": "Lo «potente» sale del cuerpo, los taninos y el alcohol de cada uva.", "g_smell_q": "¿A qué huele un {g}?", "g_smell_hint": "Hay 4 aromas correctos. Elegí y después tocá «Ver resultado».", "g_check": "Ver resultado", "g_smell_res": "Acertaste {n} de 4"}, "en": {"in_uy": "in Uruguay", "uy_nodep": "INAVI doesn't publish this grape by department.", "cmp_t": "Compare with", "g_title": "Play and learn", "g_hint": "Three games to get to know grapes, no wine knowledge needed.", "g_guess": "Guess the grape", "g_guess_d": "One clue at a time: the fewer you use, the more points.", "g_order": "Order from light to bold", "g_order_d": "Tap the grapes in order, from lightest to boldest.", "g_smell": "What does it smell like?", "g_smell_d": "Pick the aromas that really belong to this grape.", "g_more": "Another clue", "g_right": "Correct! {p} points", "g_wrong": "No: it was {g}", "g_open": "See the {g} profile", "g_again": "Play again", "g_order_hint": "Tap the lightest one first.", "g_light": "Light", "g_strong": "Bold", "g_undo": "Undo", "g_order_ok": "Perfect!", "g_order_bad": "Almost: check the corrections.", "g_order_why": "How “bold” a grape is comes from its body, tannins and alcohol.", "g_smell_q": "What does a {g} smell like?", "g_smell_hint": "There are 4 correct aromas. Pick them, then tap “See result”.", "g_check": "See result", "g_smell_res": "You got {n} out of 4"}, "pt": {"in_uy": "no Uruguai", "uy_nodep": "O INAVI não publica esta uva por departamento.", "cmp_t": "Comparar com", "g_title": "Jogue e aprenda", "g_hint": "Três jogos para conhecer as uvas sem saber nada de vinho.", "g_guess": "Adivinhe a uva", "g_guess_d": "Uma dica por vez: quanto menos usar, mais pontos.", "g_order": "Ordene do leve ao potente", "g_order_d": "Toque nas uvas em ordem, da mais leve à mais potente.", "g_smell": "Qual é o aroma?", "g_smell_d": "Escolha os aromas que são mesmo dessa uva.", "g_more": "Outra dica", "g_right": "Correto! {p} pontos", "g_wrong": "Não: era {g}", "g_open": "Ver a ficha de {g}", "g_again": "Jogar de novo", "g_order_hint": "Toque primeiro na mais leve.", "g_light": "Leve", "g_strong": "Potente", "g_undo": "Desfazer", "g_order_ok": "Perfeito!", "g_order_bad": "Quase: veja as correções.", "g_order_why": "O «potente» vem do corpo, dos taninos e do álcool de cada uva.", "g_smell_q": "Qual é o aroma de um {g}?", "g_smell_hint": "Há 4 aromas corretos. Escolha e depois toque em «Ver resultado».", "g_check": "Ver resultado", "g_smell_res": "Você acertou {n} de 4"}, "fr": {"in_uy": "en Uruguay", "uy_nodep": "L’INAVI ne publie pas ce cépage par département.", "cmp_t": "Comparer avec", "g_title": "Jouez et apprenez", "g_hint": "Trois jeux pour découvrir les cépages sans rien connaître au vin.", "g_guess": "Devinez le cépage", "g_guess_d": "Un indice à la fois : moins vous en utilisez, plus vous marquez de points.", "g_order": "Classez du plus léger au plus puissant", "g_order_d": "Touchez les cépages dans l’ordre, du plus léger au plus puissant.", "g_smell": "Ça sent quoi ?", "g_smell_d": "Choisissez les arômes qui appartiennent vraiment à ce cépage.", "g_more": "Un autre indice", "g_right": "Bravo ! {p} points", "g_wrong": "Non : c’était {g}", "g_open": "Voir la fiche de {g}", "g_again": "Rejouer", "g_order_hint": "Touchez d’abord le plus léger.", "g_light": "Léger", "g_strong": "Puissant", "g_undo": "Annuler", "g_order_ok": "Parfait !", "g_order_bad": "Presque : regardez les corrections.", "g_order_why": "La « puissance » vient du corps, des tanins et de l’alcool de chaque cépage.", "g_smell_q": "Que sent un {g} ?", "g_smell_hint": "Il y a 4 arômes corrects. Choisissez-les, puis touchez « Voir le résultat ».", "g_check": "Voir le résultat", "g_smell_res": "{n} sur 4 trouvés"}, "de": {"in_uy": "in Uruguay", "uy_nodep": "INAVI veröffentlicht diese Rebsorte nicht nach Departamento.", "cmp_t": "Vergleichen mit", "g_title": "Spielen und lernen", "g_hint": "Drei Spiele, um Rebsorten kennenzulernen – ganz ohne Weinwissen.", "g_guess": "Errate die Rebsorte", "g_guess_d": "Ein Hinweis nach dem anderen: Je weniger du brauchst, desto mehr Punkte.", "g_order": "Ordne von leicht bis kräftig", "g_order_d": "Tippe die Rebsorten der Reihe nach an, von der leichtesten bis zur kräftigsten.", "g_smell": "Wonach riecht es?", "g_smell_d": "Wähle die Aromen, die wirklich zu dieser Rebsorte gehören.", "g_more": "Noch ein Hinweis", "g_right": "Richtig! {p} Punkte", "g_wrong": "Nein: Es war {g}", "g_open": "Steckbrief von {g} ansehen", "g_again": "Nochmal spielen", "g_order_hint": "Tippe zuerst die leichteste an.", "g_light": "Leicht", "g_strong": "Kräftig", "g_undo": "Rückgängig", "g_order_ok": "Perfekt!", "g_order_bad": "Fast: Schau dir die Korrekturen an.", "g_order_why": "Wie „kräftig“ eine Rebsorte ist, hängt von Körper, Tanninen und Alkohol ab.", "g_smell_q": "Wonach riecht ein {g}?", "g_smell_hint": "Es gibt 4 richtige Aromen. Wähle aus und tippe dann auf „Ergebnis ansehen“.", "g_check": "Ergebnis ansehen", "g_smell_res": "{n} von 4 richtig"}, "ru": {"in_uy": "в Уругвае", "uy_nodep": "INAVI не публикует данные по этому сорту по департаментам.", "cmp_t": "Сравнить с", "g_title": "Играйте и учитесь", "g_hint": "Три игры, чтобы познакомиться с сортами винограда без всяких знаний о вине.", "g_guess": "Угадайте сорт", "g_guess_d": "Подсказки по одной: чем меньше используете, тем больше очков.", "g_order": "От лёгкого к мощному", "g_order_d": "Нажимайте на сорта по порядку: от самого лёгкого к самому мощному.", "g_smell": "Чем пахнет?", "g_smell_d": "Выберите ароматы, которые действительно свойственны этому сорту.", "g_more": "Ещё подсказка", "g_right": "Верно! Очков: {p}", "g_wrong": "Нет, это был {g}", "g_open": "Открыть карточку {g}", "g_again": "Сыграть ещё раз", "g_order_hint": "Сначала нажмите на самый лёгкий.", "g_light": "Лёгкий", "g_strong": "Мощный", "g_undo": "Отменить", "g_order_ok": "Отлично!", "g_order_bad": "Почти: посмотрите исправления.", "g_order_why": "«Мощность» зависит от тела, танинов и алкоголя каждого сорта.", "g_smell_q": "Чем пахнет {g}?", "g_smell_hint": "Правильных ароматов 4. Выберите их и нажмите «Показать результат».", "g_check": "Показать результат", "g_smell_res": "Угадано {n} из 4"}, "zh": {"in_uy": "在乌拉圭", "uy_nodep": "INAVI 未按省份公布该葡萄品种的数据。", "cmp_t": "对比", "g_title": "边玩边学", "g_hint": "三个小游戏，不懂葡萄酒也能认识葡萄品种。", "g_guess": "猜葡萄品种", "g_guess_d": "每次一条提示：用得越少，得分越高。", "g_order": "从轻盈到浓郁排序", "g_order_d": "按顺序点击葡萄，从最轻盈到最浓郁。", "g_smell": "闻起来像什么？", "g_smell_d": "选出真正属于这个品种的香气。", "g_more": "再给一条提示", "g_right": "正确！{p} 分", "g_wrong": "不对，答案是 {g}", "g_open": "查看 {g} 详情", "g_again": "再玩一次", "g_order_hint": "先点最轻盈的。", "g_light": "轻盈", "g_strong": "浓郁", "g_undo": "撤销", "g_order_ok": "完美！", "g_order_bad": "差一点：看看纠正。", "g_order_why": "“浓郁”程度取决于每个品种的酒体、单宁和酒精度。", "g_smell_q": "{g} 闻起来像什么？", "g_smell_hint": "共有 4 种正确香气。选好后点击“查看结果”。", "g_check": "查看结果", "g_smell_res": "答对 {n}/4"}, "ja": {"in_uy": "ウルグアイで", "uy_nodep": "INAVIはこのブドウの県別データを公開していません。", "cmp_t": "比較する", "g_title": "遊んで学ぼう", "g_hint": "ワインを知らなくてもブドウ品種に親しめる3つのゲームです。", "g_guess": "ブドウを当てよう", "g_guess_d": "ヒントは1つずつ。使う数が少ないほど高得点です。", "g_order": "軽い順に並べよう", "g_order_d": "いちばん軽いものから力強いものへ、順にタップしてください。", "g_smell": "どんな香り？", "g_smell_d": "このブドウに本当にある香りを選んでください。", "g_more": "次のヒント", "g_right": "正解！{p}ポイント", "g_wrong": "不正解：正解は{g}でした", "g_open": "{g}の詳細を見る", "g_again": "もう一度遊ぶ", "g_order_hint": "まず、いちばん軽いものをタップしてください。", "g_light": "軽い", "g_strong": "力強い", "g_undo": "元に戻す", "g_order_ok": "完璧です！", "g_order_bad": "惜しい！訂正を確認してください。", "g_order_why": "「力強さ」は、各品種のボディ、タンニン、アルコールで決まります。", "g_smell_q": "{g}はどんな香り？", "g_smell_hint": "正しい香りは4つです。選んだら「結果を見る」をタップしてください。", "g_check": "結果を見る", "g_smell_res": "4つ中{n}つ正解"}, "ko": {"in_uy": "우루과이에서", "uy_nodep": "INAVI는 이 품종의 주별 데이터를 공개하지 않습니다.", "cmp_t": "비교하기", "g_title": "놀면서 배우기", "g_hint": "와인을 몰라도 포도 품종을 알아갈 수 있는 게임 3가지입니다.", "g_guess": "포도 맞히기", "g_guess_d": "힌트는 하나씩 나옵니다. 적게 쓸수록 점수가 높아요.", "g_order": "가벼운 것부터 묵직한 것까지", "g_order_d": "가장 가벼운 품종부터 가장 묵직한 품종까지 순서대로 누르세요.", "g_smell": "어떤 향이 날까요?", "g_smell_d": "이 품종에 실제로 있는 향을 고르세요.", "g_more": "힌트 더 보기", "g_right": "정답입니다! {p}점", "g_wrong": "아니에요. 정답은 {g}입니다", "g_open": "{g} 정보 보기", "g_again": "다시 하기", "g_order_hint": "가장 가벼운 것을 먼저 누르세요.", "g_light": "가벼움", "g_strong": "묵직함", "g_undo": "되돌리기", "g_order_ok": "완벽해요!", "g_order_bad": "아깝네요. 수정된 부분을 확인하세요.", "g_order_why": "'묵직함'은 각 품종의 바디감, 타닌, 알코올에서 나옵니다.", "g_smell_q": "{g}에서는 어떤 향이 날까요?", "g_smell_hint": "정답 향은 4개입니다. 고른 뒤 '결과 보기'를 누르세요.", "g_check": "결과 보기", "g_smell_res": "4개 중 {n}개 정답"}};
+for (const l in T_ADD25) Object.assign(T[l], T_ADD25[l]);
+
+const T_ADD26 = {"es": {"temp_ok_w": "Temperatura justa: frescura, aroma y fruta en equilibrio.", "temp_cold_w": "Muy frío: el aroma se apaga y el vino casi no tiene sabor."}, "en": {"temp_ok_w": "Just right: freshness, aroma and fruit in balance.", "temp_cold_w": "Too cold: the aroma shuts down and the wine tastes of very little."}, "pt": {"temp_ok_w": "Temperatura certa: frescor, aroma e fruta em equilíbrio.", "temp_cold_w": "Frio demais: o aroma se apaga e o vinho quase não tem sabor."}, "fr": {"temp_ok_w": "Bonne température : fraîcheur, arôme et fruit en équilibre.", "temp_cold_w": "Trop froid : l’arôme s’éteint et le vin n’a presque plus de goût."}, "de": {"temp_ok_w": "Genau richtig: Frische, Aroma und Frucht im Gleichgewicht.", "temp_cold_w": "Zu kalt: Das Aroma verschwindet und der Wein schmeckt kaum nach etwas."}, "ru": {"temp_ok_w": "Идеальная температура: свежесть, аромат и фрукт в балансе.", "temp_cold_w": "Слишком холодно: аромат пропадает, а вкус почти не чувствуется."}, "zh": {"temp_ok_w": "温度正好：清爽、香气与果味达到平衡。", "temp_cold_w": "太冷：香气被压住，酒几乎尝不出味道。"}, "ja": {"temp_ok_w": "ちょうどよい温度：爽やかさ、香り、果実味のバランスがとれています。", "temp_cold_w": "冷やしすぎ：香りが閉じて、味もほとんど感じられません。"}, "ko": {"temp_ok_w": "딱 좋은 온도: 신선함, 향, 과일 맛이 균형을 이룹니다.", "temp_cold_w": "너무 차가움: 향이 닫히고 맛이 거의 느껴지지 않습니다."}};
+for (const l in T_ADD26) Object.assign(T[l], T_ADD26[l]);
 
 (() => {
 'use strict';
@@ -2889,21 +2937,25 @@ $('#helpBtn').onclick = () => coachShow(0);
 
 /* ---------- Aprender: fichas de uvas (sección aparte del mapa; el mapa sigue siendo la portada) ---------- */
 const LEARN_GRAPES = [
-  { id: 'tannat', name: 'Tannat', kind: 'red', ready: true }, { id: 'merlot', name: 'Merlot', kind: 'red' }, { id: 'cabernet-franc', name: 'Cabernet Franc', kind: 'red' },
-  { id: 'cabernet-sauvignon', name: 'Cabernet Sauvignon', kind: 'red' }, { id: 'marselan', name: 'Marselan', kind: 'red' }, { id: 'pinot-noir', name: 'Pinot Noir', kind: 'red' },
-  { id: 'syrah', name: 'Syrah', kind: 'red' }, { id: 'moscatel-hamburgo', name: 'Moscatel de Hamburgo', kind: 'red' }, { id: 'albarino', name: 'Albariño', kind: 'white' },
-  { id: 'sauvignon-blanc', name: 'Sauvignon Blanc', kind: 'white' }, { id: 'chardonnay', name: 'Chardonnay', kind: 'white' }, { id: 'viognier', name: 'Viognier', kind: 'white' }, { id: 'ugni-blanc', name: 'Ugni Blanc', kind: 'white' }
-];
+  { id: 'tannat', name: 'Tannat', kind: 'red' }, { id: 'merlot', name: 'Merlot', kind: 'red' }, { id: 'cabernet-sauvignon', name: 'Cabernet Sauvignon', kind: 'red' },
+  { id: 'cabernet-franc', name: 'Cabernet Franc', kind: 'red' }, { id: 'marselan', name: 'Marselan', kind: 'red' }, { id: 'pinot-noir', name: 'Pinot Noir', kind: 'red' },
+  { id: 'syrah', name: 'Syrah', kind: 'red' }, { id: 'moscatel-hamburgo', name: 'Moscatel de Hamburgo', kind: 'red' }, { id: 'ugni-blanc', name: 'Ugni Blanc', kind: 'white' },
+  { id: 'sauvignon-blanc', name: 'Sauvignon Blanc', kind: 'white' }, { id: 'albarino', name: 'Albariño', kind: 'white' }, { id: 'chardonnay', name: 'Chardonnay', kind: 'white' }, { id: 'viognier', name: 'Viognier', kind: 'white' }
+].map(g => Object.assign(g, { ready: true }));
+let learnTab = 'red', JUEGOS = null, UVAMUNDO = null;
 const getUva = id => UVA[id] ? Promise.resolve(UVA[id]) : get('data/uvas/' + id + '.json').then(d => (UVA[id] = d));
+const getJuegos = () => JUEGOS ? Promise.resolve(JUEGOS) : get('data/uvas/_juegos.json').then(d => (JUEGOS = d));
+const getUvaMundo = () => UVAMUNDO ? Promise.resolve(UVAMUNDO) : get('data/uvas_mundo.json').then(d => (UVAMUNDO = d)).catch(() => (UVAMUNDO = { grapes: {}, prime: {} }));
 function openLearn(route) {
   learnRoute = route || 'index'; const el = $('#learn'); el.hidden = false; document.body.classList.add('learning');
   if (location.hash !== '#aprender' + (route && route !== 'index' ? '/' + route : '')) history.replaceState(null, '', '#aprender' + (route && route !== 'index' ? '/' + route : ''));
   if (learnRoute === 'index') return renderLearnIndex();
   if (learnRoute === 'uvas') return renderGrapeList();
   if (learnRoute === 'catar') return renderTasting();
-  el.className = 'theme-' + ((LEARN_GRAPES.find(g => g.id === learnRoute) || {}).kind || 'red');
+  const gk = (LEARN_GRAPES.find(g => g.id === learnRoute) || {}).kind || 'red'; learnTab = gk;
+  el.className = 'theme-' + (gk === 'white' ? 'white' : 'red');
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
-  getUva(learnRoute).then(renderGrape).catch(() => renderLearnIndex());
+  Promise.all([getUva(learnRoute), getUvaMundo()]).then(([d]) => renderGrape(d)).catch(e => { console.error(e); renderLearnIndex(); });
 }
 function closeLearn() { learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
 const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
@@ -2922,13 +2974,70 @@ function renderLearnIndex() {
   learnWire(el);
 }
 function renderGrapeList() {
-  const el = $('#learn'); el.className = 'theme-index';
-  const grp = kind => LEARN_GRAPES.filter(g => g.kind === kind).map(g => { const ha = (INAVI.nat || {})[g.name];
-    return '<button class="l-gcard ' + g.kind + (g.ready ? ' ready' : ' soon') + '" ' + (g.ready ? 'data-l="' + g.id + '"' : 'disabled') + '><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc(g.ready ? (ha ? nf(ha) + ' ' + t('ha') + ' · ' : '') + t('learn_open') : t('learn_soon')) + '</small></button>'; }).join('');
+  const el = $('#learn'); el.className = 'theme-' + (learnTab === 'white' ? 'white' : 'red');
+  const cards = LEARN_GRAPES.filter(g => g.kind === learnTab).map(g => { const ha = (INAVI.nat || {})[g.name];
+    return '<button class="l-gcard ' + g.kind + ' ready" data-l="' + g.id + '"><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc((ha ? nf(ha) + ' ' + t('ha') + ' ' + t('in_uy') + ' · ' : '') + t('learn_open')) + '</small></button>'; }).join('');
   el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_grapes')) + '</h1><p>' + esc(t('learn_sub_grapes_d')) + '</p></header>' +
-    '<h2 class="l-h2">' + esc(t('learn_reds')) + '</h2><div class="l-grid">' + grp('red') + '</div><h2 class="l-h2">' + esc(t('learn_whites')) + '</h2><div class="l-grid">' + grp('white') + '</div></div>';
+    '<div class="l-tabs" role="tablist">' + ['red', 'white'].map(k => '<button role="tab" data-tab="' + k + '" class="' + (k === learnTab ? 'sel' : '') + '"><span class="berry ' + k + '"></span>' + esc(t(k === 'red' ? 'learn_reds' : 'learn_whites')) + '</button>').join('') + '</div>' +
+    '<div class="l-grid">' + cards + '</div>' +
+    '<section class="l-sec l-games"><h2>' + esc(t('g_title')) + '</h2><p class="l-hint">' + esc(t('g_hint')) + '</p><div class="l-gamebtns">' +
+    [['guess', '?'], ['order', '↗'], ['smell', '❀']].map(([k, ic]) => '<button data-game="' + k + '"><span class="ic">' + ic + '</span><b>' + esc(t('g_' + k)) + '</b><small>' + esc(t('g_' + k + '_d')) + '</small></button>').join('') + '</div><div id="lGame"></div></section></div>';
   learnWire(el);
+  el.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { learnTab = b.dataset.tab; renderGrapeList(); });
+  el.querySelectorAll('[data-game]').forEach(b => b.onclick = () => getJuegos().then(J => { el.querySelectorAll('[data-game]').forEach(x => x.classList.toggle('sel', x === b)); GAMES[b.dataset.game](J[L] || J.es); $('#lGame').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 }
+// juegos para aprender sin saber de vino
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const GAMES = {
+  // Adiviná la uva: pistas de a una; cuantas menos uses, más puntos
+  guess(J) {
+    const box = $('#lGame'), g = J[Math.floor(Math.random() * J.length)], opts = shuffle([g].concat(shuffle(J.filter(x => x.id !== g.id)).slice(0, 3)));
+    let n = 1;
+    const draw = (done, pick) => {
+      box.innerHTML = '<div class="l-game"><h3>' + esc(t('g_guess')) + '</h3><ol class="l-clues">' + g.clues.slice(0, n).map(c => '<li>' + esc(c) + '</li>').join('') + '</ol>' +
+        (done ? '<div class="l-verdict ' + (pick === g.id ? 'yes' : 'no') + '"><b>' + (pick === g.id ? '✓ ' + esc(t('g_right', { p: 5 - n })) : '✗ ' + esc(t('g_wrong', { g: g.name }))) + '</b></div><div class="l-btns"><button class="cta" data-l="' + g.id + '"><span>' + esc(t('g_open', { g: g.name })) + '</span></button><button class="cta ghost" id="gAgain"><span>' + esc(t('g_again')) + '</span></button></div>'
+          : '<div class="l-chips">' + opts.map(o => '<button class="l-chip" data-pick="' + o.id + '">' + esc(o.name) + '</button>').join('') + '</div>' + (n < g.clues.length ? '<button class="l-more" id="gMore">' + esc(t('g_more')) + ' (' + (g.clues.length - n) + ')</button>' : '')) + '</div>';
+      learnWire(box);
+      const m = $('#gMore'); if (m) m.onclick = () => { n++; draw(); };
+      box.querySelectorAll('[data-pick]').forEach(b => b.onclick = () => draw(true, b.dataset.pick));
+      const a = $('#gAgain'); if (a) a.onclick = () => GAMES.guess(J);
+    };
+    draw();
+  },
+  // Ordená de liviano a potente: tocar en orden según el cuerpo
+  order(J) {
+    const box = $('#lGame'), set = shuffle(J).slice(0, 5), body = g => g.prof[2] + g.prof[1] * .3 + g.prof[4] * .2, picked = [];
+    const draw = (done) => {
+      const sorted = set.slice().sort((a, b) => body(a) - body(b)), ok = done && picked.every((g, i) => body(g) === body(sorted[i]));
+      box.innerHTML = '<div class="l-game"><h3>' + esc(t('g_order')) + '</h3><p class="l-hint">' + esc(t('g_order_hint')) + '</p><div class="l-order"><div class="l-chips">' + set.map(g => '<button class="l-chip ' + (g.white ? 'w' : 'r') + '" data-o="' + g.id + '"' + (picked.includes(g) ? ' disabled' : '') + '>' + esc(g.name) + '</button>').join('') + '</div>' +
+        '<ol class="l-ladder">' + set.map((_, i) => { const g = picked[i], right = done && g && body(g) === body(sorted[i]); return '<li class="' + (done ? (right ? 'yes' : 'no') : '') + '"><span>' + (i + 1) + '</span>' + (g ? esc(g.name) : '') + (done && !right ? ' <small>→ ' + esc(sorted[i].name) + '</small>' : '') + '</li>'; }).join('') + '</ol>' +
+        '<div class="l-scale"><span>' + esc(t('g_light')) + '</span><i></i><span>' + esc(t('g_strong')) + '</span></div></div>' +
+        (done ? '<div class="l-verdict ' + (ok ? 'yes' : 'no') + '"><b>' + (ok ? '✓ ' + esc(t('g_order_ok')) : esc(t('g_order_bad'))) + '</b><p>' + esc(t('g_order_why')) + '</p></div><div class="l-btns"><button class="cta ghost" id="gAgain"><span>' + esc(t('g_again')) + '</span></button></div>' : (picked.length ? '<button class="l-more" id="gUndo">' + esc(t('g_undo')) + '</button>' : '')) + '</div>';
+      box.querySelectorAll('[data-o]').forEach(b => b.onclick = () => { picked.push(set.find(g => g.id === b.dataset.o)); draw(picked.length === set.length); });
+      const u = $('#gUndo'); if (u) u.onclick = () => { picked.pop(); draw(); };
+      const a = $('#gAgain'); if (a) a.onclick = () => GAMES.order(J);
+    };
+    draw();
+  },
+  // ¿A qué huele?: elegí los aromas que son de esa uva
+  smell(J) {
+    const box = $('#lGame'), g = J[Math.floor(Math.random() * J.length)], mine = shuffle(g.aro).slice(0, 4);
+    const pool = [...new Set(J.filter(x => x.id !== g.id && x.white === g.white).flatMap(x => x.aro))].filter(a => !g.aro.includes(a));
+    const all = shuffle(mine.concat(shuffle(pool).slice(0, 4))), sel = new Set();
+    const draw = (done) => {
+      const hits = [...sel].filter(a => mine.includes(a)).length, bad = [...sel].filter(a => !mine.includes(a)).length;
+      box.innerHTML = '<div class="l-game"><h3>' + esc(t('g_smell_q', { g: g.name })) + '</h3><p class="l-hint">' + esc(t('g_smell_hint')) + '</p><div class="l-chips">' +
+        all.map(a => '<button class="l-chip' + (sel.has(a) ? ' sel' : '') + (done ? (mine.includes(a) ? ' good' : sel.has(a) ? ' bad' : ' off') : '') + '" data-a="' + esc(a) + '">' + esc(a) + '</button>').join('') + '</div>' +
+        (done ? '<div class="l-verdict ' + (hits === 4 && !bad ? 'yes' : 'no') + '"><b>' + esc(t('g_smell_res', { n: hits })) + '</b></div><div class="l-btns"><button class="cta" data-l="' + g.id + '"><span>' + esc(t('g_open', { g: g.name })) + '</span></button><button class="cta ghost" id="gAgain"><span>' + esc(t('g_again')) + '</span></button></div>'
+          : '<button class="cta" id="gCheck"' + (sel.size ? '' : ' disabled') + '><span>' + esc(t('g_check')) + '</span></button>') + '</div>';
+      learnWire(box);
+      if (!done) box.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { const a = b.dataset.a; sel.has(a) ? sel.delete(a) : sel.add(a); draw(); });
+      const c = $('#gCheck'); if (c) c.onclick = () => draw(true);
+      const a = $('#gAgain'); if (a) a.onclick = () => GAMES.smell(J);
+    };
+    draw();
+  }
+};
 function renderTasting() {
   const el = $('#learn'); el.className = 'theme-index';
   el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_tasting')) + '</h1><p>' + esc(t('learn_sub_tasting_d')) + '</p></header>' +
@@ -2938,11 +3047,12 @@ function renderTasting() {
 // aclara (+) u oscurece (-) un color hex
 const shade = (hex, k) => { const n = parseInt(hex.slice(1), 16), f = x => Math.max(0, Math.min(255, Math.round(k >= 0 ? x + (255 - x) * k : x * (1 + k)))); return '#' + [n >> 16, (n >> 8) & 255, n & 255].map(f).map(x => x.toString(16).padStart(2, '0')).join(''); };
 // gráfico de radar del perfil (0–5)
-function radar(labels, vals) {
+function radar(labels, vals, vals2) {
   const N = labels.length, R = 70, cx = 100, cy = 92, pt = (i, r) => [cx + r * Math.sin(2 * Math.PI * i / N), cy - r * Math.cos(2 * Math.PI * i / N)];
   const ring = r => labels.map((_, i) => pt(i, r).map(x => x.toFixed(1)).join(',')).join(' ');
   return '<svg class="l-radar" viewBox="0 0 200 190">' + [1, 2, 3, 4, 5].map(k => '<polygon points="' + ring(R * k / 5) + '" fill="none" stroke="currentColor" opacity=".15"/>').join('') +
     labels.map((_, i) => { const [x, y] = pt(i, R); return '<line x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="currentColor" opacity=".15"/>'; }).join('') +
+    (vals2 ? '<polygon class="rv2" points="' + vals2.map((v, i) => pt(i, R * v / 5).map(x => x.toFixed(1)).join(',')).join(' ') + '"/>' : '') +
     '<polygon class="rv" points="' + vals.map((v, i) => pt(i, R * v / 5).map(x => x.toFixed(1)).join(',')).join(' ') + '"/>' +
     labels.map((l, i) => { const [x, y] = pt(i, R + 14); return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" text-anchor="middle" dominant-baseline="middle">' + esc(l) + '</text>'; }).join('') + '</svg>';
 }
@@ -2957,29 +3067,32 @@ function miniMap(gn) {
     return '<path data-d="' + f.properties.id + '" data-n="' + esc(n) + '" data-h="' + h + '" d="' + path(f.geometry) + '" style="fill-opacity:' + a.toFixed(2) + '"><title>' + esc(n) + ' · ' + nf(h, h < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</title></path>'; }).join('') + '</svg>';
 }
 // copa de vino en SVG: el color del vino cambia con la edad
-const glassSVG = (wine, rim) => '<svg class="l-glass" viewBox="0 0 120 170" aria-hidden="true"><defs><radialGradient id="lgW" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="' + wine + '" stop-opacity=".85"/><stop offset=".78" stop-color="' + wine + '"/><stop offset="1" stop-color="' + rim + '"/></radialGradient></defs>' +
-  '<path d="M22 14h76c3 34-6 70-38 74C28 84 19 48 22 14z" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.55)" stroke-width="1.6"/>' +
-  '<path d="M25 46h70c-3 22-14 38-35 40C39 84 28 68 25 46z" fill="url(#lgW)"/><ellipse cx="60" cy="46" rx="35" ry="5" fill="' + rim + '" opacity=".9"/><ellipse cx="60" cy="46" rx="29" ry="3.6" fill="' + wine + '"/>' +
-  '<path d="M60 88v58M36 156h48" stroke="rgba(255,255,255,.55)" stroke-width="2" stroke-linecap="round"/><path d="M33 22c-1 10 0 20 3 28" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+let GLN = 0; const glassSVG = (wine, rim) => { const gid = 'lgW' + (++GLN); return '<svg class="l-glass" viewBox="0 0 120 170" aria-hidden="true"><defs><radialGradient id="' + gid + '" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="' + wine + '" stop-opacity=".85"/><stop offset=".78" stop-color="' + wine + '"/><stop offset="1" stop-color="' + rim + '"/></radialGradient></defs>' +
+  '<path d="M22 14h76c3 34-6 70-38 74C28 84 19 48 22 14z" fill="rgba(255,255,255,.06)" style="stroke:var(--l-glass)" stroke-width="1.6"/>' +
+  '<path d="M25 46h70c-3 22-14 38-35 40C39 84 28 68 25 46z" fill="url(#' + gid + ')"/><ellipse cx="60" cy="46" rx="35" ry="5" fill="' + rim + '" opacity=".9"/><ellipse cx="60" cy="46" rx="29" ry="3.6" fill="' + wine + '"/>' +
+  '<path d="M60 88v58M36 156h48" style="stroke:var(--l-glass)" stroke-width="2" stroke-linecap="round"/><path d="M33 22c-1 10 0 20 3 28" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'; };
 const AGE_COL = [['#3d0a33', '#7c3a8e'], ['#5a0c1e', '#8c1d2f'], ['#5e1a14', '#a5502a'], ['#5a2414', '#b9733f']];
-const AROMA_COL = { black: '#3b1430', red: '#b3263b', floral: '#8a5cb5', spice: '#b0662c', oak: '#8b5a2b', aged: '#6b4a32' };
+const AGE_COL_W = [['#e8e2a2', '#f3f0cf'], ['#e4cd72', '#f0e2a6'], ['#d5a845', '#e8c77c'], ['#b8792c', '#d8a35c']];
+const AROMA_COL = { black: '#3b1430', red: '#b3263b', floral: '#8a5cb5', spice: '#b0662c', oak: '#8b5a2b', aged: '#6b4a32', herbal: '#5f8a4a', earth: '#7a5c45', citrus: '#c9b22e', stone: '#d99a4e', tropical: '#e0a32a', mineral: '#8a949a' };
 function renderGrape(all) {
   // textos en el idioma elegido; los datos (coordenadas, modificadores, temperaturas) siempre del español
   const d = all[L] || all.es, E = all.es, id = learnRoute, el = $('#learn');
-  const gn = d.name;
-  // superficie mundial por país (Univ. of Adelaide)
-  const byC = {}; (WORLD ? WORLD.regions : []).forEach(r => { const h = (r.v || {})[gn]; if (h) { const c = byC[r.c] || (byC[r.c] = { ha: 0, x: 0, y: 0 }); c.ha += h; c.x += r.lng * h; c.y += r.lat * h; } });
+  const gn = d.name, gk = E.name, white = (LEARN_GRAPES.find(g => g.id === id) || {}).kind === 'white';   // gn: nombre a mostrar; gk: clave en los datos
+  const prime = (UVAMUNDO.prime || {})[gk] || gk, onMap = WORLD && WORLD.varieties.some(v => v.id === prime);
+  // superficie por país (Univ. of Adelaide); el centro de cada país sale de las regiones del mapa del mundo, si las hay
+  const byC = {}; Object.entries((UVAMUNDO.grapes || {})[gk] || {}).forEach(([c, ha]) => { byC[c] = { ha, x: 0, y: 0, w: 0 }; });
+  (WORLD ? WORLD.regions : []).forEach(r => { const c = byC[r.c], h = onMap ? (r.v || {})[prime] || 0 : r.t || 0; if (c && h) { c.x += r.lng * h; c.y += r.lat * h; c.w += h; } });
   const ctry = Object.entries(byC).sort((a, b) => b[1].ha - a[1].ha), wHa = ctry.reduce((s, c) => s + c[1].ha, 0), cm = ctry.length ? ctry[0][1].ha : 1;
   const RA = { 'United States': 'United States of America', 'Turkiye': 'Turkey', 'Korea, Rep.': 'South Korea', 'Moldova': 'Republic of Moldova', 'Russia': 'Russian Federation' }, cFeat = c => COUNTRIES_GJ && COUNTRIES_GJ.features.find(f => f.properties.n === (RA[c] || c)), cName = c => { const f = cFeat(c); return f ? countryName(f.properties) : c; };
   const top2 = wHa ? (ctry.slice(0, 2).reduce((s, c) => s + c[1].ha, 0) / wHa * 100) : 0;
-  const deps2 = Object.entries((INAVI.grapes || {})[gn] || {}).sort((a, b) => b[1] - a[1]), dm = deps2.length ? deps2[0][1] : 1;
-  const wins = WIN.filter(w => !w.unconf && w.profile && w.profile.main_grape === gn).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999));
+  const uyHa = (INAVI.nat || {})[gk] || 0, inGrapes = GRAPES.includes(gk), deps2 = Object.entries((INAVI.grapes || {})[gk] || {}).sort((a, b) => b[1] - a[1]), dm = deps2.length ? deps2[0][1] : 1;
+  const wins = WIN.filter(w => !w.unconf && w.profile && w.profile.main_grape === gk).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999));
   // rueda de aromas (dona SVG)
   const n6 = d.aromas.length, R = 92, r0 = 50, seg = (i) => { const a0 = (i / n6) * 2 * Math.PI - Math.PI / 2, a1 = ((i + 1) / n6) * 2 * Math.PI - Math.PI / 2, p = (rr, a) => (100 + rr * Math.cos(a)).toFixed(1) + ' ' + (100 + rr * Math.sin(a)).toFixed(1);
     return 'M' + p(R, a0) + 'A' + R + ' ' + R + ' 0 0 1 ' + p(R, a1) + 'L' + p(r0, a1) + 'A' + r0 + ' ' + r0 + ' 0 0 0 ' + p(r0, a0) + 'Z'; };
   const lab = (i) => { const a = ((i + .5) / n6) * 2 * Math.PI - Math.PI / 2; return [(100 + 71 * Math.cos(a)).toFixed(1), (100 + 71 * Math.sin(a)).toFixed(1)]; };
   const wheel = '<svg class="l-wheel" viewBox="0 0 200 200">' + d.aromas.map((a, i) => '<path class="ws" data-a="' + i + '" d="' + seg(i) + '" fill="' + (AROMA_COL[a.k] || '#555') + '"/>').join('') +
-    d.aromas.map((a, i) => { const [x, y] = lab(i), w = a.label.split(' '), l1 = w.length > 2 ? w.slice(0, -1).join(' ') : w[0], l2 = w.length > 2 ? w[w.length - 1] : (w[1] || ''); return '<text x="' + x + '" y="' + y + '" text-anchor="middle">' + (l2 ? '<tspan x="' + x + '" dy="-0.25em">' + esc(l1) + '</tspan><tspan x="' + x + '" dy="1.1em">' + esc(l2) + '</tspan>' : '<tspan dy="0.35em">' + esc(l1) + '</tspan>') + '</text>'; }).join('') + '<text class="wc" x="100" y="100" text-anchor="middle" dominant-baseline="middle">' + esc(gn) + '</text></svg>';
+    d.aromas.map((a, i) => { const [x, y] = lab(i), w = a.label.split(' '), l1 = w.length > 2 ? w.slice(0, -1).join(' ') : w[0], l2 = w.length > 2 ? w[w.length - 1] : (w[1] || ''); return '<text x="' + x + '" y="' + y + '" text-anchor="middle"' + (a.label.length > 16 ? ' class="sm"' : '') + '>' + (l2 ? '<tspan x="' + x + '" dy="-0.25em">' + esc(l1) + '</tspan><tspan x="' + x + '" dy="1.1em">' + esc(l2) + '</tspan>' : '<tspan dy="0.35em">' + esc(l1) + '</tspan>') + '</text>'; }).join('') + '<text class="wc" x="100" y="100" text-anchor="middle" dominant-baseline="middle">' + esc(gn) + '</text></svg>';
   const T0 = E.temp || [16, 18];
   let h = learnTop('uvas') + '<div class="lw">' +
     '<header class="l-hero"><div class="eyebrow">' + esc(d.kind) + '</div><h1>' + esc(gn) + '</h1><p class="l-tag">' + esc(d.tagline) + '</p><p class="l-orig">' + esc(d.origin) + '</p>' +
@@ -2992,7 +3105,8 @@ function renderGrape(all) {
     '<div class="l-def"><div><b>' + esc(t('age_young_t')) + '</b><p>' + esc(t('age_young')) + '</p></div><div><b>' + esc(t('age_mature_t')) + '</b><p>' + esc(t('age_mature')) + '</p></div><small>' + esc(t('age_note')) + '</small></div>' +
     '</div><div class="sim-out"><div id="lGlass"></div><div id="lRadar"></div></div></div><div id="lSimTxt" class="l-detail"></div><p class="l-hint">' + esc(t('sim_note')) + '</p><button class="cta l-cta" id="lSoilMap"><span></span></button></section>' +
     // 2) perfil + aromas, lado a lado
-    '<section class="l-sec l-two eq"><div><h2>' + esc(d.profile_t) + '</h2><div class="l-bars">' + d.profile.map((p, i) => '<button class="l-bar" data-p="' + i + '"><span>' + esc(p.label) + '</span><i>' + [1, 2, 3, 4, 5].map(k => '<em class="' + (k <= p.v ? 'on' : '') + '"></em>').join('') + '</i></button>').join('') + '</div><p class="l-detail" id="lProf"></p></div>' +
+    '<section class="l-sec l-two eq"><div><h2>' + esc(d.profile_t) + '</h2><div class="l-bars">' + d.profile.map((p, i) => '<button class="l-bar" data-p="' + i + '"><span>' + esc(p.label) + '</span><i>' + [1, 2, 3, 4, 5].map(k => '<em class="' + (k <= p.v ? 'on' : '') + '"></em>').join('') + '</i></button>').join('') + '</div><p class="l-detail" id="lProf"></p>' +
+    '<div class="l-cmp"><label>' + esc(t('cmp_t')) + ' <select id="lCmp"><option value="">—</option>' + LEARN_GRAPES.filter(g => g.id !== id).map(g => '<option value="' + g.id + '">' + esc(g.name) + '</option>').join('') + '</select></label><div id="lCmpR"></div></div></div>' +
     '<div><h2>' + esc(d.aroma_t) + '</h2>' + wheel + '<div id="lAroma" class="l-detail"></div></div></section>' +
     // 3) servicio: termómetro + juego de maridaje
     '<section class="l-sec"><h2>' + esc(d.serve_t) + '</h2><div class="l-two serve2"><div class="l-thermo"><h3>' + esc(t('temp_t')) + '</h3><div class="th-row"><svg viewBox="0 0 40 170" class="th" aria-hidden="true"><rect x="14" y="8" width="12" height="130" rx="6" fill="none" stroke="currentColor" opacity=".5"/><circle cx="20" cy="148" r="14" id="thB"/><rect x="17" id="thM" width="6" rx="3"/></svg>' +
@@ -3004,14 +3118,23 @@ function renderGrape(all) {
     // 5) mundo, y Uruguay en detalle si la persona quiere
     '<section class="l-sec l-map"><h2>' + esc(d.map_t) + '</h2><p class="l-hint">' + esc(d.map_hint) + '</p><div class="bars wbars">' + ctry.slice(0, 7).map(([c, v]) => '<button class="bar" data-c="' + esc(c) + '"><span>' + esc(cName(c)) + '</span><span class="num">' + nf(v.ha) + ' ' + esc(t('ha')) + ' · ' + (v.ha / wHa < .01 ? '<1' : nf(v.ha / wHa * 100, 0)) + ' %</span><span class="b"><i style="width:' + (v.ha / cm * 100).toFixed(1) + '%"></i></span></button>').join('') + '</div>' +
     '<div class="l-btns"><button class="cta" id="lMapW"><span>' + esc(d.map_btn_world) + '</span></button></div>' +
-    (deps2.length ? '<details class="l-uy"><summary>' + esc(d.map_uy_t) + '</summary><div class="l-two map2"><div>' + miniMap(gn) + '<p class="l-hint" id="lMiniTxt">' + esc(t('mini_hint')) + '</p></div><div class="bars">' + deps2.slice(0, 8).map(([dn, v]) => '<div class="bar"><span>' + esc(dn) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / dm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>' +
-      '<div class="l-btns"><button class="cta" id="lMapUy"><span>' + esc(d.map_btn_uy) + '</span></button></div>' +
+    (uyHa ? '<details class="l-uy"><summary>' + esc(d.map_uy_t) + ' · ' + nf(uyHa) + ' ' + esc(t('ha')) + '</summary>' + (deps2.length ? '<div class="l-two map2"><div>' + miniMap(gk) + '<p class="l-hint" id="lMiniTxt">' + esc(t('mini_hint')) + '</p></div><div class="bars">' + deps2.slice(0, 8).map(([dn, v]) => '<div class="bar"><span>' + esc(dn) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / dm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>' : '<p class="l-hint">' + esc(t('uy_nodep')) + '</p>') +
+      (inGrapes ? '<div class="l-btns"><button class="cta" id="lMapUy"><span>' + esc(d.map_btn_uy) + '</span></button></div>' : '') +
       (wins.length ? '<h3>' + esc(d.map_wineries) + ' <span class="num">' + nf(wins.length) + '</span></h3><div class="l-wins">' + wins.slice(0, 24).map(w => '<button data-w="' + w.id + '">' + esc(w.name) + '<small>' + esc(w.dep) + '</small></button>').join('') + '</div>' : '') + '</details>' : '') +
     '</section><details class="l-src"><summary>' + esc(t('sources_t')) + '</summary><p>' + esc(d.sources) + '</p></details></div>';
   el.innerHTML = h; learnWire(el);
   // perfil
   const showP = i => { el.querySelectorAll('.l-bar').forEach(x => x.classList.toggle('sel', +x.dataset.p === i)); $('#lProf').textContent = d.profile[i].txt; };
   el.querySelectorAll('.l-bar').forEach(b => b.onclick = () => showP(+b.dataset.p)); showP(0);
+  // comparar con otra uva: radares superpuestos y las dos copas jóvenes
+  const base = E.profile.map(p => p.v), myCol = (white ? AGE_COL_W : AGE_COL)[0];
+  const cmp = () => { const o = $('#lCmp').value, box = $('#lCmpR');
+    if (!o) { box.innerHTML = ''; return; }
+    getUva(o).then(a => { const oe = a.es, od = a[L] || oe, ow = (LEARN_GRAPES.find(g => g.id === o) || {}).kind === 'white', oc = (ow ? AGE_COL_W : AGE_COL)[0];
+      box.innerHTML = '<div class="cmp-out"><div class="cmp-g"><div>' + glassSVG(myCol[0], myCol[1]) + '<b class="k1">' + esc(gn) + '</b></div><div>' + glassSVG(oc[0], oc[1]) + '<b class="k2">' + esc(od.name) + '</b></div></div>' + radar(d.profile.map(p => p.label), base, oe.profile.map(p => p.v)) + '</div>' +
+        '<p class="l-hint">' + d.profile.map((p, i) => { const dv = oe.profile[i].v - p.v; return dv ? esc(p.label) + ': ' + (dv > 0 ? '+' : '') + dv : ''; }).filter(Boolean).join(' · ') + '</p><button class="l-more" data-l="' + o + '">' + esc(t('g_open', { g: od.name })) + ' →</button>';
+      learnWire(box); }); };
+  $('#lCmp').onchange = cmp;
   // aromas
   const showA = i => { const a = d.aromas[i]; el.querySelectorAll('.ws').forEach(s => s.classList.toggle('sel', +s.dataset.a === i)); $('#lAroma').innerHTML = '<b style="color:' + (AROMA_COL[a.k] === '#3b1430' ? 'var(--l-ink)' : AROMA_COL[a.k]) + '">' + esc(a.label) + '</b><div class="l-tags">' + a.items.map(x => '<span>' + esc(x) + '</span>').join('') + '</div><small>' + esc(d.stages[a.stage] || '') + '</small>'; };
   el.querySelectorAll('.ws').forEach(s => s.onclick = () => showA(+s.dataset.a)); showA(0);
@@ -3023,7 +3146,7 @@ function renderGrape(all) {
       if (oak) { if (p.k === 'tannin') x -= .5; if (p.k === 'body') x += .5; }
       if (p.k === 'tannin') x -= ageK * .6; if (p.k === 'color') x -= ageK * .45; if (p.k === 'acid') x -= ageK * .2;
       return Math.max(.5, Math.min(5, x)); });
-    const c = AGE_COL[Math.min(ageK, AGE_COL.length - 1)], dk = -(m.color || 0) * .24;
+    const AC = white ? AGE_COL_W : AGE_COL, c = AC[Math.min(ageK, AC.length - 1)], dk = -(m.color || 0) * .24;
     $('#lGlass').innerHTML = glassSVG(shade(c[0], dk), shade(c[1], dk));
     $('#lRadar').innerHTML = radar(d.profile.map(p => p.label), v);
     const am = k => d.aromas.find(x => x.k === k), fam = (e.fam || ['black']).map(am).filter(Boolean);
@@ -3046,7 +3169,7 @@ function renderGrape(all) {
   const thermo = () => { const v = +$('#lTemp').value, [lo, hi] = T0, k = v < lo - 4 ? 'cold' : v < lo ? 'cool' : v <= hi ? 'ok' : v <= hi + 3 ? 'warm' : 'hot';
     const y = 138 - (v - 6) / 18 * 120, col = k === 'ok' ? '#6fbf73' : (k === 'cold' || k === 'cool') ? '#6fa8dc' : '#e07a5f';
     $('#thM').setAttribute('y', y.toFixed(1)); $('#thM').setAttribute('height', (146 - y).toFixed(1)); $('#thM').style.fill = col; $('#thB').style.fill = col;
-    $('#thV').textContent = v + ' °C' + (k === 'ok' ? ' ✓' : ''); $('#thTxt').textContent = t('temp_' + k); $('#thTxt').className = 'tk-' + k; };
+    $('#thV').textContent = v + ' °C' + (k === 'ok' ? ' ✓' : ''); $('#thTxt').textContent = t('temp_' + k + (white && (k === 'ok' || k === 'cold') ? '_w' : '')); $('#thTxt').className = 'tk-' + k; };
   $('#lTemp').oninput = thermo; thermo();
   // juego de maridaje
   el.querySelectorAll('[data-pr]').forEach(b => b.onclick = () => { const i = +b.dataset.pr, p = d.pair[i], ok = (E.pair[i] || {}).ok;
@@ -3057,18 +3180,18 @@ function renderGrape(all) {
   // mini mapa: tocar un departamento lo abre en el mapa con la uva elegida
   el.querySelectorAll('.mm path[data-d]').forEach(p => {
     p.onmouseenter = () => { $('#lMiniTxt').textContent = p.dataset.n + ' · ' + nf(+p.dataset.h, +p.dataset.h < 10 ? 1 : 0) + ' ' + t('ha'); };
-    p.onclick = () => toUy(() => { S.dep = +p.dataset.d; S.reg = -1; S.grape = gn; S.cols = true; $('#grapeSel').value = gn; $('#colsToggle').checked = true; $('#depSel').value = S.dep; zoneSel(); buildColumns(); renderLegend(); schedule(); flyDep(deps[S.dep]); });
+    p.onclick = () => toUy(() => { S.dep = +p.dataset.d; S.reg = -1; S.grape = inGrapes ? gk : 'all'; S.cols = inGrapes; $('#grapeSel').value = S.grape; $('#colsToggle').checked = inGrapes; $('#depSel').value = S.dep; zoneSel(); buildColumns(); renderLegend(); schedule(); flyDep(deps[S.dep]); });
   });
   // conexión con el mapa
   const toUy = (fn) => { closeLearn(); if (view !== 'uy') goUruguay(); setMode('terroir'); fn(); };
-  const uyCols = () => toUy(() => { S.grape = gn; S.cols = true; $('#grapeSel').value = gn; $('#colsToggle').checked = true; buildColumns(); renderLegend(); schedule(); });
-  const toWorld = (center, zoom, c) => { closeLearn(); WVAR = gn; if ($('#wVar')) $('#wVar').value = gn; paintWorld(); if (view !== 'world') goWorld(true);
+  const uyCols = () => toUy(() => { S.grape = gk; S.cols = true; $('#grapeSel').value = gk; $('#colsToggle').checked = true; buildColumns(); renderLegend(); schedule(); });
+  const toWorld = (center, zoom, c) => { closeLearn(); WVAR = onMap ? prime : 'all'; if ($('#wVar')) $('#wVar').value = WVAR; paintWorld(); if (view !== 'world') goWorld(true);
     const f = c && cFeat(c); if (f) showCountry(f);
     map.flyTo(center ? { center, zoom, pitch: 0, bearing: 0, duration: 2600, essential: true } : { center: [-30, 0], zoom: flat ? 1.9 : 1.6, pitch: 0, bearing: 0, duration: 2600, essential: true }); };
   $('#lSoilMap').onclick = () => { const e = E.regions[regK];
-    if (e.map === 'uy') toUy(() => { S.rock = new Set(e.rock || []); S.wk = new Set(e.wk || []); S.grape = gn; $('#grapeSel').value = gn; buildChips(); buildColumns(); renderLegend(); clearSim(); schedule(); });
+    if (e.map === 'uy') toUy(() => { S.rock = new Set(e.rock || []); S.wk = new Set(e.wk || []); S.grape = inGrapes ? gk : 'all'; $('#grapeSel').value = S.grape; buildChips(); buildColumns(); renderLegend(); clearSim(); schedule(); });
     else toWorld(e.pt, 6.5); };
-  el.querySelectorAll('.wbars [data-c]').forEach(b => b.onclick = () => { const c = b.dataset.c, v = byC[c]; if (c === 'Uruguay') return uyCols(); toWorld([v.x / v.ha, v.y / v.ha], 4.6, c); });
+  el.querySelectorAll('.wbars [data-c]').forEach(b => b.onclick = () => { const c = b.dataset.c, v = byC[c]; if (c === 'Uruguay' && inGrapes) return uyCols(); toWorld(v.w ? [v.x / v.w, v.y / v.w] : null, 4.6, c); });
   $('#lMapW').onclick = () => toWorld();
   const mu = $('#lMapUy'); if (mu) mu.onclick = uyCols;
   el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); if (view !== 'uy') goUruguay(true); setMode('bodegas'); showWinery(+b.dataset.w, true); });
