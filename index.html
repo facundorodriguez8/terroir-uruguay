@@ -643,6 +643,59 @@ body.learning #coach { display: none; }
 #learn .l-scale i { flex: 1; height: 4px; border-radius: 2px; background: linear-gradient(90deg, rgba(226,180,106,.2), var(--l-acc)); }
 #learn .l-game .cta[disabled] { opacity: .45; }
 #learn .l-wheel text.sm { font-size: 6.8px; }
+/* denominaciones de origen */
+#learn .l-sub.do .ic { color: #e2b46a; }
+#learn .do-pyr { width: 100%; max-width: 360px; display: block; margin: 8px auto; }
+#learn .do-pyr .pl { cursor: pointer; }
+#learn .do-pyr path { fill: var(--l-acc); stroke: rgba(0,0,0,.35); transition: transform .2s; }
+#learn .do-pyr .pl:hover path, #learn .do-pyr .pl.sel path { fill: #f3cf8a; }
+#learn .do-pyr .pl.sel path { stroke: #fff; stroke-width: 2; }
+#learn .do-pyr text { fill: #1a1213; font-size: 13px; font-weight: 700; pointer-events: none; }
+#learn .do-sys p { font-size: 15px; }
+#learn .l-chip.sm { padding: 5px 11px; font-size: 13px; }
+#learn .l-chip.static { cursor: default; }
+#learn .do-label-wrap { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 22px; align-items: start; margin-top: 12px; }
+@media (max-width: 720px) { #learn .do-label-wrap { grid-template-columns: 1fr; } }
+#learn .do-label { background: #f6efdc; color: #2a2116; border-radius: 6px; padding: 26px 22px 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; font-family: 'Bodoni Moda', Georgia, serif; box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 0 6px #f6efdc, inset 0 0 0 7px #8a6420; }
+#learn .do-label [data-h] { cursor: pointer; border-radius: 4px; padding: 2px 6px; transition: background .2s, box-shadow .2s; }
+#learn .do-label [data-h]:hover { background: rgba(138,100,32,.12); }
+#learn .do-label [data-h].sel { box-shadow: 0 0 0 2px #8a6420; background: rgba(138,100,32,.15); }
+#learn .do-label [data-h].miss { animation: lshake .4s; background: rgba(224,122,95,.25); }
+#learn .do-label.found .lb-do { box-shadow: 0 0 0 2px #6fbf73; }
+@keyframes lshake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+#learn .lb-country { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+#learn .lb-prod { font-size: 24px; font-style: italic; line-height: 1.1; }
+#learn .lb-vint { font-size: 22px; letter-spacing: .1em; }
+#learn .lb-grape { font-size: 14px; text-transform: uppercase; letter-spacing: .15em; }
+#learn .lb-do { font-size: 13px; font-family: system-ui, sans-serif; }
+#learn .lb-extra { font-size: 12px; font-style: italic; }
+#learn .lb-foot { display: flex; justify-content: space-between; width: 100%; font-size: 11px; font-family: system-ui, sans-serif; margin-top: 8px; }
+#learn .lb-foot b { font-weight: 500; }
+#learn #labA b.yes { color: #8fd694; } #learn #labA b.no { color: #f0a08a; }
+#learn .do-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-top: 12px; }
+#learn .do-card { text-align: left; background: var(--l-card); border: 1px solid var(--l-line); border-radius: 12px; padding: 10px 12px; color: var(--l-ink); font: inherit; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+#learn .do-card:hover { border-color: var(--l-acc); }
+#learn .do-card small { color: var(--l-ink2); font-size: 11px; }
+#learn .do-card b { font-size: 15px; }
+#learn .do-cols { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; color: var(--l-ink2); margin-top: 6px; }
+#learn .do-cols i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
+#learn .do-badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 10px; }
+#learn .do-badges span { border: 1px solid var(--l-line); border-radius: 999px; padding: 4px 10px; font-size: 13px; }
+#learn .do-badges .do-lv { background: var(--l-acc); color: #1a1213; font-weight: 700; border-color: var(--l-acc); }
+#learn .do-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+#learn .do-steps span { padding: 4px 10px; border-radius: 8px; border: 1px solid var(--l-line); font-size: 13px; opacity: .6; }
+#learn .do-steps span.sel { opacity: 1; background: var(--l-acc); color: #1a1213; font-weight: 700; border-color: var(--l-acc); }
+#learn .do-steps i { opacity: .4; font-style: normal; }
+#learn .do-rules { padding-left: 20px; } #learn .do-rules li { margin: 6px 0; font-size: 15px; }
+#learn .do-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; background: none; border: 1px solid var(--l-acc); color: var(--l-ink); border-radius: 999px; padding: 6px 12px 6px 6px; font: inherit; font-size: 14px; cursor: pointer; }
+#learn .do-link span { background: var(--l-acc); color: #1a1213; border-radius: 999px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+.do-mk { background: none; border: 0; padding: 0; cursor: pointer; display: flex; align-items: center; gap: 4px; transform: translateY(0); }
+.do-mk i { width: 10px; height: 10px; border-radius: 50%; background: #e2b46a; border: 2px solid #1a1213; box-shadow: 0 0 0 1px #e2b46a; }
+.do-mk span { font: 600 11px/1 system-ui, sans-serif; color: #f6efdc; text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; opacity: 0; transition: opacity .2s; }
+.do-mk:hover span, .do-mk.sel span { opacity: 1; }
+.do-mk.sel i { background: #fff; width: 14px; height: 14px; }
+.do-tog { margin-top: 10px; }
+body.do-z .do-mk span { opacity: 1; }
 
 </style>
 </head>
@@ -672,6 +725,7 @@ body.learning #coach { display: none; }
       <div class="field"><label for="wVar" data-i18n="world_var">Viñedos del mundo por variedad</label><select class="sel" id="wVar"></select></div>
       <div class="wlegend"><i></i><span data-i18n="world_more">más hectáreas</span></div>
       <p class="hint" id="wNote"></p>
+      <label class="switch do-tog"><input type="checkbox" id="doToggle"><span data-i18n="do_show">Denominaciones de origen</span></label>
     </div>
   </section>
   <aside id="country" hidden></aside>
@@ -1580,6 +1634,9 @@ for (const l in T_ADD25) Object.assign(T[l], T_ADD25[l]);
 const T_ADD26 = {"es": {"temp_ok_w": "Temperatura justa: frescura, aroma y fruta en equilibrio.", "temp_cold_w": "Muy frío: el aroma se apaga y el vino casi no tiene sabor."}, "en": {"temp_ok_w": "Just right: freshness, aroma and fruit in balance.", "temp_cold_w": "Too cold: the aroma shuts down and the wine tastes of very little."}, "pt": {"temp_ok_w": "Temperatura certa: frescor, aroma e fruta em equilíbrio.", "temp_cold_w": "Frio demais: o aroma se apaga e o vinho quase não tem sabor."}, "fr": {"temp_ok_w": "Bonne température : fraîcheur, arôme et fruit en équilibre.", "temp_cold_w": "Trop froid : l’arôme s’éteint et le vin n’a presque plus de goût."}, "de": {"temp_ok_w": "Genau richtig: Frische, Aroma und Frucht im Gleichgewicht.", "temp_cold_w": "Zu kalt: Das Aroma verschwindet und der Wein schmeckt kaum nach etwas."}, "ru": {"temp_ok_w": "Идеальная температура: свежесть, аромат и фрукт в балансе.", "temp_cold_w": "Слишком холодно: аромат пропадает, а вкус почти не чувствуется."}, "zh": {"temp_ok_w": "温度正好：清爽、香气与果味达到平衡。", "temp_cold_w": "太冷：香气被压住，酒几乎尝不出味道。"}, "ja": {"temp_ok_w": "ちょうどよい温度：爽やかさ、香り、果実味のバランスがとれています。", "temp_cold_w": "冷やしすぎ：香りが閉じて、味もほとんど感じられません。"}, "ko": {"temp_ok_w": "딱 좋은 온도: 신선함, 향, 과일 맛이 균형을 이룹니다.", "temp_cold_w": "너무 차가움: 향이 닫히고 맛이 거의 느껴지지 않습니다."}};
 for (const l in T_ADD26) Object.assign(T[l], T_ADD26[l]);
 
+const T_ADD27 = {"es": {"learn_sub_do": "Denominaciones de origen", "learn_sub_do_d": "Qué garantiza el nombre de un lugar en la etiqueta: las DO del mundo, sus reglas y cómo leerlas.", "do_intro": "Una denominación de origen (DO) protege el nombre de un lugar: solo puede usarlo el vino hecho con uvas de esa zona y siguiendo sus reglas.", "do_pyr_t": "La pirámide de cada país", "do_pyr_hint": "Elegí un país y tocá un escalón: arriba, las reglas más exigentes.", "do_lv_hint": "Tocá un escalón de la pirámide.", "do_label_t": "Leé una etiqueta", "do_label_q": "Encontrá en la etiqueta la denominación de origen y tocala.", "do_label_ok": "¡Esa es! La denominación de origen.", "do_label_no": "No, eso no es la denominación.", "do_label_explore": "Ahora tocá cualquier parte de la etiqueta para ver qué significa.", "do_label_fake": "Etiqueta de ejemplo: el productor es inventado.", "labn_country": "País", "labn_producer": "Productor", "labn_vintage": "Añada", "labn_grape": "Uva", "labn_do": "Denominación de origen", "labn_extra": "Mención extra", "labn_alc": "Alcohol", "labn_vol": "Contenido", "lab_country": "El país donde se hizo el vino.", "lab_producer": "Quién hizo el vino: la bodega, el château o el domaine.", "lab_vintage": "El año en que se cosecharon las uvas.", "lab_grape": "La uva (o las uvas) del vino. Muchas DO europeas no la ponen: el lugar ya lo dice.", "lab_do": "Garantiza de dónde vienen las uvas y que el vino cumplió las reglas de esa zona.", "lab_alc": "Graduación alcohólica, en porcentaje del volumen.", "lab_vol": "Cuánto vino trae la botella.", "do_list_t": "Explorá las denominaciones", "do_all": "Todas", "do_map_all": "Ver todas en el mapa del mundo", "do_since": "desde {y}", "do_icon": "Ícono", "do_grapes": "Uvas", "do_grapes_hint": "Destacadas, las principales. Tocá una uva con flecha para ver su ficha.", "do_rules": "Reglas", "do_terroir": "Suelo y clima", "do_map": "Ver en el mapa", "do_more": "Más de {c}", "do_link": "Denominación: {d}", "do_show": "Denominaciones de origen", "col_tinto": "Tinto", "col_blanco": "Blanco", "col_rosado": "Rosado", "col_espumoso": "Espumoso", "col_dulce": "Dulce", "col_fortificado": "Fortificado", "col_destilado": "Destilado"}, "en": {"learn_sub_do": "Designations of origin", "learn_sub_do_d": "What a place name on the label guarantees: the world's PDOs, their rules and how to read them.", "do_intro": "A designation of origin (PDO) protects a place name: only wine made from grapes of that area, following its rules, may use it.", "do_pyr_t": "Each country's pyramid", "do_pyr_hint": "Choose a country and tap a level: the strictest rules are at the top.", "do_lv_hint": "Tap a level of the pyramid.", "do_label_t": "Read a label", "do_label_q": "Find the designation of origin on the label and tap it.", "do_label_ok": "That's it! The designation of origin.", "do_label_no": "No, that's not the designation.", "do_label_explore": "Now tap any part of the label to see what it means.", "do_label_fake": "Sample label: the producer is made up.", "labn_country": "Country", "labn_producer": "Producer", "labn_vintage": "Vintage", "labn_grape": "Grape", "labn_do": "Designation of origin", "labn_extra": "Extra term", "labn_alc": "Alcohol", "labn_vol": "Volume", "lab_country": "The country where the wine was made.", "lab_producer": "Who made the wine: the winery, château or domaine.", "lab_vintage": "The year the grapes were harvested.", "lab_grape": "The grape (or grapes) in the wine. Many European PDOs leave it out: the place already tells you.", "lab_do": "Guarantees where the grapes come from and that the wine followed the rules of that area.", "lab_alc": "Alcohol content, as a percentage of volume.", "lab_vol": "How much wine is in the bottle.", "do_list_t": "Explore the designations", "do_all": "All", "do_map_all": "See all on the world map", "do_since": "since {y}", "do_icon": "Icon", "do_grapes": "Grapes", "do_grapes_hint": "Highlighted: the main ones. Tap a grape with an arrow to see its profile.", "do_rules": "Rules", "do_terroir": "Soil and climate", "do_map": "See on the map", "do_more": "More from {c}", "do_link": "Designation: {d}", "do_show": "Designations of origin", "col_tinto": "Red", "col_blanco": "White", "col_rosado": "Rosé", "col_espumoso": "Sparkling", "col_dulce": "Sweet", "col_fortificado": "Fortified", "col_destilado": "Spirit"}, "pt": {"learn_sub_do": "Denominações de origem", "learn_sub_do_d": "O que garante o nome de um lugar no rótulo: as DO do mundo, suas regras e como lê-las.", "do_intro": "Uma denominação de origem (DO) protege o nome de um lugar: só pode usá-lo o vinho feito com uvas daquela região e seguindo suas regras.", "do_pyr_t": "A pirâmide de cada país", "do_pyr_hint": "Escolha um país e toque em um degrau: no topo, as regras mais exigentes.", "do_lv_hint": "Toque em um degrau da pirâmide.", "do_label_t": "Leia um rótulo", "do_label_q": "Encontre no rótulo a denominação de origem e toque nela.", "do_label_ok": "É essa! A denominação de origem.", "do_label_no": "Não, isso não é a denominação.", "do_label_explore": "Agora toque em qualquer parte do rótulo para ver o que significa.", "do_label_fake": "Rótulo de exemplo: o produtor é fictício.", "labn_country": "País", "labn_producer": "Produtor", "labn_vintage": "Safra", "labn_grape": "Uva", "labn_do": "Denominação de origem", "labn_extra": "Menção extra", "labn_alc": "Álcool", "labn_vol": "Conteúdo", "lab_country": "O país onde o vinho foi feito.", "lab_producer": "Quem fez o vinho: a vinícola, o château ou o domaine.", "lab_vintage": "O ano em que as uvas foram colhidas.", "lab_grape": "A uva (ou as uvas) do vinho. Muitas DO europeias não a indicam: o lugar já diz.", "lab_do": "Garante de onde vêm as uvas e que o vinho cumpriu as regras daquela região.", "lab_alc": "Teor alcoólico, em porcentagem do volume.", "lab_vol": "Quanto vinho a garrafa contém.", "do_list_t": "Explore as denominações", "do_all": "Todas", "do_map_all": "Ver todas no mapa-múndi", "do_since": "desde {y}", "do_icon": "Ícone", "do_grapes": "Uvas", "do_grapes_hint": "Em destaque, as principais. Toque em uma uva com seta para ver sua ficha.", "do_rules": "Regras", "do_terroir": "Solo e clima", "do_map": "Ver no mapa", "do_more": "Mais de {c}", "do_link": "Denominação: {d}", "do_show": "Denominações de origem", "col_tinto": "Tinto", "col_blanco": "Branco", "col_rosado": "Rosé", "col_espumoso": "Espumante", "col_dulce": "Doce", "col_fortificado": "Fortificado", "col_destilado": "Destilado"}, "fr": {"learn_sub_do": "Appellations d'origine", "learn_sub_do_d": "Ce que garantit le nom d'un lieu sur l'étiquette : les appellations du monde, leurs règles et comment les lire.", "do_intro": "Une appellation d'origine (AOP) protège le nom d'un lieu : seul le vin issu de raisins de cette zone et respectant ses règles peut l'utiliser.", "do_pyr_t": "La pyramide de chaque pays", "do_pyr_hint": "Choisissez un pays et touchez un niveau : en haut, les règles les plus strictes.", "do_lv_hint": "Touchez un niveau de la pyramide.", "do_label_t": "Lisez une étiquette", "do_label_q": "Trouvez l'appellation d'origine sur l'étiquette et touchez-la.", "do_label_ok": "C'est bien ça ! L'appellation d'origine.", "do_label_no": "Non, ce n'est pas l'appellation.", "do_label_explore": "Touchez maintenant n'importe quelle partie de l'étiquette pour voir ce qu'elle signifie.", "do_label_fake": "Étiquette d'exemple : le producteur est fictif.", "labn_country": "Pays", "labn_producer": "Producteur", "labn_vintage": "Millésime", "labn_grape": "Cépage", "labn_do": "Appellation d'origine", "labn_extra": "Mention complémentaire", "labn_alc": "Alcool", "labn_vol": "Contenance", "lab_country": "Le pays où le vin a été élaboré.", "lab_producer": "Qui a fait le vin : la bodega, le château ou le domaine.", "lab_vintage": "L'année où les raisins ont été vendangés.", "lab_grape": "Le cépage (ou les cépages) du vin. Beaucoup d'appellations européennes ne l'indiquent pas : le lieu le dit déjà.", "lab_do": "Garantit l'origine des raisins et que le vin a respecté les règles de cette zone.", "lab_alc": "Degré d'alcool, en pourcentage du volume.", "lab_vol": "La quantité de vin dans la bouteille.", "do_list_t": "Explorez les appellations", "do_all": "Toutes", "do_map_all": "Voir toutes sur la carte du monde", "do_since": "depuis {y}", "do_icon": "Icône", "do_grapes": "Cépages", "do_grapes_hint": "En surbrillance, les principaux. Touchez un cépage avec une flèche pour voir sa fiche.", "do_rules": "Règles", "do_terroir": "Sol et climat", "do_map": "Voir sur la carte", "do_more": "Plus de {c}", "do_link": "Appellation : {d}", "do_show": "Appellations d'origine", "col_tinto": "Rouge", "col_blanco": "Blanc", "col_rosado": "Rosé", "col_espumoso": "Effervescent", "col_dulce": "Doux", "col_fortificado": "Muté", "col_destilado": "Eau-de-vie"}, "de": {"learn_sub_do": "Herkunftsbezeichnungen", "learn_sub_do_d": "Was ein Ortsname auf dem Etikett garantiert: die g.U. der Welt, ihre Regeln und wie du sie liest.", "do_intro": "Eine geschützte Ursprungsbezeichnung (g.U.) schützt einen Ortsnamen: Nur Wein aus Trauben dieses Gebiets, nach dessen Regeln gemacht, darf ihn tragen.", "do_pyr_t": "Die Pyramide jedes Landes", "do_pyr_hint": "Wähle ein Land und tippe auf eine Stufe: oben die strengsten Regeln.", "do_lv_hint": "Tippe auf eine Stufe der Pyramide.", "do_label_t": "Lies ein Etikett", "do_label_q": "Finde die Herkunftsbezeichnung auf dem Etikett und tippe darauf.", "do_label_ok": "Genau! Das ist die Herkunftsbezeichnung.", "do_label_no": "Nein, das ist nicht die Herkunftsbezeichnung.", "do_label_explore": "Tippe jetzt auf einen beliebigen Teil des Etiketts, um zu sehen, was er bedeutet.", "do_label_fake": "Beispieletikett: Der Erzeuger ist erfunden.", "labn_country": "Land", "labn_producer": "Erzeuger", "labn_vintage": "Jahrgang", "labn_grape": "Rebsorte", "labn_do": "Herkunftsbezeichnung", "labn_extra": "Zusatzangabe", "labn_alc": "Alkohol", "labn_vol": "Inhalt", "lab_country": "Das Land, in dem der Wein gemacht wurde.", "lab_producer": "Wer den Wein gemacht hat: das Weingut, Château oder Domaine.", "lab_vintage": "Das Jahr, in dem die Trauben gelesen wurden.", "lab_grape": "Die Rebsorte (oder Rebsorten) des Weins. Viele europäische g.U. nennen sie nicht: Der Ort sagt es schon.", "lab_do": "Garantiert, woher die Trauben stammen und dass der Wein die Regeln dieses Gebiets erfüllt.", "lab_alc": "Alkoholgehalt in Volumenprozent.", "lab_vol": "Wie viel Wein in der Flasche ist.", "do_list_t": "Entdecke die Herkunftsbezeichnungen", "do_all": "Alle", "do_map_all": "Alle auf der Weltkarte ansehen", "do_since": "seit {y}", "do_icon": "Symbol", "do_grapes": "Rebsorten", "do_grapes_hint": "Hervorgehoben: die wichtigsten. Tippe auf eine Rebsorte mit Pfeil, um ihr Profil zu sehen.", "do_rules": "Regeln", "do_terroir": "Boden und Klima", "do_map": "Auf der Karte ansehen", "do_more": "Mehr aus {c}", "do_link": "Herkunftsbezeichnung: {d}", "do_show": "Herkunftsbezeichnungen", "col_tinto": "Rot", "col_blanco": "Weiß", "col_rosado": "Rosé", "col_espumoso": "Schaumwein", "col_dulce": "Süß", "col_fortificado": "Likörwein", "col_destilado": "Spirituose"}, "ru": {"learn_sub_do": "Наименования по происхождению", "learn_sub_do_d": "Что гарантирует название места на этикетке: наименования по происхождению в мире, их правила и как их читать.", "do_intro": "Наименование по происхождению (ЗНМП) защищает название места: его может носить только вино из винограда этой зоны, сделанное по её правилам.", "do_pyr_t": "Пирамида каждой страны", "do_pyr_hint": "Выберите страну и нажмите на ступень: наверху — самые строгие правила.", "do_lv_hint": "Нажмите на ступень пирамиды.", "do_label_t": "Прочитайте этикетку", "do_label_q": "Найдите на этикетке наименование по происхождению и нажмите на него.", "do_label_ok": "Верно! Это наименование по происхождению.", "do_label_no": "Нет, это не наименование.", "do_label_explore": "Теперь нажмите на любую часть этикетки, чтобы узнать, что она означает.", "do_label_fake": "Пример этикетки: производитель вымышленный.", "labn_country": "Страна", "labn_producer": "Производитель", "labn_vintage": "Урожай", "labn_grape": "Сорт", "labn_do": "Наименование по происхождению", "labn_extra": "Доп. указание", "labn_alc": "Алкоголь", "labn_vol": "Объём", "lab_country": "Страна, где сделано вино.", "lab_producer": "Кто сделал вино: винодельня, шато или домен.", "lab_vintage": "Год, когда собрали виноград.", "lab_grape": "Сорт (или сорта) винограда. Многие европейские наименования его не указывают: место говорит само за себя.", "lab_do": "Гарантирует, откуда виноград и что вино соответствует правилам этой зоны.", "lab_alc": "Крепость, в процентах от объёма.", "lab_vol": "Сколько вина в бутылке.", "do_list_t": "Изучите наименования", "do_all": "Все", "do_map_all": "Смотреть все на карте мира", "do_since": "с {y}", "do_icon": "Значок", "do_grapes": "Сорта", "do_grapes_hint": "Выделены основные. Нажмите на сорт со стрелкой, чтобы открыть его карточку.", "do_rules": "Правила", "do_terroir": "Почва и климат", "do_map": "Смотреть на карте", "do_more": "Ещё из {c}", "do_link": "Наименование: {d}", "do_show": "Наименования по происхождению", "col_tinto": "Красное", "col_blanco": "Белое", "col_rosado": "Розовое", "col_espumoso": "Игристое", "col_dulce": "Сладкое", "col_fortificado": "Креплёное", "col_destilado": "Крепкий напиток"}, "zh": {"learn_sub_do": "原产地名称", "learn_sub_do_d": "酒标上的地名保证了什么：世界各地的原产地名称、规则以及如何解读。", "do_intro": "原产地名称（PDO）保护一个地名：只有用该产区葡萄、按其规则酿造的葡萄酒才能使用它。", "do_pyr_t": "各国的分级金字塔", "do_pyr_hint": "选择一个国家并点击一个等级：越往上，规则越严格。", "do_lv_hint": "点击金字塔的一个等级。", "do_label_t": "读懂酒标", "do_label_q": "在酒标上找到原产地名称并点击它。", "do_label_ok": "就是它！原产地名称。", "do_label_no": "不对，那不是原产地名称。", "do_label_explore": "现在点击酒标的任意部分，看看它的含义。", "do_label_fake": "示例酒标：生产商为虚构。", "labn_country": "国家", "labn_producer": "生产商", "labn_vintage": "年份", "labn_grape": "葡萄品种", "labn_do": "原产地名称", "labn_extra": "附加标注", "labn_alc": "酒精度", "labn_vol": "容量", "lab_country": "酿造这款酒的国家。", "lab_producer": "谁酿的酒：酒庄、城堡（Château）或庄园（Domaine）。", "lab_vintage": "葡萄采收的年份。", "lab_grape": "酿酒所用的葡萄（一种或多种）。许多欧洲原产地名称不标注：产地本身已说明一切。", "lab_do": "保证葡萄的来源，并保证葡萄酒符合该产区的规则。", "lab_alc": "酒精含量，以体积百分比表示。", "lab_vol": "瓶中酒的容量。", "do_list_t": "探索原产地名称", "do_all": "全部", "do_map_all": "在世界地图上查看全部", "do_since": "始于 {y} 年", "do_icon": "图标", "do_grapes": "葡萄品种", "do_grapes_hint": "突出显示的是主要品种。点击带箭头的品种查看详情。", "do_rules": "规则", "do_terroir": "土壤与气候", "do_map": "在地图上查看", "do_more": "更多{c}产区", "do_link": "原产地名称：{d}", "do_show": "原产地名称", "col_tinto": "红葡萄酒", "col_blanco": "白葡萄酒", "col_rosado": "桃红葡萄酒", "col_espumoso": "起泡酒", "col_dulce": "甜酒", "col_fortificado": "加强酒", "col_destilado": "蒸馏酒"}, "ja": {"learn_sub_do": "原産地呼称", "learn_sub_do_d": "ラベルの地名が保証すること：世界の原産地呼称、そのルールと読み方。", "do_intro": "原産地呼称（PDO）は地名を守る制度です。その地域のブドウを使い、ルールに従って造ったワインだけが名乗れます。", "do_pyr_t": "各国のピラミッド", "do_pyr_hint": "国を選び、段をタップしてください。上ほどルールが厳しくなります。", "do_lv_hint": "ピラミッドの段をタップしてください。", "do_label_t": "ラベルを読む", "do_label_q": "ラベルの中から原産地呼称を見つけてタップしてください。", "do_label_ok": "正解です！それが原産地呼称です。", "do_label_no": "いいえ、それは原産地呼称ではありません。", "do_label_explore": "ラベルの好きな部分をタップして、意味を確認しましょう。", "do_label_fake": "サンプルラベル：生産者は架空です。", "labn_country": "国", "labn_producer": "生産者", "labn_vintage": "ヴィンテージ", "labn_grape": "ブドウ品種", "labn_do": "原産地呼称", "labn_extra": "追加表示", "labn_alc": "アルコール", "labn_vol": "容量", "lab_country": "ワインが造られた国。", "lab_producer": "ワインを造った人：ワイナリー、シャトー、ドメーヌ。", "lab_vintage": "ブドウを収穫した年。", "lab_grape": "ワインに使われたブドウ品種。ヨーロッパの多くの原産地呼称では記載されません。地名が品種を物語るからです。", "lab_do": "ブドウの産地と、その地域のルールを守って造られたことを保証します。", "lab_alc": "アルコール度数（容量に対する割合）。", "lab_vol": "ボトルに入っているワインの量。", "do_list_t": "原産地呼称を探す", "do_all": "すべて", "do_map_all": "世界地図ですべて見る", "do_since": "{y}年から", "do_icon": "アイコン", "do_grapes": "ブドウ品種", "do_grapes_hint": "強調表示は主要品種です。矢印付きの品種をタップすると詳細が見られます。", "do_rules": "ルール", "do_terroir": "土壌と気候", "do_map": "地図で見る", "do_more": "{c}のその他", "do_link": "原産地呼称：{d}", "do_show": "原産地呼称", "col_tinto": "赤", "col_blanco": "白", "col_rosado": "ロゼ", "col_espumoso": "スパークリング", "col_dulce": "甘口", "col_fortificado": "酒精強化", "col_destilado": "蒸留酒"}, "ko": {"learn_sub_do": "원산지 명칭", "learn_sub_do_d": "라벨 속 지명이 보증하는 것: 세계의 원산지 명칭, 그 규칙과 읽는 법.", "do_intro": "원산지 명칭(PDO)은 지명을 보호합니다. 그 지역 포도로, 그 규칙에 따라 만든 와인만 사용할 수 있습니다.", "do_pyr_t": "나라별 피라미드", "do_pyr_hint": "나라를 고르고 단계를 눌러 보세요. 위로 갈수록 규칙이 엄격합니다.", "do_lv_hint": "피라미드의 단계를 눌러 보세요.", "do_label_t": "라벨 읽기", "do_label_q": "라벨에서 원산지 명칭을 찾아 눌러 보세요.", "do_label_ok": "맞습니다! 그것이 원산지 명칭입니다.", "do_label_no": "아니요, 그것은 원산지 명칭이 아닙니다.", "do_label_explore": "이제 라벨의 아무 부분이나 눌러 의미를 확인해 보세요.", "do_label_fake": "예시 라벨: 생산자는 가상입니다.", "labn_country": "국가", "labn_producer": "생산자", "labn_vintage": "빈티지", "labn_grape": "포도 품종", "labn_do": "원산지 명칭", "labn_extra": "추가 표기", "labn_alc": "알코올", "labn_vol": "용량", "lab_country": "와인을 만든 나라.", "lab_producer": "와인을 만든 곳: 와이너리, 샤토 또는 도멘.", "lab_vintage": "포도를 수확한 해.", "lab_grape": "와인에 쓰인 포도 품종. 유럽의 많은 원산지 명칭은 표기하지 않습니다. 지명이 이미 알려 주기 때문입니다.", "lab_do": "포도의 산지와, 그 지역의 규칙을 지켜 만든 와인임을 보증합니다.", "lab_alc": "알코올 도수(부피 대비 비율).", "lab_vol": "병에 담긴 와인의 양.", "do_list_t": "원산지 명칭 둘러보기", "do_all": "전체", "do_map_all": "세계 지도에서 모두 보기", "do_since": "{y}년부터", "do_icon": "아이콘", "do_grapes": "포도 품종", "do_grapes_hint": "강조 표시된 것이 주요 품종입니다. 화살표가 있는 품종을 누르면 정보를 볼 수 있습니다.", "do_rules": "규칙", "do_terroir": "토양과 기후", "do_map": "지도에서 보기", "do_more": "{c}의 다른 명칭", "do_link": "원산지 명칭: {d}", "do_show": "원산지 명칭", "col_tinto": "레드", "col_blanco": "화이트", "col_rosado": "로제", "col_espumoso": "스파클링", "col_dulce": "스위트", "col_fortificado": "주정 강화", "col_destilado": "증류주"}};
+for (const l in T_ADD27) Object.assign(T[l], T_ADD27[l]);
+
 (() => {
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -1645,7 +1702,8 @@ let FILT = false, PREM = {}, WORLD = null, WVAR = 'all', COUNTRY = null, flat = 
 let D, n, AREA, CELLS, CLAT, CLNG, cellIdx, M, P, SIM = null, deps = [], depByName = {}, units = [], WIN = [], INAVI, selCell = -1, selWin = -1, view = 'world', is3D = true, tourStep = -1;
 const markers = [];
 let coachStep = -1;   // paso de la ayuda de primera vez (-1: cerrada)
-let learnRoute = null, DEPS_GJ = null; const UVA = {};   // sección Aprender: ruta abierta y fichas cargadas
+let learnRoute = null, DEPS_GJ = null; const UVA = {};
+let doSys = 'France', doLv = -1, doFilt = 'all', doOn = false, doMk = [];   // denominaciones de origen: país, nivel y filtro elegidos; marcadores en el mundo   // sección Aprender: ruta abierta y fichas cargadas
 
 /* ---------- mapa ---------- */
 const EMPTY = { type: 'FeatureCollection', features: [] };
@@ -2726,7 +2784,7 @@ function viewLayers() {
   UY_LAYERS.forEach(id => map.setLayoutProperty(id, 'visibility', uy ? 'visible' : 'none'));
   WORLD_LAYERS.forEach(id => map.setLayoutProperty(id, 'visibility', uy ? 'none' : 'visible'));
   if (uy) { paintHex(); map.setLayoutProperty('columns', 'visibility', MODE === 'bodegas' ? 'none' : 'visible'); }
-  sealVis();
+  sealVis(); doVis();
 }
 const inUY = c => c.lng > UY_BOUNDS[0][0] - 0.3 && c.lng < UY_BOUNDS[1][0] + 0.3 && c.lat > UY_BOUNDS[0][1] - 0.3 && c.lat < UY_BOUNDS[1][1] + 0.3;
 map.on('moveend', () => {
@@ -2952,23 +3010,27 @@ function openLearn(route) {
   if (learnRoute === 'index') return renderLearnIndex();
   if (learnRoute === 'uvas') return renderGrapeList();
   if (learnRoute === 'catar') return renderTasting();
+  if (learnRoute === 'do') return renderDOIndex();
+  if (learnRoute.startsWith('do-')) return renderDOSheet(learnRoute.slice(3));
   const gk = (LEARN_GRAPES.find(g => g.id === learnRoute) || {}).kind || 'red'; learnTab = gk;
   el.className = 'theme-' + (gk === 'white' ? 'white' : 'red');
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
-  Promise.all([getUva(learnRoute), getUvaMundo()]).then(([d]) => renderGrape(d)).catch(e => { console.error(e); renderLearnIndex(); });
+  Promise.all([getUva(learnRoute), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => renderGrape(d)).catch(e => { console.error(e); renderLearnIndex(); });
 }
 function closeLearn() { learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
-const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
+const learnTop = (back) => '<div class="l-top"><button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : back === 'do' ? 'learn_sub_do' : 'learn_back')) + '</button><button class="x l-x" aria-label="close" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
 function learnWire(el) { el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => b.dataset.l === 'map' ? closeLearn() : openLearn(b.dataset.l)); }
 // ícono grande de cada subtema (SVG)
 const ICON_GLASS = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 6h24c1 14-3 26-12 27C23 32 19 20 20 6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M21 16h22c-1 9-4 15-11 15s-10-6-11-15z" fill="currentColor" opacity=".55"/><path d="M32 33v20M22 58h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M46 10c4 2 7 6 7 11M50 6c5 3 9 8 9 15" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".6"/></svg>';
 const ICON_GRAPE = '<svg viewBox="0 0 64 64" aria-hidden="true">' + [[26,22],[38,22],[20,32],[32,32],[44,32],[26,42],[38,42],[32,52]].map(([x, y]) => '<circle cx="' + x + '" cy="' + y + '" r="6.5" fill="currentColor" opacity=".55" stroke="currentColor" stroke-width="1.6"/>').join('') + '<path d="M32 15V6M32 9c5-4 11-3 14 1-5 3-10 2-14-1z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>';
+const ICON_SEAL = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="26" r="17" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="26" r="11" fill="currentColor" opacity=".45"/><path d="M22 40l-5 18 9-4 5 8 3-15M42 40l5 18-9-4-5 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
 function renderLearnIndex() {
   const el = $('#learn'); el.className = 'theme-index';
   const ready = LEARN_GRAPES.filter(g => g.ready).length;
   el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p></header>' +
     '<div class="l-subs">' +
     '<button class="l-sub grapes" data-l="uvas"><span class="ic">' + ICON_GRAPE + '</span><b>' + esc(t('learn_sub_grapes')) + '</b><p>' + esc(t('learn_sub_grapes_d')) + '</p><small>' + esc(t('learn_ready', { n: ready, m: LEARN_GRAPES.length })) + ' →</small></button>' +
+    '<button class="l-sub do" data-l="do"><span class="ic">' + ICON_SEAL + '</span><b>' + esc(t('learn_sub_do')) + '</b><p>' + esc(t('learn_sub_do_d')) + '</p><small>' + esc(t('learn_open')) + ' →</small></button>' +
     '<button class="l-sub tasting" data-l="catar"><span class="ic">' + ICON_GLASS + '</span><b>' + esc(t('learn_sub_tasting')) + '</b><p>' + esc(t('learn_sub_tasting_d')) + '</p><small>' + esc(t('learn_soon')) + '</small></button>' +
     '</div></div>';
   learnWire(el);
@@ -3159,6 +3221,8 @@ function renderGrape(all) {
       '<dl><dt>' + esc(t('learn_eye')) + '</dt><dd>' + esc(ag.color) + '</dd><dt>' + esc(t('learn_nose')) + '</dt><dd>' + esc(ag.nose) + '</dd><dt>' + esc(t('learn_mouth')) + '</dt><dd>' + esc(ag.mouth) + '</dd></dl>' +
       '<div class="l-tags">' + fams.filter(Boolean).map(f => f.items.slice(0, 3).map(x => '<span style="border-color:' + (AROMA_COL[f.k] || '#888') + '">' + esc(x) + '</span>').join('')).join('') + '</div>';
     $('#lSoilMap span').textContent = e.map === 'uy' ? d.region_btn_uy : d.region_btn_w;
+    const DL = DOD[L] && ((DOD[L].links || {})[id] || {})[e.k], dx = DL && doById(DOD[L], DL);
+    if (dx) $('#lSimTxt').insertAdjacentHTML('beforeend', '<button class="do-link" data-l="do-' + dx.id + '"><span>' + esc(lvOf(DOD[L], dx).label) + '</span>' + esc(t('do_link', { d: dx.name })) + ' →</button>'), learnWire($('#lSimTxt'));
     el.querySelectorAll('[data-s]').forEach(b => b.classList.toggle('sel', +b.dataset.s === regK));
     el.querySelectorAll('.l-seg button').forEach(b => b.classList.toggle('sel', +b.dataset.o === oak));
   };
@@ -3197,6 +3261,92 @@ function renderGrape(all) {
   el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); if (view !== 'uy') goUruguay(true); setMode('bodegas'); showWinery(+b.dataset.w, true); });
   el.scrollTop = 0;
 }
+/* ---------- Aprender: denominaciones de origen ---------- */
+const DOD = {};   // datos de DO por idioma
+const getDO = () => DOD[L] ? Promise.resolve(DOD[L]) : get('data/do/' + L + '.json').then(d => (DOD[L] = d)).catch(() => get('data/do/es.json').then(d => (DOD[L] = d)));
+const doById = (D, id) => D.dos.find(x => x.id === id);
+const sysOf = (D, c) => D.systems.find(s => s.c === c) || { levels: [], name: c };
+const lvOf = (D, x) => (sysOf(D, x.c).levels.find(l => l.k === x.level) || { label: x.level });
+const COL_IC = { tinto: '#8c1d2f', blanco: '#e6d47a', rosado: '#e79aa6', espumoso: '#f1e3a0', dulce: '#d7a13b', fortificado: '#6b2a1c', destilado: '#b97a2c' };
+const colChips = cs => '<div class="do-cols">' + (cs || []).map(c => '<span><i style="background:' + (COL_IC[c] || '#888') + '"></i>' + esc(t('col_' + c)) + '</span>').join('') + '</div>';
+// marcadores de las DO en el mapa del mundo (solo en la vista mundo)
+function doMarkers(D, sel) {
+  if (!doMk.length) D.dos.forEach(x => { const el = document.createElement('button'); el.className = 'do-mk'; el.innerHTML = '<i></i><span>' + esc(x.name) + '</span>'; el.title = x.name;
+    el.onclick = ev => { ev.stopPropagation(); openLearn('do-' + x.id); };
+    doMk.push({ id: x.id, el, m: new maplibregl.Marker({ element: el }).setLngLat(x.pt).addTo(map) }); });
+  doMk.forEach(k => k.el.classList.toggle('sel', k.id === sel));
+  doVis();
+}
+function doVis() { doMk.forEach(k => { k.el.style.display = doOn && view === 'world' ? '' : 'none'; }); const tg = $('#doToggle'); if (tg) tg.checked = doOn; }
+function showDOMap(id) { getDO().then(D => { const x = doById(D, id); closeLearn(); doOn = true; if (view !== 'world') goWorld(true); doMarkers(D, id);
+  if (x) map.flyTo({ center: x.pt, zoom: 6.6, pitch: 0, bearing: 0, duration: 2600, essential: true }); }); }
+function renderDOIndex() {
+  const el = $('#learn'); el.className = 'theme-index';
+  getDO().then(D => {
+    if (!D.systems.some(s => s.c === doSys)) doSys = D.systems[0].c;
+    const S0 = sysOf(D, doSys), N = S0.levels.length;
+    // pirámide: el nivel más exigente arriba (más angosto)
+    const pyr = '<svg class="do-pyr" viewBox="0 0 300 ' + (N * 46 + 4) + '">' + S0.levels.map((l, i) => { const y = i * 46 + 2, w0 = 70 + i * (230 / N), w1 = 70 + (i + 1) * (230 / N);
+      return '<g class="pl' + (i === doLv ? ' sel' : '') + '" data-lv="' + i + '"><path d="M' + (150 - w0 / 2) + ' ' + y + 'H' + (150 + w0 / 2) + 'L' + (150 + w1 / 2) + ' ' + (y + 42) + 'H' + (150 - w1 / 2) + 'Z" style="fill-opacity:' + (1 - i * .16).toFixed(2) + '"/><text x="150" y="' + (y + 26) + '" text-anchor="middle">' + esc(l.label) + '</text></g>'; }).join('') + '</svg>';
+    const L0 = S0.levels[doLv], inLv = L0 ? D.dos.filter(x => x.c === doSys && x.level === L0.k) : [];
+    const ex = S0.label_example || {}, exDo = doById(D, ex.do) || {}, exG = (exDo.grapes || [])[0];
+    const list = D.dos.filter(x => doFilt === 'all' || x.c === doFilt).sort((a, b) => (b.icon - a.icon) || a.name.localeCompare(b.name));
+    el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_do')) + '</h1><p>' + esc(t('do_intro')) + '</p></header>' +
+      '<section class="l-sec"><h2>' + esc(t('do_pyr_t')) + '</h2><p class="l-hint">' + esc(t('do_pyr_hint')) + '</p><div class="l-chips">' + D.systems.map(s => '<button class="l-chip' + (s.c === doSys ? ' sel' : '') + '" data-sys="' + esc(s.c) + '">' + esc(s.name) + '</button>').join('') + '</div>' +
+      '<div class="l-two eq do-sys"><div>' + pyr + '</div><div><p>' + esc(S0.intro) + '</p>' + (L0 ? '<div class="l-detail"><b>' + esc(L0.label) + '</b>' + (L0.full && L0.full !== L0.label ? ' <small>· ' + esc(L0.full) + '</small>' : '') + '<p>' + esc(L0.txt) + '</p>' +
+        (inLv.length ? '<div class="l-chips">' + inLv.map(x => '<button class="l-chip" data-l="do-' + x.id + '">' + esc(x.name) + '</button>').join('') + '</div>' : '') + '</div>' : '<p class="l-hint">' + esc(t('do_lv_hint')) + '</p>') + '</div></div></section>' +
+      // juego: leé una etiqueta
+      '<section class="l-sec"><h2>' + esc(t('do_label_t')) + '</h2><p class="l-hint" id="labQ">' + esc(t('do_label_q')) + '</p><div class="do-label-wrap"><div class="do-label">' +
+        '<span class="lb-country" data-h="country">' + esc(S0.name) + '</span>' +
+        '<span class="lb-prod" data-h="producer">' + esc(ex.producer || '') + '</span>' +
+        '<span class="lb-vint" data-h="vintage">2021</span>' +
+        (exG ? '<span class="lb-grape" data-h="grape">' + esc(exG.name) + '</span>' : '') +
+        '<span class="lb-do" data-h="do">' + esc(ex.mention || exDo.name || '') + '</span>' +
+        (ex.extra ? '<span class="lb-extra" data-h="extra">' + esc(ex.extra) + '</span>' : '') +
+        '<span class="lb-foot"><b data-h="alc">13,5 % vol</b><b data-h="vol">750 ml</b></span></div><div class="l-detail" id="labA"><small>' + esc(t('do_label_fake')) + '</small></div></div></section>' +
+      // lista
+      '<section class="l-sec"><h2>' + esc(t('do_list_t')) + ' <span class="num">' + nf(D.dos.length) + '</span></h2><div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c)).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
+      '<div class="do-grid">' + list.map(x => '<button class="do-card" data-l="do-' + x.id + '"><small>' + esc(sysOf(D, x.c).name) + ' · ' + esc(lvOf(D, x).label) + (x.icon ? ' · ★' : '') + '</small><b>' + esc(x.name) + '</b>' + colChips(x.colors) + '</button>').join('') + '</div>' +
+      '<div class="l-btns"><button class="cta ghost" id="doAllMap"><span>' + esc(t('do_map_all')) + '</span></button></div></section></div>';
+    learnWire(el);
+    el.querySelectorAll('[data-sys]').forEach(b => b.onclick = () => { doSys = b.dataset.sys; doLv = -1; renderDOIndex(); });
+    el.querySelectorAll('.pl').forEach(g => g.onclick = () => { doLv = +g.dataset.lv; renderDOIndex(); });
+    el.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { doFilt = b.dataset.f; const y = el.scrollTop; renderDOIndex(); });
+    $('#doAllMap').onclick = () => { closeLearn(); doOn = true; if (view !== 'world') goWorld(); doMarkers(D); };
+    // etiqueta: primero encontrá la DO; después tocá cualquier parte para ver qué es
+    let found = false; const lab = el.querySelector('.do-label');
+    lab.querySelectorAll('[data-h]').forEach(s => s.onclick = () => { const h = s.dataset.h;
+      if (!found && h !== 'do') { s.classList.add('miss'); setTimeout(() => s.classList.remove('miss'), 600); $('#labA').innerHTML = '<b class="no">✗ ' + esc(t('do_label_no')) + '</b><p>' + esc(t('lab_' + h)) + '</p>'; return; }
+      if (!found) { found = true; lab.classList.add('found'); $('#labQ').textContent = t('do_label_explore'); }
+      lab.querySelectorAll('[data-h]').forEach(x => x.classList.toggle('sel', x === s));
+      $('#labA').innerHTML = (h === 'do' && !lab.dataset.ok ? '<b class="yes">✓ ' + esc(t('do_label_ok')) + '</b>' : '<b>' + esc(t('labn_' + h)) + '</b>') + '<p>' + esc(h === 'extra' ? (ex.extra_txt || '') : t('lab_' + h)) + '</p>' +
+        (h === 'do' && exDo.id ? '<button class="l-more" data-l="do-' + exDo.id + '">' + esc(exDo.name) + ' →</button>' : '');
+      if (h === 'do') lab.dataset.ok = '1'; learnWire($('#labA')); });
+  });
+}
+function renderDOSheet(id) {
+  const el = $('#learn'); el.className = 'theme-index';
+  getDO().then(D => {
+    const x = doById(D, id); if (!x) return renderDOIndex();
+    const S0 = sysOf(D, x.c), lv = lvOf(D, x), li = S0.levels.findIndex(l => l.k === x.level);
+    const more = D.dos.filter(o => o.c === x.c && o.id !== x.id);
+    const fact = (k, v) => v ? '<div><small>' + esc(t(k)) + '</small><b>' + esc(v) + '</b></div>' : '';
+    el.innerHTML = learnTop('do') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(S0.name) + ' · ' + esc(x.area || '') + '</div><h1>' + esc(x.name) + '</h1>' +
+      '<div class="do-badges"><span class="do-lv" title="' + esc(lv.full || '') + '">' + esc(lv.label) + '</span>' + (x.since ? '<span>' + esc(t('do_since', { y: x.since })) + '</span>' : '') + (x.icon ? '<span>★ ' + esc(t('do_icon')) + '</span>' : '') + '</div>' +
+      '<p class="l-tag">' + esc(x.txt) + '</p>' + colChips(x.colors) + '</header>' +
+      // dónde está en la pirámide del país
+      '<section class="l-sec do-where"><div class="do-steps">' + S0.levels.map((l, i) => '<span class="' + (i === li ? 'sel' : '') + '">' + esc(l.label) + '</span>').join('<i>›</i>') + '</div><p class="l-hint">' + esc(lv.txt || '') + '</p></section>' +
+      (x.grapes.length ? '<section class="l-sec"><h2>' + esc(t('do_grapes')) + '</h2><div class="l-chips">' + x.grapes.map(g => g.gid ? '<button class="l-chip' + (g.role === 'principal' ? ' sel' : '') + '" data-l="' + g.gid + '">' + esc(g.name) + ' →</button>' : '<span class="l-chip static' + (g.role === 'principal' ? ' sel' : '') + '">' + esc(g.name) + '</span>').join('') + '</div><p class="l-hint">' + esc(t('do_grapes_hint')) + '</p></section>' : '') +
+      (x.rules.length ? '<section class="l-sec"><h2>' + esc(t('do_rules')) + '</h2><ol class="do-rules">' + x.rules.map(r => '<li>' + esc(r) + '</li>').join('') + '</ol></section>' : '') +
+      (x.soil || x.climate ? '<section class="l-sec"><h2>' + esc(t('do_terroir')) + '</h2><div class="l-facts">' + fact('f_soil', x.soil) + fact('f_climate', x.climate) + '</div></section>' : '') +
+      '<div class="l-btns"><button class="cta" id="doMap"><span>' + esc(t('do_map')) + '</span></button></div>' +
+      (more.length ? '<section class="l-sec"><h2>' + esc(t('do_more', { c: S0.name })) + '</h2><div class="l-chips">' + more.map(o => '<button class="l-chip sm" data-l="do-' + o.id + '">' + esc(o.name) + '</button>').join('') + '</div></section>' : '') +
+      '<details class="l-src"><summary>' + esc(t('sources_t')) + '</summary><p>' + esc(x.sources) + '</p></details></div>';
+    learnWire(el); $('#doMap').onclick = () => showDOMap(x.id); el.scrollTop = 0;
+  });
+}
+map.on('zoomend', () => document.body.classList.toggle('do-z', map.getZoom() >= 5));
+$('#doToggle').onchange = e => { doOn = e.target.checked; if (doOn) getDO().then(D => doMarkers(D)); else doVis(); };
 $('#learnBtn').onclick = () => { if (coachStep >= 0) coachEnd(); openLearn('index'); };
 addEventListener('hashchange', () => { const m = location.hash.match(/^#aprender\/?([\w-]*)/); if (m) openLearn(m[1] || 'index'); else if (learnRoute) closeLearn(); });
 addEventListener('keydown', e => { if (learnRoute && e.key === 'Escape' && coachStep < 0) closeLearn(); });
