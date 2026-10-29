@@ -2538,6 +2538,20 @@ const T_ADD46 = {
 for (const l in T_ADD46) Object.assign(T[l], T_ADD46[l]);
 const T_ADD47 = { es: 'DO', en: 'PDO', pt: 'DO', fr: 'AOP', de: 'Herkunft', ru: 'НМП', zh: '原产地', ja: '原産地', ko: '원산지' };
 for (const l in T_ADD47) T[l].tab_do_s = T_ADD47[l];
+// el terroir de Argentina ahora cubre todo el país: el contador vuelve a decir "del país"
+for (const l in T) if (T[l].of_country) T[l].of_country__ar = T[l].of_country;
+const T_ADD48 = {
+  es: 'Terroir: todo el país, con más detalle (hexágonos chicos) en las zonas con viña. Bodegas: todo el país.',
+  en: 'Terroir: the whole country, in finer detail (small hexagons) in vineyard areas. Wineries: the whole country.',
+  pt: 'Terroir: todo o país, com mais detalhe (hexágonos pequenos) nas áreas com vinhedos. Vinícolas: todo o país.',
+  fr: 'Terroir : tout le pays, plus détaillé (petits hexagones) dans les zones viticoles. Domaines : tout le pays.',
+  de: 'Terroir: das ganze Land, in Weinbaugebieten genauer (kleine Sechsecke). Weingüter: das ganze Land.',
+  ru: 'Терруар: вся страна, подробнее (мелкие шестиугольники) в зонах виноградников. Винодельни: вся страна.',
+  zh: '风土：覆盖全国，葡萄园区域更精细（小六边形）。酒庄：全国。',
+  ja: 'テロワール：国内全域。ブドウ畑のある地域はより細かく（小さな六角形）。ワイナリー：全国。',
+  ko: '테루아: 전국. 포도밭 지역은 더 자세히(작은 육각형). 와이너리: 전국.'
+};
+for (const l in T_ADD48) T[l].ar_scope__ar = T_ADD48[l], T[l].ar_scope = T[l].ar_scope;
 
 (() => {
 'use strict';
@@ -2579,13 +2593,13 @@ const CTRY = {
   AR: { base: 'data/ar/', a2: 'AR', view: 'view_ar', enter: 'enter_ar', hint: 'country_ar_hint', bounds: [[-69.9, -35.5], [-66.8, -30.2]], exag: 1.25, reg: 'INV', relief: 'relief-ar', hs: 'hillshade-ar', dem: 'demar',
     grapes: ['Malbec', 'Cereza', 'Bonarda', 'Criolla Grande', 'Cabernet Sauvignon', 'Syrah', 'Pedro Giménez', 'Chardonnay', 'Tempranillo', 'Moscatel Rosado'],
     tour: ['Luján de Cuyo', 'Maipú', 'Tupungato', 'San Carlos', 'San Rafael', 'San Martín', 'Pocito', 'Calingasta', 'Chilecito', 'Cafayate', 'Añelo', 'General Roca'], bear: [-25, 18, -38, 28, -8, 22, -30, 12, -20, 25, -15, 10],
-    rng: { alt: [400, 2100, 20], rain: [50, 550, 10], sea: 0, ph: [65, 90] }, wk: [1, 2, 3, 4, 5], major: 1000, colKm: 9, rock: false, sea: false,
+    rng: { alt: [0, 4000, 20], rain: [0, 2000, 10], sea: 0, ph: [45, 90] }, wk: [1, 2, 3, 4, 5], major: 1000, colKm: 9, rock: false, sea: false,
     vars: [['g_main', ['tex', 'alt', 'gdd', 'rain', 'vyf']], ['advanced', ['cf', 'ph', 'slope', 'asp', 'hug', 'dtr']]],
     ai: { alt: 1000, dtr: 125, rainLo: 300, rainHi: 420 }, reliefTicks: [0, 2600, 5200],
-    seq: { alt: { stops: [500, 700, 900, 1100, 1400, 2000], colors: WARM6, div: 1, unit: 'm', d: 0 }, ph: { stops: [70, 73, 76, 79, 82, 85], colors: ['#c4643a', '#d38c56', '#ddb98a', '#b9c4a8', '#7fa9a8', '#4b8aa3'], div: 10, unit: '', d: 1 },
-      hug: { stops: [1600, 2100, 2600, 3000, 3300], colors: ['#3f6fa8', '#6aa7a4', '#d9c96a', '#e3904d', '#c4453d'], div: 1, unit: '', d: 0 },
-      rain: { stops: [80, 150, 220, 300, 380, 500], colors: ['#22303d', '#284a69', '#2f6c95', '#4b93ba', '#79bdd4', '#b7e2ea'], div: 1, unit: 'mm', d: 0 },
-      dtr: { stops: [100, 110, 120, 130, 140], colors: ['#3c3a6e', '#6a4c8c', '#a2588f', '#d77a6b', '#f0b65f'], div: 10, unit: '°C', d: 1 } } }
+    seq: { alt: { stops: [0, 400, 800, 1200, 2000, 3500], colors: WARM6, div: 1, unit: 'm', d: 0 }, ph: { stops: [55, 62, 68, 74, 80, 86], colors: ['#c4643a', '#d38c56', '#ddb98a', '#b9c4a8', '#7fa9a8', '#4b8aa3'], div: 10, unit: '', d: 1 },
+      hug: { stops: [600, 1200, 1800, 2400, 3000], colors: ['#3f6fa8', '#6aa7a4', '#d9c96a', '#e3904d', '#c4453d'], div: 1, unit: '', d: 0 },
+      rain: { stops: [100, 250, 500, 800, 1200, 1800], colors: ['#22303d', '#284a69', '#2f6c95', '#4b93ba', '#79bdd4', '#b7e2ea'], div: 1, unit: 'mm', d: 0 },
+      dtr: { stops: [80, 100, 115, 130, 145], colors: ['#3c3a6e', '#6a4c8c', '#a2588f', '#d77a6b', '#f0b65f'], div: 10, unit: '°C', d: 1 } } }
 };
 let CC = 'UY', CX = CTRY.UY;
 let GRAPES = CX.grapes;
@@ -2651,7 +2665,7 @@ const DEF = () => ({ color: 'relief', dep: -1, reg: -1, rock: new Set(), tex: ne
 let S = DEF();
 let MODE = 'terroir';
 let FILT = false, PREM = {}, WORLD = null, WVAR = 'all', COUNTRY = null, flat = false;
-let D, n, AREA, CELLS, CLAT, CLNG, cellIdx, M, P, SIM = null, deps = [], depByName = {}, units = [], WIN = [], INAVI, selCell = -1, selWin = -1, view = 'world', is3D = true, tourStep = -1;
+let NZ = 0, ATOT = 0, PROVS = [], D, n, AREA, CELLS, CLAT, CLNG, cellIdx, M, P, SIM = null, deps = [], depByName = {}, units = [], WIN = [], INAVI, selCell = -1, selWin = -1, view = 'world', is3D = true, tourStep = -1;
 const markers = [];
 let coachStep = -1;   // paso de la ayuda de primera vez (-1: cerrada)
 let learnRoute = null, DEPS_GJ = null, learnSeq = 0, NT = 0, CTT = null; const UVA = {};
@@ -2774,7 +2788,9 @@ function fetchPack(cc) {
   return PKD[cc] || (PKD[cc] = (async () => {
     const [hex, depsGj, depPts, nbr, rivers, lakes, vy, geo, win, inavi, regs] = await Promise.all(PACK_FILES.map(f => get(CTRY[cc].base + f)));
     const n = hex.n, D = {}, X = { cc, INAVI: inavi, units: geo.units, REG: regs, n, AREA: hex.area_km2, CELLS: hex.cells, depsGj, nbr, rivers, lakes, vy, D };
-    for (const k of ['alt', 'slope', 'asp', 'rock', 'unit', 'tex', 'clay', 'cf', 'ph', 'gdd', 'hug', 'rain', 'dtr', 'sea', 'dep', 'vyf']) D[k] = hex[k] ? Int16Array.from(hex[k]) : new Int16Array(n).fill(-1);
+    for (const k of ['alt', 'slope', 'asp', 'rock', 'unit', 'tex', 'clay', 'cf', 'ph', 'gdd', 'hug', 'rain', 'dtr', 'sea', 'dep', 'vyf', 'ar', 'pv']) D[k] = hex[k] ? Int16Array.from(hex[k]) : new Int16Array(n).fill(-1);
+    X.PROVS = hex.provs || [];
+    X.NZ = hex.nz || n;   // las primeras NZ celdas son la zona con viña (res 7); en Argentina, después viene el resto del país (res 6 y 5)
     const CLAT = new Float32Array(n), CLNG = new Float32Array(n), cellIdx = new Map(), feats = new Array(n);
     for (let i = 0; i < n; i++) {
       const c = hex.cells[i]; cellIdx.set(c, i);
@@ -2798,6 +2814,7 @@ function fetchPack(cc) {
       if (w.lat != null) {
         const c = h3.latLngToCell(w.lat, w.lng, 7);
         if (cellIdx.has(c)) i = cellIdx.get(c); else for (const k of h3.gridDisk(c, 2)) { if (cellIdx.has(k)) { i = cellIdx.get(k); break; } }
+        for (const r of [6, 5]) if (i < 0) { const pc = h3.cellToParent(c, r); if (cellIdx.has(pc)) i = cellIdx.get(pc); }
       }
       return Object.assign({}, w, { cell: i, _v: true });
     });
@@ -2805,6 +2822,8 @@ function fetchPack(cc) {
     const same = {};
     X.WIN.forEach(w => { if (w.lat != null) (same[w.lat.toFixed(4) + ',' + w.lng.toFixed(4)] ||= []).push(w); });
     Object.values(same).forEach(g => { if (g.length < 2) return; g.forEach((w, j) => { const a = 2 * Math.PI * j / g.length, r = 0.0013 * (1 + g.length / 8); w.lat += r * Math.sin(a); w.lng += r * Math.cos(a) / Math.cos(w.lat * Math.PI / 180); }); });
+    // íconos de marca empaquetados (Argentina: data/ar/img/logos.json); las fotos se bajan después, sin frenar la entrada
+    if (X.WIN.some(w => w.logo_pk)) { const lg = await get(CTRY[cc].base + 'img/logos.json').catch(() => ({})); X.WIN.forEach(w => { if (w.logo_pk && lg[w.slug]) w.logo = 'data:image/webp;base64,' + lg[w.slug]; }); }
     X.winFC = { type: 'FeatureCollection', features: X.WIN.filter(w => w.lat != null).map(w => ({ type: 'Feature', id: w.id, properties: { name: w.name, f: w.profile ? 1 : 0, t: w.tier || 3, n: w.nat || 999 }, geometry: { type: 'Point', coordinates: [w.lng, w.lat] } })) };
     return X;
   })().catch(e => { delete PKD[cc]; throw e; }));
@@ -2815,7 +2834,8 @@ function usePack(X) {
   if (D === X.D) return;
   endTour(); closeCard(); clearSim(); stopOrbit();
   CC = X.cc; CX = CTRY[CC]; GRAPES = CX.grapes; SEQ = Object.assign({}, SEQ0, CX.seq || {}); RELIEF = RELIEFS[CC];
-  ({ INAVI, units, REG, n, AREA, CELLS, D, CLAT, CLNG, cellIdx, deps, depByName, WIN } = X);
+  ({ INAVI, units, REG, n, AREA, CELLS, D, CLAT, CLNG, cellIdx, deps, depByName, WIN, NZ, PROVS } = X);
+  ATOT = 0; for (let i = 0; i < n; i++) ATOT += cellA(i);
   DEPS_GJ = X.depsGj; M = new Uint8Array(n).fill(1); P = new Uint8Array(n).fill(1); FILT = false;
   if (!X.stats) { depStats(); X.stats = 1; }
   S = DEF(); Object.assign(B, { q: '', dep: '', top: false, prof: false, tours: false, rest: false, lodge: false, grape: '', inT: false, unconf: false });
@@ -2831,6 +2851,12 @@ function usePack(X) {
   const sc = $('#arScope'); if (sc) sc.hidden = CC === 'UY';
   buildMarkers(); buildSeals(); buildColumns(); buildUI(); paintHex(); applyFilters(); renderLegend();
   ensureTxt('es'); if (L !== 'es') ensureTxt(L);
+  if (!X.fotos && X.WIN.some(w => w.photo && w.photo.pk)) X.fotos = get(CTRY[X.cc].base + 'img/fotos.json').then(fp => {
+    X.WIN.forEach(w => { if (w.photo && w.photo.pk && fp[w.slug]) w.photo.src = 'data:image/webp;base64,' + fp[w.slug]; });
+    if (CC !== X.cc) return;
+    seals.forEach(x => { if (x.w.photo && x.w.photo.src && !x.w.logo) x.el.innerHTML = sealHTML(x.w) + '<em>' + esc(x.w.name) + '</em>'; });
+    if (MODE === 'bodegas') applyBodegas(); if (cardMode === 'win') refreshCard();
+  }).catch(() => {});
 }
 async function load() {
   const [land, uy] = await Promise.all([get('data/world_land.geojson'), fetchPack('UY')]);
@@ -2854,11 +2880,14 @@ async function load() {
 
 function median(a) { if (!a.length) return NaN; const s = Float64Array.from(a).sort(); return s[s.length >> 1]; }
 function mode(a) { const m = new Map(); let best = -1, bc = 0; for (const v of a) { if (v < 0) continue; const c = (m.get(v) || 0) + 1; m.set(v, c); if (c > bc) { bc = c; best = v; } } return best; }
+// superficie de una celda: en Argentina hay de varios tamaños (res 7 en la zona con viña, 6 y 5 en el resto)
+const cellA = i => D.ar[i] > 0 ? D.ar[i] / 10 : AREA;
 function depStats() {
   const by = deps.map(() => []);
   for (let i = 0; i < n; i++) if (D.dep[i] >= 0) by[D.dep[i]].push(i);
   deps.forEach(d => {
-    const ix = by[d.id]; d.cells = ix.length;
+    // con zona con viña, los datos del departamento salen de ahí (no de la cordillera o la meseta de alrededor)
+    let ix = by[d.id]; const iz = ix.filter(i => i < NZ); if (iz.length) ix = iz; d.cells = ix.length;
     let w = 180, s = 90, e = -180, no = -90, la = 0, lo = 0;
     for (const i of ix) { w = Math.min(w, CLNG[i]); e = Math.max(e, CLNG[i]); s = Math.min(s, CLAT[i]); no = Math.max(no, CLAT[i]); la += CLAT[i]; lo += CLNG[i]; }
     d.bbox = [[w, s], [e, no]]; d.center = [lo / ix.length, la / ix.length];
@@ -2880,7 +2909,7 @@ function applyFilters() {
   let okDep = null;
   if (S.reg >= 0) { const set = new Set(REG.regions[S.reg].deps); okDep = new Uint8Array(deps.length).map((_, k) => set.has(deps[k].name) ? 1 : 0); }
   if (S.onlyGrape) { const g = new Uint8Array(deps.length).map((_, k) => grapeHa(deps[k].name, S.grape) > 0 ? 1 : 0); okDep = okDep ? okDep.map((v, k) => v && g[k]) : g; }
-  let cnt = 0; const perDep = new Float64Array(deps.length);
+  let cnt = 0, area = 0; const perDep = new Float64Array(deps.length);
   for (let i = 0; i < n; i++) {
     let ok = 1;
     if (dep >= 0 && D.dep[i] !== dep) ok = 0;
@@ -2896,19 +2925,19 @@ function applyFilters() {
     else if (uRain && (D.rain[i] < r0 || D.rain[i] > r1)) ok = 0;
     else if (uSea && (D.sea[i] < 0 || D.sea[i] > sea)) ok = 0;
     M[i] = ok;
-    if (ok) { cnt++; if (D.dep[i] >= 0) perDep[D.dep[i]]++; }
+    if (ok) { cnt++; const a = cellA(i); area += a; if (D.dep[i] >= 0) perDep[D.dep[i]] += a; }
   }
   for (let i = 0; i < n; i++) if (M[i] !== P[i]) { map.setFeatureState({ source: 'hex', id: i }, { m: !!M[i] }); P[i] = M[i]; }
   if ((cnt < n) !== FILT) { FILT = cnt < n; renderLegend(); }
   WIN.forEach(w => { if (w.lat != null) map.setFeatureState({ source: 'wineries', id: w.id }, { m: MODE === 'bodegas' || (w.cell >= 0 && !!M[w.cell]) }); });
   // contador
-  $('#cArea').innerHTML = nf(cnt * AREA) + '<small>' + t('km2') + '</small>';
-  $('#cPct').textContent = nf(cnt / n * 100, cnt && cnt / n < 0.01 ? 2 : 1) + ' %';
+  $('#cArea').innerHTML = nf(area) + '<small>' + t('km2') + '</small>';
+  $('#cPct').textContent = nf(area / ATOT * 100, area && area / ATOT < 0.01 ? 2 : 1) + ' %';
   const wm = WIN.filter(w => !w.unconf && w.cell >= 0 && M[w.cell]).sort((a, b) => (b.profile ? 1 : 0) - (a.profile ? 1 : 0));
   $('#cWin').textContent = nf(wm.length);
   // resultados
   const rd = $('#resDeps'); rd.innerHTML = '';
-  const top = deps.map(d => ({ d, a: perDep[d.id] * AREA })).filter(x => x.a > 0).sort((a, b) => b.a - a.a).slice(0, 6);
+  const top = deps.map(d => ({ d, a: perDep[d.id] })).filter(x => x.a > 0).sort((a, b) => b.a - a.a).slice(0, 6);
   if (!top.length) rd.innerHTML = '<p class="empty">' + esc(t('none_match')) + '</p>';
   const mx = top.length ? top[0].a : 1;
   top.forEach(({ d, a }) => {
@@ -3185,7 +3214,7 @@ function depBlock(i) {
 }
 function simBlock() {
   if (!SIM) return '<button class="btn" id="simBtn">' + esc(t('similar_btn')) + '</button>';
-  return '<div class="simline"><span>' + esc(t('similar_on', { n: nf(SIM.count * AREA) })) + '<br><span style="color:var(--ink-3)">' + esc(t('similar_where', { deps: SIM.where.join(', ') })) + '</span></span><button class="link-btn" id="simClear">' + esc(t('similar_clear')) + '</button></div>';
+  return '<div class="simline"><span>' + esc(t('similar_on', { n: nf(SIM.area) })) + '<br><span style="color:var(--ink-3)">' + esc(t('similar_where', { deps: SIM.where.join(', ') })) + '</span></span><button class="link-btn" id="simClear">' + esc(t('similar_clear')) + '</button></div>';
 }
 let cardMode = null;
 function openCard(html) {
@@ -3228,7 +3257,7 @@ const LOGO_BAD = new Set();
 const SEAL_PAL = [['#b8475f', '#5f1a2b'], ['#7d4a8c', '#3a1d44'], ['#c98f33', '#7a4f12'], ['#7c8d42', '#3d4a1b'], ['#4a6c9c', '#213651'], ['#cf6a45', '#6e2e1b'], ['#9a4572', '#4a1b36'], ['#3a8a81', '#163d39'], ['#b3763f', '#5b351b'], ['#5a8a55', '#28412a']];
 function sealPal(w) { let h = 0; for (const ch of w.slug) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return SEAL_PAL[h % SEAL_PAL.length]; }
 function sealHTML(w, cls) {
-  const lg = w.logo && !LOGO_BAD.has(w.id), ph = !lg && w.photo && !LOGO_BAD.has(w.id), pal = sealPal(w);
+  const lg = w.logo && !LOGO_BAD.has(w.id), ph = !lg && w.photo && w.photo.src && !LOGO_BAD.has(w.id), pal = sealPal(w);
   const bg = lg && w.logo_bg && w.logo_bg[0] === '#' ? ';background:' + w.logo_bg : '';
   return '<span class="seal' + (w.profile ? '' : ' basic') + (lg ? ' logo' + (w.logo_bg === 'dark' ? ' on-dark' : '') : ph ? ' photo' : '') + (cls ? ' ' + cls : '') + '" style="--s1:' + pal[0] + ';--s2:' + pal[1] + bg + '" aria-hidden="true" data-w="' + w.id + '">' +
     (lg ? '<img src="' + esc(w.logo) + '" alt="" decoding="async">' : ph ? '<img src="' + esc(w.photo.src) + '" alt="" decoding="async" loading="lazy">' : esc(w.mono)) + '</span>';
@@ -3308,8 +3337,8 @@ function autoDesc(w) {
 function wineryCard(w) {
   const p = w.profile, tx = p ? ((txtOf(L) && txtOf(L)[w.slug]) || (txtOf('es') && txtOf('es')[w.slug]) || {}) : null, i = w.cell;
   // portada solo con foto real de la bodega; la vista satelital del predio va en la sección de terroir
-  const hero = w.photo ? '<img src="' + esc(w.photo.src) + '" alt="" loading="lazy" decoding="async">' : '';
-  const credit = w.photo ? '<a class="credit" href="' + esc(w.photo.url) + '" target="_blank" rel="noopener">© ' + esc(w.photo.credit) + (w.photo.lic ? ' · ' + esc(w.photo.lic) : '') + '</a>' : '';
+  const hero = w.photo && w.photo.src ? '<img src="' + esc(w.photo.src) + '" alt="" loading="lazy" decoding="async">' : '';
+  const credit = w.photo && w.photo.src ? '<a class="credit" href="' + esc(w.photo.url) + '" target="_blank" rel="noopener">© ' + esc(w.photo.credit) + (w.photo.lic ? ' · ' + esc(w.photo.lic) : '') + '</a>' : '';
   const satFig = w.sat_img ? '<figure class="tsat"><img class="timg" data-pk="s" alt="" decoding="async"><figcaption><a href="https://sentinels.copernicus.eu/" target="_blank" rel="noopener">' + esc(t('sat_credit', { d: (w.sat_date || '').slice(0, 7) })) + '</a></figcaption></figure>' : '';
   let h = '<header class="w-head' + (hero ? ' has-hero' : '') + '">' +
     (hero ? '<div class="hero">' + hero + credit + '</div>' : '') +
@@ -3369,7 +3398,7 @@ function refreshCard() {
     const chipsZ = [['alt', nf(D.alt[i]) + ' m'], ['soil', CX.rock && D.tex[i] >= 0 ? t('tex_' + D.tex[i]) : null], ['clim', g >= 0 ? 'Winkler ' + t('wk_' + wkOf(g)) : null], ['sea', D.sea[i] >= 0 ? nf(D.sea[i]) + ' km' : null], ['rain', !CX.sea && D.rain[i] > 0 ? nf(D.rain[i]) + ' mm' : null]]
       .filter(x => x[1]).map(([k, v]) => '<span class="zc">' + ZI[k] + esc(v) + '</span>').join('');
     const rk = deps[D.dep[i]] ? regOf(deps[D.dep[i]].name) : -1;
-    openCard('<header><div class="eyebrow">' + esc(t('zone_title')) + ' · ' + esc(deps[D.dep[i]] ? deps[D.dep[i]].name : '') + (rk >= 0 ? ' · <button class="link-btn reg-link" data-reg="' + rk + '">' + esc(rname(REG.regions[rk])) + '</button>' : '') + '</div><h2>' + esc(r >= 0 ? t('rock_' + r) : !CX.rock && D.tex[i] >= 0 ? t('tex_' + D.tex[i]) : t('missing')) + '</h2><div class="zchips">' + chipsZ + '</div>' + X_BTN_() + '</header><div class="body">' +
+    openCard('<header><div class="eyebrow">' + esc(t('zone_title')) + ' · ' + esc(deps[D.dep[i]] ? deps[D.dep[i]].name : (PROVS[D.pv[i]] || '')) + (rk >= 0 ? ' · <button class="link-btn reg-link" data-reg="' + rk + '">' + esc(rname(REG.regions[rk])) + '</button>' : '') + '</div><h2>' + esc(r >= 0 ? t('rock_' + r) : !CX.rock && D.tex[i] >= 0 ? t('tex_' + D.tex[i]) : t('missing')) + '</h2><div class="zchips">' + chipsZ + '</div>' + X_BTN_() + '</header><div class="body">' +
       leadAporte(i) + '<div><h4>' + esc(t('zt_more')) + '</h4><ul class="aporte">' + aporte(i).filter(([k]) => k !== 'rock').map(([k, txt], j) => {
         const m = txt.match(/^(.{2,80}?)([:：])\s*([\s\S]+)$/);
         const cap = x => x.charAt(0).toLocaleUpperCase(LOCALE[L]) + x.slice(1);
@@ -3423,7 +3452,7 @@ function regionCard(k) {
   const wins = WIN.filter(w => !w.unconf && set.has(w.dep) && (CC === 'UY' || w.lat != null));
   // terroir: donde están sus bodegas (si hay al menos 3 ubicadas); si no, toda la superficie de la región
   const wl = wins.filter(w => !w.unconf && w.cell >= 0), wc = wl.map(w => w.cell), byWin = wl.length >= 3;
-  const cells = byWin ? wc : [...Array(n).keys()].filter(i => deps[D.dep[i]] && set.has(deps[D.dep[i]].name));
+  const cells = byWin ? wc : [...Array(NZ).keys()].filter(i => deps[D.dep[i]] && set.has(deps[D.dep[i]].name));
   const rc = {}, tc = {}, wk = {}; let rain = 0, nr = 0, a0 = 1e9, a1 = -1e9;
   for (const i of cells) {
     if (D.rock[i] >= 0) rc[D.rock[i]] = (rc[D.rock[i]] || 0) + 1;
@@ -3757,7 +3786,7 @@ function similar(o) {
   const ids = []; const per = new Map();
   for (let j = 0; j < n; j++) if (dist[j] <= thr && dist[j] !== Infinity) { ids.push(j); const dn = deps[D.dep[j]] ? deps[D.dep[j]].name : ''; per.set(dn, (per.get(dn) || 0) + 1); }
   ids.forEach(j => map.setFeatureState({ source: 'hex', id: j }, { s: true }));
-  SIM = { origin: o, ids, count: ids.length, where: [...per.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(x => x[0]) };
+  SIM = { origin: o, ids, count: ids.length, area: ids.reduce((s, j) => s + cellA(j), 0), where: [...per.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(x => x[0]) };
   paintHex();
   map.getSource('simhex').setData({ type: 'Feature', properties: {}, geometry: { type: 'MultiLineString', coordinates: ids.map(j => h3.cellToBoundary(CELLS[j], true)) } });
 }
