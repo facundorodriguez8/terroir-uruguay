@@ -3339,11 +3339,12 @@ const FI = {
   tours: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 1.5h6l-.4 4.2a2.6 2.6 0 0 1-5.2 0zM8 8.3v5.2M5.5 14.5h5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>'
 };
 // Imágenes de ficha (satélite y terroir) en paquetes data/img/pack_NN.json, repartidos por hash del slug (ver p13_paquetes.py).
-const PACKS = {}, PACK_N = 48;
-function packOf(slug) { let h = 0; for (let i = 0; i < slug.length; i++) h = (Math.imul(h, 31) + slug.charCodeAt(i)) | 0; return (h >>> 0) % PACK_N; }
+// Uruguay: 48 paquetes en data/img; Argentina: 16 en data/ar/img (a9_satelite.py)
+const PACKS = {}, PACK_N = { UY: 48, AR: 16 };
+function packOf(slug, n) { let h = 0; for (let i = 0; i < slug.length; i++) h = (Math.imul(h, 31) + slug.charCodeAt(i)) | 0; return (h >>> 0) % n; }
 function imgPack(slug) {
-  const b = packOf(slug);
-  return PACKS[b] || (PACKS[b] = fetch('data/img/pack_' + String(b).padStart(2, '0') + '.json').then(r => r.ok ? r.json() : {}).catch(() => ({})));
+  const b = packOf(slug, PACK_N[CC] || 48), k = CC + b;
+  return PACKS[k] || (PACKS[k] = fetch(CX.base + 'img/pack_' + String(b).padStart(2, '0') + '.json').then(r => r.ok ? r.json() : {}).catch(() => ({})));
 }
 function fillImgs(w) {
   imgPack(w.slug).then(p => {
@@ -5228,7 +5229,7 @@ let doCMap = null;
 // un solo manejador de mouse para los mapas chicos: el cursor y el cartel cambian solo cuando cambia la zona (sin parpadeo)
 function mapHover(m, pop, onHover, onClick) {
   let cur, show = false;
-  const pick = p => m.queryRenderedFeatures(p, { layers: ['df', 'pt'].filter(l => m.getLayer(l)) }).sort((a, b) => (a.layer.id === 'pt' ? -1 : 1))[0] || null;
+  const pick = p => m.queryRenderedFeatures(p, { layers: ['df', 'pt', 'pt2'].filter(l => m.getLayer(l)) }).sort((a, b) => (a.layer.id === 'df' ? 1 : -1))[0] || null;
   m.on('mousemove', e => {
     const f = pick(e.point), id = f ? f.properties.id : null;
     if (id !== cur) { cur = id; show = onHover(f); m.getCanvas().style.cursor = show ? 'pointer' : ''; if (show) pop.setText(f.properties.name).addTo(m); else pop.remove(); }
@@ -5240,24 +5241,30 @@ function mapHover(m, pop, onHover, onClick) {
 function doCountryMap(D, c) {
   if (doCMap) { doCMap.remove(); doCMap = null; }
   const box = $('#doCMap'), seq = learnSeq; if (!box || !window.maplibregl) return;
-  const list = D.dos.filter(o => o.c === c && (DO_NOT.includes(o.level) ? 'ig' : 'do') === doKind).sort((a, b) => a.name.localeCompare(b.name)), col = {};
-  list.forEach((o, i) => col[o.id] = DO_PAL[i % DO_PAL.length]);
-  Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => Promise.all(list.map(o => IX[o.id] ? geoOf(o.id).then(f => (f.id = list.indexOf(o), f.properties = { id: o.id, name: o.name, col: col[o.id] }, f)).catch(() => null) : null))).then(fs => {
+  // c === 'all': mapa plano del mundo con todas las zonas del tipo elegido, un color por país
+  const all = c === 'all', list = D.dos.filter(o => (all || o.c === c) && (DO_NOT.includes(o.level) ? 'ig' : 'do') === doKind).sort((a, b) => a.name.localeCompare(b.name)), col = {};
+  const cs = [...new Set(list.map(o => o.c))].sort();
+  list.forEach((o, i) => col[o.id] = DO_PAL[(all ? cs.indexOf(o.c) : i) % DO_PAL.length]);
+  const nm = o => all ? o.name + ' · ' + sysOf(D, o.c).name : o.name;
+  Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => Promise.all(list.map(o => IX[o.id] ? geoOf(o.id).then(f => (f.id = list.indexOf(o), f.properties = { id: o.id, name: nm(o), col: col[o.id] }, f)).catch(() => null) : null))).then(fs => {
     if (seq !== learnSeq || !box.isConnected) return;
     if (doCMap) { doCMap.remove(); doCMap = null; }
     fs = fs.filter(Boolean);
-    const pts = { type: 'FeatureCollection', features: list.map((o, i) => ({ type: 'Feature', id: i, properties: { id: o.id, name: o.name, col: col[o.id], geo: fs.some(f => f.properties.id === o.id) ? 1 : 0 }, geometry: { type: 'Point', coordinates: o.pt } })) };
+    const pts = { type: 'FeatureCollection', features: list.map((o, i) => ({ type: 'Feature', id: i, properties: { id: o.id, name: nm(o), col: col[o.id], geo: fs.some(f => f.properties.id === o.id) ? 1 : 0 }, geometry: { type: 'Point', coordinates: o.pt } })) };
     const b = [180, 90, -180, -90], ext = ([x, y]) => { b[0] = Math.min(b[0], x); b[1] = Math.min(b[1], y); b[2] = Math.max(b[2], x); b[3] = Math.max(b[3], y); };
     list.forEach(o => ext(o.pt)); fs.forEach(f => (f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates).forEach(pl => pl[0].forEach(ext)));
     const hi = ['boolean', ['feature-state', 'hover'], false];
-    doCMap = new maplibregl.Map({ container: box, attributionControl: false, dragRotate: false, pitchWithRotate: false, maxZoom: 11, bounds: [[b[0] - .3, b[1] - .3], [b[2] + .3, b[3] + .3]], fitBoundsOptions: { padding: 30 },
+    const inC = all ? ['in', ['get', 'n'], ['literal', cs.map(x => RA2[x] || x)]] : ['==', ['get', 'n'], RA2[c] || c];
+    doCMap = new maplibregl.Map({ container: box, attributionControl: false, dragRotate: false, pitchWithRotate: false, maxZoom: 11, renderWorldCopies: false, bounds: all ? [[-168, -56], [180, 72]] : [[b[0] - .3, b[1] - .3], [b[2] + .3, b[3] + .3]], fitBoundsOptions: { padding: all ? 10 : 30 },
       style: { version: 8, sources: { c: { type: 'geojson', data: COUNTRIES_GJ }, d: { type: 'geojson', data: { type: 'FeatureCollection', features: fs } }, p: { type: 'geojson', data: pts } }, layers: [
         { id: 'bg', type: 'background', paint: { 'background-color': '#0d1a22' } },
-        { id: 'cf', type: 'fill', source: 'c', paint: { 'fill-color': ['case', ['==', ['get', 'n'], RA2[c] || c], '#3a2a2c', '#231d1e'] } },
-        { id: 'cl', type: 'line', source: 'c', paint: { 'line-color': ['case', ['==', ['get', 'n'], RA2[c] || c], '#8a6a3a', '#3e3436'], 'line-width': 1 } },
+        { id: 'cf', type: 'fill', source: 'c', paint: { 'fill-color': ['case', inC, '#3a2a2c', '#231d1e'] } },
+        { id: 'cl', type: 'line', source: 'c', paint: { 'line-color': ['case', inC, '#8a6a3a', '#3e3436'], 'line-width': all ? .6 : 1 } },
         { id: 'df', type: 'fill', source: 'd', paint: { 'fill-color': ['get', 'col'], 'fill-opacity': ['case', hi, .85, .5] } },
         { id: 'dl', type: 'line', source: 'd', paint: { 'line-color': ['case', hi, '#ffffff', ['get', 'col']], 'line-width': ['case', hi, 2.5, 1] } },
-        { id: 'pt', type: 'circle', source: 'p', filter: ['==', ['get', 'geo'], 0], paint: { 'circle-radius': ['case', hi, 9, 6], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }] } });
+        { id: 'pt', type: 'circle', source: 'p', filter: ['==', ['get', 'geo'], 0], paint: { 'circle-radius': ['case', hi, 9, all ? 4.5 : 6], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }]
+        // en el mundo los contornos son muy chicos: también un punto hasta que se acerca
+        .concat(all ? [{ id: 'pt2', type: 'circle', source: 'p', maxzoom: 5, filter: ['==', ['get', 'geo'], 1], paint: { 'circle-radius': ['case', hi, 9, 4.5], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }] : []) } });
     doCMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right'); doCMap.scrollZoom.disable();
     const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'mini-pop', offset: 14 });
     let hov = null;
@@ -5292,6 +5299,7 @@ function renderDOIndex() {
       // lista
       '<section class="l-sec" id="doExplore"><div class="do-kinds">' + [['do', nDO], ['ig', D.dos.length - nDO]].map(([k, n]) => '<button data-kind="' + k + '" class="' + (k === doKind ? 'sel' : '') + '"><b>' + esc(t('do_kind_' + k)) + '</b><span>' + nf(n) + '</span></button>').join('') + '</div>' + (doKind === 'ig' ? '<p class="do-note">' + esc(t('do_kind_ig_d')) + '</p>' : '') + '<div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c).filter(c => ctrs.includes(c))).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
       (doFilt !== 'all' ? '<div id="doCMap" class="do-cmap"></div><p class="l-hint">' + esc(t('do_cmap_hint')) + '</p><div class="do-leg">' + list.slice().sort((a, b) => a.name.localeCompare(b.name)).map((x, i) => '<button data-l="do-' + x.id + '" data-dl="' + x.id + '"><i style="background:' + DO_PAL[i % DO_PAL.length] + '"></i>' + esc(x.name) + '<small>' + esc(lvOf(D, x).label) + '</small></button>').join('') + '</div>' + doCountBox(D, doFilt, list.length) :
+      '<div id="doCMap" class="do-cmap"></div><p class="l-hint">' + esc(t('do_cmap_hint')) + '</p><div class="do-leg">' + ctrs.slice().sort().map((c, i) => '<button data-f="' + esc(c) + '"><i style="background:' + DO_PAL[i % DO_PAL.length] + '"></i>' + esc(sysOf(D, c).name) + '<small>' + nf(list.filter(x => x.c === c).length) + '</small></button>').join('') + '</div>' +
       '<div class="do-grid">' + list.map(x => '<button class="do-card" data-l="do-' + x.id + '"><small>' + esc(sysOf(D, x.c).name) + ' · ' + esc(lvOf(D, x).label) + (x.icon ? ' · ★' : '') + '</small><b>' + esc(x.name) + '</b>' + colChips(x.colors) + '</button>').join('') + '</div>') +
       '<div class="l-btns"><button class="cta ghost" id="doAllMap"><span>' + esc(t('do_map_all')) + '</span></button></div></section>' +
       '<section class="l-sec"><h2>' + esc(t('do_pyr_t')) + '</h2><p class="l-hint">' + esc(t('do_pyr_hint')) + '</p><div class="l-chips">' + D.systems.map(s => '<button class="l-chip' + (s.c === doSys ? ' sel' : '') + '" data-sys="' + esc(s.c) + '">' + esc(s.name) + '</button>').join('') + '</div>' +
@@ -5312,7 +5320,7 @@ function renderDOIndex() {
     el.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { doKind = b.dataset.kind; renderDOIndex(); requestAnimationFrame(() => $('#doExplore') && $('#doExplore').scrollIntoView({ block: 'start' })); });
     el.querySelectorAll('.pl').forEach(g => g.onclick = () => { doLv = +g.dataset.lv; renderDOIndex(); });
     el.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { doFilt = b.dataset.f; if (doFilt !== 'all') { doSys = doFilt; doLv = -1; } const y = el.scrollTop; renderDOIndex(); requestAnimationFrame(() => { if (doFilt !== 'all') $('#doExplore').scrollIntoView({ block: 'start' }); else el.scrollTop = y; }); });
-    if (doFilt !== 'all') doCountryMap(D, doFilt); else if (doCMap) { doCMap.remove(); doCMap = null; }
+    doCountryMap(D, doFilt);
     $('#doAllMap').onclick = () => { closeLearn(); if (view !== 'world') goWorld(true); doSelId = null; doFoc = doFilt !== 'all' ? doFilt : null; worldMode('do'); if (doFoc) doFit(list); };
     // etiqueta: primero encontrá la DO; después tocá cualquier parte para ver qué es
     let found = false; const lab = el.querySelector('.do-label');
