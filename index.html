@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Mapa vitivinícola de Uruguay en 3D: terroir (roca, suelo, clima), regiones de INAVI, bodegas y viñedos del mundo, y fichas para aprender sobre cada uva. En 9 idiomas.">
+<meta name="description" content="Mapa vitivinícola en 3D de Uruguay y Argentina (Mendoza y San Juan): terroir, regiones, bodegas, viñedos y denominaciones del mundo, y fichas para aprender sobre cada uva. En 9 idiomas.">
 <meta property="og:title" content="Terroir del Uruguay · mapa vitivinícola en 3D">
 <meta property="og:description" content="Explorá el terroir de Uruguay: roca madre, suelo, clima, regiones y bodegas, en un mapa 3D. Y aprendé sobre cada uva.">
 <meta property="og:type" content="website">
@@ -1470,6 +1470,21 @@ body.do-z .do-mk span { opacity: 1; }
 #learn .ct-bsw.done { grid-template-columns: 64px minmax(0, 1fr); align-items: start; }
 #learn .ct-bsw .ct-cls { margin-top: 8px; }
 #learn .ct-bsw .cta { width: auto; }
+/* bajando los datos de un país: barra fina arriba */
+body.pk-load::after { content: ''; position: fixed; top: 0; left: 0; z-index: 60; height: 3px; width: 35%; background: var(--brass); animation: pkload 1.1s ease-in-out infinite; }
+@keyframes pkload { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+body.pk-load #map { cursor: progress; }
+.ar-scope { border-left: 2px solid var(--brass); padding-left: 8px; }
+/* modo Denominaciones del mundo: lista de países y de zonas del país elegido */
+.wm-list { display: flex; flex-direction: column; gap: 8px; }
+.wm-list h4 { margin: 2px 0 0; font: 500 17px/1.2 var(--f-display); color: var(--ink); }
+.wm-ctry, .wm-dos { display: flex; flex-wrap: wrap; gap: 6px; max-height: 38vh; overflow-y: auto; }
+.wm-ctry button, .wm-dos button { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-2); font-size: 12px; cursor: pointer; }
+.wm-ctry button b { color: var(--brass); font-weight: 700; }
+.wm-dos button i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.wm-dos button small { color: var(--ink-3); font-size: 11px; }
+.wm-ctry button:hover, .wm-dos button:hover, .wm-dos button.on { border-color: var(--ink); color: var(--ink); background: var(--raise); }
+.wm-back { align-self: flex-start; background: none; border: 0; padding: 0; color: var(--brass); font-size: 12px; cursor: pointer; }
 
 </style>
 </head>
@@ -1505,11 +1520,11 @@ body.do-z .do-mk span { opacity: 1; }
         <div class="field"><label for="wVar" data-i18n="world_var">Viñedos del mundo por variedad</label><select class="sel" id="wVar"></select></div>
         <div class="wlegend"><i></i><span data-i18n="world_more">más hectáreas</span></div>
         <p class="hint" id="wNote"></p>
-        <label class="switch do-tog"><input type="checkbox" id="doToggle"><span data-i18n="do_show">Denominaciones de origen</span></label>
+        
       </div>
       <div class="wm-do" hidden>
         <div class="wm-kinds" id="wmKinds"></div>
-        <div class="wm-leg"><span><i class="do"></i><b data-i18n="do_kind_do">Denominaciones de origen</b></span><span><i class="ig"></i><b data-i18n="do_kind_ig">Indicaciones geográficas</b></span></div>
+        <div class="wm-list" id="wmList"></div>
         <p class="hint" id="wmNote"></p>
       </div>
     </div>
@@ -1536,6 +1551,7 @@ body.do-z .do-mk span { opacity: 1; }
         <div class="field"><label for="depSel" data-i18n="zone">Zona</label><select class="sel" id="depSel"></select></div>
       </div>
       <p class="hint edu-intro" data-i18n="edu_intro"></p>
+      <p class="hint ar-scope" id="arScope" data-i18n="ar_scope" hidden></p>
       <div class="sec">
         <h3 data-i18n="rock">Roca madre</h3>
         <p class="hint edu" data-i18n="edu_rock"></p>
@@ -2462,6 +2478,25 @@ for (const l in T_ADD39) Object.assign(T[l], T_ADD39[l]);
 const T_ADD40 = {"es": {"wm_vy": "Viñedos", "wm_do": "Denominaciones", "wm_note": "{n} zonas con su contorno; el resto aparece como punto. Tocá una para abrir su ficha."}, "en": {"wm_vy": "Vineyards", "wm_do": "Appellations", "wm_note": "{n} areas drawn with their boundaries; the rest appear as dots. Tap one to open its page."}, "pt": {"wm_vy": "Vinhedos", "wm_do": "Denominações", "wm_note": "{n} zonas com contorno; as demais aparecem como ponto. Toque em uma para abrir a ficha."}, "fr": {"wm_vy": "Vignobles", "wm_do": "Appellations", "wm_note": "{n} zones avec leur contour ; les autres apparaissent en points. Touchez-en une pour ouvrir sa fiche."}, "de": {"wm_vy": "Weinberge", "wm_do": "Herkunft", "wm_note": "{n} Gebiete mit Umriss; die übrigen als Punkt. Tippe eines an, um sein Profil zu öffnen."}, "ru": {"wm_vy": "Виноградники", "wm_do": "Наименования", "wm_note": "{n} зон с границами; остальные показаны точками. Нажмите, чтобы открыть карточку."}, "zh": {"wm_vy": "葡萄园", "wm_do": "原产地", "wm_note": "{n} 个产区显示边界，其余以圆点表示。点击即可打开介绍。"}, "ja": {"wm_vy": "ブドウ畑", "wm_do": "原産地呼称", "wm_note": "{n}の産地は境界付きで表示、その他は点で表示。タップで詳細を開きます。"}, "ko": {"wm_vy": "포도밭", "wm_do": "원산지", "wm_note": "{n}개 산지는 경계로 표시되고 나머지는 점으로 표시돼요. 눌러서 상세를 열어 보세요."}};
 for (const l in T_ADD40) Object.assign(T[l], T_ADD40[l]);
 
+const T_ADD41 = {"es": {"intro_kicker": "Prototipo · Uruguay y Argentina primero, el mundo después", "intro_body": "Mirá dónde se planta cada variedad en el mundo y, al entrar en Uruguay o Argentina, filtrá el terroir por suelo, relieve y clima.", "country_soon": "Por ahora el detalle de terroir y bodegas está para Uruguay y Argentina. Otros países, más adelante.", "enter_ar": "Explorar Argentina", "country_ar_hint": "Entrá para ver el terroir de Mendoza y San Juan y las bodegas de todo el país.", "view_ar": "Argentina", "ar_scope": "Terroir: zonas con viña de Mendoza y San Juan (las demás provincias vienen después). Bodegas: todo el país.", "wk_1": "I · muy fresca", "ai_wk_1": "Clima muy fresco (Winkler I): a la uva le cuesta madurar. Solo variedades tempranas, blancos y bases de espumoso; las heladas son el gran riesgo.", "vyf": "Viñedo (% de la zona)", "src_bod": "Bodegas", "src_deps": "Departamentos", "src_geo_none": "Roca madre", "src_geo_none_v": "Sin mapa geológico abierto con detalle suficiente para Argentina: por eso no hay filtro de roca.", "w_where": "{dep}, {prov}", "w_contact_src": "Fuentes", "w_auto__ar": "{name} es una bodega de {dep}. Su zona está a {alt} m, con suelo {tex} y clima Winkler {wk}.", "w_auto_noloc__ar": "{name} es una bodega de {dep}.", "w_auto_note__ar": "Ficha básica armada con fuentes públicas (turismo provincial, listados del sector, OpenStreetMap y el sitio de la bodega) y el terroir de su ubicación.", "unconf_tip__ar": "Figura en algún listado, pero no encontramos una fuente reciente que confirme que sigue elaborando.", "reg_title__ar": "Región vitícola · INV", "reg_src__ar": "Regiones: departamentos agrupados como los zonifica el INV. Hectáreas, viñedos y uvas: Anuario de Superficie 2024 (INV). Terroir: datos del mapa.", "regions_group__ar": "Regiones vitícolas", "ai_alt__ar": "A {alt} m: viñedo de altura, con noches frías que dan más acidez, color y aroma.", "ai_dtr__ar": "Amplitud térmica muy alta ({dtr} °C entre el día y la noche): conserva acidez, color y aromas.", "ai_rain_lo__ar": "Clima desértico ({mm} mm de lluvia al año): sin riego no hay viña, y casi no hay hongos.", "ai_rain_hi__ar": "Lluvia de {mm} mm al año, alta para la zona: algo más de presión de hongos en verano.", "tour_l1__ar": "{ha} ha de viñedo, el {pct} de Mendoza y San Juan · {w} bodegas en el mapa", "tour_l2__ar": "Suelo dominante: {tex} · {alt} m de altitud", "tour_l3__ar": "Winkler {gdd} ({wk}) · lluvia {rain} mm · {dtr} °C de amplitud térmica", "w_registry__ar": "relevamiento de fuentes públicas", "wineries_osm__ar": "Bodegas relevadas de turismo provincial, listados del sector, OpenStreetMap y sitios oficiales.", "of_country__ar": "de la zona con viña", "loc_aprox__ar": "Ubicación aproximada: ubicada por su dirección o su localidad.", "no_location__ar": "Sin ubicación precisa: no encontramos su dirección", "edu_wk__ar": "Suma el calor de la temporada de crecimiento. Zonas frescas (I–II): vinos de más acidez y menos alcohol, buenas para blancos y espumosos. Cálidas (IV–V): uvas más maduras y vinos más potentes, como en el Este mendocino y el Valle de Tulum.", "edu_rain__ar": "Acá llueve poco (entre 100 y 500 mm al año) y sobre todo en verano: la viña vive del riego con agua de deshielo y la presión de hongos es baja. El riesgo es el granizo.", "all_country__ar": "Mendoza y San Juan", "reg_desc_mendoza-zona-norte": "Llanura baja del río Mendoza con pendiente hacia el noreste, a una altura similar o algo menor que la de la Zona Este (600–700 m). Clima templado y seco, con veranos calurosos, lluvias escasas (el promedio provincial ronda los 250 mm anuales) e inviernos con heladas fuertes; los suelos son arenosos y en sectores salinos. No hay una variedad dominante: Bonarda, Cereza, Syrah, Pedro Giménez, Criolla Grande y Malbec son las más plantadas, con mucho vino de mesa, blancos frescos y mosto. Lavalle concentra cerca del 90 % de la viña de la zona y tiene su propia IG, «Lavalle / Desierto de Lavalle».", "reg_desc_mendoza-zona-este": "Viñedos de llanura entre 600 y 700 m, regados por el curso inferior de los ríos Tunuyán y Mendoza y con apoyo de agua subterránea. Clima templado y muy soleado (más de 2.200 horas de sol al año), con lluvias escasas y episodios de granizo que dañan zonas como Medrano y Las Catitas. Los suelos son de origen eólico, franco arenosos a areno limosos y ricos en potasio, con sectores salinos. Es la zona de mayor volumen: tintas como Bonarda, Malbec, Syrah y Tempranillo, rosadas como Criolla Grande y Cereza, y blancas como Pedro Giménez y Torrontés Riojano. Concentra alrededor del 41 % de la viña de Mendoza (60.890 ha en 2022), y San Martín es el departamento con más viña de la provincia.", "reg_desc_mendoza-primera-zona": "Núcleo histórico del vino mendocino, sobre el piedemonte y las terrazas del río Mendoza, con viñedos entre unos 800 y 1.100 m en Luján de Cuyo. El clima es continental y árido, con buena amplitud térmica, unos 250 mm de lluvia al año y riesgo de granizo en verano. Los suelos son aluviales y muy variables: pedregosos y pobres cerca del río, y más arcillo-limosos en otros sectores, como Agrelo. Es tierra de Malbec (43 % de lo plantado en 2015), seguido por Cabernet Sauvignon, con tintos de guarda y viñas viejas. Luján de Cuyo es una de las dos DOC de Argentina; la zona también suma IG como Agrelo, Vistalba, Las Compuertas, Lunlunta, Barrancas y Russell.", "reg_desc_mendoza-valle-de-uco": "Valle al pie de la Cordillera, con viñedos de unos 900 m en las partes bajas y por encima de 1.250 m en las altas; los más altos llegan a cerca de 1.500 m. Los inviernos son rigurosos y los veranos cálidos, con noches frías y una amplitud térmica cercana a los 15 °C. Las heladas y el granizo causan pérdidas con frecuencia. Los suelos de las partes altas son aluviales, pedregosos, de baja fertilidad y muy permeables. Predominan las tintas (86 %), con Malbec al frente, más Cabernet Sauvignon y Tempranillo, y blancos como Chardonnay y Sauvignon Blanc. Es la región con más IG reconocidas de Mendoza, entre ellas Paraje Altamira, Los Chacayes, San Pablo, Vista Flores, El Peral, La Consulta y Pampa El Cepillo.", "reg_desc_mendoza-zona-sur": "Oasis regado por los ríos Diamante y Atuel, con viñedos que bajan desde unos 750 m en Las Paredes (San Rafael) hasta unos 485 m en General Alvear. Clima árido continental, con heladas que pueden pegar fuerte y el granizo más frecuente de Cuyo: unas 3 tormentas por año en San Rafael. Los suelos son aluviales, con mucho calcáreo y a menudo subsuelo pedregoso. San Rafael se inclina por las tintas (Malbec, Bonarda, Cabernet Sauvignon, Syrah) y General Alvear, por las rosadas (Cereza, Criolla Grande, Moscatel Rosado). San Rafael es la otra DOC del país, junto con Luján de Cuyo.", "reg_desc_san-juan-valle-de-tulum": "Gran oasis del río San Juan, con viñedos en torno a los 600–650 m (Pocito, 618 m). El clima es desértico: llueven menos de 100 mm al año, casi todo en verano. Hay mucho calor en enero, unos 29 días de helada al año (de fines de mayo a fines de agosto), casi nada de granizo y unos 11 días de viento Zonda. Los suelos son jóvenes y poco profundos, de textura franco arenosa a franco limosa. Mucho viñedo es parral: hay uvas para vino (Cereza, Malbec, Syrah, Bonarda) y mucha uva de mesa y para pasas. En el llano, el Syrah sale intenso y especiado, y el Malbec más liviano y de color menos violáceo.", "reg_desc_san-juan-zonda-ullum": "Valles al oeste de la ciudad de San Juan, sobre el río San Juan y encerrados por la precordillera (Sierra Chica de Zonda, Cerro Blanco). Comparten el clima árido de Tulum, con lluvias de verano muy escasas y el viento Zonda que le da nombre a uno de ellos. Los suelos son jóvenes y poco profundos, franco arenosos a franco limosos. El INTA considera a Ullum apto para blancas como Moscatel de Alejandría y a Zonda apto con restricciones para tintas. Aun así, el Malbec y el Syrah de viñedos viejos muestran buena tipicidad. El Valle de Zonda tiene su propia IG desde 2015, pedida por una bodega privada.", "reg_desc_san-juan-valle-de-calingasta": "Valle cordillerano sobre el río Los Patos, con viñedos entre unos 1.350 y 1.700 m (Barreal es el punto más alto). Llueven unos 80 mm al año, sobre todo en verano. La amplitud térmica diaria llega a 24 °C, lo que aumenta el riesgo de heladas. Los suelos son pedregosos y con poca arcilla, y cambian mucho a lo largo de unos 120 km de valle. El INTA lo señala apto para tintas de ciclo corto (Pinot Noir, Merlot, Cabernet Franc, Tempranillo), y también hay Malbec, Syrah y Cabernet Sauvignon de color profundo. Desde 2023 suma tres IG propias (Tamberías, Sorocayense e Hilario), además de Barreal.", "reg_desc_san-juan-valles-del-norte": "Valles áridos del norte sanjuanino: Jáchal está a unos 1.200 m e Iglesia ronda los 1.700 m, con viñedos que llegan a cerca de 2.000 m. Las lluvias son muy escasas y el granizo es raro (unos 0,5 eventos por año en Jáchal). Las noches frías y las heladas son el límite principal. La viña es marginal y, en buena parte, experimental: el INV registraba 7 ha en Iglesia en 2017 y unas 22 ha en Jáchal en 2000. Jáchal, Iglesia y Valle Fértil tienen IG departamental desde 2002, aunque casi no tienen producción.", "reg_note_ar_mendoza-zona-norte": "Las Heras va en la Zona Norte, como la agrupa el INV, aunque parte de su viña de piedemonte (IG Valle de Canota) se parece más a la Primera Zona.", "reg_note_ar_mendoza-primera-zona": "Maipú va entero acá, como lo agrupa el INV, aunque su sector este (Fray Luis Beltrán, Rodeo del Medio) es más llano y se parece al Este.", "reg_note_ar_mendoza-zona-sur": "Malargüe casi no tiene viña (0,1 ha en 2024): se incluye para que la región quede completa.", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento incluye el Valle del Pedernal (IG), a unos 1.250–1.500 m, con un perfil de altura muy distinto del llano.", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil está al este, no en los valles del norte: se suma acá para que todo departamento con viña tenga región. Jáchal no figura con superficie en el anuario 2024 del INV."}, "en": {"intro_kicker": "Prototype · Uruguay and Argentina first, the world next", "intro_body": "See where each grape variety is planted around the world and, once inside Uruguay or Argentina, filter the terroir by soil, terrain and climate.", "country_soon": "For now, detailed terroir and winery data is available for Uruguay and Argentina. Other countries will follow.", "enter_ar": "Explore Argentina", "country_ar_hint": "Go in to see the terroir of Mendoza and San Juan and wineries across the whole country.", "view_ar": "Argentina", "ar_scope": "Terroir: vineyard areas of Mendoza and San Juan (other provinces come later). Wineries: the whole country.", "wk_1": "I · very cool", "ai_wk_1": "Very cool climate (Winkler I): grapes struggle to ripen. Only early-ripening varieties, whites and sparkling bases; frost is the major risk.", "vyf": "Vineyard (% of area)", "src_bod": "Wineries", "src_deps": "Departments", "src_geo_none": "Bedrock", "src_geo_none_v": "No open geological map with enough detail exists for Argentina, so there is no bedrock filter.", "w_where": "{dep}, {prov}", "w_contact_src": "Sources", "w_auto__ar": "{name} is a winery in {dep}. Its area sits at {alt} m, with {tex} soil and a Winkler {wk} climate.", "w_auto_noloc__ar": "{name} is a winery in {dep}.", "w_auto_note__ar": "Basic profile compiled from public sources (provincial tourism, industry listings, OpenStreetMap and the winery's website) plus the terroir of its location.", "unconf_tip__ar": "It appears in some listing, but we found no recent source confirming it is still making wine.", "reg_title__ar": "Wine region · INV", "reg_src__ar": "Regions: departments grouped as zoned by the INV. Hectares, vineyards and grapes: 2024 Vineyard Area Yearbook (INV). Terroir: map data.", "regions_group__ar": "Wine regions", "ai_alt__ar": "At {alt} m: high-altitude vineyard, with cold nights that bring more acidity, color and aroma.", "ai_dtr__ar": "Very high diurnal temperature range ({dtr} °C between day and night): preserves acidity, color and aromas.", "ai_rain_lo__ar": "Desert climate ({mm} mm of rain per year): no vines without irrigation, and almost no fungal disease.", "ai_rain_hi__ar": "{mm} mm of rain per year, high for the area: somewhat more fungal pressure in summer.", "tour_l1__ar": "{ha} ha of vineyard, {pct} of Mendoza and San Juan · {w} wineries on the map", "tour_l2__ar": "Dominant soil: {tex} · {alt} m altitude", "tour_l3__ar": "Winkler {gdd} ({wk}) · rain {rain} mm · {dtr} °C diurnal range", "w_registry__ar": "survey of public sources", "wineries_osm__ar": "Wineries surveyed from provincial tourism, industry listings, OpenStreetMap and official websites.", "of_country__ar": "of the vineyard area", "loc_aprox__ar": "Approximate location: placed by its address or town.", "no_location__ar": "No precise location: we couldn't find its address", "edu_wk__ar": "Adds up the heat of the growing season. Cool zones (I–II): wines with more acidity and less alcohol, good for whites and sparkling. Warm zones (IV–V): riper grapes and more powerful wines, as in eastern Mendoza and the Valle de Tulum.", "edu_rain__ar": "Rainfall here is low (between 100 and 500 mm a year) and falls mostly in summer: vines live on irrigation with snowmelt water and fungal pressure is low. The risk is hail.", "all_country__ar": "Mendoza and San Juan", "reg_desc_mendoza-zona-norte": "Low plain of the Mendoza River sloping to the northeast, at an altitude similar to or slightly lower than the Zona Este (600–700 m). Temperate, dry climate with hot summers, scarce rainfall (the provincial average is around 250 mm a year) and winters with hard frosts; soils are sandy and saline in places. No single variety dominates: Bonarda, Cereza, Syrah, Pedro Giménez, Criolla Grande and Malbec are the most planted, with lots of table wine, fresh whites and grape must. Lavalle holds about 90 % of the zone's vineyards and has its own GI, «Lavalle / Desierto de Lavalle».", "reg_desc_mendoza-zona-este": "Plain vineyards between 600 and 700 m, irrigated by the lower course of the Tunuyán and Mendoza rivers and supported by groundwater. Temperate, very sunny climate (more than 2,200 hours of sun a year), with scarce rainfall and hail episodes that damage areas such as Medrano and Las Catitas. Soils are wind-borne, sandy loam to silty sand and rich in potassium, with saline patches. It is the highest-volume zone: reds such as Bonarda, Malbec, Syrah and Tempranillo, pink grapes such as Criolla Grande and Cereza, and whites such as Pedro Giménez and Torrontés Riojano. It holds around 41 % of Mendoza's vineyards (60,890 ha in 2022), and San Martín is the department with the most vineyard in the province.", "reg_desc_mendoza-primera-zona": "Historic core of Mendoza wine, on the piedmont and terraces of the Mendoza River, with vineyards between about 800 and 1,100 m in Luján de Cuyo. The climate is continental and arid, with a good diurnal temperature range, about 250 mm of rain a year and a risk of hail in summer. Soils are alluvial and highly variable: stony and poor near the river, and more clay-silty in other sectors such as Agrelo. It is Malbec country (43 % of plantings in 2015), followed by Cabernet Sauvignon, with age-worthy reds and old vines. Luján de Cuyo is one of Argentina's two DOCs; the zone also includes GIs such as Agrelo, Vistalba, Las Compuertas, Lunlunta, Barrancas and Russell.", "reg_desc_mendoza-valle-de-uco": "Valley at the foot of the Andes, with vineyards at about 900 m in the lower parts and above 1,250 m in the higher ones; the highest reach nearly 1,500 m. Winters are harsh and summers warm, with cold nights and a diurnal temperature range close to 15 °C. Frost and hail frequently cause losses. Soils in the higher parts are alluvial, stony, low in fertility and very free-draining. Reds dominate (86 %), led by Malbec, plus Cabernet Sauvignon and Tempranillo, and whites such as Chardonnay and Sauvignon Blanc. It is the region with the most recognized GIs in Mendoza, including Paraje Altamira, Los Chacayes, San Pablo, Vista Flores, El Peral, La Consulta and Pampa El Cepillo.", "reg_desc_mendoza-zona-sur": "Oasis irrigated by the Diamante and Atuel rivers, with vineyards descending from about 750 m in Las Paredes (San Rafael) to about 485 m in General Alvear. Arid continental climate, with frosts that can hit hard and the most frequent hail in Cuyo: about 3 storms a year in San Rafael. Soils are alluvial, very calcareous and often with a stony subsoil. San Rafael leans toward reds (Malbec, Bonarda, Cabernet Sauvignon, Syrah) and General Alvear toward pink grapes (Cereza, Criolla Grande, Moscatel Rosado). San Rafael is the country's other DOC, alongside Luján de Cuyo.", "reg_desc_san-juan-valle-de-tulum": "Large oasis of the San Juan River, with vineyards around 600–650 m (Pocito, 618 m). The climate is desert: less than 100 mm of rain a year, almost all in summer. January is very hot, there are about 29 frost days a year (late May to late August), almost no hail and about 11 days of Zonda wind. Soils are young and shallow, sandy loam to silt loam in texture. Much of the vineyard is pergola (parral) trained: there are wine grapes (Cereza, Malbec, Syrah, Bonarda) and lots of table and raisin grapes. On the plain, Syrah comes out intense and spicy, and Malbec lighter and less violet in color.", "reg_desc_san-juan-zonda-ullum": "Valleys west of the city of San Juan, along the San Juan River and enclosed by the Precordillera (Sierra Chica de Zonda, Cerro Blanco). They share Tulum's arid climate, with very scarce summer rain and the Zonda wind that gives one of them its name. Soils are young and shallow, sandy loam to silt loam. INTA considers Ullum suitable for whites such as Moscatel de Alejandría and Zonda suitable with restrictions for reds. Even so, Malbec and Syrah from old vineyards show good typicity. The Valle de Zonda has had its own GI since 2015, requested by a private winery.", "reg_desc_san-juan-valle-de-calingasta": "Andean valley along the Los Patos River, with vineyards between about 1,350 and 1,700 m (Barreal is the highest point). About 80 mm of rain falls a year, mostly in summer. The daily temperature range reaches 24 °C, which raises the risk of frost. Soils are stony with little clay, and change a lot along about 120 km of valley. INTA marks it as suitable for short-cycle reds (Pinot Noir, Merlot, Cabernet Franc, Tempranillo), and there is also deep-colored Malbec, Syrah and Cabernet Sauvignon. Since 2023 it has three GIs of its own (Tamberías, Sorocayense and Hilario), in addition to Barreal.", "reg_desc_san-juan-valles-del-norte": "Arid valleys of northern San Juan: Jáchal is at about 1,200 m and Iglesia around 1,700 m, with vineyards reaching nearly 2,000 m. Rainfall is very scarce and hail is rare (about 0.5 events a year in Jáchal). Cold nights and frost are the main limits. Viticulture is marginal and largely experimental: the INV recorded 7 ha in Iglesia in 2017 and about 22 ha in Jáchal in 2000. Jáchal, Iglesia and Valle Fértil have had departmental GIs since 2002, although they have almost no production.", "reg_note_ar_mendoza-zona-norte": "Las Heras is placed in the Zona Norte, as the INV groups it, although part of its piedmont vineyards (GI Valle de Canota) is closer to the Primera Zona.", "reg_note_ar_mendoza-primera-zona": "All of Maipú goes here, as the INV groups it, although its eastern sector (Fray Luis Beltrán, Rodeo del Medio) is flatter and resembles the Este.", "reg_note_ar_mendoza-zona-sur": "Malargüe has almost no vineyards (0.1 ha in 2024): it is included so the region is complete.", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento includes the Valle del Pedernal (GI), at about 1,250–1,500 m, with a high-altitude profile very different from the plain.", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil lies to the east, not in the northern valleys: it is added here so every department with vineyards has a region. Jáchal has no listed area in the INV's 2024 yearbook."}, "pt": {"intro_kicker": "Protótipo · Uruguai e Argentina primeiro, o mundo depois", "intro_body": "Veja onde cada variedade é plantada no mundo e, ao entrar no Uruguai ou na Argentina, filtre o terroir por solo, relevo e clima.", "country_soon": "Por enquanto, o detalhe de terroir e vinícolas está disponível para Uruguai e Argentina. Outros países, mais adiante.", "enter_ar": "Explorar a Argentina", "country_ar_hint": "Entre para ver o terroir de Mendoza e San Juan e as vinícolas de todo o país.", "view_ar": "Argentina", "ar_scope": "Terroir: áreas com vinhedos de Mendoza e San Juan (as demais províncias vêm depois). Vinícolas: todo o país.", "wk_1": "I · muito fresca", "ai_wk_1": "Clima muito fresco (Winkler I): a uva tem dificuldade para amadurecer. Só variedades precoces, brancos e bases de espumante; as geadas são o grande risco.", "vyf": "Vinhedo (% da área)", "src_bod": "Vinícolas", "src_deps": "Departamentos", "src_geo_none": "Rocha-mãe", "src_geo_none_v": "Não há mapa geológico aberto com detalhe suficiente para a Argentina: por isso não há filtro de rocha.", "w_where": "{dep}, {prov}", "w_contact_src": "Fontes", "w_auto__ar": "{name} é uma vinícola de {dep}. Sua área fica a {alt} m, com solo {tex} e clima Winkler {wk}.", "w_auto_noloc__ar": "{name} é uma vinícola de {dep}.", "w_auto_note__ar": "Ficha básica montada com fontes públicas (turismo provincial, listas do setor, OpenStreetMap e o site da vinícola) e o terroir da sua localização.", "unconf_tip__ar": "Aparece em alguma lista, mas não encontramos uma fonte recente que confirme que ainda produz vinho.", "reg_title__ar": "Região vitícola · INV", "reg_src__ar": "Regiões: departamentos agrupados conforme o zoneamento do INV. Hectares, vinhedos e uvas: Anuário de Superfície 2024 (INV). Terroir: dados do mapa.", "regions_group__ar": "Regiões vitícolas", "ai_alt__ar": "A {alt} m: vinhedo de altitude, com noites frias que dão mais acidez, cor e aroma.", "ai_dtr__ar": "Amplitude térmica muito alta ({dtr} °C entre o dia e a noite): preserva acidez, cor e aromas.", "ai_rain_lo__ar": "Clima desértico ({mm} mm de chuva por ano): sem irrigação não há vinhedo, e quase não há fungos.", "ai_rain_hi__ar": "Chuva de {mm} mm por ano, alta para a área: um pouco mais de pressão de fungos no verão.", "tour_l1__ar": "{ha} ha de vinhedo, {pct} de Mendoza e San Juan · {w} vinícolas no mapa", "tour_l2__ar": "Solo dominante: {tex} · {alt} m de altitude", "tour_l3__ar": "Winkler {gdd} ({wk}) · chuva {rain} mm · {dtr} °C de amplitude térmica", "w_registry__ar": "levantamento de fontes públicas", "wineries_osm__ar": "Vinícolas levantadas a partir de turismo provincial, listas do setor, OpenStreetMap e sites oficiais.", "of_country__ar": "da área com vinhedos", "loc_aprox__ar": "Localização aproximada: posicionada pelo endereço ou pela localidade.", "no_location__ar": "Sem localização precisa: não encontramos o endereço", "edu_wk__ar": "Soma o calor da estação de crescimento. Zonas frescas (I–II): vinhos com mais acidez e menos álcool, bons para brancos e espumantes. Quentes (IV–V): uvas mais maduras e vinhos mais potentes, como no Leste de Mendoza e no Valle de Tulum.", "edu_rain__ar": "Aqui chove pouco (entre 100 e 500 mm por ano) e principalmente no verão: o vinhedo vive da irrigação com água de degelo e a pressão de fungos é baixa. O risco é o granizo.", "all_country__ar": "Mendoza e San Juan", "reg_desc_mendoza-zona-norte": "Planície baixa do rio Mendoza com declive para o nordeste, a uma altitude semelhante ou um pouco menor que a da Zona Este (600–700 m). Clima temperado e seco, com verões quentes, chuvas escassas (a média provincial gira em torno de 250 mm anuais) e invernos com geadas fortes; os solos são arenosos e, em alguns setores, salinos. Não há uma variedade dominante: Bonarda, Cereza, Syrah, Pedro Giménez, Criolla Grande e Malbec são as mais plantadas, com muito vinho de mesa, brancos frescos e mosto. Lavalle concentra cerca de 90 % dos vinhedos da zona e tem sua própria IG, «Lavalle / Desierto de Lavalle».", "reg_desc_mendoza-zona-este": "Vinhedos de planície entre 600 e 700 m, irrigados pelo curso inferior dos rios Tunuyán e Mendoza e com apoio de água subterrânea. Clima temperado e muito ensolarado (mais de 2.200 horas de sol por ano), com chuvas escassas e episódios de granizo que danificam áreas como Medrano e Las Catitas. Os solos são de origem eólica, franco-arenosos a areno-siltosos e ricos em potássio, com setores salinos. É a zona de maior volume: tintas como Bonarda, Malbec, Syrah e Tempranillo, rosadas como Criolla Grande e Cereza, e brancas como Pedro Giménez e Torrontés Riojano. Concentra cerca de 41 % dos vinhedos de Mendoza (60.890 ha em 2022), e San Martín é o departamento com mais vinhedos da província.", "reg_desc_mendoza-primera-zona": "Núcleo histórico do vinho mendocino, no sopé e nos terraços do rio Mendoza, com vinhedos entre cerca de 800 e 1.100 m em Luján de Cuyo. O clima é continental e árido, com boa amplitude térmica, cerca de 250 mm de chuva por ano e risco de granizo no verão. Os solos são aluviais e muito variáveis: pedregosos e pobres perto do rio, e mais argilo-siltosos em outros setores, como Agrelo. É terra de Malbec (43 % do plantado em 2015), seguido por Cabernet Sauvignon, com tintos de guarda e vinhas velhas. Luján de Cuyo é uma das duas DOC da Argentina; a zona também reúne IG como Agrelo, Vistalba, Las Compuertas, Lunlunta, Barrancas e Russell.", "reg_desc_mendoza-valle-de-uco": "Vale ao pé da Cordilheira, com vinhedos a cerca de 900 m nas partes baixas e acima de 1.250 m nas altas; os mais altos chegam a quase 1.500 m. Os invernos são rigorosos e os verões quentes, com noites frias e uma amplitude térmica próxima de 15 °C. Geadas e granizo causam perdas com frequência. Os solos das partes altas são aluviais, pedregosos, de baixa fertilidade e muito permeáveis. Predominam as tintas (86 %), com o Malbec à frente, além de Cabernet Sauvignon e Tempranillo, e brancos como Chardonnay e Sauvignon Blanc. É a região com mais IG reconhecidas de Mendoza, entre elas Paraje Altamira, Los Chacayes, San Pablo, Vista Flores, El Peral, La Consulta e Pampa El Cepillo.", "reg_desc_mendoza-zona-sur": "Oásis irrigado pelos rios Diamante e Atuel, com vinhedos que descem de cerca de 750 m em Las Paredes (San Rafael) até cerca de 485 m em General Alvear. Clima árido continental, com geadas que podem ser severas e o granizo mais frequente de Cuyo: cerca de 3 tempestades por ano em San Rafael. Os solos são aluviais, muito calcários e muitas vezes com subsolo pedregoso. San Rafael tende às tintas (Malbec, Bonarda, Cabernet Sauvignon, Syrah) e General Alvear, às rosadas (Cereza, Criolla Grande, Moscatel Rosado). San Rafael é a outra DOC do país, junto com Luján de Cuyo.", "reg_desc_san-juan-valle-de-tulum": "Grande oásis do rio San Juan, com vinhedos em torno de 600–650 m (Pocito, 618 m). O clima é desértico: chove menos de 100 mm por ano, quase tudo no verão. Faz muito calor em janeiro, há cerca de 29 dias de geada por ano (do fim de maio ao fim de agosto), quase nenhum granizo e cerca de 11 dias de vento Zonda. Os solos são jovens e pouco profundos, de textura franco-arenosa a franco-siltosa. Muitos vinhedos são conduzidos em latada (parral): há uvas para vinho (Cereza, Malbec, Syrah, Bonarda) e muita uva de mesa e para passas. Na planície, o Syrah sai intenso e especiado, e o Malbec mais leve e de cor menos violácea.", "reg_desc_san-juan-zonda-ullum": "Vales a oeste da cidade de San Juan, sobre o rio San Juan e cercados pela pré-cordilheira (Sierra Chica de Zonda, Cerro Blanco). Compartilham o clima árido de Tulum, com chuvas de verão muito escassas e o vento Zonda que dá nome a um deles. Os solos são jovens e pouco profundos, franco-arenosos a franco-siltosos. O INTA considera Ullum apto para brancas como Moscatel de Alejandría e Zonda apto com restrições para tintas. Ainda assim, o Malbec e o Syrah de vinhedos velhos mostram boa tipicidade. O Valle de Zonda tem sua própria IG desde 2015, solicitada por uma vinícola privada.", "reg_desc_san-juan-valle-de-calingasta": "Vale da cordilheira sobre o rio Los Patos, com vinhedos entre cerca de 1.350 e 1.700 m (Barreal é o ponto mais alto). Chove cerca de 80 mm por ano, principalmente no verão. A amplitude térmica diária chega a 24 °C, o que aumenta o risco de geadas. Os solos são pedregosos e com pouca argila, e mudam muito ao longo de cerca de 120 km de vale. O INTA o aponta como apto para tintas de ciclo curto (Pinot Noir, Merlot, Cabernet Franc, Tempranillo), e também há Malbec, Syrah e Cabernet Sauvignon de cor profunda. Desde 2023 soma três IG próprias (Tamberías, Sorocayense e Hilario), além de Barreal.", "reg_desc_san-juan-valles-del-norte": "Vales áridos do norte de San Juan: Jáchal fica a cerca de 1.200 m e Iglesia em torno de 1.700 m, com vinhedos que chegam a quase 2.000 m. As chuvas são muito escassas e o granizo é raro (cerca de 0,5 evento por ano em Jáchal). As noites frias e as geadas são o principal limite. A viticultura é marginal e, em boa parte, experimental: o INV registrava 7 ha em Iglesia em 2017 e cerca de 22 ha em Jáchal em 2000. Jáchal, Iglesia e Valle Fértil têm IG departamental desde 2002, embora quase não tenham produção.", "reg_note_ar_mendoza-zona-norte": "Las Heras fica na Zona Norte, como o INV a agrupa, embora parte de seus vinhedos de sopé (IG Valle de Canota) se pareça mais com a Primera Zona.", "reg_note_ar_mendoza-primera-zona": "Maipú entra inteiro aqui, como o INV o agrupa, embora seu setor leste (Fray Luis Beltrán, Rodeo del Medio) seja mais plano e se pareça com o Leste.", "reg_note_ar_mendoza-zona-sur": "Malargüe quase não tem vinhedos (0,1 ha em 2024): é incluído para que a região fique completa.", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento inclui o Valle del Pedernal (IG), a cerca de 1.250–1.500 m, com um perfil de altitude muito diferente da planície.", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil fica a leste, não nos vales do norte: entra aqui para que todo departamento com vinhedos tenha região. Jáchal não aparece com superfície no anuário 2024 do INV."}, "fr": {"intro_kicker": "Prototype · L'Uruguay et l'Argentine d'abord, le monde ensuite", "intro_body": "Découvrez où chaque cépage est planté dans le monde et, en entrant en Uruguay ou en Argentine, filtrez le terroir par sol, relief et climat.", "country_soon": "Pour l'instant, le détail du terroir et des domaines est disponible pour l'Uruguay et l'Argentine. Les autres pays suivront.", "enter_ar": "Explorer l'Argentine", "country_ar_hint": "Entrez pour voir le terroir de Mendoza et de San Juan et les domaines de tout le pays.", "view_ar": "Argentine", "ar_scope": "Terroir : zones viticoles de Mendoza et de San Juan (les autres provinces suivront). Domaines : tout le pays.", "wk_1": "I · très frais", "ai_wk_1": "Climat très frais (Winkler I) : le raisin a du mal à mûrir. Seulement des cépages précoces, des blancs et des bases de mousseux ; les gelées sont le grand risque.", "vyf": "Vignoble (% de la zone)", "src_bod": "Domaines", "src_deps": "Départements", "src_geo_none": "Roche mère", "src_geo_none_v": "Aucune carte géologique ouverte suffisamment détaillée n'existe pour l'Argentine : il n'y a donc pas de filtre de roche.", "w_where": "{dep}, {prov}", "w_contact_src": "Sources", "w_auto__ar": "{name} est un domaine de {dep}. Sa zone se situe à {alt} m, avec un sol {tex} et un climat Winkler {wk}.", "w_auto_noloc__ar": "{name} est un domaine de {dep}.", "w_auto_note__ar": "Fiche de base établie à partir de sources publiques (tourisme provincial, annuaires du secteur, OpenStreetMap et site du domaine) et du terroir de son emplacement.", "unconf_tip__ar": "Il figure dans un annuaire, mais nous n'avons trouvé aucune source récente confirmant qu'il vinifie encore.", "reg_title__ar": "Région viticole · INV", "reg_src__ar": "Régions : départements regroupés selon le zonage de l'INV. Hectares, vignobles et cépages : Annuaire des superficies 2024 (INV). Terroir : données de la carte.", "regions_group__ar": "Régions viticoles", "ai_alt__ar": "À {alt} m : vignoble d'altitude, aux nuits froides qui apportent plus d'acidité, de couleur et d'arômes.", "ai_dtr__ar": "Amplitude thermique très élevée ({dtr} °C entre le jour et la nuit) : préserve l'acidité, la couleur et les arômes.", "ai_rain_lo__ar": "Climat désertique ({mm} mm de pluie par an) : sans irrigation, pas de vigne, et presque pas de maladies fongiques.", "ai_rain_hi__ar": "{mm} mm de pluie par an, beaucoup pour la zone : un peu plus de pression fongique en été.", "tour_l1__ar": "{ha} ha de vignes, soit {pct} de Mendoza et San Juan · {w} domaines sur la carte", "tour_l2__ar": "Sol dominant : {tex} · {alt} m d'altitude", "tour_l3__ar": "Winkler {gdd} ({wk}) · pluie {rain} mm · {dtr} °C d'amplitude thermique", "w_registry__ar": "recensement de sources publiques", "wineries_osm__ar": "Domaines recensés à partir du tourisme provincial, des annuaires du secteur, d'OpenStreetMap et des sites officiels.", "of_country__ar": "de la zone viticole", "loc_aprox__ar": "Emplacement approximatif : situé d'après son adresse ou sa localité.", "no_location__ar": "Pas d'emplacement précis : nous n'avons pas trouvé son adresse", "edu_wk__ar": "Cumule la chaleur de la saison de croissance. Zones fraîches (I–II) : vins plus acides et moins alcoolisés, adaptés aux blancs et aux mousseux. Zones chaudes (IV–V) : raisins plus mûrs et vins plus puissants, comme dans l'Est de Mendoza et le Valle de Tulum.", "edu_rain__ar": "Il pleut peu ici (entre 100 et 500 mm par an), surtout en été : la vigne vit de l'irrigation par l'eau de fonte des neiges et la pression fongique est faible. Le risque, c'est la grêle.", "all_country__ar": "Mendoza et San Juan", "reg_desc_mendoza-zona-norte": "Plaine basse du río Mendoza inclinée vers le nord-est, à une altitude semblable ou un peu inférieure à celle de la Zona Este (600–700 m). Climat tempéré et sec, aux étés chauds, aux pluies rares (la moyenne provinciale tourne autour de 250 mm par an) et aux hivers marqués par de fortes gelées ; les sols sont sableux et, par endroits, salins. Aucun cépage ne domine : Bonarda, Cereza, Syrah, Pedro Giménez, Criolla Grande et Malbec sont les plus plantés, avec beaucoup de vin de table, de blancs frais et de moût. Lavalle concentre environ 90 % du vignoble de la zone et possède sa propre IG, «Lavalle / Desierto de Lavalle».", "reg_desc_mendoza-zona-este": "Vignobles de plaine entre 600 et 700 m, irrigués par le cours inférieur des ríos Tunuyán et Mendoza, avec l'appui des eaux souterraines. Climat tempéré et très ensoleillé (plus de 2 200 heures de soleil par an), aux pluies rares et aux épisodes de grêle qui touchent des secteurs comme Medrano et Las Catitas. Les sols sont d'origine éolienne, limono-sableux à sablo-limoneux et riches en potassium, avec des zones salines. C'est la zone au plus gros volume : des rouges comme Bonarda, Malbec, Syrah et Tempranillo, des cépages rosés comme Criolla Grande et Cereza, et des blancs comme Pedro Giménez et Torrontés Riojano. Elle concentre environ 41 % du vignoble de Mendoza (60 890 ha en 2022), et San Martín est le département le plus planté de la province.", "reg_desc_mendoza-primera-zona": "Cœur historique du vin de Mendoza, sur le piémont et les terrasses du río Mendoza, avec des vignobles entre environ 800 et 1 100 m à Luján de Cuyo. Le climat est continental et aride, avec une bonne amplitude thermique, environ 250 mm de pluie par an et un risque de grêle en été. Les sols sont alluviaux et très variables : caillouteux et pauvres près du fleuve, plus argilo-limoneux dans d'autres secteurs comme Agrelo. C'est une terre de Malbec (43 % des plantations en 2015), suivi du Cabernet Sauvignon, avec des rouges de garde et de vieilles vignes. Luján de Cuyo est l'une des deux DOC d'Argentine ; la zone compte aussi des IG comme Agrelo, Vistalba, Las Compuertas, Lunlunta, Barrancas et Russell.", "reg_desc_mendoza-valle-de-uco": "Vallée au pied de la Cordillère, avec des vignobles vers 900 m dans les parties basses et au-dessus de 1 250 m dans les hautes ; les plus élevés atteignent près de 1 500 m. Les hivers sont rigoureux et les étés chauds, avec des nuits froides et une amplitude thermique proche de 15 °C. Les gelées et la grêle causent souvent des pertes. Les sols des parties hautes sont alluviaux, caillouteux, peu fertiles et très drainants. Les rouges dominent (86 %), Malbec en tête, avec du Cabernet Sauvignon et du Tempranillo, et des blancs comme le Chardonnay et le Sauvignon Blanc. C'est la région de Mendoza qui compte le plus d'IG reconnues, dont Paraje Altamira, Los Chacayes, San Pablo, Vista Flores, El Peral, La Consulta et Pampa El Cepillo.", "reg_desc_mendoza-zona-sur": "Oasis irriguée par les ríos Diamante et Atuel, avec des vignobles qui descendent d'environ 750 m à Las Paredes (San Rafael) jusqu'à environ 485 m à General Alvear. Climat continental aride, avec des gelées parfois sévères et la grêle la plus fréquente du Cuyo : environ 3 orages par an à San Rafael. Les sols sont alluviaux, très calcaires et souvent sur un sous-sol caillouteux. San Rafael penche vers les rouges (Malbec, Bonarda, Cabernet Sauvignon, Syrah) et General Alvear vers les cépages rosés (Cereza, Criolla Grande, Moscatel Rosado). San Rafael est l'autre DOC du pays, avec Luján de Cuyo.", "reg_desc_san-juan-valle-de-tulum": "Grande oasis du río San Juan, avec des vignobles autour de 600–650 m (Pocito, 618 m). Le climat est désertique : il tombe moins de 100 mm de pluie par an, presque tout en été. Il fait très chaud en janvier ; on compte environ 29 jours de gel par an (de fin mai à fin août), presque pas de grêle et environ 11 jours de vent Zonda. Les sols sont jeunes et peu profonds, de texture limono-sableuse à limoneuse. Une grande partie du vignoble est conduite en pergola (parral) : on y trouve des raisins de cuve (Cereza, Malbec, Syrah, Bonarda) et beaucoup de raisin de table et à sécher. En plaine, la Syrah se montre intense et épicée, et le Malbec plus léger et d'une couleur moins violacée.", "reg_desc_san-juan-zonda-ullum": "Vallées à l'ouest de la ville de San Juan, sur le río San Juan et enserrées par la précordillère (Sierra Chica de Zonda, Cerro Blanco). Elles partagent le climat aride de Tulum, avec des pluies d'été très rares et le vent Zonda qui a donné son nom à l'une d'elles. Les sols sont jeunes et peu profonds, limono-sableux à limoneux. L'INTA juge Ullum apte aux blancs comme le Moscatel de Alejandría et Zonda apte, avec des restrictions, aux rouges. Malgré tout, le Malbec et la Syrah de vieilles vignes montrent une bonne typicité. Le Valle de Zonda a sa propre IG depuis 2015, demandée par un domaine privé.", "reg_desc_san-juan-valle-de-calingasta": "Vallée andine sur le río Los Patos, avec des vignobles entre environ 1 350 et 1 700 m (Barreal est le point le plus haut). Il tombe environ 80 mm de pluie par an, surtout en été. L'amplitude thermique quotidienne atteint 24 °C, ce qui accroît le risque de gel. Les sols sont caillouteux et pauvres en argile, et changent beaucoup sur environ 120 km de vallée. L'INTA la juge apte aux rouges à cycle court (Pinot Noir, Merlot, Cabernet Franc, Tempranillo), et l'on trouve aussi du Malbec, de la Syrah et du Cabernet Sauvignon à la couleur profonde. Depuis 2023, elle compte trois IG propres (Tamberías, Sorocayense et Hilario), en plus de Barreal.", "reg_desc_san-juan-valles-del-norte": "Vallées arides du nord de San Juan : Jáchal se trouve vers 1 200 m et Iglesia autour de 1 700 m, avec des vignobles qui atteignent près de 2 000 m. Les pluies sont très rares et la grêle exceptionnelle (environ 0,5 épisode par an à Jáchal). Les nuits froides et les gelées sont la principale limite. La vigne y est marginale et en grande partie expérimentale : l'INV recensait 7 ha à Iglesia en 2017 et environ 22 ha à Jáchal en 2000. Jáchal, Iglesia et Valle Fértil ont une IG départementale depuis 2002, bien qu'ils ne produisent presque rien.", "reg_note_ar_mendoza-zona-norte": "Las Heras est classé en Zona Norte, comme le fait l'INV, bien qu'une partie de son vignoble de piémont (IG Valle de Canota) ressemble davantage à la Primera Zona.", "reg_note_ar_mendoza-primera-zona": "Maipú est inclus ici en entier, comme le fait l'INV, bien que son secteur est (Fray Luis Beltrán, Rodeo del Medio) soit plus plat et ressemble à l'Est.", "reg_note_ar_mendoza-zona-sur": "Malargüe n'a presque pas de vignes (0,1 ha en 2024) : il est inclus pour que la région soit complète.", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento comprend le Valle del Pedernal (IG), vers 1 250–1 500 m, au profil d'altitude très différent de la plaine.", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil se trouve à l'est, pas dans les vallées du nord : il est ajouté ici pour que chaque département viticole ait une région. Jáchal n'apparaît pas avec une superficie dans l'annuaire 2024 de l'INV."}, "de": {"intro_kicker": "Prototyp · Zuerst Uruguay und Argentinien, dann die Welt", "intro_body": "Sieh dir an, wo jede Rebsorte weltweit angebaut wird, und filtere in Uruguay oder Argentinien das Terroir nach Boden, Relief und Klima.", "country_soon": "Detaillierte Terroir- und Weingutsdaten gibt es vorerst für Uruguay und Argentinien. Weitere Länder folgen.", "enter_ar": "Argentinien erkunden", "country_ar_hint": "Tritt ein, um das Terroir von Mendoza und San Juan und die Weingüter im ganzen Land zu sehen.", "view_ar": "Argentinien", "ar_scope": "Terroir: Rebflächen in Mendoza und San Juan (die übrigen Provinzen folgen). Weingüter: das ganze Land.", "wk_1": "I · sehr kühl", "ai_wk_1": "Sehr kühles Klima (Winkler I): Die Trauben reifen nur schwer. Nur frühreifende Sorten, Weißweine und Sektgrundweine; Frost ist das größte Risiko.", "vyf": "Rebfläche (% der Zone)", "src_bod": "Weingüter", "src_deps": "Departamentos", "src_geo_none": "Grundgestein", "src_geo_none_v": "Für Argentinien gibt es keine offene geologische Karte mit ausreichender Detailtiefe – daher kein Gesteinsfilter.", "w_where": "{dep}, {prov}", "w_contact_src": "Quellen", "w_auto__ar": "{name} ist ein Weingut in {dep}. Seine Zone liegt auf {alt} m, mit {tex}-Boden und Winkler-Klima {wk}.", "w_auto_noloc__ar": "{name} ist ein Weingut in {dep}.", "w_auto_note__ar": "Basisprofil aus öffentlichen Quellen (Provinztourismus, Branchenverzeichnisse, OpenStreetMap und Website des Weinguts) sowie dem Terroir seines Standorts.", "unconf_tip__ar": "Es steht in einem Verzeichnis, aber wir haben keine aktuelle Quelle gefunden, die bestätigt, dass es noch Wein erzeugt.", "reg_title__ar": "Weinregion · INV", "reg_src__ar": "Regionen: Departamentos gruppiert nach der Zonierung des INV. Hektar, Weinberge und Rebsorten: Flächenjahrbuch 2024 (INV). Terroir: Kartendaten.", "regions_group__ar": "Weinregionen", "ai_alt__ar": "Auf {alt} m: Höhenweinberg mit kalten Nächten, die mehr Säure, Farbe und Aroma bringen.", "ai_dtr__ar": "Sehr große Tag-Nacht-Temperaturschwankung ({dtr} °C zwischen Tag und Nacht): erhält Säure, Farbe und Aromen.", "ai_rain_lo__ar": "Wüstenklima ({mm} mm Regen pro Jahr): Ohne Bewässerung kein Weinbau, und kaum Pilzkrankheiten.", "ai_rain_hi__ar": "{mm} mm Regen pro Jahr, viel für die Gegend: im Sommer etwas mehr Pilzdruck.", "tour_l1__ar": "{ha} ha Rebfläche, {pct} von Mendoza und San Juan · {w} Weingüter auf der Karte", "tour_l2__ar": "Vorherrschender Boden: {tex} · {alt} m Höhe", "tour_l3__ar": "Winkler {gdd} ({wk}) · Regen {rain} mm · {dtr} °C Tag-Nacht-Schwankung", "w_registry__ar": "Erhebung aus öffentlichen Quellen", "wineries_osm__ar": "Weingüter erhoben aus Provinztourismus, Branchenverzeichnissen, OpenStreetMap und offiziellen Websites.", "of_country__ar": "der Rebfläche", "loc_aprox__ar": "Ungefährer Standort: anhand von Adresse oder Ort verortet.", "no_location__ar": "Kein genauer Standort: Wir haben die Adresse nicht gefunden", "edu_wk__ar": "Summiert die Wärme der Vegetationsperiode. Kühle Zonen (I–II): Weine mit mehr Säure und weniger Alkohol, gut für Weiß- und Schaumweine. Warme Zonen (IV–V): reifere Trauben und kräftigere Weine, wie im Osten Mendozas und im Valle de Tulum.", "edu_rain__ar": "Hier regnet es wenig (zwischen 100 und 500 mm pro Jahr), vor allem im Sommer: Die Reben leben von Bewässerung mit Schmelzwasser, und der Pilzdruck ist gering. Das Risiko ist Hagel.", "all_country__ar": "Mendoza und San Juan", "reg_desc_mendoza-zona-norte": "Tiefe Ebene des Río Mendoza mit Gefälle nach Nordosten, auf ähnlicher oder etwas geringerer Höhe als die Zona Este (600–700 m). Gemäßigtes, trockenes Klima mit heißen Sommern, spärlichen Niederschlägen (der Provinzdurchschnitt liegt bei etwa 250 mm pro Jahr) und Wintern mit starken Frösten; die Böden sind sandig und stellenweise salzhaltig. Keine Sorte dominiert: Bonarda, Cereza, Syrah, Pedro Giménez, Criolla Grande und Malbec sind am stärksten angebaut, mit viel Tafelwein, frischen Weißweinen und Most. Lavalle vereint rund 90 % der Rebfläche der Zone und hat eine eigene g. A., «Lavalle / Desierto de Lavalle».", "reg_desc_mendoza-zona-este": "Weinberge in der Ebene zwischen 600 und 700 m, bewässert vom Unterlauf der Flüsse Tunuyán und Mendoza und ergänzt durch Grundwasser. Gemäßigtes, sehr sonniges Klima (mehr als 2.200 Sonnenstunden im Jahr), mit spärlichen Niederschlägen und Hagelereignissen, die Gebiete wie Medrano und Las Catitas schädigen. Die Böden sind äolischen Ursprungs, sandiger Lehm bis schluffiger Sand und kaliumreich, mit salzhaltigen Bereichen. Es ist die Zone mit dem größten Volumen: Rote wie Bonarda, Malbec, Syrah und Tempranillo, rosa Sorten wie Criolla Grande und Cereza und Weiße wie Pedro Giménez und Torrontés Riojano. Sie vereint rund 41 % der Rebfläche Mendozas (60.890 ha im Jahr 2022), und San Martín ist das Departamento mit der meisten Rebfläche der Provinz.", "reg_desc_mendoza-primera-zona": "Historisches Herz des Weinbaus in Mendoza, am Gebirgsfuß und auf den Terrassen des Río Mendoza, mit Weinbergen zwischen etwa 800 und 1.100 m in Luján de Cuyo. Das Klima ist kontinental und arid, mit guter Tag-Nacht-Schwankung, etwa 250 mm Regen pro Jahr und Hagelrisiko im Sommer. Die Böden sind alluvial und sehr variabel: steinig und karg in Flussnähe, in anderen Bereichen wie Agrelo eher tonig-schluffig. Es ist Malbec-Land (43 % der Bestockung 2015), gefolgt von Cabernet Sauvignon, mit lagerfähigen Rotweinen und alten Reben. Luján de Cuyo ist eine der beiden DOC Argentiniens; die Zone umfasst außerdem g. A. wie Agrelo, Vistalba, Las Compuertas, Lunlunta, Barrancas und Russell.", "reg_desc_mendoza-valle-de-uco": "Tal am Fuß der Kordillere, mit Weinbergen auf etwa 900 m in den tieferen und über 1.250 m in den höheren Lagen; die höchsten erreichen fast 1.500 m. Die Winter sind streng und die Sommer warm, mit kalten Nächten und einer Tag-Nacht-Schwankung von fast 15 °C. Frost und Hagel verursachen häufig Verluste. Die Böden der höheren Lagen sind alluvial, steinig, wenig fruchtbar und sehr durchlässig. Rote Sorten überwiegen (86 %), angeführt von Malbec, dazu Cabernet Sauvignon und Tempranillo, sowie Weiße wie Chardonnay und Sauvignon Blanc. Es ist die Region Mendozas mit den meisten anerkannten g. A., darunter Paraje Altamira, Los Chacayes, San Pablo, Vista Flores, El Peral, La Consulta und Pampa El Cepillo.", "reg_desc_mendoza-zona-sur": "Oase, bewässert von den Flüssen Diamante und Atuel, mit Weinbergen, die von etwa 750 m in Las Paredes (San Rafael) auf etwa 485 m in General Alvear abfallen. Arides Kontinentalklima mit teils heftigen Frösten und dem häufigsten Hagel in Cuyo: etwa 3 Unwetter pro Jahr in San Rafael. Die Böden sind alluvial, sehr kalkreich und oft mit steinigem Untergrund. San Rafael setzt eher auf Rote (Malbec, Bonarda, Cabernet Sauvignon, Syrah), General Alvear auf rosa Sorten (Cereza, Criolla Grande, Moscatel Rosado). San Rafael ist neben Luján de Cuyo die andere DOC des Landes.", "reg_desc_san-juan-valle-de-tulum": "Große Oase des Río San Juan, mit Weinbergen um 600–650 m (Pocito, 618 m). Das Klima ist Wüstenklima: weniger als 100 mm Regen pro Jahr, fast alles im Sommer. Im Januar ist es sehr heiß, es gibt etwa 29 Frosttage im Jahr (Ende Mai bis Ende August), kaum Hagel und etwa 11 Tage Zonda-Wind. Die Böden sind jung und flachgründig, mit sandig-lehmiger bis schluffig-lehmiger Textur. Viele Weinberge sind als Pergola (parral) erzogen: Es gibt Keltertrauben (Cereza, Malbec, Syrah, Bonarda) und viele Tafel- und Rosinentrauben. In der Ebene gerät Syrah intensiv und würzig, Malbec leichter und weniger violett in der Farbe.", "reg_desc_san-juan-zonda-ullum": "Täler westlich der Stadt San Juan, am Río San Juan und umschlossen von der Präkordillere (Sierra Chica de Zonda, Cerro Blanco). Sie teilen das aride Klima von Tulum, mit sehr spärlichem Sommerregen und dem Zonda-Wind, der einem von ihnen den Namen gibt. Die Böden sind jung und flachgründig, sandiger bis schluffiger Lehm. Das INTA hält Ullum für geeignet für Weiße wie Moscatel de Alejandría und Zonda für eingeschränkt geeignet für Rote. Dennoch zeigen Malbec und Syrah aus alten Weinbergen gute Typizität. Das Valle de Zonda hat seit 2015 eine eigene g. A., beantragt von einem privaten Weingut.", "reg_desc_san-juan-valle-de-calingasta": "Andental am Río Los Patos, mit Weinbergen zwischen etwa 1.350 und 1.700 m (Barreal ist der höchste Punkt). Es fallen etwa 80 mm Regen pro Jahr, vor allem im Sommer. Die tägliche Temperaturschwankung erreicht 24 °C, was das Frostrisiko erhöht. Die Böden sind steinig und tonarm und wechseln stark auf etwa 120 km Tallänge. Das INTA stuft es als geeignet für Rote mit kurzem Zyklus ein (Pinot Noir, Merlot, Cabernet Franc, Tempranillo), außerdem gibt es tieffarbigen Malbec, Syrah und Cabernet Sauvignon. Seit 2023 hat es drei eigene g. A. (Tamberías, Sorocayense und Hilario), zusätzlich zu Barreal.", "reg_desc_san-juan-valles-del-norte": "Aride Täler im Norden San Juans: Jáchal liegt auf etwa 1.200 m und Iglesia um 1.700 m, mit Weinbergen bis fast 2.000 m. Niederschläge sind sehr spärlich und Hagel ist selten (etwa 0,5 Ereignisse pro Jahr in Jáchal). Kalte Nächte und Frost sind die wichtigste Grenze. Der Weinbau ist marginal und großteils experimentell: Das INV verzeichnete 2017 7 ha in Iglesia und 2000 etwa 22 ha in Jáchal. Jáchal, Iglesia und Valle Fértil haben seit 2002 eine g. A. auf Departamento-Ebene, obwohl dort kaum produziert wird.", "reg_note_ar_mendoza-zona-norte": "Las Heras gehört zur Zona Norte, wie das INV es gruppiert, obwohl ein Teil seiner Weinberge am Gebirgsfuß (g. A. Valle de Canota) eher der Primera Zona ähnelt.", "reg_note_ar_mendoza-primera-zona": "Maipú gehört komplett hierher, wie das INV es gruppiert, obwohl sein östlicher Teil (Fray Luis Beltrán, Rodeo del Medio) flacher ist und dem Osten ähnelt.", "reg_note_ar_mendoza-zona-sur": "Malargüe hat kaum Rebfläche (0,1 ha im Jahr 2024): Es ist enthalten, damit die Region vollständig ist.", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento umfasst das Valle del Pedernal (g. A.) auf etwa 1.250–1.500 m, mit einem Höhenprofil, das sich stark von der Ebene unterscheidet.", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil liegt im Osten, nicht in den nördlichen Tälern: Es wird hier ergänzt, damit jedes Departamento mit Rebfläche eine Region hat. Jáchal ist im INV-Jahrbuch 2024 ohne Fläche aufgeführt."}, "ru": {"intro_kicker": "Прототип · Сначала Уругвай и Аргентина, потом весь мир", "intro_body": "Посмотрите, где в мире выращивают каждый сорт, а внутри Уругвая или Аргентины фильтруйте терруар по почве, рельефу и климату.", "country_soon": "Пока подробные данные о терруаре и винодельнях есть для Уругвая и Аргентины. Другие страны — позже.", "enter_ar": "Исследовать Аргентину", "country_ar_hint": "Зайдите, чтобы увидеть терруар Мендосы и Сан-Хуана и винодельни всей страны.", "view_ar": "Аргентина", "ar_scope": "Терруар: винодельческие зоны Мендосы и Сан-Хуана (остальные провинции — позже). Винодельни: вся страна.", "wk_1": "I · очень прохладный", "ai_wk_1": "Очень прохладный климат (Winkler I): винограду трудно вызреть. Только ранние сорта, белые вина и основы для игристых; главный риск — заморозки.", "vyf": "Виноградники (% зоны)", "src_bod": "Винодельни", "src_deps": "Департаменты", "src_geo_none": "Коренная порода", "src_geo_none_v": "Для Аргентины нет открытой геологической карты с достаточной детализацией, поэтому фильтра по породе нет.", "w_where": "{dep}, {prov}", "w_contact_src": "Источники", "w_auto__ar": "{name} — винодельня в {dep}. Её зона находится на высоте {alt} м, почва — {tex}, климат — Winkler {wk}.", "w_auto_noloc__ar": "{name} — винодельня в {dep}.", "w_auto_note__ar": "Базовая карточка составлена по открытым источникам (туризм провинции, отраслевые списки, OpenStreetMap и сайт винодельни) и терруару её местоположения.", "unconf_tip__ar": "Значится в каком-то списке, но мы не нашли свежего источника, подтверждающего, что она всё ещё производит вино.", "reg_title__ar": "Винодельческий регион · INV", "reg_src__ar": "Регионы: департаменты сгруппированы по зонированию INV. Гектары, виноградники и сорта: Ежегодник площадей 2024 (INV). Терруар: данные карты.", "regions_group__ar": "Винодельческие регионы", "ai_alt__ar": "На высоте {alt} м: высокогорный виноградник, холодные ночи дают больше кислотности, цвета и аромата.", "ai_dtr__ar": "Очень большая суточная амплитуда температур ({dtr} °C между днём и ночью): сохраняет кислотность, цвет и ароматы.", "ai_rain_lo__ar": "Пустынный климат ({mm} мм осадков в год): без орошения нет лозы, и почти нет грибковых болезней.", "ai_rain_hi__ar": "{mm} мм осадков в год — много для этой зоны: летом чуть выше давление грибковых болезней.", "tour_l1__ar": "{ha} га виноградников, {pct} Мендосы и Сан-Хуана · {w} виноделен на карте", "tour_l2__ar": "Преобладающая почва: {tex} · высота {alt} м", "tour_l3__ar": "Winkler {gdd} ({wk}) · осадки {rain} мм · суточная амплитуда {dtr} °C", "w_registry__ar": "обзор открытых источников", "wineries_osm__ar": "Винодельни собраны по данным туризма провинций, отраслевых списков, OpenStreetMap и официальных сайтов.", "of_country__ar": "площади виноградников", "loc_aprox__ar": "Примерное местоположение: определено по адресу или населённому пункту.", "no_location__ar": "Нет точного местоположения: мы не нашли адрес", "edu_wk__ar": "Суммирует тепло вегетационного периода. Прохладные зоны (I–II): вина с большей кислотностью и меньшим алкоголем, хороши для белых и игристых. Тёплые (IV–V): более зрелый виноград и более мощные вина, как на востоке Мендосы и в Valle de Tulum.", "edu_rain__ar": "Осадков здесь мало (от 100 до 500 мм в год), в основном летом: лоза живёт за счёт орошения талой водой, давление грибковых болезней низкое. Главный риск — град.", "all_country__ar": "Мендоса и Сан-Хуан", "reg_desc_mendoza-zona-norte": "Низменная равнина реки Мендоса с уклоном на северо-восток, на высоте, сходной с Zona Este или чуть ниже (600–700 м). Умеренный сухой климат с жарким летом, скудными осадками (средний показатель по провинции — около 250 мм в год) и зимами с сильными заморозками; почвы песчаные, местами засолённые. Доминирующего сорта нет: больше всего посажено Bonarda, Cereza, Syrah, Pedro Giménez, Criolla Grande и Malbec, много столового вина, свежих белых и сусла. На Lavalle приходится около 90 % виноградников зоны, и у него есть собственное ГУ — «Lavalle / Desierto de Lavalle».", "reg_desc_mendoza-zona-este": "Равнинные виноградники на высоте 600–700 м, орошаемые нижним течением рек Тунуян и Мендоса, с подпиткой грунтовыми водами. Умеренный и очень солнечный климат (более 2 200 солнечных часов в год), скудные осадки и эпизоды града, повреждающие такие зоны, как Medrano и Las Catitas. Почвы эолового происхождения, от супесчаных до пылевато-песчаных, богаты калием, местами засолены. Это зона наибольших объёмов: красные сорта — Bonarda, Malbec, Syrah и Tempranillo, розовые — Criolla Grande и Cereza, белые — Pedro Giménez и Torrontés Riojano. Здесь сосредоточено около 41 % виноградников Мендосы (60 890 га в 2022 году), а San Martín — департамент с наибольшей площадью виноградников в провинции.", "reg_desc_mendoza-primera-zona": "Историческое ядро виноделия Мендосы, на предгорьях и террасах реки Мендоса, с виноградниками примерно на 800–1 100 м в Luján de Cuyo. Климат континентальный и засушливый, с хорошей суточной амплитудой, около 250 мм осадков в год и риском града летом. Почвы аллювиальные и очень разнообразные: каменистые и бедные у реки и более глинисто-пылеватые в других секторах, например в Agrelo. Это земля Malbec (43 % посадок в 2015 году), за ним следует Cabernet Sauvignon; здесь делают вина для выдержки и есть старые лозы. Luján de Cuyo — одна из двух DOC Аргентины; в зоне также есть ГУ Agrelo, Vistalba, Las Compuertas, Lunlunta, Barrancas и Russell.", "reg_desc_mendoza-valle-de-uco": "Долина у подножия Кордильер, с виноградниками около 900 м в нижней части и выше 1 250 м в верхней; самые высокие достигают почти 1 500 м. Зимы суровые, лето тёплое, ночи холодные, суточная амплитуда — около 15 °C. Заморозки и град часто приводят к потерям. Почвы верхних участков аллювиальные, каменистые, малоплодородные и хорошо дренированные. Преобладают красные сорта (86 %), во главе с Malbec, а также Cabernet Sauvignon и Tempranillo; из белых — Chardonnay и Sauvignon Blanc. Это регион Мендосы с наибольшим числом признанных ГУ, среди них Paraje Altamira, Los Chacayes, San Pablo, Vista Flores, El Peral, La Consulta и Pampa El Cepillo.", "reg_desc_mendoza-zona-sur": "Оазис, орошаемый реками Диаманте и Атуэль, с виноградниками, спускающимися примерно от 750 м в Las Paredes (San Rafael) до примерно 485 м в General Alvear. Засушливый континентальный климат, с порой сильными заморозками и самым частым градом в Куйо: около 3 бурь в год в San Rafael. Почвы аллювиальные, очень известковые, часто с каменистой подпочвой. San Rafael склоняется к красным сортам (Malbec, Bonarda, Cabernet Sauvignon, Syrah), а General Alvear — к розовым (Cereza, Criolla Grande, Moscatel Rosado). San Rafael — вторая DOC страны наряду с Luján de Cuyo.", "reg_desc_san-juan-valle-de-tulum": "Большой оазис реки Сан-Хуан, с виноградниками на высоте около 600–650 м (Pocito, 618 м). Климат пустынный: менее 100 мм осадков в год, почти всё летом. В январе очень жарко, около 29 дней с заморозками в год (с конца мая до конца августа), града почти нет, около 11 дней дует ветер Zonda. Почвы молодые и неглубокие, от супесчаных до пылевато-суглинистых. Многие виноградники ведутся на перголе (parral): есть винные сорта (Cereza, Malbec, Syrah, Bonarda) и много столового винограда и винограда для изюма. На равнине Syrah получается насыщенным и пряным, а Malbec — более лёгким и менее фиолетовым по цвету.", "reg_desc_san-juan-zonda-ullum": "Долины к западу от города Сан-Хуан, на реке Сан-Хуан, окружённые Предкордильерой (Sierra Chica de Zonda, Cerro Blanco). У них общий с Тулумом засушливый климат, очень скудные летние осадки и ветер Zonda, давший имя одной из долин. Почвы молодые и неглубокие, от супесчаных до пылевато-суглинистых. INTA считает Ullum пригодным для белых сортов, таких как Moscatel de Alejandría, а Zonda — пригодной с ограничениями для красных. Тем не менее Malbec и Syrah со старых виноградников показывают хорошую типичность. С 2015 года у Valle de Zonda есть собственное ГУ, запрошенное частной винодельней.", "reg_desc_san-juan-valle-de-calingasta": "Горная долина на реке Лос-Патос, с виноградниками примерно на 1 350–1 700 м (Barreal — самая высокая точка). Выпадает около 80 мм осадков в год, в основном летом. Суточная амплитуда достигает 24 °C, что повышает риск заморозков. Почвы каменистые, с малым содержанием глины, и сильно меняются на протяжении примерно 120 км долины. INTA считает её пригодной для красных сортов с коротким циклом (Pinot Noir, Merlot, Cabernet Franc, Tempranillo); есть также Malbec, Syrah и Cabernet Sauvignon глубокого цвета. С 2023 года здесь три собственных ГУ (Tamberías, Sorocayense и Hilario), помимо Barreal.", "reg_desc_san-juan-valles-del-norte": "Засушливые долины севера Сан-Хуана: Jáchal находится примерно на 1 200 м, Iglesia — около 1 700 м, а виноградники поднимаются почти до 2 000 м. Осадков очень мало, град редок (около 0,5 случая в год в Jáchal). Главное ограничение — холодные ночи и заморозки. Виноградарство здесь маргинальное и во многом экспериментальное: INV фиксировал 7 га в Iglesia в 2017 году и около 22 га в Jáchal в 2000 году. У Jáchal, Iglesia и Valle Fértil с 2002 года есть ГУ на уровне департамента, хотя производства там почти нет.", "reg_note_ar_mendoza-zona-norte": "Las Heras отнесён к Zona Norte, как его группирует INV, хотя часть его предгорных виноградников (ГУ Valle de Canota) больше похожа на Primera Zona.", "reg_note_ar_mendoza-primera-zona": "Maipú целиком включён сюда, как его группирует INV, хотя его восточная часть (Fray Luis Beltrán, Rodeo del Medio) более равнинная и похожа на Восточную зону.", "reg_note_ar_mendoza-zona-sur": "В Malargüe почти нет виноградников (0,1 га в 2024 году): он включён, чтобы регион был полным.", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento включает Valle del Pedernal (ГУ) на высоте около 1 250–1 500 м, с высокогорным профилем, сильно отличающимся от равнины.", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil находится на востоке, а не в северных долинах: он добавлен сюда, чтобы у каждого департамента с виноградниками был регион. Jáchal не указан с площадью в ежегоднике INV 2024 года."}, "zh": {"intro_kicker": "原型 · 先做乌拉圭和阿根廷，再做全世界", "intro_body": "查看每个葡萄品种在世界各地的种植分布；进入乌拉圭或阿根廷后，可按土壤、地形和气候筛选风土。", "country_soon": "目前风土和酒庄的详细信息仅覆盖乌拉圭和阿根廷，其他国家稍后上线。", "enter_ar": "探索阿根廷", "country_ar_hint": "进入查看 Mendoza 和 San Juan 的风土以及全国的酒庄。", "view_ar": "阿根廷", "ar_scope": "风土：Mendoza 和 San Juan 的葡萄种植区（其他省份稍后加入）。酒庄：全国。", "wk_1": "I · 非常凉爽", "ai_wk_1": "非常凉爽的气候（Winkler I）：葡萄难以成熟。只适合早熟品种、白葡萄酒和起泡酒基酒；霜冻是最大风险。", "vyf": "葡萄园（占区域 %）", "src_bod": "酒庄", "src_deps": "行政区", "src_geo_none": "母岩", "src_geo_none_v": "阿根廷没有足够详细的开放地质图，因此没有岩石筛选。", "w_where": "{dep}，{prov}", "w_contact_src": "来源", "w_auto__ar": "{name} 是位于 {dep} 的酒庄。所在区域海拔 {alt} 米，土壤为 {tex}，气候为 Winkler {wk}。", "w_auto_noloc__ar": "{name} 是位于 {dep} 的酒庄。", "w_auto_note__ar": "基础资料依据公开来源（省旅游部门、行业名录、OpenStreetMap 和酒庄官网）及其所在位置的风土整理而成。", "unconf_tip__ar": "它出现在某份名录中，但我们没有找到近期来源确认其仍在酿酒。", "reg_title__ar": "葡萄酒产区 · INV", "reg_src__ar": "产区：按 INV 的分区方式归并行政区。公顷数、葡萄园和品种：2024 年种植面积年鉴（INV）。风土：地图数据。", "regions_group__ar": "葡萄酒产区", "ai_alt__ar": "海拔 {alt} 米：高海拔葡萄园，寒冷的夜晚带来更多酸度、色泽和香气。", "ai_dtr__ar": "昼夜温差极大（昼夜相差 {dtr} °C）：保留酸度、色泽和香气。", "ai_rain_lo__ar": "沙漠气候（年降水 {mm} 毫米）：没有灌溉就无法种葡萄，几乎没有真菌病害。", "ai_rain_hi__ar": "年降水 {mm} 毫米，在当地算多：夏季真菌病害压力略高。", "tour_l1__ar": "{ha} 公顷葡萄园，占 Mendoza 和 San Juan 的 {pct} · 地图上有 {w} 家酒庄", "tour_l2__ar": "主要土壤：{tex} · 海拔 {alt} 米", "tour_l3__ar": "Winkler {gdd}（{wk}）· 降水 {rain} 毫米 · 昼夜温差 {dtr} °C", "w_registry__ar": "公开来源调查", "wineries_osm__ar": "酒庄数据来自省旅游部门、行业名录、OpenStreetMap 和官方网站。", "of_country__ar": "占葡萄种植区", "loc_aprox__ar": "大致位置：根据地址或所在地定位。", "no_location__ar": "无精确位置：未找到其地址", "edu_wk__ar": "累计生长季的热量。凉爽区（I–II）：酒的酸度更高、酒精度更低，适合白葡萄酒和起泡酒。温暖区（IV–V）：葡萄更成熟，酒体更强劲，如 Mendoza 东部和 Valle de Tulum。", "edu_rain__ar": "这里降水很少（每年 100 至 500 毫米），且主要在夏季：葡萄园依靠融雪水灌溉，真菌病害压力低。主要风险是冰雹。", "all_country__ar": "Mendoza 和 San Juan", "reg_desc_mendoza-zona-norte": "Mendoza 河的低平原，向东北倾斜，海拔与 Zona Este 相近或略低（600–700 米）。温带干燥气候，夏季炎热，降水稀少（全省平均约 250 毫米/年），冬季霜冻严重；土壤为沙质，部分区域含盐。没有主导品种：Bonarda、Cereza、Syrah、Pedro Giménez、Criolla Grande 和 Malbec 种植最多，大量生产餐酒、清新白葡萄酒和葡萄汁。Lavalle 集中了该区约 90 % 的葡萄园，并拥有自己的地理标志「Lavalle / Desierto de Lavalle」。", "reg_desc_mendoza-zona-este": "平原葡萄园，海拔 600 至 700 米，由 Tunuyán 河和 Mendoza 河下游灌溉，并辅以地下水。温带气候，日照充足（每年超过 2,200 小时），降水稀少，冰雹会损害 Medrano 和 Las Catitas 等地。土壤为风积成因，从砂壤土到粉砂质砂土，富含钾，部分区域含盐。这是产量最大的产区：红葡萄有 Bonarda、Malbec、Syrah 和 Tempranillo，粉红葡萄有 Criolla Grande 和 Cereza，白葡萄有 Pedro Giménez 和 Torrontés Riojano。它占 Mendoza 约 41 % 的葡萄园（2022 年 60,890 公顷），San Martín 是全省葡萄园面积最大的行政区。", "reg_desc_mendoza-primera-zona": "Mendoza 葡萄酒的历史核心，位于 Mendoza 河的山麓和阶地上，Luján de Cuyo 的葡萄园海拔约 800 至 1,100 米。大陆性干旱气候，昼夜温差良好，年降水约 250 毫米，夏季有冰雹风险。土壤为冲积土，变化很大：靠近河流处多石而贫瘠，其他区域（如 Agrelo）则更偏黏土和粉土。这里是 Malbec 之乡（2015 年占种植面积的 43 %），其次是 Cabernet Sauvignon，出产适合陈年的红葡萄酒，并有老藤。Luján de Cuyo 是阿根廷两个 DOC 之一；该区还有 Agrelo、Vistalba、Las Compuertas、Lunlunta、Barrancas 和 Russell 等地理标志。", "reg_desc_mendoza-valle-de-uco": "安第斯山脚下的山谷，低处葡萄园海拔约 900 米，高处超过 1,250 米，最高的接近 1,500 米。冬季严寒，夏季温暖，夜晚寒冷，昼夜温差接近 15 °C。霜冻和冰雹经常造成损失。高处土壤为冲积土，多石、肥力低、排水性极好。以红葡萄为主（86 %），Malbec 领先，另有 Cabernet Sauvignon 和 Tempranillo，白葡萄有 Chardonnay 和 Sauvignon Blanc。这是 Mendoza 获认可地理标志最多的产区，包括 Paraje Altamira、Los Chacayes、San Pablo、Vista Flores、El Peral、La Consulta 和 Pampa El Cepillo。", "reg_desc_mendoza-zona-sur": "由 Diamante 河和 Atuel 河灌溉的绿洲，葡萄园海拔从 Las Paredes（San Rafael）约 750 米降至 General Alvear 约 485 米。干旱大陆性气候，霜冻可能很严重，冰雹是 Cuyo 最频繁的：San Rafael 每年约 3 场风暴。土壤为冲积土，石灰质丰富，底土常多石。San Rafael 偏重红葡萄（Malbec、Bonarda、Cabernet Sauvignon、Syrah），General Alvear 偏重粉红葡萄（Cereza、Criolla Grande、Moscatel Rosado）。San Rafael 与 Luján de Cuyo 并列为全国另一个 DOC。", "reg_desc_san-juan-valle-de-tulum": "San Juan 河的大型绿洲，葡萄园海拔约 600–650 米（Pocito，618 米）。沙漠气候：年降水不足 100 毫米，几乎都在夏季。一月非常炎热，每年约 29 个霜冻日（五月底至八月底），几乎没有冰雹，约 11 天刮 Zonda 风。土壤年轻且浅，质地从砂壤土到粉壤土。许多葡萄园采用棚架（parral）栽培：既有酿酒葡萄（Cereza、Malbec、Syrah、Bonarda），也有大量鲜食葡萄和制干葡萄。在平原上，Syrah 浓郁带香料味，Malbec 则较轻盈，颜色紫色调较淡。", "reg_desc_san-juan-zonda-ullum": "San Juan 市以西的山谷，位于 San Juan 河畔，被前科迪勒拉山脉（Sierra Chica de Zonda、Cerro Blanco）环绕。与 Tulum 同属干旱气候，夏季降水极少，其中一个山谷以 Zonda 风命名。土壤年轻且浅，为砂壤土至粉壤土。INTA 认为 Ullum 适合 Moscatel de Alejandría 等白葡萄，Zonda 则有条件地适合红葡萄。尽管如此，老藤 Malbec 和 Syrah 表现出良好的典型性。Valle de Zonda 自 2015 年起拥有自己的地理标志，由一家私人酒庄申请。", "reg_desc_san-juan-valle-de-calingasta": "Los Patos 河畔的高山山谷，葡萄园海拔约 1,350 至 1,700 米（Barreal 为最高点）。年降水约 80 毫米，主要在夏季。日温差可达 24 °C，增加了霜冻风险。土壤多石、黏土少，沿约 120 公里的山谷变化很大。INTA 认为这里适合短周期红葡萄（Pinot Noir、Merlot、Cabernet Franc、Tempranillo），也有颜色深浓的 Malbec、Syrah 和 Cabernet Sauvignon。自 2023 年起，除 Barreal 外还拥有三个自己的地理标志（Tamberías、Sorocayense 和 Hilario）。", "reg_desc_san-juan-valles-del-norte": "San Juan 北部的干旱山谷：Jáchal 海拔约 1,200 米，Iglesia 约 1,700 米，葡萄园最高接近 2,000 米。降水极少，冰雹罕见（Jáchal 每年约 0.5 次）。寒冷的夜晚和霜冻是主要限制。葡萄种植处于边缘，且大多为试验性质：INV 记录 2017 年 Iglesia 有 7 公顷，2000 年 Jáchal 约有 22 公顷。Jáchal、Iglesia 和 Valle Fértil 自 2002 年起拥有行政区级地理标志，但几乎没有产量。", "reg_note_ar_mendoza-zona-norte": "Las Heras 按 INV 的归类划入 Zona Norte，尽管其部分山麓葡萄园（地理标志 Valle de Canota）更接近 Primera Zona。", "reg_note_ar_mendoza-primera-zona": "Maipú 按 INV 的归类整体划入此区，尽管其东部（Fray Luis Beltrán、Rodeo del Medio）地势更平坦，更接近东区。", "reg_note_ar_mendoza-zona-sur": "Malargüe 几乎没有葡萄园（2024 年 0.1 公顷）：纳入是为了让产区完整。", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento 包括 Valle del Pedernal（地理标志），海拔约 1,250–1,500 米，其高海拔特征与平原截然不同。", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil 位于东部，并不在北部山谷：将其并入此处，是为了让每个有葡萄园的行政区都有所属产区。INV 2024 年年鉴中未列出 Jáchal 的面积。"}, "ja": {"intro_kicker": "プロトタイプ · まずウルグアイとアルゼンチン、世界はその後", "intro_body": "各品種が世界のどこで栽培されているかを確認し、ウルグアイやアルゼンチンに入ると、土壌・地形・気候でテロワールを絞り込めます。", "country_soon": "現在、テロワールとワイナリーの詳細はウルグアイとアルゼンチンのみです。他の国は今後追加します。", "enter_ar": "アルゼンチンを探索", "country_ar_hint": "Mendoza と San Juan のテロワール、全国のワイナリーを見るには入ってください。", "view_ar": "アルゼンチン", "ar_scope": "テロワール：Mendoza と San Juan のブドウ栽培地域（他の州は今後追加）。ワイナリー：全国。", "wk_1": "I · 非常に冷涼", "ai_wk_1": "非常に冷涼な気候（Winkler I）：ブドウが熟しにくい。早熟品種、白ワイン、スパークリングのベースのみ。霜が最大のリスク。", "vyf": "ブドウ畑（地域の %）", "src_bod": "ワイナリー", "src_deps": "県", "src_geo_none": "母岩", "src_geo_none_v": "アルゼンチンには十分に詳細なオープンの地質図がないため、岩石フィルターはありません。", "w_where": "{dep}、{prov}", "w_contact_src": "出典", "w_auto__ar": "{name} は {dep} のワイナリーです。所在地域は標高 {alt} m、土壌は {tex}、気候は Winkler {wk} です。", "w_auto_noloc__ar": "{name} は {dep} のワイナリーです。", "w_auto_note__ar": "公開情報（州の観光局、業界リスト、OpenStreetMap、ワイナリーのサイト）と所在地のテロワールから作成した基本情報です。", "unconf_tip__ar": "いずれかのリストに掲載されていますが、現在も醸造していることを確認できる最近の情報源は見つかりませんでした。", "reg_title__ar": "ワイン産地 · INV", "reg_src__ar": "産地：INV のゾーニングに従って県をまとめたもの。面積・畑・品種：2024 年栽培面積年報（INV）。テロワール：地図データ。", "regions_group__ar": "ワイン産地", "ai_alt__ar": "標高 {alt} m：高地のブドウ畑。冷涼な夜が酸、色、香りを高めます。", "ai_dtr__ar": "非常に大きな日較差（昼夜の差 {dtr} °C）：酸、色、香りを保ちます。", "ai_rain_lo__ar": "砂漠気候（年間降水量 {mm} mm）：灌漑なしではブドウは育たず、カビ病はほとんどありません。", "ai_rain_hi__ar": "年間降水量 {mm} mm、この地域としては多め：夏はカビ病の圧力がやや高まります。", "tour_l1__ar": "ブドウ畑 {ha} ha、Mendoza と San Juan の {pct} · 地図上のワイナリー {w} 軒", "tour_l2__ar": "主な土壌：{tex} · 標高 {alt} m", "tour_l3__ar": "Winkler {gdd}（{wk}）· 降水量 {rain} mm · 日較差 {dtr} °C", "w_registry__ar": "公開情報の調査", "wineries_osm__ar": "州の観光局、業界リスト、OpenStreetMap、公式サイトから調査したワイナリー。", "of_country__ar": "（ブドウ栽培地域に占める割合）", "loc_aprox__ar": "おおよその位置：住所または地名から配置しています。", "no_location__ar": "正確な位置なし：住所が見つかりませんでした", "edu_wk__ar": "生育期の熱量を合計したものです。冷涼な地域（I–II）：酸が高くアルコールが低いワインで、白やスパークリングに向きます。温暖な地域（IV–V）：ブドウがより熟し、力強いワインになります（Mendoza 東部や Valle de Tulum など）。", "edu_rain__ar": "ここは雨が少なく（年間 100〜500 mm）、主に夏に降ります。ブドウは雪解け水による灌漑で育ち、カビ病の圧力は低めです。リスクは雹です。", "all_country__ar": "Mendoza と San Juan", "reg_desc_mendoza-zona-norte": "Mendoza 川の低い平野で、北東へ傾斜し、標高は Zona Este と同程度かやや低い（600–700 m）。温暖で乾燥した気候で、夏は暑く、雨は少なく（州平均は年間約 250 mm）、冬は強い霜が降ります。土壌は砂質で、一部は塩性です。主力品種はなく、Bonarda、Cereza、Syrah、Pedro Giménez、Criolla Grande、Malbec が多く植えられ、テーブルワイン、フレッシュな白、ブドウ果汁が多く造られます。Lavalle がゾーンのブドウ畑の約 90 % を占め、独自の GI「Lavalle / Desierto de Lavalle」を持ちます。", "reg_desc_mendoza-zona-este": "標高 600〜700 m の平野のブドウ畑で、Tunuyán 川と Mendoza 川の下流から灌漑され、地下水でも補われています。温暖で日照が非常に多く（年間 2,200 時間以上）、雨は少なく、Medrano や Las Catitas などでは雹の被害が出ます。土壌は風成で、砂壌土からシルト質砂土、カリウムに富み、一部は塩性です。最も生産量の多いゾーンで、黒ブドウは Bonarda、Malbec、Syrah、Tempranillo、ピンク系は Criolla Grande と Cereza、白は Pedro Giménez と Torrontés Riojano など。Mendoza のブドウ畑の約 41 %（2022 年に 60,890 ha）を占め、San Martín は州で最もブドウ畑の多い県です。", "reg_desc_mendoza-primera-zona": "Mendoza ワインの歴史的中心地で、Mendoza 川の山麓と段丘に位置し、Luján de Cuyo のブドウ畑は標高約 800〜1,100 m です。大陸性の乾燥気候で、日較差が大きく、年間降水量は約 250 mm、夏には雹のリスクがあります。土壌は沖積で変化に富み、川沿いは礫が多く痩せており、Agrelo などでは粘土・シルト質が強くなります。Malbec の地（2015 年の作付けの 43 %）で、Cabernet Sauvignon が続き、熟成向きの赤と古木があります。Luján de Cuyo はアルゼンチンに 2 つある DOC の 1 つで、Agrelo、Vistalba、Las Compuertas、Lunlunta、Barrancas、Russell などの GI もあります。", "reg_desc_mendoza-valle-de-uco": "アンデス山脈の麓の谷で、ブドウ畑は低い所で約 900 m、高い所で 1,250 m 以上、最も高いものは 1,500 m 近くに達します。冬は厳しく夏は暑く、夜は冷え込み、日較差は 15 °C 近くになります。霜と雹による被害が頻繁に出ます。高い所の土壌は沖積で礫が多く、肥沃度が低く、水はけが非常に良好です。黒ブドウが主体（86 %）で、Malbec を筆頭に Cabernet Sauvignon、Tempranillo、白は Chardonnay や Sauvignon Blanc。Mendoza で最も多くの GI が認められた産地で、Paraje Altamira、Los Chacayes、San Pablo、Vista Flores、El Peral、La Consulta、Pampa El Cepillo などがあります。", "reg_desc_mendoza-zona-sur": "Diamante 川と Atuel 川が潤すオアシスで、ブドウ畑は Las Paredes（San Rafael）の約 750 m から General Alvear の約 485 m まで下ります。乾燥した大陸性気候で、霜が厳しくなることもあり、雹は Cuyo で最も頻繁です（San Rafael で年に約 3 回の嵐）。土壌は沖積で石灰質が多く、下層が礫質であることが多いです。San Rafael は赤（Malbec、Bonarda、Cabernet Sauvignon、Syrah）、General Alvear はピンク系（Cereza、Criolla Grande、Moscatel Rosado）が中心です。San Rafael は Luján de Cuyo と並ぶ、国内もう 1 つの DOC です。", "reg_desc_san-juan-valle-de-tulum": "San Juan 川の大きなオアシスで、ブドウ畑は標高 600〜650 m 前後（Pocito、618 m）。砂漠気候で、年間降水量は 100 mm 未満、ほぼすべて夏に降ります。1 月は非常に暑く、霜の日は年に約 29 日（5 月末〜8 月末）、雹はほとんどなく、Zonda 風が吹く日は約 11 日です。土壌は若く浅く、砂壌土からシルト質壌土です。多くの畑は棚仕立て（parral）で、醸造用ブドウ（Cereza、Malbec、Syrah、Bonarda）のほか、生食用・レーズン用ブドウも多く栽培されています。平野では Syrah は濃厚でスパイシー、Malbec は軽めで紫色が弱くなります。", "reg_desc_san-juan-zonda-ullum": "San Juan 市の西にある谷で、San Juan 川沿いにあり、プレコルディエラ（Sierra Chica de Zonda、Cerro Blanco）に囲まれています。Tulum と同じ乾燥気候で、夏の雨はごくわずか、Zonda 風はその一つの谷の名の由来です。土壌は若く浅く、砂壌土からシルト質壌土です。INTA は Ullum を Moscatel de Alejandría などの白に適し、Zonda を条件付きで赤に適すると評価しています。それでも、古木の Malbec と Syrah は良い典型性を示します。Valle de Zonda は 2015 年から独自の GI を持ち、民間ワイナリーの申請によるものです。", "reg_desc_san-juan-valle-de-calingasta": "Los Patos 川沿いの山岳の谷で、ブドウ畑は標高約 1,350〜1,700 m（Barreal が最も高い地点）。年間降水量は約 80 mm で、主に夏に降ります。日較差は 24 °C に達し、霜のリスクを高めます。土壌は礫が多く粘土が少なく、約 120 km の谷に沿って大きく変化します。INTA は短い生育サイクルの赤（Pinot Noir、Merlot、Cabernet Franc、Tempranillo）に適すると評価しており、色の濃い Malbec、Syrah、Cabernet Sauvignon もあります。2023 年からは Barreal に加え、独自の GI が 3 つ（Tamberías、Sorocayense、Hilario）あります。", "reg_desc_san-juan-valles-del-norte": "San Juan 北部の乾燥した谷：Jáchal は標高約 1,200 m、Iglesia は約 1,700 m で、ブドウ畑は 2,000 m 近くに達します。雨はごくわずかで、雹はまれです（Jáchal で年に約 0.5 回）。冷え込む夜と霜が主な制約です。ブドウ栽培は周縁的で、多くは試験的です。INV の記録では 2017 年に Iglesia で 7 ha、2000 年に Jáchal で約 22 ha でした。Jáchal、Iglesia、Valle Fértil は 2002 年から県単位の GI を持ちますが、生産はほとんどありません。", "reg_note_ar_mendoza-zona-norte": "Las Heras は INV の区分どおり Zona Norte に含めていますが、山麓の畑の一部（GI Valle de Canota）は Primera Zona に近い性格です。", "reg_note_ar_mendoza-primera-zona": "Maipú は INV の区分どおり全域をここに含めていますが、東部（Fray Luis Beltrán、Rodeo del Medio）は平坦で東部ゾーンに近い性格です。", "reg_note_ar_mendoza-zona-sur": "Malargüe にはブドウ畑がほとんどありません（2024 年に 0.1 ha）。産地を完全にするために含めています。", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento には Valle del Pedernal（GI）が含まれ、標高約 1,250〜1,500 m で、平野とは大きく異なる高地の特徴を持ちます。", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil は東部にあり、北部の谷ではありません。ブドウ畑のあるすべての県が産地に属するよう、ここに加えています。Jáchal は INV の 2024 年年報に面積が記載されていません。"}, "ko": {"intro_kicker": "프로토타입 · 우루과이와 아르헨티나 먼저, 세계는 그다음", "intro_body": "각 품종이 세계 어디에서 재배되는지 살펴보고, 우루과이나 아르헨티나에 들어가면 토양, 지형, 기후로 테루아를 필터링하세요.", "country_soon": "현재 테루아와 와이너리 상세 정보는 우루과이와 아르헨티나만 제공합니다. 다른 나라는 추후 추가됩니다.", "enter_ar": "아르헨티나 둘러보기", "country_ar_hint": "들어가서 Mendoza와 San Juan의 테루아, 전국의 와이너리를 확인하세요.", "view_ar": "아르헨티나", "ar_scope": "테루아: Mendoza와 San Juan의 포도 재배 지역(다른 주는 추후 추가). 와이너리: 전국.", "wk_1": "I · 매우 서늘함", "ai_wk_1": "매우 서늘한 기후(Winkler I): 포도가 잘 익지 않습니다. 조생 품종, 화이트, 스파클링 베이스만 가능하며, 서리가 가장 큰 위험입니다.", "vyf": "포도밭(지역 대비 %)", "src_bod": "와이너리", "src_deps": "주 하위 행정구역", "src_geo_none": "모암", "src_geo_none_v": "아르헨티나에는 충분히 상세한 공개 지질도가 없어 암석 필터가 없습니다.", "w_where": "{dep}, {prov}", "w_contact_src": "출처", "w_auto__ar": "{name}은(는) {dep}의 와이너리입니다. 해당 지역은 해발 {alt} m이며, 토양은 {tex}, 기후는 Winkler {wk}입니다.", "w_auto_noloc__ar": "{name}은(는) {dep}의 와이너리입니다.", "w_auto_note__ar": "공개 자료(주 관광청, 업계 목록, OpenStreetMap, 와이너리 웹사이트)와 위치의 테루아를 바탕으로 만든 기본 정보입니다.", "unconf_tip__ar": "일부 목록에 올라 있지만, 현재도 와인을 생산하고 있음을 확인해 주는 최근 자료는 찾지 못했습니다.", "reg_title__ar": "와인 산지 · INV", "reg_src__ar": "산지: INV의 구역 구분에 따라 행정구역을 묶었습니다. 면적, 포도밭, 품종: 2024년 재배면적 연감(INV). 테루아: 지도 데이터.", "regions_group__ar": "와인 산지", "ai_alt__ar": "해발 {alt} m: 고지대 포도밭으로, 차가운 밤이 산도, 색, 향을 높여 줍니다.", "ai_dtr__ar": "매우 큰 일교차(낮과 밤의 차이 {dtr} °C): 산도, 색, 향을 지켜 줍니다.", "ai_rain_lo__ar": "사막 기후(연 강수량 {mm} mm): 관개 없이는 포도를 키울 수 없고, 곰팡이병은 거의 없습니다.", "ai_rain_hi__ar": "연 강수량 {mm} mm로 이 지역치고는 많은 편: 여름철 곰팡이병 압력이 다소 높습니다.", "tour_l1__ar": "포도밭 {ha} ha, Mendoza와 San Juan의 {pct} · 지도 위 와이너리 {w}곳", "tour_l2__ar": "주요 토양: {tex} · 해발 {alt} m", "tour_l3__ar": "Winkler {gdd}({wk}) · 강수량 {rain} mm · 일교차 {dtr} °C", "w_registry__ar": "공개 자료 조사", "wineries_osm__ar": "주 관광청, 업계 목록, OpenStreetMap, 공식 웹사이트에서 조사한 와이너리입니다.", "of_country__ar": "(포도 재배 지역 대비)", "loc_aprox__ar": "대략적인 위치: 주소나 지역명으로 표시했습니다.", "no_location__ar": "정확한 위치 없음: 주소를 찾지 못했습니다", "edu_wk__ar": "생육기의 열량을 합산한 값입니다. 서늘한 지역(I–II): 산도가 높고 알코올이 낮은 와인으로, 화이트와 스파클링에 적합합니다. 따뜻한 지역(IV–V): 포도가 더 잘 익고 와인이 더 강건해지며, Mendoza 동부와 Valle de Tulum이 그 예입니다.", "edu_rain__ar": "이곳은 비가 적고(연 100~500 mm) 주로 여름에 내립니다. 포도나무는 눈 녹은 물을 이용한 관개에 의존하며 곰팡이병 압력은 낮습니다. 위험 요소는 우박입니다.", "all_country__ar": "Mendoza와 San Juan", "reg_desc_mendoza-zona-norte": "북동쪽으로 기울어진 Mendoza강의 낮은 평야로, 해발은 Zona Este와 비슷하거나 약간 낮습니다(600–700 m). 온화하고 건조한 기후로 여름은 덥고, 비는 적으며(주 평균 연 약 250 mm), 겨울에는 강한 서리가 내립니다. 토양은 사질이며 일부는 염분이 있습니다. 주력 품종은 없으며 Bonarda, Cereza, Syrah, Pedro Giménez, Criolla Grande, Malbec이 가장 많이 재배되고, 테이블 와인, 신선한 화이트, 포도 머스트가 많이 생산됩니다. Lavalle가 이 구역 포도밭의 약 90 %를 차지하며 자체 GI «Lavalle / Desierto de Lavalle»를 갖고 있습니다.", "reg_desc_mendoza-zona-este": "해발 600~700 m의 평야 포도밭으로, Tunuyán강과 Mendoza강 하류에서 관개하고 지하수로 보충합니다. 온화하고 일조량이 매우 많은 기후(연 2,200시간 이상)이며, 비는 적고 Medrano, Las Catitas 같은 지역에 피해를 주는 우박이 내립니다. 토양은 풍성 기원으로 사양토에서 미사질 사토까지 있으며 칼륨이 풍부하고 일부는 염분이 있습니다. 생산량이 가장 많은 구역으로, 레드는 Bonarda, Malbec, Syrah, Tempranillo, 핑크 계열은 Criolla Grande와 Cereza, 화이트는 Pedro Giménez와 Torrontés Riojano 등이 있습니다. Mendoza 포도밭의 약 41 %(2022년 60,890 ha)를 차지하며, San Martín은 주에서 포도밭이 가장 많은 행정구역입니다.", "reg_desc_mendoza-primera-zona": "Mendoza 와인의 역사적 중심지로, Mendoza강의 산록과 단구에 자리하며 Luján de Cuyo의 포도밭은 해발 약 800~1,100 m입니다. 대륙성 건조 기후로 일교차가 크고, 연 강수량은 약 250 mm이며 여름에는 우박 위험이 있습니다. 토양은 충적토로 변화가 매우 큽니다. 강 근처는 자갈이 많고 척박하며, Agrelo 같은 다른 지역은 점토·미사질이 더 많습니다. Malbec의 땅(2015년 재배 면적의 43 %)이며 Cabernet Sauvignon이 뒤를 잇고, 숙성형 레드와 고목이 있습니다. Luján de Cuyo는 아르헨티나의 두 DOC 중 하나이며, 이 구역에는 Agrelo, Vistalba, Las Compuertas, Lunlunta, Barrancas, Russell 등의 GI도 있습니다.", "reg_desc_mendoza-valle-de-uco": "안데스산맥 기슭의 계곡으로, 포도밭은 낮은 곳이 약 900 m, 높은 곳은 1,250 m 이상이며 가장 높은 곳은 1,500 m 가까이 이릅니다. 겨울은 혹독하고 여름은 따뜻하며, 밤은 차갑고 일교차는 15 °C에 가깝습니다. 서리와 우박으로 인한 피해가 잦습니다. 높은 곳의 토양은 충적토로 자갈이 많고 비옥도가 낮으며 배수가 매우 좋습니다. 레드가 주를 이루며(86 %) Malbec이 선두이고 Cabernet Sauvignon과 Tempranillo, 화이트로는 Chardonnay와 Sauvignon Blanc이 있습니다. Mendoza에서 인정된 GI가 가장 많은 산지로, Paraje Altamira, Los Chacayes, San Pablo, Vista Flores, El Peral, La Consulta, Pampa El Cepillo 등이 있습니다.", "reg_desc_mendoza-zona-sur": "Diamante강과 Atuel강이 관개하는 오아시스로, 포도밭은 Las Paredes(San Rafael)의 약 750 m에서 General Alvear의 약 485 m까지 내려갑니다. 건조한 대륙성 기후로 서리가 심할 수 있고, 우박은 Cuyo에서 가장 잦습니다(San Rafael에서 연 약 3회 폭풍). 토양은 충적토로 석회질이 많고 흔히 하층토에 자갈이 많습니다. San Rafael은 레드(Malbec, Bonarda, Cabernet Sauvignon, Syrah), General Alvear는 핑크 계열(Cereza, Criolla Grande, Moscatel Rosado)에 치중합니다. San Rafael은 Luján de Cuyo와 함께 이 나라의 또 다른 DOC입니다.", "reg_desc_san-juan-valle-de-tulum": "San Juan강의 큰 오아시스로, 포도밭은 해발 약 600–650 m입니다(Pocito, 618 m). 사막 기후로 연 강수량은 100 mm 미만이며 거의 모두 여름에 내립니다. 1월은 매우 덥고, 서리 일수는 연 약 29일(5월 말~8월 말)이며, 우박은 거의 없고 Zonda 바람이 부는 날은 약 11일입니다. 토양은 젊고 얕으며, 사양토에서 미사질 양토까지의 질감입니다. 많은 포도밭이 덕(parral) 방식으로 재배됩니다. 양조용 포도(Cereza, Malbec, Syrah, Bonarda)와 함께 생식용·건포도용 포도도 많습니다. 평야에서 Syrah는 진하고 스파이시하며, Malbec은 더 가볍고 보랏빛이 덜합니다.", "reg_desc_san-juan-zonda-ullum": "San Juan시 서쪽의 계곡들로, San Juan강을 따라 있으며 프리코르디예라(Sierra Chica de Zonda, Cerro Blanco)에 둘러싸여 있습니다. Tulum과 같은 건조 기후로 여름비가 매우 적으며, Zonda 바람은 그중 한 계곡의 이름이 되었습니다. 토양은 젊고 얕으며 사양토에서 미사질 양토입니다. INTA는 Ullum을 Moscatel de Alejandría 같은 화이트에 적합하다고, Zonda는 조건부로 레드에 적합하다고 봅니다. 그럼에도 고목의 Malbec과 Syrah는 좋은 전형성을 보여 줍니다. Valle de Zonda는 2015년부터 자체 GI를 갖고 있으며, 한 민간 와이너리가 신청한 것입니다.", "reg_desc_san-juan-valle-de-calingasta": "Los Patos강을 따라 있는 산악 계곡으로, 포도밭은 해발 약 1,350~1,700 m입니다(Barreal이 가장 높은 지점). 연 강수량은 약 80 mm이며 주로 여름에 내립니다. 일교차는 24 °C에 이르러 서리 위험을 높입니다. 토양은 자갈이 많고 점토가 적으며, 약 120 km에 이르는 계곡을 따라 크게 달라집니다. INTA는 이곳을 생육 주기가 짧은 레드(Pinot Noir, Merlot, Cabernet Franc, Tempranillo)에 적합하다고 보며, 색이 짙은 Malbec, Syrah, Cabernet Sauvignon도 있습니다. 2023년부터 Barreal 외에 자체 GI 세 곳(Tamberías, Sorocayense, Hilario)이 더해졌습니다.", "reg_desc_san-juan-valles-del-norte": "San Juan 북부의 건조한 계곡: Jáchal은 해발 약 1,200 m, Iglesia는 약 1,700 m이며 포도밭은 2,000 m 가까이 이릅니다. 비는 매우 적고 우박은 드뭅니다(Jáchal에서 연 약 0.5회). 차가운 밤과 서리가 주요 제약입니다. 포도 재배는 주변적이며 상당 부분 실험적입니다. INV는 2017년 Iglesia에 7 ha, 2000년 Jáchal에 약 22 ha를 기록했습니다. Jáchal, Iglesia, Valle Fértil은 2002년부터 행정구역 단위 GI를 갖고 있지만 생산은 거의 없습니다.", "reg_note_ar_mendoza-zona-norte": "Las Heras는 INV의 구분대로 Zona Norte에 넣었지만, 산록 포도밭 일부(GI Valle de Canota)는 Primera Zona에 더 가깝습니다.", "reg_note_ar_mendoza-primera-zona": "Maipú는 INV의 구분대로 전체를 여기에 넣었지만, 동부(Fray Luis Beltrán, Rodeo del Medio)는 더 평탄해 동부 구역과 비슷합니다.", "reg_note_ar_mendoza-zona-sur": "Malargüe에는 포도밭이 거의 없습니다(2024년 0.1 ha). 산지를 완전하게 하기 위해 포함했습니다.", "reg_note_ar_san-juan-valle-de-tulum": "Sarmiento에는 해발 약 1,250–1,500 m의 Valle del Pedernal(GI)이 포함되며, 평야와는 매우 다른 고지대 특성을 지닙니다.", "reg_note_ar_san-juan-valles-del-norte": "Valle Fértil은 북부 계곡이 아니라 동쪽에 있습니다. 포도밭이 있는 모든 행정구역이 산지에 속하도록 여기에 추가했습니다. Jáchal은 INV 2024년 연감에 면적이 나와 있지 않습니다."}};
+for (const l in T_ADD41) Object.assign(T[l], T_ADD41[l]);
+for (const l in T) if (T[l].services) T[l].services__ar = T[l].services.replace(/\s*[（(]INAVI[)）]/, '');
+const T_ADD42 = {
+  es: { do_all_ctry: 'Todos los países', do_n: '{n} zonas', wm_tip: 'Tocá un país para acercarte y ver sus zonas; tocá una zona para abrir su ficha.' },
+  en: { do_all_ctry: 'All countries', do_n: '{n} areas', wm_tip: 'Tap a country to zoom in and see its areas; tap an area to open its page.' },
+  pt: { do_all_ctry: 'Todos os países', do_n: '{n} zonas', wm_tip: 'Toque em um país para aproximar e ver suas zonas; toque em uma zona para abrir a ficha.' },
+  fr: { do_all_ctry: 'Tous les pays', do_n: '{n} zones', wm_tip: 'Touchez un pays pour zoomer et voir ses zones ; touchez une zone pour ouvrir sa fiche.' },
+  de: { do_all_ctry: 'Alle Länder', do_n: '{n} Gebiete', wm_tip: 'Tippe auf ein Land, um hineinzuzoomen und seine Gebiete zu sehen; tippe auf ein Gebiet, um sein Profil zu öffnen.' },
+  ru: { do_all_ctry: 'Все страны', do_n: 'зон: {n}', wm_tip: 'Нажмите на страну, чтобы приблизить её зоны; нажмите на зону, чтобы открыть карточку.' },
+  zh: { do_all_ctry: '所有国家', do_n: '{n} 个产区', wm_tip: '点击国家可放大查看其产区；点击产区可打开介绍。' },
+  ja: { do_all_ctry: 'すべての国', do_n: '{n}産地', wm_tip: '国をタップすると拡大して産地を表示、産地をタップすると詳細を開きます。' },
+  ko: { do_all_ctry: '모든 나라', do_n: '{n}개 산지', wm_tip: '나라를 누르면 확대해 산지를 보여 줘요. 산지를 누르면 상세가 열려요.' }
+};
+for (const l in T_ADD42) Object.assign(T[l], T_ADD42[l]);
+
+const T_ADD43 = { es: 'zonas con su contorno. Tocá una para abrir su ficha.', en: 'areas with their boundaries. Tap one to open its page.', pt: 'zonas com contorno. Toque em uma para abrir a ficha.', fr: 'zones avec leur contour. Touchez-en une pour ouvrir sa fiche.', de: 'Gebiete mit Umriss. Tippe eines an, um sein Profil zu öffnen.', ru: 'зон с границами. Нажмите, чтобы открыть карточку.', zh: '个产区显示边界。点击即可打开介绍。', ja: 'の産地を境界付きで表示。タップで詳細を開きます。', ko: '개 산지를 경계로 표시해요. 눌러서 상세를 열어 보세요.' };
+for (const l in T_ADD43) T[l].wm_note = (l === 'zh' || l === 'ja' || l === 'ko' ? '{n}' : '{n} ') + T_ADD43[l];
+
 (() => {
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -2469,19 +2504,59 @@ const BASE = new URL('.', location.href).href;
 const DEM_URL = BASE + 'dem/{z}/{x}/{y}.png';
 const DEM_BOUNDS = [-58.6, -35.2, -52.9, -29.9];
 const UY_BOUNDS = [[-58.45, -35.0], [-53.05, -30.05]];
-const EXAG = 7;
-const GRAPES = ['Tannat', 'Merlot', 'Ugni Blanc', 'Moscatel de Hamburgo'];
-const GRAPE_COLOR = { all: '#c4435f', 'Tannat': '#9a4ba0', 'Merlot': '#d8525c', 'Ugni Blanc': '#e6d38f', 'Moscatel de Hamburgo': '#e994ad' };
+const AR_DEM_BOUNDS = [-70.7, -37.7, -66.3, -28.1];
+// relieve de Argentina: teselas empaquetadas en JSON base64 (data/ar/dem_z*.json, el visor tiene tope de archivos);
+// a zoom 8–9 lejos de la viña no hay tesela propia: se recorta y amplía la de zoom 7
+let demIdx = null; const demPk = {};
+const getJ = u => fetch(u).then(r => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
+const b64buf = s => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u.buffer; };
+async function demTile(z, x, y) {
+  demIdx ||= getJ('data/ar/dem_index.json');
+  const ix = await demIdx, key = z + '/' + x + '/' + y, f = ix[key];
+  if (f) { const pk = await (demPk[f] ||= getJ('data/ar/' + f)); return b64buf(pk[key]); }
+  if (z <= 7) throw new Error('sin relieve ' + key);
+  const d = z - 7, px = x >> d, py = y >> d, k = 1 << d, sz = 512 / k;
+  const bm = await createImageBitmap(new Blob([await demTile(7, px, py)], { type: 'image/png' }));
+  const cv = new OffscreenCanvas(512, 512), c2 = cv.getContext('2d'); c2.imageSmoothingEnabled = false;
+  c2.drawImage(bm, (x - px * k) * sz, (y - py * k) * sz, sz, sz, 0, 0, 512, 512);
+  return (await cv.convertToBlob({ type: 'image/png' })).arrayBuffer();
+}
+maplibregl.addProtocol('arpk', async p => ({ data: await demTile(...p.url.slice(7).split('/').map(Number)) }));
+/* Países con terroir y bodegas: cada uno trae su paquete de datos (data/ o data/ar/) y sus escalas.
+   Al entrar en un país se cargan sus datos y se rearma el panel; el resto del código usa los globales del país activo. */
+const WARM6 = ['#2b2233', '#4d2f4a', '#7d3a55', '#b2504f', '#df8a55', '#f4cf86'];
+const CTRY = {
+  UY: { base: 'data/', a2: 'UY', view: 'view_uy', enter: 'intro_cta', hint: 'country_uy_hint', bounds: UY_BOUNDS, exag: 7, reg: 'INAVI', relief: 'relief', hs: 'hillshade', dem: 'dem',
+    grapes: ['Tannat', 'Merlot', 'Ugni Blanc', 'Moscatel de Hamburgo'], tour: ['Canelones', 'Montevideo', 'Colonia', 'Maldonado', 'Rivera'], bear: [-25, 18, -38, 28, -8],
+    rng: { alt: [0, 450, 10], rain: [1000, 1750, 10], sea: 400, ph: [50, 75] }, wk: [2, 3, 4, 5], major: 50, colKm: 6.5, rock: true, sea: true,
+    vars: [['g_main', ['rock', 'tex', 'alt', 'gdd', 'rain', 'sea']], ['advanced', ['cf', 'ph', 'slope', 'asp', 'hug', 'dtr']]],
+    ai: { alt: 200, dtr: 90, rainLo: 1150, rainHi: 1450 }, reliefTicks: [0, 250, 500] },
+  AR: { base: 'data/ar/', a2: 'AR', view: 'view_ar', enter: 'enter_ar', hint: 'country_ar_hint', bounds: [[-69.9, -35.5], [-66.8, -30.2]], exag: 1.25, reg: 'INV', relief: 'relief-ar', hs: 'hillshade-ar', dem: 'demar',
+    grapes: ['Malbec', 'Cereza', 'Bonarda', 'Criolla Grande', 'Cabernet Sauvignon', 'Syrah', 'Pedro Giménez', 'Chardonnay', 'Tempranillo', 'Moscatel Rosado'],
+    tour: ['Luján de Cuyo', 'Maipú', 'Tupungato', 'San Carlos', 'San Rafael', 'San Martín', 'Pocito', 'Calingasta'], bear: [-25, 18, -38, 28, -8, 22, -30, 12],
+    rng: { alt: [400, 2100, 20], rain: [50, 550, 10], sea: 0, ph: [65, 90] }, wk: [1, 2, 3, 4, 5], major: 1000, colKm: 9, rock: false, sea: false,
+    vars: [['g_main', ['tex', 'alt', 'gdd', 'rain', 'vyf']], ['advanced', ['cf', 'ph', 'slope', 'asp', 'hug', 'dtr']]],
+    ai: { alt: 1000, dtr: 125, rainLo: 300, rainHi: 420 }, reliefTicks: [0, 2600, 5200],
+    seq: { alt: { stops: [500, 700, 900, 1100, 1400, 2000], colors: WARM6, div: 1, unit: 'm', d: 0 }, ph: { stops: [70, 73, 76, 79, 82, 85], colors: ['#c4643a', '#d38c56', '#ddb98a', '#b9c4a8', '#7fa9a8', '#4b8aa3'], div: 10, unit: '', d: 1 },
+      hug: { stops: [1600, 2100, 2600, 3000, 3300], colors: ['#3f6fa8', '#6aa7a4', '#d9c96a', '#e3904d', '#c4453d'], div: 1, unit: '', d: 0 },
+      rain: { stops: [80, 150, 220, 300, 380, 500], colors: ['#22303d', '#284a69', '#2f6c95', '#4b93ba', '#79bdd4', '#b7e2ea'], div: 1, unit: 'mm', d: 0 },
+      dtr: { stops: [100, 110, 120, 130, 140], colors: ['#3c3a6e', '#6a4c8c', '#a2588f', '#d77a6b', '#f0b65f'], div: 10, unit: '°C', d: 1 } } }
+};
+let CC = 'UY', CX = CTRY.UY;
+let GRAPES = CX.grapes;
+const GRAPE_COLOR = { all: '#c4435f', 'Tannat': '#9a4ba0', 'Merlot': '#d8525c', 'Ugni Blanc': '#e6d38f', 'Moscatel de Hamburgo': '#e994ad',
+  'Malbec': '#7d3a8c', 'Cereza': '#e0707a', 'Bonarda': '#5a2a6a', 'Criolla Grande': '#e89aa8', 'Cabernet Sauvignon': '#9a2a3c', 'Syrah': '#6a2a4a', 'Pedro Giménez': '#e6d38f', 'Chardonnay': '#efe0a0', 'Tempranillo': '#b8475f', 'Moscatel Rosado': '#e994ad' };
 const NO_DATA = '#3a3230';
 
 const PAL = {
   rock: ['#5d6f95', '#b35a86', '#e0937a', '#a4795b', '#6f9479', '#d9a94e', '#9d9a6a', '#c7b089', '#7fb2c2'],
   tex: ['#b5543f', '#d08a52', '#ddc27e', '#f1e6bf'],
   asp: ['#e3a64a', '#d8c25a', '#9fc06a', '#5fb3a1', '#5a8fc9', '#7a72c9', '#b06cb5', '#d97a6a', '#4a403b'],
-  wk: { 2: '#4f7fbf', 3: '#5fae9f', 4: '#d9b45a', 5: '#c9493f' }
+  wk: { 1: '#6f62b0', 2: '#4f7fbf', 3: '#5fae9f', 4: '#d9b45a', 5: '#c9493f' }
 };
 const WARM = ['#2b2233', '#4d2f4a', '#7d3a55', '#b2504f', '#df8a55', '#f4cf86'];
-const SEQ = {
+const SEQ0 = {
+  vyf: { stops: [0, 5, 15, 30, 60, 100], colors: ['#24261f', '#34452a', '#4d6a33', '#7a9440', '#b3b85a', '#e8dc8a'], div: 1, unit: '%', d: 0 },
   alt: { stops: [0, 50, 100, 150, 250, 400], colors: WARM, div: 1, unit: 'm', d: 0 },
   slope: { stops: [0, 15, 30, 50, 80, 140], colors: WARM, div: 10, unit: '%', d: 1 },
   cf: { stops: [0, 3, 6, 10, 15, 25], colors: ['#2f2724', '#5c4a3e', '#8b7058', '#b89874', '#dcc39a', '#f3e6c8'], div: 1, unit: '%', d: 0 },
@@ -2491,23 +2566,30 @@ const SEQ = {
   dtr: { stops: [60, 75, 85, 90, 95], colors: ['#3c3a6e', '#6a4c8c', '#a2588f', '#d77a6b', '#f0b65f'], div: 10, unit: '°C', d: 1 },
   sea: { stops: [0, 10, 25, 50, 100, 200, 350], colors: ['#5fb3b0', '#7fb8a4', '#a8b98f', '#c8b47c', '#d6a46b', '#c98a5a', '#a86d4c'], div: 1, unit: 'km', d: 0 }
 };
+let SEQ = SEQ0;
 // tinte hipsométrico de mapa físico (verdes bajos, ocres y marrones altos), apagado para el tema oscuro
-const RELIEF = [[0, 'rgba(0,0,0,0)'], [0.4, '#33523a'], [25, '#3d633f'], [60, '#577a45'], [110, '#7c8e4f'], [170, '#a39d5b'], [240, '#bb9c62'], [320, '#a67f59'], [420, '#8a644f'], [520, '#9b8577']];
-function reliefExpr() { const e = ['interpolate', ['linear'], ['elevation']]; RELIEF.forEach(([h, c]) => e.push(h, c)); return e; }
-const COLOR_VARS = [['g_main', ['rock', 'tex', 'alt', 'gdd', 'rain', 'sea']], ['advanced', ['cf', 'ph', 'slope', 'asp', 'hug', 'dtr']]];
-const VAR_LABEL = { relief: 'relief_map', rock: 'rock', tex: 'texture', cf: 'stones', ph: 'ph', alt: 'altitude', slope: 'slope', asp: 'aspect', gdd: 'winkler', hug: 'huglin', rain: 'rain', dtr: 'dtr', sea: 'sea' };
-const TOUR = ['Canelones', 'Montevideo', 'Colonia', 'Maldonado', 'Rivera'];
+const RELIEFS = {
+  UY: [[0, 'rgba(0,0,0,0)'], [0.4, '#33523a'], [25, '#3d633f'], [60, '#577a45'], [110, '#7c8e4f'], [170, '#a39d5b'], [240, '#bb9c62'], [320, '#a67f59'], [420, '#8a644f'], [520, '#9b8577']],
+  // Cuyo: oasis bajos en verde, piedemonte ocre, cordillera marrón y cumbres claras
+  AR: [[0, 'rgba(0,0,0,0)'], [1, '#33523a'], [450, '#3d633f'], [650, '#577a45'], [850, '#7c8e4f'], [1100, '#a39d5b'], [1500, '#bb9c62'], [2100, '#a67f59'], [3000, '#8a644f'], [4000, '#9b8577'], [5200, '#cfc6bd']]
+};
+let RELIEF = RELIEFS.UY;
+function reliefExpr(cc) { const e = ['interpolate', ['linear'], ['elevation']]; RELIEFS[cc || 'UY'].forEach(([h, c]) => e.push(h, c)); return e; }
+const VAR_LABEL = { relief: 'relief_map', rock: 'rock', tex: 'texture', cf: 'stones', ph: 'ph', alt: 'altitude', slope: 'slope', asp: 'aspect', gdd: 'winkler', hug: 'huglin', rain: 'rain', dtr: 'dtr', sea: 'sea', vyf: 'vyf' };
 
 /* ---------- idioma ---------- */
 let L = 'es';
 const t = (k, v) => {
-  let s = (T[L] && T[L][k] != null) ? T[L][k] : (T.es[k] != null ? T.es[k] : k);
+  let s = null; const tb = T[L] || {};
+  // textos propios del país activo (clave__ar): pisan al genérico, que está pensado para Uruguay
+  if (CC !== 'UY') { const ka = k + '__' + CC.toLowerCase(); s = tb[ka] != null ? tb[ka] : T.es[ka]; }
+  if (s == null) s = tb[k] != null ? tb[k] : (T.es[k] != null ? T.es[k] : k);
   if (v) for (const a in v) s = s.split('{' + a + '}').join(v[a]);
   return s;
 };
 const nf = (x, d = 0) => new Intl.NumberFormat(LOCALE[L], { maximumFractionDigits: d, minimumFractionDigits: d }).format(x);
 const gname = g => g === 'all' ? t('all_grapes') : ((GRAPE_NAMES[g] && GRAPE_NAMES[g][L]) || g);
-const wkOf = g => g < 1667 ? 2 : g < 1944 ? 3 : g < 2222 ? 4 : 5;
+const wkOf = g => g < 1389 ? 1 : g < 1667 ? 2 : g < 1944 ? 3 : g < 2222 ? 4 : 5;
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const CJK_FONT = { zh: 'Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500', ja: 'Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500', ko: 'Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500', ru: 'Noto+Serif:ital,wght@0,500;1,500' };
 function loadFont(l) {
@@ -2520,7 +2602,7 @@ function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 function recall(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 
 /* ---------- estado ---------- */
-const DEF = () => ({ color: 'relief', dep: -1, reg: -1, rock: new Set(), tex: new Set(), cf: 0, ph: [50, 75], alt: [0, 450], slope: [0, 300], asp: new Set(), wk: new Set(), rain: [1000, 1750], sea: 400, grape: 'all', onlyGrape: false, cols: false });
+const DEF = () => ({ color: 'relief', dep: -1, reg: -1, rock: new Set(), tex: new Set(), cf: 0, ph: CX.rng.ph.slice(), alt: CX.rng.alt.slice(0, 2), slope: [0, 300], asp: new Set(), wk: new Set(), rain: CX.rng.rain.slice(0, 2), sea: CX.rng.sea, grape: 'all', onlyGrape: false, cols: false });
 let S = DEF();
 let MODE = 'terroir';
 let FILT = false, PREM = {}, WORLD = null, WVAR = 'all', COUNTRY = null, flat = false;
@@ -2539,7 +2621,7 @@ function colorExpr0(v) {
   if (v === 'rock' || v === 'tex' || v === 'asp') {
     const e = ['match', ['get', v]]; PAL[v].forEach((c, i) => e.push(i, c)); e.push(NO_DATA); return e;
   }
-  if (v === 'gdd') return ['case', ['<', ['get', 'gdd'], 0], NO_DATA, ['step', ['get', 'gdd'], PAL.wk[2], 1667, PAL.wk[3], 1944, PAL.wk[4], 2222, PAL.wk[5]]];
+  if (v === 'gdd') return ['case', ['<', ['get', 'gdd'], 0], NO_DATA, ['step', ['get', 'gdd'], PAL.wk[1], 1389, PAL.wk[2], 1667, PAL.wk[3], 1944, PAL.wk[4], 2222, PAL.wk[5]]];
   const s = SEQ[v]; const e = ['interpolate', ['linear'], ['get', v]];
   s.stops.forEach((x, i) => e.push(x, s.colors[i]));
   return ['case', ['<', ['get', v], 0], NO_DATA, e];
@@ -2562,27 +2644,32 @@ function paintHex() {
     const c = fillExpr(); map.setPaintProperty('hex-fill', 'fill-color', c); map.setPaintProperty('hex-fill', 'fill-outline-color', c);
     map.setPaintProperty('hex-fill', 'fill-antialias', true); map.setPaintProperty('hex-fill', 'fill-opacity', opacityExpr());
   }
-  map.setLayoutProperty('relief', 'visibility', rel ? 'visible' : 'none');
+  map.setLayoutProperty(CX.relief, 'visibility', rel && view === 'uy' ? 'visible' : 'none');
   map.setPaintProperty('deps-fill', 'fill-color', rel ? '#17201f' : '#2a2220');   // en relieve, lo que queda a 0 m (lagunas, bañados) se lee como agua
   map.setLayoutProperty('hex-line', 'visibility', rel ? 'none' : 'visible');
 }
 const style = {
   version: 8,
   sources: {
-    land: { type: 'geojson', data: EMPTY }, neighbors: { type: 'geojson', data: EMPTY }, deps: { type: 'geojson', data: EMPTY },
+    land: { type: 'geojson', data: EMPTY }, landhi: { type: 'geojson', data: EMPTY }, neighbors: { type: 'geojson', data: EMPTY }, deps: { type: 'geojson', data: EMPTY },
     hex: { type: 'geojson', data: EMPTY }, deplines: { type: 'geojson', data: EMPTY }, reglines: { type: 'geojson', data: EMPTY }, selhex: { type: 'geojson', data: EMPTY }, simhex: { type: 'geojson', data: EMPTY }, rivers: { type: 'geojson', data: EMPTY }, lakes: { type: 'geojson', data: EMPTY },
     vineyards: { type: 'geojson', data: EMPTY }, columns: { type: 'geojson', data: EMPTY }, wineries: { type: 'geojson', data: EMPTY }, world: { type: 'geojson', data: EMPTY }, dogeo: { type: 'geojson', data: EMPTY }, worldc: { type: 'geojson', data: EMPTY }, borders: { type: 'geojson', data: EMPTY }, countries: { type: 'geojson', data: EMPTY },
     dem: { type: 'raster-dem', tiles: [DEM_URL], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: DEM_BOUNDS },
-    demhs: { type: 'raster-dem', tiles: [DEM_URL], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: DEM_BOUNDS }
+    demhs: { type: 'raster-dem', tiles: [DEM_URL], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: DEM_BOUNDS },
+    demar: { type: 'raster-dem', tiles: ['arpk://{z}/{x}/{y}'], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: AR_DEM_BOUNDS },
+    demhsar: { type: 'raster-dem', tiles: ['arpk://{z}/{x}/{y}'], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: AR_DEM_BOUNDS }
   },
   layers: [
     { id: 'bg', type: 'background', paint: { 'background-color': '#0c1316' } },
     { id: 'land', type: 'fill', source: 'land', paint: { 'fill-color': '#211a19' } },
+    { id: 'land-hi', type: 'fill', source: 'landhi', minzoom: 3.5, paint: { 'fill-color': '#211a19' } },
     { id: 'neighbors', type: 'fill', source: 'neighbors', paint: { 'fill-color': '#221b1a' } },
     { id: 'deps-fill', type: 'fill', source: 'deps', paint: { 'fill-color': '#2a2220' } },
-    { id: 'relief', type: 'color-relief', source: 'demhs', paint: { 'color-relief-color': reliefExpr(), 'color-relief-opacity': 1 } },
+    { id: 'relief', type: 'color-relief', source: 'demhs', paint: { 'color-relief-color': reliefExpr('UY'), 'color-relief-opacity': 1 } },
+    { id: 'relief-ar', type: 'color-relief', source: 'demhsar', layout: { visibility: 'none' }, paint: { 'color-relief-color': reliefExpr('AR'), 'color-relief-opacity': 1 } },
     { id: 'hex-fill', type: 'fill', source: 'hex', paint: { 'fill-color': colorExpr('rock'), 'fill-outline-color': colorExpr('rock'), 'fill-antialias': true, 'fill-opacity': opacityExpr() } },
     { id: 'hillshade', type: 'hillshade', source: 'demhs', paint: { 'hillshade-exaggeration': 0.6, 'hillshade-shadow-color': 'rgba(8,4,5,0.6)', 'hillshade-highlight-color': 'rgba(255,238,215,0.2)', 'hillshade-accent-color': 'rgba(0,0,0,0)' } },
+    { id: 'hillshade-ar', type: 'hillshade', source: 'demhsar', layout: { visibility: 'none' }, paint: { 'hillshade-exaggeration': 0.45, 'hillshade-shadow-color': 'rgba(8,4,5,0.6)', 'hillshade-highlight-color': 'rgba(255,238,215,0.18)', 'hillshade-accent-color': 'rgba(0,0,0,0)' } },
     { id: 'nb-mask', type: 'fill', source: 'neighbors', paint: { 'fill-color': '#221b1a' } },
     // viñedos del mundo: calor amarillo → naranja → rojo según hectáreas de la variedad elegida; se apaga al entrar en Uruguay
     { id: 'countries', type: 'fill', source: 'countries', maxzoom: 7, paint: { 'fill-color': 'rgba(0,0,0,0)' } },
@@ -2600,8 +2687,9 @@ const style = {
       'heatmap-color': ['interpolate', ['linear'], ['heatmap-density'], 0, 'rgba(246,211,101,0)', 0.1, 'rgba(246,211,101,0.5)', 0.3, '#f6d365', 0.55, '#f28c28', 0.78, '#d9452f', 1, '#9e1d26'],
       'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 4.5, 0.9, 6.2, 0] } },
     // modo "Denominaciones": zonas de cada DO (dorado) e IG (celeste) en el mapa del mundo
-    { id: 'dog-fill', type: 'fill', source: 'dogeo', layout: { visibility: 'none' }, paint: { 'fill-color': ['case', ['==', ['get', 'k'], 'do'], '#e2b46a', '#6fb6d9'], 'fill-opacity': ['case', ['boolean', ['feature-state', 'hov'], false], 0.75, 0.42] } },
-    { id: 'dog-line', type: 'line', source: 'dogeo', layout: { visibility: 'none' }, paint: { 'line-color': ['case', ['==', ['get', 'k'], 'do'], '#f6d79a', '#a8d8ef'], 'line-width': ['interpolate', ['linear'], ['zoom'], 2, 0.6, 8, 1.8] } },
+    { id: 'do-ctry', type: 'fill', source: 'countries', maxzoom: 7, filter: ['in', ['get', 'n'], ['literal', []]], layout: { visibility: 'none' }, paint: { 'fill-color': '#cfa860', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 2, 0.28, 4, 0.14, 5.2, 0] } },
+    { id: 'dog-fill', type: 'fill', source: 'dogeo', layout: { visibility: 'none' }, paint: { 'fill-color': ['get', 'col'], 'fill-opacity': ['case', ['boolean', ['feature-state', 'hov'], false], 0.85, 0.5] } },
+    { id: 'dog-line', type: 'line', source: 'dogeo', layout: { visibility: 'none' }, paint: { 'line-color': ['case', ['boolean', ['feature-state', 'hov'], false], '#ffffff', ['get', 'col']], 'line-width': ['interpolate', ['linear'], ['zoom'], 2, ['case', ['boolean', ['feature-state', 'hov'], false], 2, 0.6], 8, ['case', ['boolean', ['feature-state', 'hov'], false], 3, 1.4]] } },
     { id: 'world-pts-c', type: 'circle', source: 'worldc', maxzoom: 4.3, paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 1, 3, 4.3, 8], 'circle-color': 'rgba(0,0,0,0)', 'circle-opacity': 0 } },
     { id: 'world-pts', type: 'circle', source: 'world', minzoom: 4.3, maxzoom: 7, paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 4.3, 8, 7, 12], 'circle-color': 'rgba(0,0,0,0)', 'circle-opacity': 0 } },
     { id: 'neighbors-line', type: 'line', source: 'neighbors', paint: { 'line-color': '#3b312d', 'line-width': 0.7 } },
@@ -2635,60 +2723,83 @@ if (/_test\.html$/.test(location.pathname)) window.__map = map;
 
 /* ---------- datos ---------- */
 const get = u => fetch(u).then(r => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
-async function load() {
-  const [hex, depsGj, depPts, nbr, land, rivers, lakes, vy, geo, win, inavi, regs] = await Promise.all(
-    ['hex.json', 'deps.geojson', 'dep_points.geojson', 'neighbors.geojson', 'world_land.geojson', 'rivers.geojson', 'lakes.geojson', 'vineyards_osm.geojson', 'geology_units.json', 'bodegas.json', 'inavi.json', 'regiones.json'].map(f => get('data/' + f)));
-  INAVI = inavi; units = geo.units; REG = regs;
-  n = hex.n; AREA = hex.area_km2; CELLS = hex.cells;
-  D = {};
-  for (const k of ['alt', 'slope', 'asp', 'rock', 'unit', 'tex', 'clay', 'cf', 'ph', 'gdd', 'hug', 'rain', 'dtr', 'sea', 'dep']) D[k] = Int16Array.from(hex[k]);
-  M = new Uint8Array(n).fill(1); P = new Uint8Array(n).fill(1);
-  CLAT = new Float32Array(n); CLNG = new Float32Array(n); cellIdx = new Map();
-  const feats = new Array(n);
-  for (let i = 0; i < n; i++) {
-    const c = CELLS[i]; cellIdx.set(c, i);
-    const ll = h3.cellToLatLng(c); CLAT[i] = ll[0]; CLNG[i] = ll[1];
-    feats[i] = { type: 'Feature', id: i, properties: { alt: D.alt[i], slope: D.slope[i], asp: D.asp[i], rock: D.rock[i], tex: D.tex[i], cf: D.cf[i], ph: D.ph[i], gdd: D.gdd[i], hug: D.hug[i], rain: D.rain[i], dtr: D.dtr[i], sea: D.sea[i] },
-      geometry: { type: 'Polygon', coordinates: [h3.cellToBoundary(c, true)] } };
-  }
-  // departamentos
-  const pts = {}; depPts.features.forEach(f => pts[f.properties.id] = f.geometry.coordinates);
-  deps = depsGj.features.map(f => ({ id: f.properties.id, name: f.properties.name, ha: INAVI.dep[f.properties.name] || 0, vy: INAVI.vy[f.properties.name] || 0, pt: pts[f.properties.id] }));
-  deps.sort((a, b) => a.id - b.id);
-  deps.forEach(d => depByName[d.name] = d);
-  depStats();
-  // bodegas
-  WIN = win.map(w => {
-    let i = -1;
-    if (w.lat != null) {
-      const c = h3.latLngToCell(w.lat, w.lng, 7);
-      if (cellIdx.has(c)) i = cellIdx.get(c); else for (const k of h3.gridDisk(c, 2)) { if (cellIdx.has(k)) { i = cellIdx.get(k); break; } }
+const PACK_FILES = ['hex.json', 'deps.geojson', 'dep_points.geojson', 'neighbors.geojson', 'rivers.geojson', 'lakes.geojson', 'vineyards_osm.geojson', 'geology_units.json', 'bodegas.json', 'inavi.json', 'regiones.json'];
+const PKD = {};   // datos preparados de cada país (se bajan una vez, al entrar)
+function fetchPack(cc) {
+  return PKD[cc] || (PKD[cc] = (async () => {
+    const [hex, depsGj, depPts, nbr, rivers, lakes, vy, geo, win, inavi, regs] = await Promise.all(PACK_FILES.map(f => get(CTRY[cc].base + f)));
+    const n = hex.n, D = {}, X = { cc, INAVI: inavi, units: geo.units, REG: regs, n, AREA: hex.area_km2, CELLS: hex.cells, depsGj, nbr, rivers, lakes, vy, D };
+    for (const k of ['alt', 'slope', 'asp', 'rock', 'unit', 'tex', 'clay', 'cf', 'ph', 'gdd', 'hug', 'rain', 'dtr', 'sea', 'dep', 'vyf']) D[k] = hex[k] ? Int16Array.from(hex[k]) : new Int16Array(n).fill(-1);
+    const CLAT = new Float32Array(n), CLNG = new Float32Array(n), cellIdx = new Map(), feats = new Array(n);
+    for (let i = 0; i < n; i++) {
+      const c = hex.cells[i]; cellIdx.set(c, i);
+      const ll = h3.cellToLatLng(c); CLAT[i] = ll[0]; CLNG[i] = ll[1];
+      feats[i] = { type: 'Feature', id: i, properties: { alt: D.alt[i], slope: D.slope[i], asp: D.asp[i], rock: D.rock[i], tex: D.tex[i], cf: D.cf[i], ph: D.ph[i], gdd: D.gdd[i], hug: D.hug[i], rain: D.rain[i], dtr: D.dtr[i], sea: D.sea[i], vyf: D.vyf[i] },
+        geometry: { type: 'Polygon', coordinates: [h3.cellToBoundary(c, true)] } };
     }
-    return Object.assign({}, w, { cell: i, _v: true });
-  });
-  // bodegas con la misma ubicación aproximada (centro de la localidad): se reparten en un anillo de ~150 m para que se vean todas de cerca
-  const same = {};
-  WIN.forEach(w => { if (w.lat != null) (same[w.lat.toFixed(4) + ',' + w.lng.toFixed(4)] ||= []).push(w); });
-  Object.values(same).forEach(g => { if (g.length < 2) return; g.forEach((w, j) => { const a = 2 * Math.PI * j / g.length, r = 0.0013 * (1 + g.length / 8); w.lat += r * Math.sin(a); w.lng += r * Math.cos(a) / Math.cos(w.lat * Math.PI / 180); }); });
+    Object.assign(X, { CLAT, CLNG, cellIdx, hexFC: { type: 'FeatureCollection', features: feats } });
+    // departamentos
+    const pts = {}; depPts.features.forEach(f => pts[f.properties.id] = f.geometry.coordinates);
+    X.deps = depsGj.features.map(f => ({ id: f.properties.id, name: f.properties.name, ha: inavi.dep[f.properties.name] || 0, vy: (inavi.vy || {})[f.properties.name] || 0, pt: pts[f.properties.id] })).sort((a, b) => a.id - b.id);
+    X.depByName = {}; X.deps.forEach(d => X.depByName[d.name] = d);
+    const dl = [];
+    depsGj.features.forEach(f => { const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates; polys.forEach(pl => pl.forEach(r => dl.push({ type: 'Feature', properties: { id: f.properties.id }, geometry: { type: 'LineString', coordinates: r } }))); });
+    X.deplines = { type: 'FeatureCollection', features: dl };
+    // regiones de Argentina: la nota es texto propio traducido (reg_note_ar_<id>)
+    if (cc !== 'UY') regs.regions.forEach(r => { r.note = r.note ? cc.toLowerCase() + '_' + r.id : null; });
+    // bodegas
+    X.WIN = win.map(w => {
+      let i = -1;
+      if (w.lat != null) {
+        const c = h3.latLngToCell(w.lat, w.lng, 7);
+        if (cellIdx.has(c)) i = cellIdx.get(c); else for (const k of h3.gridDisk(c, 2)) { if (cellIdx.has(k)) { i = cellIdx.get(k); break; } }
+      }
+      return Object.assign({}, w, { cell: i, _v: true });
+    });
+    // bodegas con la misma ubicación aproximada (centro de la localidad): se reparten en un anillo de ~150 m para que se vean todas de cerca
+    const same = {};
+    X.WIN.forEach(w => { if (w.lat != null) (same[w.lat.toFixed(4) + ',' + w.lng.toFixed(4)] ||= []).push(w); });
+    Object.values(same).forEach(g => { if (g.length < 2) return; g.forEach((w, j) => { const a = 2 * Math.PI * j / g.length, r = 0.0013 * (1 + g.length / 8); w.lat += r * Math.sin(a); w.lng += r * Math.cos(a) / Math.cos(w.lat * Math.PI / 180); }); });
+    X.winFC = { type: 'FeatureCollection', features: X.WIN.filter(w => w.lat != null).map(w => ({ type: 'Feature', id: w.id, properties: { name: w.name, f: w.profile ? 1 : 0, t: w.tier || 3, n: w.nat || 999 }, geometry: { type: 'Point', coordinates: [w.lng, w.lat] } })) };
+    return X;
+  })().catch(e => { delete PKD[cc]; throw e; }));
+}
+let UYX = null;   // Uruguay queda siempre a mano: Aprender y los juegos usan sus datos
+// activa el país: globales, capas del mapa y panel
+function usePack(X) {
+  if (D === X.D) return;
+  endTour(); closeCard(); clearSim(); stopOrbit();
+  CC = X.cc; CX = CTRY[CC]; GRAPES = CX.grapes; SEQ = Object.assign({}, SEQ0, CX.seq || {}); RELIEF = RELIEFS[CC];
+  ({ INAVI, units, REG, n, AREA, CELLS, D, CLAT, CLNG, cellIdx, deps, depByName, WIN } = X);
+  DEPS_GJ = X.depsGj; M = new Uint8Array(n).fill(1); P = new Uint8Array(n).fill(1); FILT = false;
+  if (!X.stats) { depStats(); X.stats = 1; }
+  S = DEF(); Object.assign(B, { q: '', dep: '', top: false, prof: false, tours: false, rest: false, lodge: false, grape: '', inT: false, unconf: false });
+  $('#bQ').value = ''; $('#bTerroir').checked = false; $('#onlyGrape').checked = false; $('#colsToggle').checked = false;
+  map.removeFeatureState({ source: 'hex' }); map.removeFeatureState({ source: 'wineries' });
+  map.getSource('neighbors').setData(X.nbr); map.getSource('deps').setData(X.depsGj); map.getSource('deplines').setData(X.deplines);
+  map.getSource('reglines').setData(REG.lines); map.getSource('rivers').setData(X.rivers); map.getSource('lakes').setData(X.lakes);
+  map.getSource('vineyards').setData(X.vy); map.getSource('hex').setData(X.hexFC); map.getSource('wineries').setData(X.winFC);
+  markers.forEach(x => x.m.remove()); markers.length = 0;
+  seals.forEach(x => x.m.remove()); seals.length = 0; lastMt = ''; lastSel = -2;
+  // sin roca madre ni distancia al mar (Argentina): se ocultan sus filtros
+  $('#chRock').closest('.sec').hidden = !CX.rock; $('#rgSea').closest('.field').hidden = !CX.sea;
+  const sc = $('#arScope'); if (sc) sc.hidden = CC === 'UY';
+  buildMarkers(); buildSeals(); buildColumns(); buildUI(); paintHex(); applyFilters(); renderLegend();
+}
+async function load() {
+  const [land, uy] = await Promise.all([get('data/world_land.geojson'), fetchPack('UY')]);
+  UYX = uy;
   await ready;
   map.getSource('land').setData(land);
-  map.getSource('neighbors').setData(nbr);
-  map.getSource('deps').setData(depsGj); DEPS_GJ = depsGj;
-  const dl = [];
-  depsGj.features.forEach(f => { const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates; polys.forEach(pl => pl.forEach(r => dl.push({ type: 'Feature', properties: { id: f.properties.id }, geometry: { type: 'LineString', coordinates: r } }))); });
-  map.getSource('deplines').setData({ type: 'FeatureCollection', features: dl });
-  map.getSource('reglines').setData(REG.lines);
-  map.getSource('rivers').setData(rivers);
-  map.getSource('lakes').setData(lakes);
-  map.getSource('vineyards').setData(vy);
-  map.getSource('hex').setData({ type: 'FeatureCollection', features: feats });
-  map.getSource('wineries').setData({ type: 'FeatureCollection', features: WIN.filter(w => w.lat != null).map(w => ({ type: 'Feature', id: w.id, properties: { name: w.name, f: w.profile ? 1 : 0, t: w.tier || 3, n: w.nat || 999 }, geometry: { type: 'Point', coordinates: [w.lng, w.lat] } })) });
   try { PREM = await get('data/premios.json'); } catch (e) { PREM = {}; }
   get('data/mundo.json').then(w => { WORLD = w; buildWorldUI(); paintWorld(); }).catch(() => {});
   get('data/world_borders.geojson').then(b => map.getSource('borders').setData(b)).catch(() => {});
+  // costa detallada para acercarse (la del globo es gruesa): se baja después y reemplaza a la gruesa desde zoom 3,5
+  setTimeout(() => get('data/world_land_hi.geojson').then(g => { map.getSource('landhi').setData(g); map.setLayerZoomRange('land', 0, 3.5); }).catch(() => {}), 2500);
   get('data/world_countries.geojson').then(c => { COUNTRIES_GJ = c; map.getSource('countries').setData(c); }).catch(() => {});
   await Promise.all([ensureTxt('es'), ensurePrem('es')]); if (L !== 'es') await Promise.all([ensureTxt(L), ensurePrem(L)]);
-  buildMarkers(); buildSeals(); buildColumns(); buildUI(); paintHex(); applyFilters(); renderLegend(); viewLayers();
+  usePack(uy); viewLayers();
+  if (window.__map) { window.__go = goCountry; window.__st = () => ({ CC, view, n, deps: deps.length, win: WIN.length, seals: seals.length, z: map.getZoom(), S }); }
   const ld = $('#loading'); ld.style.opacity = 0; setTimeout(() => ld.remove(), 550);
   { const r = routeOfHash(location.hash); if (r) openLearn(r); }
   // primera visita en este navegador: ayuda de 5 pasos (en la página de pruebas, solo con ?ayuda)
@@ -2706,7 +2817,7 @@ function depStats() {
     for (const i of ix) { w = Math.min(w, CLNG[i]); e = Math.max(e, CLNG[i]); s = Math.min(s, CLAT[i]); no = Math.max(no, CLAT[i]); la += CLAT[i]; lo += CLNG[i]; }
     d.bbox = [[w, s], [e, no]]; d.center = [lo / ix.length, la / ix.length];
     const pick = k => ix.map(i => D[k][i]).filter(v => v >= 0);
-    d.alt = median(pick('alt')); d.gdd = median(pick('gdd')); d.rain = median(pick('rain')); d.sea = median(pick('sea'));
+    d.alt = median(pick('alt')); d.gdd = median(pick('gdd')); d.rain = median(pick('rain')); d.sea = median(pick('sea')); d.dtr = median(pick('dtr')); d.tex = mode(ix.map(i => D.tex[i]));
     d.rock = mode(ix.map(i => D.rock[i])); d.unit = mode(ix.map(i => D.unit[i]));
   });
 }
@@ -2715,11 +2826,11 @@ function depStats() {
 function grapeHa(name, g) { return g === 'all' ? (INAVI.dep[name] || 0) : ((INAVI.grapes[g] || {})[name] || 0); }
 function applyFilters() {
   const dep = S.dep, uR = S.rock.size > 0, uT = S.tex.size > 0, uA = S.asp.size > 0, uW = S.wk.size > 0;
-  const cf = S.cf, ph0 = S.ph[0], ph1 = S.ph[1], uPh = ph0 > 50 || ph1 < 75;
-  const a0 = S.alt[0], a1 = S.alt[1], uAlt = a0 > 0 || a1 < 450;
+  const cf = S.cf, ph0 = S.ph[0], ph1 = S.ph[1], uPh = ph0 > CX.rng.ph[0] || ph1 < CX.rng.ph[1];
+  const RG = CX.rng, a0 = S.alt[0], a1 = S.alt[1], uAlt = a0 > RG.alt[0] || a1 < RG.alt[1];
   const s0 = S.slope[0], s1 = S.slope[1], uS = s0 > 0 || s1 < 300;
-  const r0 = S.rain[0], r1 = S.rain[1], uRain = r0 > 1000 || r1 < 1750;
-  const sea = S.sea, uSea = sea < 400;
+  const r0 = S.rain[0], r1 = S.rain[1], uRain = r0 > RG.rain[0] || r1 < RG.rain[1];
+  const sea = S.sea, uSea = CX.sea && sea < RG.sea;
   let okDep = null;
   if (S.reg >= 0) { const set = new Set(REG.regions[S.reg].deps); okDep = new Uint8Array(deps.length).map((_, k) => set.has(deps[k].name) ? 1 : 0); }
   if (S.onlyGrape) { const g = new Uint8Array(deps.length).map((_, k) => grapeHa(deps[k].name, S.grape) > 0 ? 1 : 0); okDep = okDep ? okDep.map((v, k) => v && g[k]) : g; }
@@ -2778,11 +2889,11 @@ function circle(lng, lat, km, steps = 40) {
   return [c];
 }
 function buildColumns() {
-  const g = S.grape, maxH = 52000, ref = INAVI.dep['Canelones'];
+  const g = S.grape, maxH = 52000, ref = Math.max(...deps.map(d => d.ha)) * (CC === 'UY' ? 1 : 0.6);
   const feats = [];
   if (S.cols) deps.forEach(d => {
     const ha = grapeHa(d.name, g); if (ha <= 0 || !d.pt) return;
-    feats.push({ type: 'Feature', properties: { h: Math.max(350, ha / ref * maxH), color: GRAPE_COLOR[g] }, geometry: { type: 'Polygon', coordinates: circle(d.pt[0], d.pt[1], d.name === 'Montevideo' ? 4 : 6.5) } });
+    feats.push({ type: 'Feature', properties: { h: Math.min(maxH * 1.4, Math.max(350, ha / ref * maxH)), color: GRAPE_COLOR[g] || GRAPE_COLOR.all }, geometry: { type: 'Polygon', coordinates: circle(d.pt[0], d.pt[1], d.name === 'Montevideo' ? 4 : CX.colKm) } });
   });
   map.getSource('columns').setData({ type: 'FeatureCollection', features: feats });
   updateMarkers();
@@ -2794,7 +2905,8 @@ function buildMarkers() {
     const m = new maplibregl.Marker({ element: el, anchor: 'top' }).setLngLat(d.pt).addTo(map);
     markers.push({ d, el, m });
   });
-  map.on('zoom', markerVis); map.on('moveend', declutter); map.on('terrain', () => markers.forEach(x => x.m.setLngLat(x.d.pt))); markerVis();
+  if (!buildMarkers.on) { buildMarkers.on = 1; map.on('zoom', markerVis); map.on('moveend', declutter); map.on('terrain', () => markers.forEach(x => x.m.setLngLat(x.d.pt))); }
+  markerVis();
 }
 function updateMarkers() {
   markers.forEach(({ d, el }) => {
@@ -2806,7 +2918,7 @@ function updateMarkers() {
 }
 function markerVis() {
   const z = map.getZoom(), on = view === 'uy' && z < 10.5 && MODE !== 'bodegas';
-  markers.forEach(({ d, el }) => { const major = grapeHa(d.name, 'all') >= 50; el.style.display = on && z > (major ? 5.2 : 6.2) ? '' : 'none'; });
+  markers.forEach(({ d, el }) => { const major = grapeHa(d.name, 'all') >= CX.major; el.style.display = on && z > (major ? 5.2 : 6.2) ? '' : 'none'; });
   declutter();
 }
 function declutter() {
@@ -2830,13 +2942,13 @@ function chip(label, color, pressed, onClick) {
 function toggleSet(set, v) { set.has(v) ? set.delete(v) : set.add(v); clearSim(); schedule(); }
 function buildChips() {
   const r = $('#chRock'); r.innerHTML = '';
-  PAL.rock.forEach((c, i) => r.appendChild(chip(t('rock_' + i), c, S.rock.has(i), () => toggleSet(S.rock, i))));
+  if (CX.rock) PAL.rock.forEach((c, i) => r.appendChild(chip(t('rock_' + i), c, S.rock.has(i), () => toggleSet(S.rock, i))));
   const tx = $('#chTex'); tx.innerHTML = '';
   PAL.tex.forEach((c, i) => tx.appendChild(chip(t('tex_' + i), c, S.tex.has(i), () => toggleSet(S.tex, i))));
   const as = $('#chAsp'); as.innerHTML = '';
   [7, 0, 1, 6, 8, 2, 5, 4, 3].forEach(i => as.appendChild(chip(i === 8 ? t('flat') : t('asp_' + i), null, S.asp.has(i), () => toggleSet(S.asp, i))));
   const wk = $('#chWk'); wk.innerHTML = '';
-  [2, 3, 4, 5].forEach(i => wk.appendChild(chip(t('wk_' + i), PAL.wk[i], S.wk.has(i), () => toggleSet(S.wk, i))));
+  CX.wk.forEach(i => wk.appendChild(chip(t('wk_' + i), PAL.wk[i], S.wk.has(i), () => toggleSet(S.wk, i))));
 }
 const ranges = {};
 function makeRange(id, min, max, step, get, set, fmt, single) {
@@ -2858,16 +2970,16 @@ function makeRange(id, min, max, step, get, set, fmt, single) {
 }
 function buildRanges() {
   makeRange('rgCf', 0, 30, 1, () => S.cf, v => S.cf = v, v => v > 0 ? '≥ ' + nf(v) + ' %' : '0 %', 'min');
-  makeRange('rgPh', 50, 75, 1, () => S.ph, v => S.ph = v, v => nf(v[0] / 10, 1) + ' – ' + nf(v[1] / 10, 1));
-  makeRange('rgAlt', 0, 450, 10, () => S.alt, v => S.alt = v, v => nf(v[0]) + ' – ' + nf(v[1]) + ' m');
+  makeRange('rgPh', CX.rng.ph[0], CX.rng.ph[1], 1, () => S.ph, v => S.ph = v, v => nf(v[0] / 10, 1) + ' – ' + nf(v[1] / 10, 1));
+  makeRange('rgAlt', CX.rng.alt[0], CX.rng.alt[1], CX.rng.alt[2], () => S.alt, v => S.alt = v, v => nf(v[0]) + ' – ' + nf(v[1]) + ' m');
   makeRange('rgSlope', 0, 300, 5, () => S.slope, v => S.slope = v, v => nf(v[0] / 10, 1) + ' – ' + nf(v[1] / 10, 1) + ' %');
-  makeRange('rgRain', 1000, 1750, 10, () => S.rain, v => S.rain = v, v => nf(v[0]) + ' – ' + nf(v[1]) + ' mm');
-  makeRange('rgSea', 0, 400, 5, () => S.sea, v => S.sea = v, v => v >= 400 ? '—' : t('sea_max') + ' ' + nf(v) + ' km', 'max');
+  makeRange('rgRain', CX.rng.rain[0], CX.rng.rain[1], CX.rng.rain[2], () => S.rain, v => S.rain = v, v => nf(v[0]) + ' – ' + nf(v[1]) + ' mm');
+  if (CX.sea) makeRange('rgSea', 0, 400, 5, () => S.sea, v => S.sea = v, v => v >= 400 ? '—' : t('sea_max') + ' ' + nf(v) + ' km', 'max');
 }
 function buildSelects() {
   const cb = $('#colorBy'); cb.innerHTML = '';
   { const o = document.createElement('option'); o.value = 'relief'; o.textContent = t('relief_map'); cb.appendChild(o); }
-  COLOR_VARS.forEach(([g, vars]) => {
+  CX.vars.forEach(([g, vars]) => {
     const og = document.createElement('optgroup'); og.label = t(g);
     vars.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = t(VAR_LABEL[v]); og.appendChild(o); });
     cb.appendChild(og);
@@ -2881,7 +2993,7 @@ function buildSelects() {
   ds.append(og1, og2);
   ds.value = S.reg >= 0 ? 'r' + S.reg : S.dep;
   const gs = $('#grapeSel'); gs.innerHTML = '';
-  ['all'].concat(GRAPES).forEach(g => { const o = document.createElement('option'); o.value = g; o.textContent = gname(g) + (g === 'all' ? '' : ' · ' + nf(INAVI.nat[g]) + ' ' + t('ha')); gs.appendChild(o); });
+  ['all'].concat(GRAPES).forEach(g => { const o = document.createElement('option'); o.value = g; o.textContent = gname(g) + (g === 'all' ? '' : ' · ' + nf(INAVI.nat[g] || 0) + ' ' + t('ha')); gs.appendChild(o); });
   gs.value = S.grape;
   const dl = $('#wineryList'); dl.innerHTML = '';
   WIN.slice().sort((a, b) => a.name.localeCompare(b.name, 'es')).forEach(w => { const o = document.createElement('option'); o.value = w.name; dl.appendChild(o); });
@@ -2895,7 +3007,17 @@ function langOptions() {
 }
 narrow.addEventListener('change', langOptions);
 function buildSources() {
-  const S_ = [
+  const S_ = CC === 'AR' ? [
+    ['src_relief', 'Copernicus DEM GLO-90 (ESA)', 'https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM'],
+    ['src_soil', 'ISRIC SoilGrids 2.0 · 0–30 cm · CC BY 4.0', 'https://soilgrids.org'],
+    ['src_clim', 'CHELSA v2.1 · 1981–2010 · CC0', 'https://chelsa-climate.org'],
+    ['src_ha', INAVI.src, INAVI.url],
+    ['src_deps', 'Georef Argentina · IGN (datos.gob.ar)', 'https://www.argentina.gob.ar/georef'],
+    ['src_bod', 'Enoturismo de Mendoza y San Juan · Bodegas de Argentina · OpenStreetMap · sitios oficiales', 'https://datosabiertos.mendoza.gov.ar/dataset/enoturismo'],
+    ['src_osm', '© OpenStreetMap (ODbL)', 'https://www.openstreetmap.org/copyright'],
+    ['src_world', 'Anderson, Nelgen & Puga (Univ. of Adelaide) · 2023 · CC BY 4.0', 'https://doi.org/10.25909/32870405.v1'],
+    ['src_grid', 'H3 (Uber) · ' + t('grid_note'), 'https://h3geo.org']
+  ] : [
     ['src_relief', 'Copernicus DEM GLO-90 (ESA)', 'https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM'],
     ['src_rock', 'DINAMIGE (MIEM) · Carta Geológica del Uruguay 1:500.000', 'https://visualizadorgeominero.dinamige.gub.uy/accesos/acceso.html'],
     ['src_soil', 'ISRIC SoilGrids 2.0 · 0–30 cm · CC BY 4.0', 'https://soilgrids.org'],
@@ -2906,7 +3028,8 @@ function buildSources() {
     ['src_world', 'Anderson, Nelgen & Puga (Univ. of Adelaide) · 2023 · CC BY 4.0', 'https://doi.org/10.25909/32870405.v1'],
     ['src_grid', 'H3 (Uber) · ' + t('grid_note'), 'https://h3geo.org']
   ];
-  $('#srcList').innerHTML = S_.map(([k, txt, u]) => '<dt>' + esc(t(k)) + '</dt><dd><a href="' + u + '" target="_blank" rel="noopener">' + esc(txt) + '</a></dd>').join('');
+  $('#srcList').innerHTML = S_.map(([k, txt, u]) => '<dt>' + esc(t(k)) + '</dt><dd><a href="' + u + '" target="_blank" rel="noopener">' + esc(txt) + '</a></dd>').join('') +
+    (CX.rock ? '' : '<dt>' + esc(t('src_geo_none')) + '</dt><dd>' + esc(t('src_geo_none_v')) + '</dd>');
 }
 function translateStatic() {
   document.documentElement.lang = L;
@@ -2914,8 +3037,8 @@ function translateStatic() {
   $('#wineryIn').placeholder = t('find_ph');
   $('#dimBtn').textContent = is3D ? t('d2') : t('d3'); $('#dimBtn').title = is3D ? t('d2_tip') : t('d3_tip');
   $('#projBtn').title = flat ? t('flat_tip_off') : t('flat_tip_on');
-  if (view === 'uy') $('#vUy').textContent = t('view_uy'); else if (COUNTRY) $('#vUy').textContent = COUNTRY.name;
-  document.title = t('brand'); projUI(); if (learnRoute) openLearn(learnRoute, true); if (doMk.length && DOD[L]) doMarkers(DOD[L]);
+  if (view === 'uy') $('#vUy').textContent = t(CX.view); else if (COUNTRY) $('#vUy').textContent = COUNTRY.name;
+  document.title = t('brand'); projUI(); if (learnRoute) openLearn(learnRoute, true); if (WMODE === 'do' && D) getDO().then(doGeoAll);
   $('#lang') && $('#lang').setAttribute('aria-label', t('lang_label'));
   { const hb = $('#helpBtn'); if (hb) { hb.title = t('help'); hb.setAttribute('aria-label', t('help')); } if (coachStep >= 0) coachShow(coachStep); }
 }
@@ -2960,19 +3083,19 @@ function renderLegend() {
   const lg = $('#legend'), v = S.color; let h = '<button class="lg-h" aria-expanded="' + !lg.classList.contains('folded') + '"><span>' + esc(t(VAR_LABEL[v])) + '</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><div class="lg-b">';
   if (v === 'relief') {
     const st = RELIEF.slice(1), lo = st[0][0], hi = st[st.length - 1][0];
-    h += '<div class="grad" style="background:linear-gradient(90deg,' + st.map(([x, c]) => c + ' ' + ((x - lo) / (hi - lo) * 100).toFixed(0) + '%').join(',') + ')"></div><div class="ticks"><span>0</span><span>' + nf(250) + '</span><span>' + nf(500) + ' m</span></div>';
+    h += '<div class="grad" style="background:linear-gradient(90deg,' + st.map(([x, c]) => c + ' ' + ((x - lo) / (hi - lo) * 100).toFixed(0) + '%').join(',') + ')"></div><div class="ticks"><span>' + nf(CX.reliefTicks[0]) + '</span><span>' + nf(CX.reliefTicks[1]) + '</span><span>' + nf(CX.reliefTicks[2]) + ' m</span></div>';
     if (FILT || SIM) h += '<div class="lit"><i></i><span>' + esc(t('lg_lit')) + '</span></div>';
   } else if (v === 'rock' || v === 'tex' || v === 'asp') {
     h += '<div class="sw">' + PAL[v].map((c, i) => '<span><i style="background:' + c + '"></i>' + esc(v === 'asp' ? (i === 8 ? t('flat') : t('asp_' + i)) : t(v + '_' + i)) + '</span>').join('') + '</div>';
   } else if (v === 'gdd') {
-    h += '<div class="sw">' + [2, 3, 4, 5].map(i => '<span><i style="background:' + PAL.wk[i] + '"></i>' + esc(t('wk_' + i)) + '</span>').join('') + '</div>';
+    h += '<div class="sw">' + CX.wk.map(i => '<span><i style="background:' + PAL.wk[i] + '"></i>' + esc(t('wk_' + i)) + '</span>').join('') + '</div>';
   } else {
     const s = SEQ[v], lo = s.stops[0], hi = s.stops[s.stops.length - 1];
     const grad = 'linear-gradient(90deg,' + s.colors.map((c, i) => c + ' ' + ((s.stops[i] - lo) / (hi - lo) * 100).toFixed(0) + '%').join(',') + ')';
     const f = x => nf(x / s.div, s.div > 1 ? 1 : 0);
     h += '<div class="grad" style="background:' + grad + '"></div><div class="ticks"><span>' + f(lo) + '</span><span>' + f((lo + hi) / 2) + '</span><span>' + f(hi) + (s.unit ? ' ' + s.unit : '') + '</span></div>';
   }
-  if (S.cols && MODE !== 'bodegas') h += '<div class="cols"><i style="background:' + GRAPE_COLOR[S.grape] + '"></i><span>' + esc(t('legend_cols')) + (S.grape !== 'all' ? ' · ' + gLink(S.grape, gname(S.grape)) : '') + '</span></div>';
+  if (S.cols && MODE !== 'bodegas') h += '<div class="cols"><i style="background:' + (GRAPE_COLOR[S.grape] || GRAPE_COLOR.all) + '"></i><span>' + esc(t('legend_cols')) + (S.grape !== 'all' ? ' · ' + gLink(S.grape, gname(S.grape)) : '') + '</span></div>';
   if (MODE === 'bodegas') h += '<div class="lg-w"><span><i class="seal"></i>' + esc(t('lg_top')) + '</span><span><i class="dot"></i>' + esc(t('lg_more')) + '</span></div>';
   lg.innerHTML = h + '</div>';
   lg.querySelector('.lg-h').onclick = () => { lg.classList.toggle('folded'); renderLegend(); };
@@ -2989,7 +3112,7 @@ function terroirTable(i) {
   const g = D.gdd[i];
   const grp = (title, tag, src, rows) => '<div class="grp"><h4>' + esc(title) + ' <span class="tag ' + tag + '">' + esc(t(tag)) + '</span><span class="src">' + esc(src) + '</span></h4><dl class="kv">' + rows + '</dl></div>';
   return grp(t('relief'), 'measured', 'Copernicus GLO-90',
-      kvRow(t('altitude'), v('alt') + ' m') + kvRow(t('slope'), v('slope', 1, 10) + ' %') + kvRow(t('aspect'), esc(asp)) + kvRow(t('sea'), v('sea') + ' km')) +
+      kvRow(t('altitude'), v('alt') + ' m') + kvRow(t('slope'), v('slope', 1, 10) + ' %') + kvRow(t('aspect'), esc(asp)) + (CX.sea ? kvRow(t('sea'), v('sea') + ' km') : '')) +
     grp(t('soil') + ' · 0–30 cm', 'modeled', 'SoilGrids',
       kvRow(short('texture'), D.tex[i] < 0 ? t('missing') : esc(t('tex_' + D.tex[i]))) + kvRow(t('clay'), v('clay') + ' %') + kvRow(short('stones'), v('cf') + ' %') + kvRow(short('ph'), v('ph', 1, 10))) +
     grp(short('climate'), 'modeled', 'CHELSA 1981–2010',
@@ -3008,7 +3131,7 @@ function nearby(lat, lng, skip) {
 }
 function depBlock(i) {
   const d = deps[D.dep[i]]; if (!d) return '';
-  let s = '<div><h4>' + esc(t('vineyards_dep')) + '</h4><div class="simline"><span>' + esc(d.name) + '</span><span class="num">' + nf(d.ha, d.ha < 10 ? 1 : 0) + ' ' + t('ha') + ' · INAVI ' + INAVI.year + '</span></div>';
+  let s = '<div><h4>' + esc(t('vineyards_dep')) + '</h4><div class="simline"><span>' + esc(d.name) + '</span><span class="num">' + nf(d.ha, d.ha < 10 ? 1 : 0) + ' ' + t('ha') + ' · ' + CX.reg + ' ' + INAVI.year + '</span></div>';
   if (S.grape !== 'all') s += '<div class="simline"><span></span><span class="num">' + esc(t('grape_dep', { ha: nf(grapeHa(d.name, S.grape), 1), grape: gname(S.grape) })) + '</span></div>';
   return s + '</div>';
 }
@@ -3041,7 +3164,7 @@ function showZone(i) {
 }
 function showWinery(id, fly) {
   const w = WIN.find(x => x.id === id); if (!w) return;
-  if (view !== 'uy') goUruguay(true);
+  if (view !== 'uy') goCountry(CC, true);
   if (SIM && SIM.origin !== w.cell) clearSim();
   selWin = id; selCell = w.cell; cardMode = 'win';
   map.setFilter('win-sel', ['==', ['id'], w.lat != null ? id : -1]); selLine(w.profile && w.profile.loc_note ? -1 : w.cell); sealVis();
@@ -3070,7 +3193,7 @@ document.addEventListener('error', e => {
 }, true);
 function miniTerroir(i) {
   const r = D.rock[i], g = D.gdd[i];
-  return '<dl class="kv">' + kvRow(t('rock'), r >= 0 ? esc(t('rock_' + r)) : t('missing')) + kvRow(t('soil'), D.tex[i] >= 0 ? esc(t('tex_' + D.tex[i])) : t('missing')) +
+  return '<dl class="kv">' + (CX.rock ? kvRow(t('rock'), r >= 0 ? esc(t('rock_' + r)) : t('missing')) : '') + kvRow(t('soil'), D.tex[i] >= 0 ? esc(t('tex_' + D.tex[i])) : t('missing')) +
     kvRow(t('altitude'), nf(D.alt[i]) + ' m') + kvRow(t('winkler'), g >= 0 ? nf(g) + ' · ' + esc(t('wk_' + wkOf(g))) : t('missing')) + '</dl>';
 }
 // premios y reconocimientos publicados (Descorchados, Tim Atkin, World's Best Vineyards…), con su fuente
@@ -3121,11 +3244,14 @@ function fillImgs(w) {
   });
 }
 // descripción para las bodegas sin información publicada: registro de INAVI + terroir de su hexágono
+// departamento y provincia de la bodega (Argentina); si solo se sabe la provincia, la provincia
+const wDep = w => w.prov && w.prov !== w.dep ? t('w_where', { dep: w.dep.replace(/\s*\(.*\)$/, ''), prov: w.prov }) : w.dep;
 function autoDesc(w) {
   const i = w.cell, low = x => x.charAt(0).toLocaleLowerCase(LOCALE[L]) + x.slice(1);
   let txt;
-  if (i >= 0 && D.rock[i] >= 0 && D.tex[i] >= 0 && D.gdd[i] >= 0) txt = t('w_auto', { name: w.name, dep: w.dep, rock: low(t('rock_' + D.rock[i])), tex: low(t('tex_' + D.tex[i])), wk: t('wk_' + wkOf(D.gdd[i])), km: nf(Math.max(D.sea[i], 0)) });
-  else txt = t('w_auto_noloc', { name: w.name, dep: w.dep });
+  const where = wDep(w);
+  if (i >= 0 && (D.rock[i] >= 0 || !CX.rock) && D.tex[i] >= 0 && D.gdd[i] >= 0) txt = t('w_auto', { name: w.name, dep: where, rock: CX.rock ? low(t('rock_' + D.rock[i])) : '', tex: low(t('tex_' + D.tex[i])), wk: t('wk_' + wkOf(D.gdd[i])), km: nf(Math.max(D.sea[i], 0)), alt: nf(D.alt[i]) });
+  else txt = t('w_auto_noloc', { name: w.name, dep: where });
   if (w.gm) txt += ' ' + t('w_gm', { n: w.gm.n, c: low(w.gm.c || '') });
   return '<div><h4>' + esc(t('w_about')) + '</h4><p class="prose">' + esc(txt) + '</p>' + (w.unconf ? '<p class="hint unconf-note">' + esc(t('unconf_tip')) + '</p>' : '') + '<p class="hint">' + esc(t('w_auto_note')) + '</p></div>';
 }
@@ -3137,7 +3263,7 @@ function wineryCard(w) {
   const satFig = w.sat_img ? '<figure class="tsat"><img class="timg" data-pk="s" alt="" decoding="async"><figcaption><a href="https://sentinels.copernicus.eu/" target="_blank" rel="noopener">' + esc(t('sat_credit', { d: (w.sat_date || '').slice(0, 7) })) + '</a></figcaption></figure>' : '';
   let h = '<header class="w-head' + (hero ? ' has-hero' : '') + '">' +
     (hero ? '<div class="hero">' + hero + credit + '</div>' : '') +
-    '<div class="w-row">' + sealHTML(w, 'big') + '<div class="w-ht"><div class="eyebrow">' + esc(t('winery_title')) + ' · ' + esc(w.dep) + '</div><h2>' + esc(w.name) + '</h2>' +
+    '<div class="w-row">' + sealHTML(w, 'big') + '<div class="w-ht"><div class="eyebrow">' + esc(t('winery_title')) + ' · ' + esc(wDep(w)) + '</div><h2>' + esc(w.name) + '</h2>' +
     (w.aliases && w.aliases.length ? '<div class="meta">' + esc(w.aliases.join(' · ')) + '</div>' : '') +
     (p ? '<span class="tag conf-' + p.conf + '">' + esc(t('conf_' + p.conf)) + '</span>' : '') + (w.unconf ? '<span class="tag unconf" title="' + esc(t('unconf_tip')) + '">' + esc(t('unconf')) + '</span>' : '') + '</div></div>' + X_BTN_() + '</header><div class="body">';
   if (p) {
@@ -3165,12 +3291,13 @@ function wineryCard(w) {
   const web = (p && p.web) || w.web;
   // contacto con íconos: dirección, sitio web, Google Maps e INAVI
   const ci = (ic, lab, val) => '<li><span class="ci" title="' + esc(lab) + '" aria-label="' + esc(lab) + '">' + CI[ic] + '</span><span>' + val + '</span></li>';
-  const gmq = encodeURIComponent((w.gm && w.gm.n || w.name) + ', ' + (w.gm && w.gm.a || w.dep + ', Uruguay'));
+  const gmq = encodeURIComponent((w.gm && w.gm.n || w.name) + ', ' + (w.gm && w.gm.a || (CC === 'UY' ? w.dep + ', Uruguay' : wDep(w) + ', Argentina')));
   h += '<ul class="contact">' + (w.address ? ci('home', t('address'), esc(w.address)) : '') +
     ci('pin', 'Google Maps', '<a href="https://www.google.com/maps/search/?api=1&query=' + gmq + '" target="_blank" rel="noopener">' + esc(t('see_map')) + '</a>') +
     (web ? ci('web', t('website'), '<a href="' + esc(href(web)) + '" target="_blank" rel="noopener">' + esc(host(web)) + '</a>') : '') +
     (w.inavi_url ? ci('reg', 'INAVI', '<a href="' + esc(w.inavi_url) + '" target="_blank" rel="noopener">' + esc(t('inavi_page')) + '</a>') : '') + '</ul>';
-  if (p && p.sources && p.sources.length) h += '<div><h4>' + esc(t('w_sources')) + '</h4><ul class="srcs">' + [...new Map(p.sources.map(u => [host(u), u])).entries()].map(([hn, u]) => '<li><a href="' + esc(href(u)) + '" target="_blank" rel="noopener">' + esc(hn) + '</a></li>').join('') + '</ul></div>';
+  const wsrc = (p && p.sources) || (CC !== 'UY' && w.sources) || [];
+  if (wsrc.length) h += '<div><h4>' + esc(t('w_sources')) + '</h4><ul class="srcs">' + [...new Map(wsrc.map(u => [host(u), u])).entries()].map(([hn, u]) => '<li><a href="' + esc(href(u)) + '" target="_blank" rel="noopener">' + esc(hn) + '</a></li>').join('') + '</ul></div>';
   if (w.lat != null) h += '<div><h4>' + esc(t('nearby')) + '</h4>' + nearby(w.lat, w.lng, w.id) + '</div>';
   return h + '</div>';
 }
@@ -3189,10 +3316,10 @@ function refreshCard() {
     openCard(regionCard(selReg));
   } else if (cardMode === 'zone') {
     const r = D.rock[i], g = D.gdd[i];
-    const chipsZ = [['alt', nf(D.alt[i]) + ' m'], ['soil', D.tex[i] >= 0 ? t('tex_' + D.tex[i]) : null], ['clim', g >= 0 ? 'Winkler ' + t('wk_' + wkOf(g)) : null], ['sea', D.sea[i] >= 0 ? nf(D.sea[i]) + ' km' : null]]
+    const chipsZ = [['alt', nf(D.alt[i]) + ' m'], ['soil', CX.rock && D.tex[i] >= 0 ? t('tex_' + D.tex[i]) : null], ['clim', g >= 0 ? 'Winkler ' + t('wk_' + wkOf(g)) : null], ['sea', D.sea[i] >= 0 ? nf(D.sea[i]) + ' km' : null], ['rain', !CX.sea && D.rain[i] > 0 ? nf(D.rain[i]) + ' mm' : null]]
       .filter(x => x[1]).map(([k, v]) => '<span class="zc">' + ZI[k] + esc(v) + '</span>').join('');
     const rk = deps[D.dep[i]] ? regOf(deps[D.dep[i]].name) : -1;
-    openCard('<header><div class="eyebrow">' + esc(t('zone_title')) + ' · ' + esc(deps[D.dep[i]] ? deps[D.dep[i]].name : '') + (rk >= 0 ? ' · <button class="link-btn reg-link" data-reg="' + rk + '">' + esc(REG.regions[rk].name) + '</button>' : '') + '</div><h2>' + esc(r >= 0 ? t('rock_' + r) : t('missing')) + '</h2><div class="zchips">' + chipsZ + '</div>' + X_BTN_() + '</header><div class="body">' +
+    openCard('<header><div class="eyebrow">' + esc(t('zone_title')) + ' · ' + esc(deps[D.dep[i]] ? deps[D.dep[i]].name : '') + (rk >= 0 ? ' · <button class="link-btn reg-link" data-reg="' + rk + '">' + esc(REG.regions[rk].name) + '</button>' : '') + '</div><h2>' + esc(r >= 0 ? t('rock_' + r) : !CX.rock && D.tex[i] >= 0 ? t('tex_' + D.tex[i]) : t('missing')) + '</h2><div class="zchips">' + chipsZ + '</div>' + X_BTN_() + '</header><div class="body">' +
       leadAporte(i) + '<div><h4>' + esc(t('zt_more')) + '</h4><ul class="aporte">' + aporte(i).filter(([k]) => k !== 'rock').map(([k, txt], j) => {
         const m = txt.match(/^(.{2,80}?)([:：])\s*([\s\S]+)$/);
         const cap = x => x.charAt(0).toLocaleUpperCase(LOCALE[L]) + x.slice(1);
@@ -3241,7 +3368,7 @@ function showRegion(k, fly) {
 function regionCard(k) {
   const r = REG.regions[k], set = new Set(r.deps), ha = regHa(r);
   const vy = r.deps.reduce((a, d) => a + ((INAVI.vy || {})[d] || 0), 0);
-  const wins = WIN.filter(w => !w.unconf && set.has(w.dep));
+  const wins = WIN.filter(w => !w.unconf && set.has(w.dep) && (CC === 'UY' || w.lat != null));
   // terroir: donde están sus bodegas (si hay al menos 3 ubicadas); si no, toda la superficie de la región
   const wl = wins.filter(w => !w.unconf && w.cell >= 0), wc = wl.map(w => w.cell), byWin = wl.length >= 3;
   const cells = byWin ? wc : [...Array(n).keys()].filter(i => deps[D.dep[i]] && set.has(deps[D.dep[i]].name));
@@ -3265,12 +3392,13 @@ function regionCard(k) {
   if (r.note) h += '<p class="hint">' + esc(t('reg_note_' + r.note)) + '</p>';
   if (grapes.length) h += '<div><h4>' + esc(t('reg_grapes')) + '</h4><div class="bars">' + grapes.map(([g, v]) => '<div class="bar"><span>' + gLink(g, gname(g)) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / gm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>';
   h += '<div><h4>' + esc(t('reg_terroir')) + '</h4><p class="hint">' + esc(t(byWin ? 'reg_by_win' : 'reg_by_area', { n: nf(wc.length) })) + '</p><dl class="kv">' +
-    kvRow(t('reg_rock'), pctRows(rocks.map(([k2, p]) => [k2, p, t('rock_' + k2)]))) +
+    (CX.rock ? kvRow(t('reg_rock'), pctRows(rocks.map(([k2, p]) => [k2, p, t('rock_' + k2)]))) : '') +
     kvRow(t('reg_soil'), pctRows(texs.map(([k2, p]) => [k2, p, t('tex_' + k2)]))) +
     kvRow(t('reg_clim'), pctRows(top(wk, 2).map(([k2, p]) => [k2, p, t('wk_' + k2)]))) + kvRow(t('reg_rain'), nr ? nf(Math.round(rain / nr / 10) * 10) + ' mm' : t('missing')) + kvRow(t('reg_alt'), nf(Math.max(a0, 0)) + ' – ' + nf(a1) + ' m') + '</dl></div>';
   h += '<div><h4>' + esc(t('reg_deps')) + '</h4><div class="bars">' + r.deps.map(d => { const v = INAVI.dep[d] || 0; return '<div class="bar"><span>' + esc(d) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / Math.max(1, ...r.deps.map(x => INAVI.dep[x] || 0)) * 100).toFixed(1) + '%"></i></span></div>'; }).join('') + '</div></div>';
   if (best.length) h += '<div><h4>' + esc(t('reg_top')) + '</h4><ul class="list">' + best.map(w => '<li><button data-win="' + w.id + '"><span>' + esc(w.name) + '</span><span>' + esc(w.dep) + '</span></button></li>').join('') + '</ul></div>';
-  h += '<p class="hint">' + esc(t('reg_src')) + ' <a href="' + esc(REG.source) + '" target="_blank" rel="noopener">inavi.com.uy</a></p></div>';
+  if (r.sources && r.sources.length) h += '<div><h4>' + esc(t('w_sources')) + '</h4><ul class="srcs">' + [...new Map(r.sources.map(u => [host(u), u])).entries()].map(([hn, u]) => '<li><a href="' + esc(href(u)) + '" target="_blank" rel="noopener">' + esc(hn) + '</a></li>').join('') + '</ul></div>';
+  h += '<p class="hint">' + esc(t('reg_src')) + ' <a href="' + esc(REG.source) + '" target="_blank" rel="noopener">' + esc(host(REG.source)) + '</a></p></div>';
   return h;
 }
 // lo más importante de la ficha: qué aporta la roca madre al vino, destacado arriba
@@ -3291,9 +3419,10 @@ function aporte(i) {
     const north = [7, 0, 1].includes(as), south = [3, 4, 5].includes(as);
     out.push(['slope', north ? t('ai_slope_n', { asp: t('asp_' + as) }) : south ? t('ai_slope_s', { asp: t('asp_' + as) }) : t('ai_slope', { slope: nf(sl / 10, 1) })]);
   }
-  if (dtr >= 90) out.push(['clim', t('ai_dtr', { dtr: nf(dtr / 10, 1) })]);
-  if (alt >= 200) out.push(['alt', t('ai_alt', { alt: nf(alt) })]);
-  if (rain >= 1450) out.push(['rain', t('ai_rain_hi', { mm: nf(rain) })]); else if (rain > 0 && rain <= 1150) out.push(['rain', t('ai_rain_lo', { mm: nf(rain) })]);
+  const A = CX.ai;
+  if (alt >= A.alt) out.push(['alt', t('ai_alt', { alt: nf(alt) })]);
+  if (dtr >= A.dtr) out.push(['clim', t('ai_dtr', { dtr: nf(dtr / 10, 1) })]);
+  if (rain >= A.rainHi) out.push(['rain', t('ai_rain_hi', { mm: nf(rain) })]); else if (rain > 0 && rain <= A.rainLo) out.push(['rain', t('ai_rain_lo', { mm: nf(rain) })]);
   return out.slice(0, 6);
 }
 
@@ -3329,8 +3458,8 @@ function countryName(p) { return p[L] || p.en || p.n; }
 function showCountry(f) {
   const p = f.properties; COUNTRY = { id: f.id, name: countryName(p), n: p.n, a2: p.a2 };
   map.setFilter('country-sel', ['==', ['id'], f.id]);
-  const isUy = p.a2 === 'UY';
-  $('#vUy').hidden = false; $('#crumbSep').hidden = false; $('#vUy').textContent = COUNTRY.name; $('#vUy').dataset.enter = isUy ? '1' : ''; $('#vUy').title = isUy ? t('intro_cta') : '';
+  const cx = CTRY[p.a2], isUy = !!cx;   // país con terroir y bodegas
+  $('#vUy').hidden = false; $('#crumbSep').hidden = false; $('#vUy').textContent = COUNTRY.name; $('#vUy').dataset.enter = isUy ? '1' : ''; $('#vUy').title = isUy ? t(cx.enter) : '';
   // hectáreas del país en la base de Adelaida (nombre en inglés de Natural Earth ≈ nombre de la base)
   const alias = { 'United States of America': 'United States', 'Turkey': 'Turkiye', 'South Korea': 'Korea, Rep.', 'Czechia': 'Czechia', 'Republic of Moldova': 'Moldova', 'Russian Federation': 'Russia', 'North Macedonia': 'North Macedonia' };
   const key = alias[p.n] || p.n, rs = WORLD ? WORLD.regions.filter(r => r.c === key) : [];
@@ -3344,11 +3473,11 @@ function showCountry(f) {
       '<div class="bars">' + top.map(([v, ha]) => '<div class="bar"><span>' + gLink(v, lab(v), null, key) + '</span><span class="num">' + nf(ha) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (ha / mx * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div>' +
       (WVAR !== 'all' && vt[WVAR] ? '<p class="hint">' + esc(lab(WVAR)) + ': ' + nf(vt[WVAR]) + ' ' + esc(t('ha')) + '</p>' : '')
       : '<p class="hint">' + esc(t('country_nodata')) + '</p>') +
-    (isUy ? '<button class="cta" id="enterBtn"><span>' + esc(t('intro_cta')) + '</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><p class="hint">' + esc(t('country_uy_hint')) + '</p>'
+    (isUy ? '<button class="cta" id="enterBtn"><span>' + esc(t(cx.enter)) + '</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><p class="hint">' + esc(t(cx.hint)) + '</p>'
           : '<p class="hint">' + esc(t('country_soon')) + '</p>');
   c.hidden = false; $('#intro').dataset.busy = '1';
   c.querySelector('.x').onclick = closeCountry;
-  const eb = c.querySelector('#enterBtn'); if (eb) eb.onclick = () => goUruguay();
+  const eb = c.querySelector('#enterBtn'); if (eb) eb.onclick = () => goCountry(p.a2);
 }
 function closeCountry() {
   COUNTRY = null; map.setFilter('country-sel', ['==', ['id'], -1]);
@@ -3461,7 +3590,7 @@ function buildSeals() {
     const m = new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat([w.lng, w.lat]);
     seals.push({ w, el, m, sz, st: 0, nw: 0 });
   });
-  map.on('move', sealVis); map.on('moveend', sealVis); map.on('resize', sealVis);
+  if (!buildSeals.on) { buildSeals.on = 1; map.on('move', sealVis); map.on('moveend', sealVis); map.on('resize', sealVis); }
   if (window.__map) { window.__seals = seals; window.__showWinery = id => showWinery(id, true); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { seals.forEach(x => x.nw = 0); sealVis(); });
 }
@@ -3589,10 +3718,10 @@ function padding() {
   return mob ? { top: 70, bottom: 210, left: 16, right: 16 } : { top: 80, bottom: 40, left: 360 + 40, right: 60 };
 }
 let curExag = 0;
-function setTerrain(on) { const ex = on ? exagFor(map.getZoom()) : 0; if (ex === curExag) return; curExag = ex; try { map.setTerrain(on ? { source: 'dem', exaggeration: ex } : null); } catch (e) {} }
+function setTerrain(on) { const ex = on ? exagFor(map.getZoom()) : 0, k = ex ? ex + CX.dem : 0; if (k === curExag) return; curExag = k; try { map.setTerrain(on ? { source: CX.dem, exaggeration: ex } : null); } catch (e) {} }
 // el relieve 3D se activa al acercarse: a escala país Uruguay es casi plano y el drapeado genera moiré en pantallas chicas;
 // de cerca (sierras) se exagera más para que la ladera se lea
-function exagFor(z) { return z >= 9 ? EXAG * 1.5 : EXAG; }
+function exagFor(z) { return z >= 9 ? CX.exag * 1.5 : CX.exag; }
 function syncTerrain() { const want = view === 'uy' && is3D && map.getZoom() >= 6.8; setTerrain(want); }
 map.on('moveend', syncTerrain);
 // sobrevuelo: al abrir una zona o bodega en 3D, la cámara gira despacio alrededor; cualquier gesto lo corta
@@ -3608,54 +3737,111 @@ function flyThenOrbit(opts) { stopOrbit(); map.once('moveend', () => { if (!orbi
 /* Vista del mundo: solo el mapa de calor y los países. El relieve, la grilla y las bodegas de Uruguay
    aparecen recién al entrar al país (clic en el país o acercándose a menos de ~zoom 5,8). */
 const UY_LAYERS = ['deps-fill', 'relief', 'hex-fill', 'hillshade', 'nb-mask', 'neighbors', 'neighbors-line', 'hex-sim', 'hex-line', 'lakes', 'rivers', 'vy-fill', 'vy-line', 'deps-line', 'reg-line', 'reg-sel', 'dep-sel', 'hex-sel', 'columns', 'wineries', 'win-sel'];
-const WORLD_LAYERS = ['countries', 'country-sel', 'borders', 'world-heat-c', 'world-heat', 'world-pts-c', 'world-pts', 'dog-fill', 'dog-line'];
+const WORLD_LAYERS = ['countries', 'country-sel', 'borders', 'world-heat-c', 'world-heat', 'world-pts-c', 'world-pts', 'do-ctry', 'dog-fill', 'dog-line'];
 // modo del mapa del mundo: vy = calor de viñedos por variedad · do = zonas de denominaciones de origen
-let WMODE = 'vy', WMK = 'all', DOGEO_FC = null;
+let WMODE = 'vy', WMK = 'all', DOGEO_FC = null, doFoc = null, doHovId = null, doSelId = null;
 function worldMode(m) {
   if (m) WMODE = m;
   document.querySelectorAll('[data-wm]').forEach(b => b.classList.toggle('sel', b.dataset.wm === WMODE));
   $('.wm-vy').hidden = WMODE !== 'vy'; $('.wm-do').hidden = WMODE !== 'do';
   const w = view === 'world';
   ['world-heat-c', 'world-heat'].forEach(id => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', w && WMODE === 'vy' ? 'visible' : 'none'));
-  ['dog-fill', 'dog-line'].forEach(id => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', w && WMODE === 'do' ? 'visible' : 'none'));
-  if (WMODE === 'do') { doOn = true; getDO().then(D => { doMarkers(D); doGeoAll(D); }); } else { doOn = $('#doToggle').checked; doVis(); }
+  ['do-ctry', 'dog-fill', 'dog-line'].forEach(id => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', w && WMODE === 'do' ? 'visible' : 'none'));
+  if (WMODE === 'do') getDO().then(D => doGeoAll(D));
 }
-// junta los contornos de todas las DO en una sola capa (se descarga una vez)
+/* Modo Denominaciones del mapa del mundo: como en la sección, cada zona con su contorno y un color por país.
+   De lejos se resaltan los países que tienen zonas; tocando un país se acerca y se listan sus zonas. */
+const doOk = x => WMK === 'all' || (WMK === 'do') === !DO_NOT.includes(x.level);
+const doCname = (D, c) => sysOf(D, c).name || c;
+const NE2DO = n => Object.keys(RA2).find(k => RA2[k] === n) || n;
+function doGroups(D) {
+  const byC = {}, col = {};
+  D.dos.filter(doOk).forEach(x => (byC[x.c] ||= []).push(x));
+  Object.values(byC).forEach(l => l.sort((a, b) => a.name.localeCompare(b.name)).forEach((x, i) => col[x.id] = DO_PAL[i % DO_PAL.length]));
+  return { byC, col };
+}
 function doGeoAll(D) {
   const kinds = { all: D.dos.length, do: D.dos.filter(x => !DO_NOT.includes(x.level)).length, ig: D.dos.filter(x => DO_NOT.includes(x.level)).length };
   $('#wmKinds').innerHTML = ['all', 'do', 'ig'].map(k => '<button data-wk="' + k + '" class="' + (WMK === k ? 'sel' : '') + '">' + esc(t(k === 'all' ? 'do_all' : 'do_kind_' + k)) + ' <b>' + kinds[k] + '</b></button>').join('');
   $('#wmKinds').querySelectorAll('[data-wk]').forEach(b => b.onclick = () => { WMK = b.dataset.wk; doGeoAll(D); });
-  const ok = x => WMK === 'all' || (WMK === 'do') === !DO_NOT.includes(x.level);
-  doCtry = 'all'; doMk.forEach(k => { const x = doById(D, k.id); k.el.style.display = doOn && view === 'world' && x && ok(x) ? '' : 'none'; });
-  const paint = () => { map.getSource('dogeo').setData({ type: 'FeatureCollection', features: DOGEO_FC.filter(f => { const x = doById(D, f.properties.id); return x && ok(x); }).map(f => { const x = doById(D, f.properties.id); f.properties.name = x.name + ' · ' + lvOf(D, x).label; return f; }) });
-    $('#wmNote').textContent = t('wm_note', { n: DOGEO_FC.length }); };
+  const { byC, col } = doGroups(D);
+  if (doFoc && !byC[doFoc]) doFoc = null;
+  map.setFilter('do-ctry', ['in', ['get', 'n'], ['literal', Object.keys(byC).map(c => RA2[c] || c)]]);
+  const wl = $('#wmList');
+  wl.innerHTML = doFoc
+    ? '<button class="wm-back" data-back>← ' + esc(t('do_all_ctry')) + '</button><h4>' + esc(doCname(D, doFoc)) + '</h4><div class="wm-dos">' +
+      byC[doFoc].map(x => '<button data-dl="' + x.id + '" class="' + (x.id === doSelId ? 'on' : '') + '"><i style="background:' + col[x.id] + '"></i><span>' + esc(x.name) + '</span><small>' + esc(lvOf(D, x).label) + '</small></button>').join('') + '</div>'
+    : '<p class="hint">' + esc(t('wm_tip')) + '</p><div class="wm-ctry">' + Object.entries(byC).sort((a, b) => b[1].length - a[1].length || doCname(D, a[0]).localeCompare(doCname(D, b[0]))).map(([c, l]) => '<button data-dc="' + esc(c) + '">' + esc(doCname(D, c)) + ' <b>' + l.length + '</b></button>').join('') + '</div>';
+  wl.querySelectorAll('[data-back]').forEach(b => b.onclick = () => { doSelId = null; doFocus(null); map.flyTo({ center: [10, 25], zoom: flat ? 1.9 : 1.7, pitch: 0, bearing: 0, duration: 2000 }); });
+  wl.querySelectorAll('[data-dc]').forEach(b => b.onclick = () => doFocus(b.dataset.dc));
+  wl.querySelectorAll('[data-dl]').forEach(b => { b.onclick = () => learnNav('do-' + b.dataset.dl); b.onmouseenter = () => doHover(b.dataset.dl); b.onmouseleave = () => doHover(null); });
+  const paint = () => {
+    map.getSource('dogeo').setData({ type: 'FeatureCollection', features: DOGEO_FC.filter(f => { const x = doById(D, f.properties.id); return x && doOk(x); }).map(f => { const x = doById(D, f.properties.id); Object.assign(f.properties, { name: x.name, lv: lvOf(D, x).label, col: col[x.id], c: x.c }); return f; }) });
+    $('#wmNote').textContent = t('wm_note', { n: DOGEO_FC.length });
+    doHover(doSelId);
+  };
   if (DOGEO_FC) return paint();
-  getDOGeo().then(IX => Promise.all(D.dos.filter(x => IX[x.id]).map(x => get('data/do/geo/' + x.id + '.json').then(f => { (f.type === 'FeatureCollection' ? f.features : [f]).forEach(g => { g.properties = { id: x.id, k: DO_NOT.includes(x.level) ? 'ig' : 'do' }; }); return f.type === 'FeatureCollection' ? f.features : [f]; }).catch(() => [])))).then(r => {
+  getDOGeo().then(IX => Promise.all(D.dos.filter(x => IX[x.id]).map(x => geoOf(x.id).then(f => { (f.type === 'FeatureCollection' ? f.features : [f]).forEach(g => { g.properties = { id: x.id }; }); return f.type === 'FeatureCollection' ? f.features : [f]; }).catch(() => [])))).then(r => {
     DOGEO_FC = r.flat().map((f, i) => (f.id = i, f)); paint(); });
+}
+// encuadre de un grupo de zonas (bbox del índice de contornos; si falta, su punto)
+function doFit(xs, maxZoom) {
+  getDOGeo().then(IX => {
+    const b = [180, 90, -180, -90];
+    xs.forEach(x => { const q = (IX[x.id] && IX[x.id].bbox) || [x.pt[0] - .3, x.pt[1] - .3, x.pt[0] + .3, x.pt[1] + .3]; b[0] = Math.min(b[0], q[0]); b[1] = Math.min(b[1], q[1]); b[2] = Math.max(b[2], q[2]); b[3] = Math.max(b[3], q[3]); });
+    const mob = innerWidth <= 760;
+    map.fitBounds([[b[0], b[1]], [b[2], b[3]]], { padding: mob ? { top: 80, bottom: 260, left: 24, right: 24 } : { top: 90, bottom: 60, left: 380, right: 70 }, maxZoom: maxZoom || 7.2, pitch: 0, bearing: 0, duration: 2200, essential: true });
+  });
+}
+function doFocus(c, fly = true) {
+  doFoc = c;
+  getDO().then(D => { doGeoAll(D); if (c && fly) doFit(doGroups(D).byC[c] || []); });
+}
+// resalta una zona (contorno blanco) en el mapa y en la lista
+function doHover(id) {
+  if (!DOGEO_FC) return;
+  const want = id || doSelId;
+  if (want === doHovId) return;
+  DOGEO_FC.forEach(f => { if (f.properties.id === doHovId || f.properties.id === want) map.setFeatureState({ source: 'dogeo', id: f.id }, { hov: f.properties.id === want }); });
+  doHovId = want;
+  document.querySelectorAll('#wmList [data-dl]').forEach(b => b.classList.toggle('on', b.dataset.dl === want));
 }
 function viewLayers() {
   if (!map.getLayer('hex-fill')) return;
   const uy = view === 'uy';
   UY_LAYERS.forEach(id => map.setLayoutProperty(id, 'visibility', uy ? 'visible' : 'none'));
+  // relieve del país activo; el del otro país queda apagado
+  ['relief', 'hillshade', 'relief-ar', 'hillshade-ar'].forEach(id => map.setLayoutProperty(id, 'visibility', uy && (id === CX.relief || id === CX.hs) ? 'visible' : 'none'));
   WORLD_LAYERS.forEach(id => map.setLayoutProperty(id, 'visibility', uy ? 'none' : 'visible'));
   if (uy) { paintHex(); map.setLayoutProperty('columns', 'visibility', MODE === 'bodegas' ? 'none' : 'visible'); }
   sealVis(); doVis(); worldMode();
 }
-const inUY = c => c.lng > UY_BOUNDS[0][0] - 0.3 && c.lng < UY_BOUNDS[1][0] + 0.3 && c.lat > UY_BOUNDS[0][1] - 0.3 && c.lat < UY_BOUNDS[1][1] + 0.3;
+const inBox = (c, b) => c.lng > b[0][0] - 0.3 && c.lng < b[1][0] + 0.3 && c.lat > b[0][1] - 0.3 && c.lat < b[1][1] + 0.3;
+const ctryAt = c => Object.keys(CTRY).find(k => inBox(c, CTRY[k].bounds));
 map.on('moveend', () => {
   if (!D) return;
-  const z = map.getZoom();
-  if (view === 'world' && z >= 5.8 && inUY(map.getCenter())) goUruguay(true);
+  const z = map.getZoom(), at = ctryAt(map.getCenter());
+  if (view === 'world' && z >= 5.8 && at) goCountry(at, true);
+  else if (view === 'uy' && z >= 5.8 && at && at !== CC && tourStep < 0) goCountry(at, true);
   else if (view === 'uy' && z < 4.2 && tourStep < 0 && coachStep < 0) goWorld(true);
 });
-function goUruguay(quick) {
+const goUruguay = quick => goCountry('UY', quick);
+let packBusy = null;
+// entra a un país: baja sus datos si hace falta, lo activa y vuela a él (quick: ya estamos ahí)
+async function goCountry(cc, quick) {
+  if (!CTRY[cc]) return;
+  if (CC !== cc || !D) {
+    const ld = !PKD[cc] && document.body.classList.add('pk-load');
+    try { const X = await (packBusy = fetchPack(cc)); usePack(X); } catch (e) { console.error(e); document.body.classList.remove('pk-load'); return; }
+    document.body.classList.remove('pk-load');
+  }
   view = 'uy'; viewLayers();
   $('#intro').hidden = true; $('#country').hidden = true; $('#panel').dataset.hidden = 'false'; legendBack();
   $('#tourBtn').hidden = false; $('#dimBtn').hidden = false;
   map.setFilter('country-sel', ['==', ['id'], -1]);
-  $('#vWorld').setAttribute('aria-pressed', 'false'); $('#vUy').hidden = false; $('#crumbSep').hidden = false; $('#vUy').textContent = t('view_uy'); $('#vUy').dataset.enter = ''; $('#vUy').setAttribute('aria-pressed', 'true');
+  $('#vWorld').setAttribute('aria-pressed', 'false'); $('#vUy').hidden = false; $('#crumbSep').hidden = false; $('#vUy').textContent = t(CX.view); $('#vUy').dataset.enter = ''; $('#vUy').setAttribute('aria-pressed', 'true');
   if (!quick) {
-    const cam = map.cameraForBounds(UY_BOUNDS, { padding: padding() });
+    const cam = map.cameraForBounds(CX.bounds, { padding: padding() });
     map.flyTo({ center: cam.center, zoom: cam.zoom - 0.15, pitch: is3D ? (narrow.matches ? 32 : 52) : 0, bearing: is3D ? -12 : 0, duration: 3200, essential: true });
   }
   if (quick) syncTerrain();
@@ -3677,14 +3863,14 @@ function flyDep(d) {
 
 /* ---------- recorrido ---------- */
 function renderTour() {
-  const d = depByName[TOUR[tourStep]]; const tc = $('#tour');
+  const TOUR = CX.tour, d = depByName[TOUR[tourStep]]; const tc = $('#tour');
   const wc = WIN.filter(w => !w.unconf && w.dep === d.name).length;
   const u = units[d.unit];
   tc.innerHTML = '<header><div class="eyebrow">' + esc(t('tour_btn')) + ' · ' + (tourStep + 1) + ' / ' + TOUR.length + '</div><h2>' + esc(d.name) + '</h2><div class="steps">' + TOUR.map((_, k) => '<i class="' + (k <= tourStep ? 'on' : '') + '"></i>').join('') + '</div>' + X_BTN_() + '</header>' +
     '<div class="body"><ul class="lines">' +
     '<li>' + esc(t('tour_l1', { ha: nf(d.ha), pct: nf(d.ha / INAVI.total * 100, 1) + ' %', w: nf(wc) })) + '</li>' +
-    '<li>' + esc(t('tour_l2', { rock: t('rock_' + d.rock), unit: u ? u.n : '' })) + '</li>' +
-    '<li>' + esc(t('tour_l3', { gdd: nf(d.gdd), wk: t('wk_' + wkOf(d.gdd)), rain: nf(d.rain), sea: nf(d.sea), alt: nf(d.alt) })) + '</li></ul>' +
+    '<li>' + esc(t('tour_l2', { rock: t('rock_' + d.rock), unit: u ? u.n : '', tex: d.tex >= 0 ? t('tex_' + d.tex) : t('missing'), alt: nf(d.alt) })) + '</li>' +
+    '<li>' + esc(t('tour_l3', { gdd: nf(d.gdd), wk: t('wk_' + wkOf(d.gdd)), rain: nf(d.rain), sea: nf(d.sea), alt: nf(d.alt), dtr: nf(d.dtr / 10, 1) })) + '</li></ul>' +
     '<div class="nav"><button class="btn" id="tPrev"' + (tourStep === 0 ? ' disabled style="opacity:.4"' : '') + '>' + esc(t('tour_prev')) + '</button>' +
     (tourStep < TOUR.length - 1 ? '<button class="btn" id="tNext">' + esc(t('tour_next')) + '</button>' : '<button class="btn" id="tEnd">' + esc(t('tour_end')) + '</button>') + '</div></div>';
   tc.hidden = false; $('#card').hidden = true; $('#legend').hidden = true;
@@ -3695,18 +3881,18 @@ function renderTour() {
   if (en) en.onclick = endTour;
 }
 function tourGo() {
-  const d = depByName[TOUR[tourStep]];
-  const bearings = [-25, 18, -38, 28, -8];
+  const d = depByName[CX.tour[tourStep]];
+  const bearings = CX.bear;
   const cam = map.cameraForBounds(d.bbox, { padding: padding() });
   map.flyTo({ center: d.pt || cam.center, zoom: Math.min(cam.zoom + 0.5, 9.6), pitch: is3D ? 62 : 0, bearing: bearings[tourStep], duration: 3400, essential: true });
   map.setFilter('dep-sel', ['==', ['get', 'id'], d.id]);
   renderTour();
 }
-function startTour() { if (view !== 'uy') goUruguay(true); closeCard(); clearSim(); tourStep = 0; tourGo(); }
+function startTour() { if (view !== 'uy') goCountry(CC, true); closeCard(); clearSim(); tourStep = 0; tourGo(); }
 function endTour() { if (tourStep < 0) return; tourStep = -1; $('#tour').hidden = true; legendBack(); zoneSel(); }
 
 /* ---------- eventos ---------- */
-$('#vUy').onclick = () => { if (view === 'world' && COUNTRY && COUNTRY.a2 === 'UY') goUruguay(); };
+$('#vUy').onclick = () => { if (view === 'world' && COUNTRY && CTRY[COUNTRY.a2]) goCountry(COUNTRY.a2); };
 $('#projBtn').onclick = () => setFlat(!flat);
 $('#vWorld').onclick = () => { if (view !== 'world') goWorld(); };
 $('#tourBtn').onclick = () => tourStep >= 0 ? endTour() : startTour();
@@ -3730,6 +3916,12 @@ map.on('click', e => {
 });
 function mapClick(e) {
   if (view === 'world') {
+    if (WMODE === 'do') {
+      const z = map.queryRenderedFeatures(e.point, { layers: ['dog-fill'] })[0];
+      if (z) return learnNav('do-' + z.properties.id);
+      const dc = map.getZoom() < 7 && map.queryRenderedFeatures(e.point, { layers: ['do-ctry'] })[0];
+      if (dc) { closeCountry(); return doFocus(NE2DO(dc.properties.n)); }
+    }
     const c = map.queryRenderedFeatures(e.point, { layers: ['countries'] })[0];
     if (c) showCountry(c); else closeCountry();
     return;
@@ -3755,7 +3947,14 @@ map.on('mousemove', e => {
   if (!D) return;
   const w = winAt(e.point, view === 'uy' ? 9 : 14);
   if (w) { if (hovW !== w.id) { pop.setLngLat([w.lng, w.lat]).setText(w.name).addTo(map); hovW = w.id; } map.getCanvas().style.cursor = 'pointer'; return; }
-  if (view === 'world' && map.getZoom() < 7) {
+  if (view === 'world' && WMODE === 'do') {
+    const z = map.queryRenderedFeatures(e.point, { layers: ['dog-fill'] })[0];
+    if (z) { const p = z.properties, key = 'd:' + p.id; pop.setLngLat(e.lngLat); if (hovW !== key) { pop.setHTML('<div class="wpop"><b>' + esc(p.name) + '</b>' + esc(p.lv || '') + '</div>').addTo(map); hovW = key; doHover(p.id); } pop.setLngLat(e.lngLat); map.getCanvas().style.cursor = 'pointer'; return; }
+    doHover(null);
+    const dc = map.getZoom() < 7 && map.queryRenderedFeatures(e.point, { layers: ['do-ctry'] })[0];
+    if (dc && DOD[L]) { const c = NE2DO(dc.properties.n), key = 'c:' + c; pop.setLngLat(e.lngLat); if (hovW !== key) { const k = doGroups(DOD[L]).byC[c] || []; pop.setHTML('<div class="wpop"><b>' + esc(doCname(DOD[L], c)) + '</b>' + esc(t('do_n', { n: k.length })) + '</div>').addTo(map); hovW = key; } pop.setLngLat(e.lngLat); map.getCanvas().style.cursor = 'pointer'; return; }
+  }
+  if (view === 'world' && WMODE === 'vy' && map.getZoom() < 7) {
     const r = 10, f = map.queryRenderedFeatures([[e.point.x - r, e.point.y - r], [e.point.x + r, e.point.y + r]], { layers: map.getZoom() < 4.3 ? ['world-pts-c'] : ['world-pts'] })[0];
     if (f) {
       const p = f.properties, key = 'w:' + p.n;
@@ -4365,7 +4564,7 @@ function renderLearnIndex() {
 }
 function renderGrapeList() {
   const el = $('#learn'); el.className = 'theme-' + (learnTab === 'white' ? 'white' : 'red');
-  const cards = LEARN_GRAPES.filter(g => g.kind === learnTab).map(g => { const ha = (INAVI.nat || {})[g.name];
+  const cards = LEARN_GRAPES.filter(g => g.kind === learnTab).map(g => { const ha = (UYX.INAVI.nat || {})[g.name];
     return '<button class="l-gcard ' + g.kind + ' ready" data-l="' + g.id + '"><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc((ha ? nf(ha) + ' ' + t('ha') + ' ' + t('in_uy') + ' · ' : '') + t('learn_open')) + '</small></button>'; }).join('');
   el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero sm"><h1>' + esc(t('learn_sub_grapes')) + '</h1><p>' + esc(t('learn_sub_grapes_d')) + '</p></header>' +
     '<div class="l-tabs" role="tablist">' + ['red', 'white'].map(k => '<button role="tab" data-tab="' + k + '" class="' + (k === learnTab ? 'sel' : '') + '"><span class="berry ' + k + '"></span>' + esc(t(k === 'red' ? 'learn_reds' : 'learn_whites')) + '</button>').join('') + '</div>' +
@@ -4659,7 +4858,7 @@ function radar(labels, vals, vals2) {
 // mapa chico de Uruguay con los departamentos coloreados por hectáreas de la uva
 function miniMap(gn) {
   if (!DEPS_GJ) return '';
-  const ha = (INAVI.grapes || {})[gn] || {}, mx = Math.max(1, ...Object.values(ha));
+  const ha = (UYX.INAVI.grapes || {})[gn] || {}, mx = Math.max(1, ...Object.values(ha));
   const x0 = -58.5, x1 = -53.1, y0 = -35.05, y1 = -30.05, k = Math.cos(32.5 * Math.PI / 180), W = 300, H = Math.round(W * (y1 - y0) / ((x1 - x0) * k));
   const P = ([x, y]) => (((x - x0) / (x1 - x0)) * W).toFixed(1) + ' ' + (((y1 - y) / (y1 - y0)) * H).toFixed(1);
   const path = g => (g.type === 'Polygon' ? [g.coordinates] : g.coordinates).map(pl => pl.map(r => 'M' + r.filter((_, j) => j % 3 === 0).map(P).join('L') + 'Z').join('')).join('');
@@ -4685,8 +4884,8 @@ function renderGrape(all, gid) {
   const ctry = Object.entries(byC).sort((a, b) => b[1].ha - a[1].ha), wHa = ctry.reduce((s, c) => s + c[1].ha, 0), cm = ctry.length ? ctry[0][1].ha : 1;
   const RA = { 'United States': 'United States of America', 'Turkiye': 'Turkey', 'Korea, Rep.': 'South Korea', 'Moldova': 'Republic of Moldova', 'Russia': 'Russian Federation' }, cFeat = c => COUNTRIES_GJ && COUNTRIES_GJ.features.find(f => f.properties.n === (RA[c] || c)), cName = c => { const f = cFeat(c); return f ? countryName(f.properties) : c; };
   const top2 = wHa ? (ctry.slice(0, 2).reduce((s, c) => s + c[1].ha, 0) / wHa * 100) : 0;
-  const uyHa = (INAVI.nat || {})[gk] || 0, inGrapes = GRAPES.includes(gk), deps2 = Object.entries((INAVI.grapes || {})[gk] || {}).sort((a, b) => b[1] - a[1]), dm = deps2.length ? deps2[0][1] : 1;
-  const wins = WIN.filter(w => !w.unconf && w.profile && w.profile.main_grape === gk).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999));
+  const uyHa = (UYX.INAVI.nat || {})[gk] || 0, inGrapes = CTRY.UY.grapes.includes(gk), deps2 = Object.entries((UYX.INAVI.grapes || {})[gk] || {}).sort((a, b) => b[1] - a[1]), dm = deps2.length ? deps2[0][1] : 1;
+  const wins = UYX.WIN.filter(w => !w.unconf && w.profile && w.profile.main_grape === gk).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999));
   // rueda de aromas (dona SVG)
   const n6 = d.aromas.length, R = 92, r0 = 50, seg = (i) => { const a0 = (i / n6) * 2 * Math.PI - Math.PI / 2, a1 = ((i + 1) / n6) * 2 * Math.PI - Math.PI / 2, p = (rr, a) => (100 + rr * Math.cos(a)).toFixed(1) + ' ' + (100 + rr * Math.sin(a)).toFixed(1);
     return 'M' + p(R, a0) + 'A' + R + ' ' + R + ' 0 0 1 ' + p(R, a1) + 'L' + p(r0, a1) + 'A' + r0 + ' ' + r0 + ' 0 0 0 ' + p(r0, a0) + 'Z'; };
@@ -4785,7 +4984,7 @@ function renderGrape(all, gid) {
     p.onclick = () => toUy(() => { S.dep = +p.dataset.d; S.reg = -1; S.grape = inGrapes ? gk : 'all'; S.cols = inGrapes; $('#grapeSel').value = S.grape; $('#colsToggle').checked = inGrapes; $('#depSel').value = S.dep; zoneSel(); buildColumns(); renderLegend(); schedule(); flyDep(deps[S.dep]); });
   });
   // conexión con el mapa
-  const toUy = (fn) => { closeLearn(); if (view !== 'uy') goUruguay(); setMode('terroir'); fn(); };
+  const toUy = (fn) => { closeLearn(); (view !== 'uy' || CC !== 'UY' ? goCountry('UY') : Promise.resolve()).then(() => { setMode('terroir'); fn(); }); };
   const uyCols = () => toUy(() => { S.grape = gk; S.cols = true; $('#grapeSel').value = gk; $('#colsToggle').checked = true; buildColumns(); renderLegend(); schedule(); });
   const toWorld = (center, zoom, c) => { closeLearn(); WVAR = onMap ? prime : 'all'; if ($('#wVar')) $('#wVar').value = WVAR; paintWorld(); if (view !== 'world') goWorld(true);
     const f = c && cFeat(c); if (f) showCountry(f);
@@ -4796,7 +4995,7 @@ function renderGrape(all, gid) {
   el.querySelectorAll('.wbars [data-c]').forEach(b => b.onclick = () => { const c = b.dataset.c, v = byC[c]; if (c === 'Uruguay' && inGrapes) return uyCols(); toWorld(v.w ? [v.x / v.w, v.y / v.w] : null, 4.6, c); });
   $('#lMapW').onclick = () => toWorld();
   const mu = $('#lMapUy'); if (mu) mu.onclick = uyCols;
-  el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); if (view !== 'uy') goUruguay(true); setMode('bodegas'); showWinery(+b.dataset.w, true); });
+  el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); (view !== 'uy' || CC !== 'UY' ? goCountry('UY', true) : Promise.resolve()).then(() => { setMode('bodegas'); showWinery(+b.dataset.w, true); }); });
   el.scrollTop = 0;
 }
 /* ---------- Aprender: ¿cuál es tu vino ideal? (quiz de gustos cotidianos + situación) ---------- */
@@ -4865,7 +5064,7 @@ function quizResult() {
       const f = re => { const m = st.find(([l]) => re.test(l)); return m ? top.d.styles[m[1]] : null; };
       return (w.bubbles > 1 && f(/espum/)) || (w.rose > Math.max(w.red, w.white) && f(/rosad/)) || (w.sweet > .9 && f(/dulce/)) || (w.oak > .5 && f(/roble|barrica|crianza|reserva/)) || f(/joven|sin madera|fresc/) || top.d.styles[0]; })();
     const okp = top.d.pair.filter((p, j) => top.e.pair[j].ok), pr = (pair.length && okp.find(p => /asado|carne/i.test(p.label + top.e.pair[top.d.pair.indexOf(p)].k))) || okp[0];
-    const wins = WIN.filter(x => !x.unconf && x.profile && x.profile.main_grape === top.e.name).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999)).slice(0, 6);
+    const wins = UYX.WIN.filter(x => !x.unconf && x.profile && x.profile.main_grape === top.e.name).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999)).slice(0, 6);
     const col = (top.g.kind === 'white' ? AGE_COL_W : AGE_COL)[w.oak > .5 ? 1 : 0], moment = QZ.q[3] && QZ.q[3].o[QZ.a[3]], mk = QZ.q[3] && QZ.q[3].k;
     el.innerHTML = learnTop('index') + '<div class="lw qz-res"><header class="l-hero sm"><div class="eyebrow">' + esc(t('qz_res_eye')) + (moment ? ' · ' + esc(t('qz_' + mk + '_' + moment[0])) : '') + '</div>' +
       '<div class="qz-hero"><div class="qz-glass">' + glassSVG(col[0], col[1]) + '</div><div><h1>' + esc(top.d.name) + '</h1>' + (sty ? '<p class="l-tag">' + esc(sty.label) + ' — ' + esc(sty.txt) + '</p>' : '') + '<div class="qz-match"><b>' + pct(top) + ' %</b> ' + esc(t('qz_match')) + '</div></div></div></header>' +
@@ -4878,7 +5077,7 @@ function quizResult() {
     learnWire(el);
     award('quiz', 100, 1);
     $('#qzAgain').onclick = () => { QZ = { i: 0, a: [], q: [] }; renderQuiz(); };
-    el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); if (view !== 'uy') goUruguay(true); setMode('bodegas'); showWinery(+b.dataset.w, true); });
+    el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); (view !== 'uy' || CC !== 'UY' ? goCountry('UY', true) : Promise.resolve()).then(() => { setMode('bodegas'); showWinery(+b.dataset.w, true); }); });
     el.scrollTop = 0;
   });
 }
@@ -4890,17 +5089,10 @@ const sysOf = (D, c) => D.systems.find(s => s.c === c) || { levels: [], name: c 
 const lvOf = (D, x) => (sysOf(D, x.c).levels.find(l => l.k === x.level) || { label: x.level });
 const COL_IC = { tinto: '#8c1d2f', blanco: '#e6d47a', rosado: '#e79aa6', espumoso: '#f1e3a0', dulce: '#d7a13b', fortificado: '#6b2a1c', destilado: '#b97a2c' };
 const colChips = cs => '<div class="do-cols">' + (cs || []).map(c => '<span><i style="background:' + (COL_IC[c] || '#888') + '"></i>' + esc(t('col_' + c)) + '</span>').join('') + '</div>';
-// marcadores de las DO en el mapa del mundo (solo en la vista mundo)
-function doMarkers(D, sel) {
-  if (!doMk.length) D.dos.forEach(x => { const el = document.createElement('button'); el.className = 'do-mk' + (DO_NOT.includes(x.level) ? ' ig' : ''); el.innerHTML = '<i></i><span>' + esc(x.name) + '</span>'; el.title = x.name;
-    el.onclick = ev => { ev.stopPropagation(); learnNav('do-' + x.id); };
-    doMk.push({ id: x.id, el, m: new maplibregl.Marker({ element: el }).setLngLat(x.pt).addTo(map) }); });
-  doMk.forEach(k => { k.el.classList.toggle('sel', k.id === sel); const o = doById(D, k.id); if (o) { k.el.querySelector('span').textContent = o.name; k.el.title = o.name; } }); if (sel) doCtry = 'all';
-  doVis();
-}
-function doVis() { const D = DOD[L] || DOD.es; doMk.forEach(k => { const x = D && doById(D, k.id); k.el.style.display = doOn && view === 'world' && (doCtry === 'all' || (x && x.c === doCtry)) ? '' : 'none'; }); const tg = $('#doToggle'); if (tg) tg.checked = doOn; }
-function showDOMap(id) { getDO().then(D => { const x = doById(D, id); closeLearn(); doOn = true; if (view !== 'world') goWorld(true); doMarkers(D, id);
-  if (x) map.flyTo({ center: x.pt, zoom: x.c === 'Uruguay' ? 5.4 : 6.6, pitch: 0, bearing: 0, duration: 2600, essential: true }); }); }
+// las DO en el mapa del mundo: modo Denominaciones (contornos por país, como en la sección)
+function doMarkers() { if (view === 'world') worldMode('do'); }
+function doVis() {}
+function showDOMap(id) { getDO().then(D => { const x = doById(D, id); closeLearn(); if (view !== 'world') goWorld(true); doSelId = id; doFoc = x ? x.c : null; worldMode('do'); if (x) doFit([x], 8.5); }); }
 // mapa de un país con todas sus DO, cada una con su color; se puede pasar el mouse y tocar para abrir la ficha
 const DO_PAL = ['#e2b46a', '#c0394f', '#6fa8dc', '#8fd694', '#d08ad8', '#f08a5d', '#5fc9c0', '#e6d47a', '#a98bdb', '#ef8fb0', '#9ccf6a', '#d9a066'];
 let doCMap = null;
@@ -4921,7 +5113,7 @@ function doCountryMap(D, c) {
   const box = $('#doCMap'), seq = learnSeq; if (!box || !window.maplibregl) return;
   const list = D.dos.filter(o => o.c === c && (DO_NOT.includes(o.level) ? 'ig' : 'do') === doKind).sort((a, b) => a.name.localeCompare(b.name)), col = {};
   list.forEach((o, i) => col[o.id] = DO_PAL[i % DO_PAL.length]);
-  Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => Promise.all(list.map(o => IX[o.id] ? get('data/do/geo/' + o.id + '.json').then(f => (f.id = list.indexOf(o), f.properties = { id: o.id, name: o.name, col: col[o.id] }, f)).catch(() => null) : null))).then(fs => {
+  Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => Promise.all(list.map(o => IX[o.id] ? geoOf(o.id).then(f => (f.id = list.indexOf(o), f.properties = { id: o.id, name: o.name, col: col[o.id] }, f)).catch(() => null) : null))).then(fs => {
     if (seq !== learnSeq || !box.isConnected) return;
     if (doCMap) { doCMap.remove(); doCMap = null; }
     fs = fs.filter(Boolean);
@@ -4992,8 +5184,7 @@ function renderDOIndex() {
     el.querySelectorAll('.pl').forEach(g => g.onclick = () => { doLv = +g.dataset.lv; renderDOIndex(); });
     el.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { doFilt = b.dataset.f; if (doFilt !== 'all') { doSys = doFilt; doLv = -1; } const y = el.scrollTop; renderDOIndex(); requestAnimationFrame(() => { if (doFilt !== 'all') $('#doExplore').scrollIntoView({ block: 'start' }); else el.scrollTop = y; }); });
     if (doFilt !== 'all') doCountryMap(D, doFilt); else if (doCMap) { doCMap.remove(); doCMap = null; }
-    $('#doAllMap').onclick = () => { closeLearn(); doOn = true; doCtry = doFilt; if (view !== 'world') goWorld(doFilt !== 'all'); doMarkers(D);
-      if (doFilt !== 'all') { const xs = list.map(o => o.pt[0]), ys = list.map(o => o.pt[1]); map.fitBounds([[Math.min(...xs) - 1.5, Math.min(...ys) - 1.5], [Math.max(...xs) + 1.5, Math.max(...ys) + 1.5]], { padding: 60, duration: 2400, maxZoom: doFilt === 'Uruguay' ? 5.4 : 7 }); } };
+    $('#doAllMap').onclick = () => { closeLearn(); if (view !== 'world') goWorld(true); doSelId = null; doFoc = doFilt !== 'all' ? doFilt : null; worldMode('do'); if (doFoc) doFit(list); };
     // etiqueta: primero encontrá la DO; después tocá cualquier parte para ver qué es
     let found = false; const lab = el.querySelector('.do-label');
     lab.querySelectorAll('[data-h]').forEach(s => s.onclick = () => { const h = s.dataset.h;
@@ -5046,14 +5237,18 @@ function doCountBox(D, c, n) {
 }
 // mapa 2D interactivo de la DO: su contorno real (si hay datos públicos) y las DO vecinas del mismo país
 let DOGEO = null, doMini = null;
-const getDOGeo = () => DOGEO ? Promise.resolve(DOGEO) : get('data/do/geo/_index.json').then(d => (DOGEO = d)).catch(() => (DOGEO = {}));
+// contornos de las DO: un solo archivo (índice + geometrías); geoOf devuelve una copia que se puede modificar
+let GEOPK = null;
+const geoPack = () => GEOPK || (GEOPK = get('data/do/geo.json').catch(() => ({ index: {}, geo: {} })));
+const getDOGeo = () => DOGEO ? Promise.resolve(DOGEO) : geoPack().then(d => (DOGEO = d.index));
+const geoOf = id => geoPack().then(d => { if (!d.geo[id]) throw new Error('sin contorno ' + id); return JSON.parse(JSON.stringify(d.geo[id])); });
 const circleGeo = (pt, km) => ({ type: 'Polygon', coordinates: [Array.from({ length: 49 }, (_, i) => { const a = i / 48 * 2 * Math.PI; return [pt[0] + km / 111 / Math.cos(pt[1] * Math.PI / 180) * Math.cos(a), pt[1] + km / 111 * Math.sin(a)]; })] });
 function doMiniMap(D, x) {
   if (doMini) { doMini.remove(); doMini = null; }
   const box = $('#doMini'), seq = learnSeq; if (!box || !window.maplibregl) return;
   getDOGeo().then(IX => {
     const same = D.dos.filter(o => o.c === x.c), withGeo = same.filter(o => IX[o.id]);
-    Promise.all(withGeo.map(o => get('data/do/geo/' + o.id + '.json').then(f => (f.properties = { id: o.id, name: o.name, sel: o.id === x.id ? 1 : 0 }, f)).catch(() => null))).then(fs => {
+    Promise.all(withGeo.map(o => geoOf(o.id).then(f => (f.properties = { id: o.id, name: o.name, sel: o.id === x.id ? 1 : 0 }, f)).catch(() => null))).then(fs => {
       if (seq !== learnSeq || !box.isConnected) return;
       if (doMini) { doMini.remove(); doMini = null; }
       fs = fs.filter(Boolean);
@@ -5104,7 +5299,7 @@ function ctryFrame(D, x) {
 }
 function fillDOImg(D, x) {
   const box = $('#doImg'); if (!box) return;
-  Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => (IX[x.id] ? get('data/do/geo/' + x.id + '.json').catch(() => null) : Promise.resolve(null))).then(geo => {
+  Promise.all([getCountries(), getDOGeo()]).then(([, IX]) => (IX[x.id] ? geoOf(x.id).catch(() => null) : Promise.resolve(null))).then(geo => {
     const fr = ctryFrame(D, x); if (!fr || !$('#doImg')) return;
     const poly = geo || { type: 'Feature', geometry: circleGeo(x.pt, 25) };
     const pb = fbox(poly), pad = Math.max(.25, (pb[2] - pb[0]) * .35, (pb[3] - pb[1]) * .35), zb = [pb[0] - pad, pb[1] - pad, pb[2] + pad, pb[3] + pad];
@@ -5138,7 +5333,7 @@ function renderDOSheet(id) {
   });
 }
 map.on('zoomend', () => document.body.classList.toggle('do-z', map.getZoom() >= 5));
-$('#doToggle').onchange = e => { doOn = e.target.checked; doCtry = 'all'; if (doOn) getDO().then(D => doMarkers(D)); else doVis(); };
+
 document.querySelectorAll('[data-wm]').forEach(b => b.onclick = () => worldMode(b.dataset.wm));
 // en el globo, los marcadores del otro lado de la Tierra no se ven (si no, aparecen encima del país que estás mirando)
 map.on('move', () => { if (!doMk.length) return; const c = map.getCenter(), r = Math.PI / 180;
