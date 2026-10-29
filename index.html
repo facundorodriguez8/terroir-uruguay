@@ -5260,11 +5260,10 @@ function doCountryMap(D, c) {
         { id: 'bg', type: 'background', paint: { 'background-color': '#0d1a22' } },
         { id: 'cf', type: 'fill', source: 'c', paint: { 'fill-color': ['case', inC, '#3a2a2c', '#231d1e'] } },
         { id: 'cl', type: 'line', source: 'c', paint: { 'line-color': ['case', inC, '#8a6a3a', '#3e3436'], 'line-width': all ? .6 : 1 } },
-        { id: 'df', type: 'fill', source: 'd', paint: { 'fill-color': ['get', 'col'], 'fill-opacity': ['case', hi, .85, .5] } },
-        { id: 'dl', type: 'line', source: 'd', paint: { 'line-color': ['case', hi, '#ffffff', ['get', 'col']], 'line-width': ['case', hi, 2.5, 1] } },
-        { id: 'pt', type: 'circle', source: 'p', filter: ['==', ['get', 'geo'], 0], paint: { 'circle-radius': ['case', hi, 9, all ? 4.5 : 6], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }]
-        // en el mundo los contornos son muy chicos: también un punto hasta que se acerca
-        .concat(all ? [{ id: 'pt2', type: 'circle', source: 'p', maxzoom: 5, filter: ['==', ['get', 'geo'], 1], paint: { 'circle-radius': ['case', hi, 9, 4.5], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }] : []) } });
+        { id: 'df', type: 'fill', source: 'd', paint: { 'fill-color': ['get', 'col'], 'fill-opacity': ['case', hi, .85, all ? .7 : .5] } },
+        // en el mundo (todas) el contorno lleva un borde más grueso para que las zonas chicas se vean
+        { id: 'dl', type: 'line', source: 'd', paint: { 'line-color': ['case', hi, '#ffffff', ['get', 'col']], 'line-width': ['case', hi, 2.5, all ? 1.6 : 1] } },
+        { id: 'pt', type: 'circle', source: 'p', filter: ['==', ['get', 'geo'], 0], paint: { 'circle-radius': ['case', hi, 9, all ? 4.5 : 6], 'circle-color': ['get', 'col'], 'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', hi, 2.5, 1] } }] } });
     doCMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right'); doCMap.scrollZoom.disable();
     const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'mini-pop', offset: 14 });
     let hov = null;

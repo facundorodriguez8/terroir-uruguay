@@ -798,5 +798,85 @@
    -66.976,
    -27.707
   ]
+ },
+ "pampa-el-cepillo": {
+  "quality": "oficial",
+  "source": "RESOL-2019-1-APN-INV#MAGYP (vértices de la resolución)",
+  "bbox": [
+   -69.181,
+   -33.87,
+   -69.065,
+   -33.786
+  ]
+ },
+ "paraje-altamira": {
+  "quality": "aprox",
+  "source": "Res. INV C.44/2013 y RESOL-2017-82 (coordenadas de la resolución; los lados de cota, río y calle, aproximados)",
+  "bbox": [
+   -69.248,
+   -33.811,
+   -69.119,
+   -33.725
+  ]
+ },
+ "san-pablo": {
+  "quality": "aprox",
+  "source": "RESOL-2019-10-APN-INV#MAGYP (río de las Tunas, RP 89, cota 1.700 m y arroyo Villegas) + OpenStreetMap (ODbL) y Copernicus DEM",
+  "bbox": [
+   -69.385,
+   -33.509,
+   -69.221,
+   -33.387
+  ]
+ },
+ "chapadmalal": {
+  "quality": "aprox",
+  "source": "Res. INV C.20/2014 (calle 515, RP 11, arroyo Las Brusquitas) + OpenStreetMap (ODbL), Colonia Chapadmalal",
+  "bbox": [
+   -57.781,
+   -38.245,
+   -57.601,
+   -38.119
+  ]
+ },
+ "valle-del-tulum": {
+  "quality": "aprox",
+  "source": "Res. INV C.32/2002 (sin límites; departamentos del valle) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -69.126,
+   -32.382,
+   -66.662,
+   -30.93
+  ]
+ },
+ "valles-calchaquies": {
+  "quality": "aprox",
+  "source": "Res. INV C.37/2002 (sin límites; departamentos de los valles) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -66.874,
+   -27.249,
+   -65.617,
+   -24.74
+  ]
+ },
+ "quebrada-de-humahuaca": {
+  "quality": "aprox",
+  "source": "Res. INV C.39/2015 (departamentos Tumbaya, Tilcara y Humahuaca) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -66.022,
+   -24.058,
+   -65.017,
+   -22.606
+  ]
+ },
+ "alto-valle-del-rio-negro": {
+  "quality": "aprox",
+  "source": "Res. INV C.37/2002 (sin límites; departamento General Roca) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -68.256,
+   -39.178,
+   -66.639,
+   -37.575
+  ]
  }
 }
