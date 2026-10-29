@@ -1164,7 +1164,7 @@ body.do-z .do-mk span { opacity: 1; }
 .lh-first span { display: flex; flex-direction: column; min-width: 0; } .lh-first b { font-size: 19px; line-height: 1.2; } .lh-first small { font-size: 14px; opacity: .8; }
 .lh-first em { font-style: normal; font-size: 24px; margin-left: auto; padding-left: 10px; }
 .lh-in { padding-block: 10px 70px; }
-.lh-or { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #f6c27a; font-weight: 700; margin: 0 0 16px; }
+.lh-or { font-size: 17px; color: #f6c27a; font-weight: 600; margin: 0 0 16px; }
 .lh-doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 @media (max-width: 760px) { .lh-doors { grid-template-columns: minmax(0, 1fr); } }
 .lh-door { position: relative; display: grid; grid-template-columns: 120px minmax(0, 1fr); grid-template-rows: 1fr auto; gap: 6px 20px; align-items: center; text-align: left; padding: 24px; min-height: 220px; border-radius: 26px; border: 1px solid rgba(255,246,230,.12); color: #fff6e6; font: inherit; cursor: pointer; overflow: hidden; transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s, border-color .3s; }
@@ -1500,6 +1500,19 @@ button, .chip, select, a { touch-action: manipulation; }
 .tool .lbl-s { display: none; }
 @media (max-width: 760px) { #doBtn .lbl { display: none; } #doBtn .lbl-s { display: block; font-size: 10.5px; line-height: 1.1; } }
 #learn:focus { outline: none; }
+
+/* Aprender v55: sin huérfanas en las grillas y barra alineada con el contenido */
+@media (min-width: 761px) { .lh-doors > .lh-door:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+#learn .l-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+@media (min-width: 601px) {
+  #learn .pl-games { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  #learn .pl-game { grid-column: span 2; }
+  #learn .pl-game:nth-last-child(2):nth-child(3n+1), #learn .pl-game:nth-last-child(2):nth-child(3n+1) ~ .pl-game { grid-column: span 3; }
+  #learn .pl-game:last-child:nth-child(3n+1) { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) { #learn .pl-game:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+#learn .l-top { padding-inline: max(20px, calc((100% - 960px) / 2)); }
+#learn.lh .l-top { padding-inline: max(20px, calc((100% - 1100px) / 2)); }
 
 </style>
 </head>
@@ -2552,6 +2565,19 @@ const T_ADD48 = {
   ko: '테루아: 전국. 포도밭 지역은 더 자세히(작은 육각형). 와이너리: 전국.'
 };
 for (const l in T_ADD48) T[l].ar_scope__ar = T_ADD48[l], T[l].ar_scope = T[l].ar_scope;
+// Argentina separa el franco arenoso (3) del arenoso (4); en Uruguay los dos van juntos en 3
+const T_ADD49 = {
+  es: ['Franco arenoso', 'Suelo franco arenoso: drena bien y se calienta, con algo de reserva de agua. Vinos aromáticos, de taninos suaves.', 'Arenoso', 'Suelo arenoso: drena muy rápido y se calienta. Vinos más aromáticos y livianos, de taninos finos; pide riego cuidadoso.'],
+  en: ['Sandy loam', 'Sandy loam soil: drains well and warms up, with some water reserve. Aromatic wines with soft tannins.', 'Sandy', 'Sandy soil: drains very fast and warms up. More aromatic, lighter wines with fine tannins; needs careful irrigation.'],
+  pt: ['Franco-arenoso', 'Solo franco-arenoso: drena bem e se aquece, com alguma reserva de água. Vinhos aromáticos, de taninos suaves.', 'Arenoso', 'Solo arenoso: drena muito rápido e se aquece. Vinhos mais aromáticos e leves, de taninos finos; pede irrigação cuidadosa.'],
+  fr: ['Limon sableux', 'Sol limono-sableux : draine bien et se réchauffe, avec un peu de réserve en eau. Vins aromatiques aux tanins souples.', 'Sableux', "Sol sableux : draine très vite et se réchauffe. Vins plus aromatiques et légers, aux tanins fins ; demande une irrigation soignée."],
+  de: ['Sandiger Lehm', 'Sandiger Lehmboden: drainiert gut und erwärmt sich, mit etwas Wasserreserve. Aromatische Weine mit weichen Tanninen.', 'Sandig', 'Sandboden: drainiert sehr schnell und erwärmt sich. Aromatischere, leichtere Weine mit feinen Tanninen; braucht sorgfältige Bewässerung.'],
+  ru: ['Супесь', 'Супесчаная почва: хорошо дренируется и прогревается, немного удерживает воду. Ароматные вина с мягкими танинами.', 'Песчаная', 'Песчаная почва: очень быстро дренируется и прогревается. Более ароматные и лёгкие вина с тонкими танинами; нужен аккуратный полив.'],
+  zh: ['砂壤土', '砂壤土：排水良好、升温快，并保有一定水分。葡萄酒芳香，单宁柔和。', '砂质土', '砂土：排水极快、升温快。葡萄酒更芳香轻盈，单宁细致；需要谨慎灌溉。'],
+  ja: ['砂壌土', '砂壌土：水はけがよく温まりやすく、ある程度水分も保つ。香り高く、タンニンのやわらかなワイン。', '砂質', '砂質土壌：排水が非常に速く、温まりやすい。より香り高く軽やかで、きめ細かいタンニン。丁寧な灌漑が必要。'],
+  ko: ['사양토', '사양토: 배수가 잘되고 쉽게 데워지며 어느 정도 수분도 머금습니다. 향긋하고 타닌이 부드러운 와인.', '사질', '사질 토양: 배수가 매우 빠르고 쉽게 데워집니다. 더 향긋하고 가벼우며 타닌이 섬세한 와인. 세심한 관개가 필요합니다.']
+};
+for (const l in T_ADD49) { const [a, b, c, d] = T_ADD49[l]; Object.assign(T[l], { tex_3__ar: a, ai_tex_3__ar: b, tex_4: c, ai_tex_4: d }); }
 
 (() => {
 'use strict';
@@ -2587,13 +2613,13 @@ const WARM6 = ['#2b2233', '#4d2f4a', '#7d3a55', '#b2504f', '#df8a55', '#f4cf86']
 const CTRY = {
   UY: { base: 'data/', a2: 'UY', view: 'view_uy', enter: 'intro_cta', hint: 'country_uy_hint', bounds: UY_BOUNDS, exag: 7, reg: 'INAVI', relief: 'relief', hs: 'hillshade', dem: 'dem',
     grapes: ['Tannat', 'Merlot', 'Ugni Blanc', 'Moscatel de Hamburgo'], tour: ['Canelones', 'Montevideo', 'Colonia', 'Maldonado', 'Rivera'], bear: [-25, 18, -38, 28, -8],
-    rng: { alt: [0, 450, 10], rain: [1000, 1750, 10], sea: 400, ph: [50, 75] }, wk: [2, 3, 4, 5], major: 50, colKm: 6.5, rock: true, sea: true,
+    rng: { alt: [0, 450, 10], rain: [1000, 1750, 10], sea: 400, ph: [50, 75] }, wk: [2, 3, 4, 5], major: 50, colKm: 6.5, texN: 4, rock: true, sea: true,
     vars: [['g_main', ['rock', 'tex', 'alt', 'gdd', 'rain', 'sea']], ['advanced', ['cf', 'ph', 'slope', 'asp', 'hug', 'dtr']]],
     ai: { alt: 200, dtr: 90, rainLo: 1150, rainHi: 1450 }, reliefTicks: [0, 250, 500] },
   AR: { base: 'data/ar/', a2: 'AR', view: 'view_ar', enter: 'enter_ar', hint: 'country_ar_hint', bounds: [[-69.9, -35.5], [-66.8, -30.2]], exag: 1.25, reg: 'INV', relief: 'relief-ar', hs: 'hillshade-ar', dem: 'demar',
     grapes: ['Malbec', 'Cereza', 'Bonarda', 'Criolla Grande', 'Cabernet Sauvignon', 'Syrah', 'Pedro Giménez', 'Chardonnay', 'Tempranillo', 'Moscatel Rosado'],
     tour: ['Luján de Cuyo', 'Maipú', 'Tupungato', 'San Carlos', 'San Rafael', 'San Martín', 'Pocito', 'Calingasta', 'Chilecito', 'Cafayate', 'Añelo', 'General Roca'], bear: [-25, 18, -38, 28, -8, 22, -30, 12, -20, 25, -15, 10],
-    rng: { alt: [0, 4000, 20], rain: [0, 2000, 10], sea: 0, ph: [45, 90] }, wk: [1, 2, 3, 4, 5], major: 1000, colKm: 9, rock: false, sea: false,
+    rng: { alt: [0, 4000, 20], rain: [0, 2000, 10], sea: 0, ph: [45, 90] }, wk: [1, 2, 3, 4, 5], major: 1000, colKm: 9, texN: 5, rock: false, sea: false,
     vars: [['g_main', ['tex', 'alt', 'gdd', 'rain', 'vyf']], ['advanced', ['cf', 'ph', 'slope', 'asp', 'hug', 'dtr']]],
     ai: { alt: 1000, dtr: 125, rainLo: 300, rainHi: 420 }, reliefTicks: [0, 2600, 5200],
     seq: { alt: { stops: [0, 400, 800, 1200, 2000, 3500], colors: WARM6, div: 1, unit: 'm', d: 0 }, ph: { stops: [55, 62, 68, 74, 80, 86], colors: ['#c4643a', '#d38c56', '#ddb98a', '#b9c4a8', '#7fa9a8', '#4b8aa3'], div: 10, unit: '', d: 1 },
@@ -2609,7 +2635,7 @@ const NO_DATA = '#3a3230';
 
 const PAL = {
   rock: ['#5d6f95', '#b35a86', '#e0937a', '#a4795b', '#6f9479', '#d9a94e', '#9d9a6a', '#c7b089', '#7fb2c2'],
-  tex: ['#b5543f', '#d08a52', '#ddc27e', '#f1e6bf'],
+  tex: ['#b5543f', '#d08a52', '#ddc27e', '#e9d9a6', '#fbf3dc'],
   asp: ['#e3a64a', '#d8c25a', '#9fc06a', '#5fb3a1', '#5a8fc9', '#7a72c9', '#b06cb5', '#d97a6a', '#4a403b'],
   wk: { 1: '#6f62b0', 2: '#4f7fbf', 3: '#5fae9f', 4: '#d9b45a', 5: '#c9493f' }
 };
@@ -2665,7 +2691,7 @@ const DEF = () => ({ color: 'relief', dep: -1, reg: -1, rock: new Set(), tex: ne
 let S = DEF();
 let MODE = 'terroir';
 let FILT = false, PREM = {}, WORLD = null, WVAR = 'all', COUNTRY = null, flat = false;
-let NZ = 0, ATOT = 0, PROVS = [], D, n, AREA, CELLS, CLAT, CLNG, cellIdx, M, P, SIM = null, deps = [], depByName = {}, units = [], WIN = [], INAVI, selCell = -1, selWin = -1, view = 'world', is3D = true, tourStep = -1;
+let PREMC = {}, NZ = 0, ATOT = 0, PROVS = [], D, n, AREA, CELLS, CLAT, CLNG, cellIdx, M, P, SIM = null, deps = [], depByName = {}, units = [], WIN = [], INAVI, selCell = -1, selWin = -1, view = 'world', is3D = true, tourStep = -1;
 const markers = [];
 let coachStep = -1;   // paso de la ayuda de primera vez (-1: cerrada)
 let learnRoute = null, DEPS_GJ = null, learnSeq = 0, NT = 0, CTT = null; const UVA = {};
@@ -2824,6 +2850,7 @@ function fetchPack(cc) {
     Object.values(same).forEach(g => { if (g.length < 2) return; g.forEach((w, j) => { const a = 2 * Math.PI * j / g.length, r = 0.0013 * (1 + g.length / 8); w.lat += r * Math.sin(a); w.lng += r * Math.cos(a) / Math.cos(w.lat * Math.PI / 180); }); });
     // íconos de marca empaquetados (Argentina: data/ar/img/logos.json); las fotos se bajan después, sin frenar la entrada
     if (X.WIN.some(w => w.logo_pk)) { const lg = await get(CTRY[cc].base + 'img/logos.json').catch(() => ({})); X.WIN.forEach(w => { if (w.logo_pk && lg[w.slug]) w.logo = 'data:image/webp;base64,' + lg[w.slug]; }); }
+    X.PREMC = cc === 'UY' ? {} : await get(CTRY[cc].base + 'premios.json').catch(() => ({}));
     X.winFC = { type: 'FeatureCollection', features: X.WIN.filter(w => w.lat != null).map(w => ({ type: 'Feature', id: w.id, properties: { name: w.name, f: w.profile ? 1 : 0, t: w.tier || 3, n: w.nat || 999 }, geometry: { type: 'Point', coordinates: [w.lng, w.lat] } })) };
     return X;
   })().catch(e => { delete PKD[cc]; throw e; }));
@@ -2834,7 +2861,7 @@ function usePack(X) {
   if (D === X.D) return;
   endTour(); closeCard(); clearSim(); stopOrbit();
   CC = X.cc; CX = CTRY[CC]; GRAPES = CX.grapes; SEQ = Object.assign({}, SEQ0, CX.seq || {}); RELIEF = RELIEFS[CC];
-  ({ INAVI, units, REG, n, AREA, CELLS, D, CLAT, CLNG, cellIdx, deps, depByName, WIN, NZ, PROVS } = X);
+  ({ INAVI, units, REG, n, AREA, CELLS, D, CLAT, CLNG, cellIdx, deps, depByName, WIN, NZ, PROVS, PREMC } = X);
   ATOT = 0; for (let i = 0; i < n; i++) ATOT += cellA(i);
   DEPS_GJ = X.depsGj; M = new Uint8Array(n).fill(1); P = new Uint8Array(n).fill(1); FILT = false;
   if (!X.stats) { depStats(); X.stats = 1; }
@@ -2850,7 +2877,7 @@ function usePack(X) {
   $('#chRock').closest('.sec').hidden = !CX.rock; $('#rgSea').closest('.field').hidden = !CX.sea;
   const sc = $('#arScope'); if (sc) sc.hidden = CC === 'UY';
   buildMarkers(); buildSeals(); buildColumns(); buildUI(); paintHex(); applyFilters(); renderLegend();
-  ensureTxt('es'); if (L !== 'es') ensureTxt(L);
+  ensureTxt('es'); if (L !== 'es') ensureTxt(L); ensurePrem('es'); if (L !== 'es') ensurePrem(L);
   if (!X.fotos && X.WIN.some(w => w.photo && w.photo.pk)) X.fotos = get(CTRY[X.cc].base + 'img/fotos.json').then(fp => {
     X.WIN.forEach(w => { if (w.photo && w.photo.pk && fp[w.slug]) w.photo.src = 'data:image/webp;base64,' + fp[w.slug]; });
     if (CC !== X.cc) return;
@@ -3019,7 +3046,7 @@ function buildChips() {
   const r = $('#chRock'); r.innerHTML = '';
   if (CX.rock) PAL.rock.forEach((c, i) => r.appendChild(chip(t('rock_' + i), c, S.rock.has(i), () => toggleSet(S.rock, i))));
   const tx = $('#chTex'); tx.innerHTML = '';
-  PAL.tex.forEach((c, i) => tx.appendChild(chip(t('tex_' + i), c, S.tex.has(i), () => toggleSet(S.tex, i))));
+  PAL.tex.slice(0, CX.texN).forEach((c, i) => tx.appendChild(chip(t('tex_' + i), c, S.tex.has(i), () => toggleSet(S.tex, i))));
   const as = $('#chAsp'); as.innerHTML = '';
   [7, 0, 1, 6, 8, 2, 5, 4, 3].forEach(i => as.appendChild(chip(i === 8 ? t('flat') : t('asp_' + i), null, S.asp.has(i), () => toggleSet(S.asp, i))));
   const wk = $('#chWk'); wk.innerHTML = '';
@@ -3163,7 +3190,7 @@ function renderLegend() {
     h += '<div class="grad" style="background:linear-gradient(90deg,' + st.map(([x, c]) => c + ' ' + ((x - lo) / (hi - lo) * 100).toFixed(0) + '%').join(',') + ')"></div><div class="ticks"><span>' + nf(CX.reliefTicks[0]) + '</span><span>' + nf(CX.reliefTicks[1]) + '</span><span>' + nf(CX.reliefTicks[2]) + ' m</span></div>';
     if (FILT || SIM) h += '<div class="lit"><i></i><span>' + esc(t('lg_lit')) + '</span></div>';
   } else if (v === 'rock' || v === 'tex' || v === 'asp') {
-    h += '<div class="sw">' + PAL[v].map((c, i) => '<span><i style="background:' + c + '"></i>' + esc(v === 'asp' ? (i === 8 ? t('flat') : t('asp_' + i)) : t(v + '_' + i)) + '</span>').join('') + '</div>';
+    h += '<div class="sw">' + (v === 'tex' ? PAL.tex.slice(0, CX.texN) : PAL[v]).map((c, i) => '<span><i style="background:' + c + '"></i>' + esc(v === 'asp' ? (i === 8 ? t('flat') : t('asp_' + i)) : t(v + '_' + i)) + '</span>').join('') + '</div>';
   } else if (v === 'gdd') {
     h += '<div class="sw">' + CX.wk.map(i => '<span><i style="background:' + PAL.wk[i] + '"></i>' + esc(t('wk_' + i)) + '</span>').join('') + '</div>';
   } else {
@@ -3247,7 +3274,7 @@ function showWinery(id, fly) {
   map.setFilter('win-sel', ['==', ['id'], w.lat != null ? id : -1]); selLine(w.profile && w.profile.loc_note ? -1 : w.cell); sealVis();
   if (fly && w.lat != null) flyThenOrbit({ center: [w.lng, w.lat], zoom: Math.max(map.getZoom(), 10.2), pitch: is3D ? 62 : 0, bearing: map.getBearing(), duration: 2200, essential: true });
   refreshCard();
-  if (!txtOf(L) || !txtOf('es') || PT[L] === undefined) Promise.all([ensureTxt(L), ensureTxt('es'), ensurePrem(L)]).then(() => { if (cardMode === 'win' && selWin === id) refreshCard(); });
+  if (!txtOf(L) || !txtOf('es') || ptOf(L) === undefined) Promise.all([ensureTxt(L), ensureTxt('es'), ensurePrem(L)]).then(() => { if (cardMode === 'win' && selWin === id) refreshCard(); });
 }
 function host(u) { try { return new URL(/^https?:/.test(u) ? u : 'https://' + u).hostname.replace(/^www\./, ''); } catch (e) { return u; } }
 function href(u) { return /^https?:/.test(u) ? u : 'https://' + u; }
@@ -3275,10 +3302,11 @@ function miniTerroir(i) {
 }
 // premios y reconocimientos publicados (Descorchados, Tim Atkin, World's Best Vineyards…), con su fuente
 // premios publicados: por ahora solo de bodegas uruguayas (la clave es el slug, que puede repetirse entre países)
-const premOf = w => CC === 'UY' ? PREM[w.slug] : null;
+const ptOf = l => PT[CC + ':' + l];
+const premOf = w => (CC === 'UY' ? PREM : PREMC)[w.slug];
 function awardsBlock(w) {
   const a = premOf(w); if (!a || !a.length) return '';
-  const tx = (PT[L] && PT[L][w.slug]) || (PT.es && PT.es[w.slug]) || [];
+  const tx = (ptOf(L) && ptOf(L)[w.slug]) || (ptOf('es') && ptOf('es')[w.slug]) || [];
   const li = a.map((x, k) => '<li class="aw' + (x.k === 'winery_award' || x.k === 'ranking_top50' ? ' top' : '') + '"' + (k >= 5 ? ' hidden' : '') + '><span class="y num">' + x.y + '</span><span class="t">' + esc(tx[k] || '') +
     ' <a href="' + esc(x.u) + '" target="_blank" rel="noopener">' + esc(x.s) + '</a></span></li>').join('');
   return '<div class="awards"><h4>' + esc(t('w_awards')) + ' <span class="cnt num">' + nf(a.length) + '</span></h4><ul>' + li + '</ul>' +
@@ -3582,9 +3610,10 @@ function setFlat(on) {
 const B = { q: '', dep: '', top: false, prof: false, tours: false, rest: false, lodge: false, grape: '', inT: false, unconf: false };
 const TXT = {}, PT = {};
 async function ensurePrem(l) {
-  if (PT[l] !== undefined) return PT[l];
-  try { PT[l] = await get('data/premios_txt/' + l + '.json'); } catch (e) { PT[l] = null; }
-  return PT[l];
+  const k = CC + ':' + l;
+  if (PT[k] !== undefined) return PT[k];
+  try { PT[k] = await get(CX.base + 'premios_txt/' + l + '.json'); } catch (e) { PT[k] = null; }
+  return PT[k];
 }
 // textos traducidos de las fichas, por país (data/bodegas_txt o data/ar/bodegas_txt)
 const txtOf = l => TXT[CC + ':' + l];
@@ -4554,7 +4583,7 @@ function renderTopic(id) {
   getTemas().then(TM => {
     if (seq !== learnSeq) return;
     const T0 = TM[id], rd = c => SEEN.t.includes(id + ':' + c.id), nd = T0.chapters.filter(rd).length, nx = Math.max(0, T0.chapters.findIndex(c => !rd(c)));
-    el.innerHTML = learnTop('index') + '<div class="lw tp2"><header class="tp2-hero"><span class="tp2-ic">' + T0.icon + '</span><div><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(T0.title) + '</h1><p>' + esc(T0.intro) + '</p>' +
+    el.innerHTML = learnTop('index') + '<div class="lw tp2"><header class="tp2-hero"><span class="tp2-ic">' + T0.icon + '</span><div><h1>' + esc(T0.title) + '</h1><p>' + esc(T0.intro) + '</p>' +
       '<div class="lx-prog"><span><i style="width:' + Math.round(100 * nd / T0.chapters.length) + '%"></i></span><small>' + esc(t('learn_seen', { n: nd, m: T0.chapters.length })) + '</small></div>' +
       '<button class="cam-big tp2-go" data-l="tp-' + id + '-' + nx + '">' + esc(t(nd ? 'cam_resume' : 'cam_go')) + ' · ' + (CH_IC[T0.chapters[nx].id] || '') + ' ' + esc(T0.chapters[nx].t) + '</button></div></header>' +
       '<div class="tp2-grid">' + T0.chapters.map((c, i) => '<button class="tp2-card rv' + (rd(c) ? ' read' : '') + '" data-l="tp-' + id + '-' + i + '"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><span class="e">' + (CH_IC[c.id] || T0.icon) + '</span><b>' + esc(c.t) + '</b><small>' + esc(t('tp_min', { n: 3, q: c.quiz.length })) + '</small>' + (rd(c) ? '<i class="ok">✓</i>' : '') + '</button>').join('') + '</div>' +
@@ -4645,7 +4674,7 @@ function renderLearnIndex() {
   const tpDoor = id => '<button class="lh-door tpd ' + id + ' rv" data-l="' + id + '"><span class="art emo">' + TOPIC_IC[id] + '</span><span class="tx"><b data-tt="' + id + '">…</b><span data-ti="' + id + '"></span><span data-tp="' + id + '"></span></span><em>' + esc(t('learn_enter')) + ' →</em></button>';
   const door = (k, route, art, title, txt, extra) => '<button class="lh-door ' + k + ' rv" data-l="' + route + '"><span class="art">' + art + '</span><span class="tx"><b>' + esc(t(title)) + '</b><span>' + esc(t(txt)) + '</span>' + extra + '</span><em>' + esc(t('learn_enter')) + ' →</em></button>';
   el.innerHTML = learnTop('map') +
-    '<section class="lx-hero lh-hero"><div class="lx-sky">' + heroArt() + '</div><div class="lx-hero-in"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p>' +
+    '<section class="lx-hero lh-hero"><div class="lx-sky">' + heroArt() + '</div><div class="lx-hero-in"><h1>' + esc(t('learn_title')) + '</h1><p>' + esc(t('learn_intro')) + '</p>' +
     '<button class="lh-first" data-l="jugar">' + MASCOT + '<span><b>' + esc(t(started && nx ? 'cam_resume' : 'learn_first')) + (started && CAMINO[nx] ? '' : '') + '</b><small>' + esc(started ? t('cam_title') + ' · ' + Math.min(CAM.done.length, CAMINO.length) + '/' + CAMINO.length : t('learn_first_d')) + '</small></span><em>→</em></button></div></section>' +
     '<div class="lx-in lh-in"><p class="lh-or">' + esc(t('learn_or')) + '</p><div class="lh-doors">' +
     tpDoor('elaboracion') + tpDoor('vinedo') +
@@ -4664,7 +4693,7 @@ function renderLearnIndex() {
 function renderGrapeList() {
   const el = $('#learn'); el.className = 'theme-' + (learnTab === 'white' ? 'white' : 'red');
   const cards = LEARN_GRAPES.filter(g => g.kind === learnTab).map(g => { const ha = (UYX.INAVI.nat || {})[g.name];
-    return '<button class="l-gcard ' + g.kind + ' ready" data-l="' + g.id + '"><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc((ha ? nf(ha) + ' ' + t('ha') + ' ' + t('in_uy') + ' · ' : '') + t('learn_open')) + '</small></button>'; }).join('');
+    return '<button class="l-gcard ' + g.kind + ' ready" data-l="' + g.id + '"><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc(ha ? nf(ha) + ' ' + t('ha') + ' ' + t('in_uy') : '') + '</small></button>'; }).join('');
   el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero sm"><h1>' + esc(t('learn_sub_grapes')) + '</h1><p>' + esc(t('learn_sub_grapes_d')) + '</p></header>' +
     '<div class="l-tabs" role="tablist">' + ['red', 'white'].map(k => '<button role="tab" data-tab="' + k + '" class="' + (k === learnTab ? 'sel' : '') + '"><span class="berry ' + k + '"></span>' + esc(t(k === 'red' ? 'learn_reds' : 'learn_whites')) + '</button>').join('') + '</div>' +
     '<div class="l-grid">' + cards + '</div>' +
