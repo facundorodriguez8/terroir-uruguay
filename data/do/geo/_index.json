@@ -878,5 +878,15 @@
    -66.639,
    -37.575
   ]
+ },
+ "cordon-el-cepillo": {
+  "quality": "oficial",
+  "source": "RESOL-2022-7-APN-INV#MEC (28 vértices de la resolución)",
+  "bbox": [
+   -69.27,
+   -33.895,
+   -69.171,
+   -33.781
+  ]
  }
 }
