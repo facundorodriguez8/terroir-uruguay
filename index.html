@@ -1439,6 +1439,38 @@ body.do-z .do-mk span { opacity: 1; }
 .cam-pt .cam-dots { display: none; }
 @media (prefers-reduced-motion: reduce) { .scn *, .scn-act span { animation: none !important; } }
 
+/* ---------- Mapa del mundo: modo viñedos / denominaciones ---------- */
+#intro .wmode { display: flex; width: 100%; }
+#intro .wmode button { flex: 1; }
+#intro .wmode button.sel { background: var(--garnet); color: #fff; }
+#intro .wm-vy, #intro .wm-do { display: grid; gap: 8px; }
+#intro .wm-vy[hidden], #intro .wm-do[hidden] { display: none; }
+.wm-kinds { display: flex; flex-wrap: wrap; gap: 6px; }
+.wm-kinds button { padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-2); font-size: 12px; cursor: pointer; }
+.wm-kinds button b { font-weight: 700; color: var(--ink-3); margin-left: 3px; }
+.wm-kinds button.sel { background: #e2b46a; border-color: #e2b46a; color: #1a1213; } .wm-kinds button.sel b { color: #1a1213; }
+.wm-leg { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--ink-2); }
+.wm-leg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 7px; vertical-align: -2px; }
+.wm-leg i.do { background: rgba(226,180,106,.6); border: 1.5px solid #f6d79a; } .wm-leg i.ig { background: rgba(111,182,217,.5); border: 1.5px solid #a8d8ef; }
+.wm-leg b { font-weight: 500; }
+.dog-pop .maplibregl-popup-content { font-weight: 600; }
+/* cata a ciegas: copa para agitar antes de oler */
+#learn .ct-bsw { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 16px; border: 1px solid var(--l-line); background: var(--l-card); }
+#learn .ct-bsw > div:last-child { flex: 1; min-width: 0; }
+#learn .ct-sg { width: 86px; flex: none; }
+#learn .ct-sg .li-glass { width: 100%; }
+#learn .ct-sg.spin .li-glass { animation: ctSwirl .5s ease-in-out 3; transform-origin: 50% 90%; }
+#learn .ct-sg.spin .li-glass .wine { animation-duration: .5s; }
+@keyframes ctSwirl { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-9deg) translateX(-4px); } 75% { transform: rotate(9deg) translateX(4px); } }
+#learn .ct-bsw.rev .ct-ab { animation: lxUp .5s var(--d) both; }
+#learn .ct-bsw.done .ct-sg::after { content: '〰'; display: block; text-align: center; color: #e2b46a; animation: camBob 2s infinite; }
+@media (max-width: 460px) { #learn .ct-bsw { align-items: flex-start; } #learn .ct-sg { width: 64px; } }
+.do-mk.far { visibility: hidden; }
+#learn .ct-bsw { display: grid; grid-template-columns: 86px minmax(0, 1fr); align-items: center; width: 100%; box-sizing: border-box; }
+#learn .ct-bsw.done { grid-template-columns: 64px minmax(0, 1fr); align-items: start; }
+#learn .ct-bsw .ct-cls { margin-top: 8px; }
+#learn .ct-bsw .cta { width: auto; }
+
 </style>
 </head>
 <body>
@@ -1468,10 +1500,18 @@ body.do-z .do-mk span { opacity: 1; }
 
   <section id="intro" aria-label="Viñedos del mundo">
     <div class="world">
-      <div class="field"><label for="wVar" data-i18n="world_var">Viñedos del mundo por variedad</label><select class="sel" id="wVar"></select></div>
-      <div class="wlegend"><i></i><span data-i18n="world_more">más hectáreas</span></div>
-      <p class="hint" id="wNote"></p>
-      <label class="switch do-tog"><input type="checkbox" id="doToggle"><span data-i18n="do_show">Denominaciones de origen</span></label>
+      <div class="seg wmode" role="tablist"><button data-wm="vy" class="sel" data-i18n="wm_vy">Viñedos</button><button data-wm="do" data-i18n="wm_do">Denominaciones</button></div>
+      <div class="wm-vy">
+        <div class="field"><label for="wVar" data-i18n="world_var">Viñedos del mundo por variedad</label><select class="sel" id="wVar"></select></div>
+        <div class="wlegend"><i></i><span data-i18n="world_more">más hectáreas</span></div>
+        <p class="hint" id="wNote"></p>
+        <label class="switch do-tog"><input type="checkbox" id="doToggle"><span data-i18n="do_show">Denominaciones de origen</span></label>
+      </div>
+      <div class="wm-do" hidden>
+        <div class="wm-kinds" id="wmKinds"></div>
+        <div class="wm-leg"><span><i class="do"></i><b data-i18n="do_kind_do">Denominaciones de origen</b></span><span><i class="ig"></i><b data-i18n="do_kind_ig">Indicaciones geográficas</b></span></div>
+        <p class="hint" id="wmNote"></p>
+      </div>
     </div>
   </section>
   <aside id="country" hidden></aside>
@@ -2419,6 +2459,9 @@ for (const l in T_ADD38) Object.assign(T[l], T_ADD38[l]);
 const T_ADD39 = {"en": {"tp_min": "{n} min · {q} questions", "tp_point": "Key {n} of {m}", "tp_done_t": "Chapter complete!", "ob_6_b": "Everything you need to learn is here: a guided path of short lessons with levels and a certificate, plus sections on winemaking, vineyards, styles and service. Tap the button to dive in.", "ob_7_t": "Grapes", "ob_7_b": "All 13 grapes, one by one: what each brings, what it smells like, how it changes over the years and what to eat with it.", "ob_8_t": "Tasting", "ob_8_b": "Learn to look at, smell and taste a wine step by step, with exercises, blind tasting and your tasting sheet.", "ob_9_t": "Appellations of origin", "ob_9_b": "The world's appellations of origin on a map: where they are, which grapes they use and which rules they follow."}, "pt": {"tp_min": "{n} min · {q} perguntas", "tp_point": "Chave {n} de {m}", "tp_done_t": "Capítulo completo!", "ob_6_b": "Aqui está tudo para aprender: um caminho guiado de lições curtas com níveis e certificado, e seções de elaboração, vinhedo, estilos e serviço. Toque no botão para entrar.", "ob_7_t": "Uvas", "ob_7_b": "As 13 uvas, uma por uma: o que cada uma traz, que aroma tem, como muda com os anos e com o que combinar.", "ob_8_t": "Degustar", "ob_8_b": "Aprenda a olhar, cheirar e provar um vinho passo a passo, com exercícios, degustação às cegas e sua ficha de degustação.", "ob_9_t": "Denominações de origem", "ob_9_b": "As denominações de origem do mundo em um mapa: onde estão, que uvas usam e que regras seguem."}, "fr": {"tp_min": "{n} min · {q} questions", "tp_point": "Clé {n} sur {m}", "tp_done_t": "Chapitre terminé !", "ob_6_b": "Tout pour apprendre est ici : un parcours guidé de leçons courtes avec niveaux et certificat, et des sections sur l'élaboration, le vignoble, les styles et le service. Touche le bouton pour entrer.", "ob_7_t": "Cépages", "ob_7_b": "Les 13 cépages, un par un : ce que chacun apporte, son nez, son évolution avec les années et avec quoi le déguster.", "ob_8_t": "Déguster", "ob_8_b": "Apprends à regarder, sentir et goûter un vin pas à pas, avec des exercices, la dégustation à l'aveugle et ta fiche de dégustation.", "ob_9_t": "Appellations d'origine", "ob_9_b": "Les appellations d'origine du monde sur une carte : où elles sont, quels cépages elles utilisent et quelles règles elles suivent."}, "de": {"tp_min": "{n} Min. · {q} Fragen", "tp_point": "Schlüssel {n} von {m}", "tp_done_t": "Kapitel abgeschlossen!", "ob_6_b": "Hier findest du alles zum Lernen: einen geführten Weg aus kurzen Lektionen mit Stufen und Zertifikat sowie Bereiche zu Weinbereitung, Weinberg, Stilen und Service. Tippe auf den Button, um loszulegen.", "ob_7_t": "Rebsorten", "ob_7_b": "Die 13 Rebsorten, eine nach der anderen: was jede mitbringt, wie sie riecht, wie sie sich über die Jahre verändert und wozu sie passt.", "ob_8_t": "Verkosten", "ob_8_b": "Lerne Schritt für Schritt, einen Wein anzusehen, zu riechen und zu probieren, mit Übungen, Blindverkostung und deinem Verkostungsbogen.", "ob_9_t": "Ursprungsbezeichnungen", "ob_9_b": "Die Ursprungsbezeichnungen der Welt auf einer Karte: wo sie liegen, welche Rebsorten sie nutzen und welche Regeln gelten."}, "ru": {"tp_min": "{n} мин · вопросов: {q}", "tp_point": "Ключ {n} из {m}", "tp_done_t": "Глава пройдена!", "ob_6_b": "Здесь всё для обучения: пошаговый путь из коротких уроков с уровнями и сертификатом, а также разделы о виноделии, винограднике, стилях и подаче. Нажми на кнопку, чтобы войти.", "ob_7_t": "Сорта", "ob_7_b": "Все 13 сортов по очереди: что даёт каждый, чем пахнет, как меняется с годами и с чем его подавать.", "ob_8_t": "Дегустация", "ob_8_b": "Научись смотреть, нюхать и пробовать вино шаг за шагом: упражнения, слепая дегустация и твой лист дегустации.", "ob_9_t": "Наименования по происхождению", "ob_9_b": "Наименования по происхождению со всего мира на карте: где они находятся, какие сорта используют и каким правилам следуют."}, "zh": {"tp_min": "{n} 分钟 · {q} 道题", "tp_point": "第 {n} 把钥匙，共 {m} 把", "tp_done_t": "本章完成！", "ob_6_b": "学习所需的一切都在这里：由短课程组成的引导式路径，含等级和证书，还有酿造、葡萄园、风格和侍酒板块。点按按钮进入。", "ob_7_t": "葡萄品种", "ob_7_b": "13 个葡萄品种逐一介绍：各自的特点、香气、随年份的变化，以及适合搭配的食物。", "ob_8_t": "品鉴", "ob_8_b": "一步步学会观色、闻香、品尝，配有练习、盲品和你的品鉴表。", "ob_9_t": "原产地名称", "ob_9_b": "地图上的世界各地原产地名称：位置、使用的葡萄品种以及遵循的规定。"}, "ja": {"tp_min": "{n}分 · {q}問", "tp_point": "キー {n} / {m}", "tp_done_t": "章クリア！", "ob_6_b": "学びに必要なものがすべてここに：レベルと修了証つきの短いレッスンのガイド付きコースに、醸造・ブドウ畑・スタイル・サービスのセクションも。ボタンをタップして入ろう。", "ob_7_t": "ブドウ品種", "ob_7_b": "13品種を一つずつ：それぞれの持ち味、香り、年月による変化、合わせる料理。", "ob_8_t": "テイスティング", "ob_8_b": "見る・嗅ぐ・味わうを一歩ずつ学ぼう。練習問題、ブラインドテイスティング、テイスティングシートつき。", "ob_9_t": "原産地呼称", "ob_9_b": "世界の原産地呼称を地図で：場所、使うブドウ品種、守るべきルール。"}, "ko": {"tp_min": "{n}분 · 문제 {q}개", "tp_point": "열쇠 {n}/{m}", "tp_done_t": "챕터 완료!", "ob_6_b": "배우는 데 필요한 모든 게 여기 있어요: 레벨과 수료증이 있는 짧은 레슨의 안내형 코스, 그리고 양조, 포도밭, 스타일, 서비스 섹션까지. 버튼을 눌러 들어가 보세요.", "ob_7_t": "포도 품종", "ob_7_b": "13개 품종을 하나씩: 각각의 특징, 향, 해마다 달라지는 모습, 어울리는 음식.", "ob_8_t": "테이스팅", "ob_8_b": "와인을 보고, 향을 맡고, 맛보는 법을 단계별로 배워요. 연습 문제, 블라인드 테이스팅, 테이스팅 시트가 함께해요.", "ob_9_t": "원산지 명칭", "ob_9_b": "세계의 원산지 명칭을 지도에서: 위치, 사용하는 품종, 지켜야 할 규칙."}, "es": {"tp_min": "{n} min · {q} preguntas", "tp_point": "Clave {n} de {m}", "tp_done_t": "¡Capítulo completo!", "ob_6_b": "Acá está todo para aprender: un camino guiado de lecciones cortas con niveles y certificado, y secciones de elaboración, viñedo, estilos y servicio. Tocá el botón para entrar.", "ob_7_t": "Uvas", "ob_7_b": "Las 13 uvas, una por una: qué aporta cada una, a qué huele, cómo cambia con los años y con qué comerla.", "ob_8_t": "Catar", "ob_8_b": "Aprendé a mirar, oler y probar un vino paso a paso, con ejercicios, cata a ciegas y tu hoja de cata.", "ob_9_t": "Denominaciones de origen", "ob_9_b": "Las denominaciones de origen del mundo en un mapa: dónde están, qué uvas usan y qué reglas cumplen."}};
 for (const l in T_ADD39) Object.assign(T[l], T_ADD39[l]);
 
+const T_ADD40 = {"es": {"wm_vy": "Viñedos", "wm_do": "Denominaciones", "wm_note": "{n} zonas con su contorno; el resto aparece como punto. Tocá una para abrir su ficha."}, "en": {"wm_vy": "Vineyards", "wm_do": "Appellations", "wm_note": "{n} areas drawn with their boundaries; the rest appear as dots. Tap one to open its page."}, "pt": {"wm_vy": "Vinhedos", "wm_do": "Denominações", "wm_note": "{n} zonas com contorno; as demais aparecem como ponto. Toque em uma para abrir a ficha."}, "fr": {"wm_vy": "Vignobles", "wm_do": "Appellations", "wm_note": "{n} zones avec leur contour ; les autres apparaissent en points. Touchez-en une pour ouvrir sa fiche."}, "de": {"wm_vy": "Weinberge", "wm_do": "Herkunft", "wm_note": "{n} Gebiete mit Umriss; die übrigen als Punkt. Tippe eines an, um sein Profil zu öffnen."}, "ru": {"wm_vy": "Виноградники", "wm_do": "Наименования", "wm_note": "{n} зон с границами; остальные показаны точками. Нажмите, чтобы открыть карточку."}, "zh": {"wm_vy": "葡萄园", "wm_do": "原产地", "wm_note": "{n} 个产区显示边界，其余以圆点表示。点击即可打开介绍。"}, "ja": {"wm_vy": "ブドウ畑", "wm_do": "原産地呼称", "wm_note": "{n}の産地は境界付きで表示、その他は点で表示。タップで詳細を開きます。"}, "ko": {"wm_vy": "포도밭", "wm_do": "원산지", "wm_note": "{n}개 산지는 경계로 표시되고 나머지는 점으로 표시돼요. 눌러서 상세를 열어 보세요."}};
+for (const l in T_ADD40) Object.assign(T[l], T_ADD40[l]);
+
 (() => {
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -2528,7 +2571,7 @@ const style = {
   sources: {
     land: { type: 'geojson', data: EMPTY }, neighbors: { type: 'geojson', data: EMPTY }, deps: { type: 'geojson', data: EMPTY },
     hex: { type: 'geojson', data: EMPTY }, deplines: { type: 'geojson', data: EMPTY }, reglines: { type: 'geojson', data: EMPTY }, selhex: { type: 'geojson', data: EMPTY }, simhex: { type: 'geojson', data: EMPTY }, rivers: { type: 'geojson', data: EMPTY }, lakes: { type: 'geojson', data: EMPTY },
-    vineyards: { type: 'geojson', data: EMPTY }, columns: { type: 'geojson', data: EMPTY }, wineries: { type: 'geojson', data: EMPTY }, world: { type: 'geojson', data: EMPTY }, worldc: { type: 'geojson', data: EMPTY }, borders: { type: 'geojson', data: EMPTY }, countries: { type: 'geojson', data: EMPTY },
+    vineyards: { type: 'geojson', data: EMPTY }, columns: { type: 'geojson', data: EMPTY }, wineries: { type: 'geojson', data: EMPTY }, world: { type: 'geojson', data: EMPTY }, dogeo: { type: 'geojson', data: EMPTY }, worldc: { type: 'geojson', data: EMPTY }, borders: { type: 'geojson', data: EMPTY }, countries: { type: 'geojson', data: EMPTY },
     dem: { type: 'raster-dem', tiles: [DEM_URL], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: DEM_BOUNDS },
     demhs: { type: 'raster-dem', tiles: [DEM_URL], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: DEM_BOUNDS }
   },
@@ -2556,6 +2599,9 @@ const style = {
       'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4.3, 30, 7, 60],
       'heatmap-color': ['interpolate', ['linear'], ['heatmap-density'], 0, 'rgba(246,211,101,0)', 0.1, 'rgba(246,211,101,0.5)', 0.3, '#f6d365', 0.55, '#f28c28', 0.78, '#d9452f', 1, '#9e1d26'],
       'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 4.5, 0.9, 6.2, 0] } },
+    // modo "Denominaciones": zonas de cada DO (dorado) e IG (celeste) en el mapa del mundo
+    { id: 'dog-fill', type: 'fill', source: 'dogeo', layout: { visibility: 'none' }, paint: { 'fill-color': ['case', ['==', ['get', 'k'], 'do'], '#e2b46a', '#6fb6d9'], 'fill-opacity': ['case', ['boolean', ['feature-state', 'hov'], false], 0.75, 0.42] } },
+    { id: 'dog-line', type: 'line', source: 'dogeo', layout: { visibility: 'none' }, paint: { 'line-color': ['case', ['==', ['get', 'k'], 'do'], '#f6d79a', '#a8d8ef'], 'line-width': ['interpolate', ['linear'], ['zoom'], 2, 0.6, 8, 1.8] } },
     { id: 'world-pts-c', type: 'circle', source: 'worldc', maxzoom: 4.3, paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 1, 3, 4.3, 8], 'circle-color': 'rgba(0,0,0,0)', 'circle-opacity': 0 } },
     { id: 'world-pts', type: 'circle', source: 'world', minzoom: 4.3, maxzoom: 7, paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 4.3, 8, 7, 12], 'circle-color': 'rgba(0,0,0,0)', 'circle-opacity': 0 } },
     { id: 'neighbors-line', type: 'line', source: 'neighbors', paint: { 'line-color': '#3b312d', 'line-width': 0.7 } },
@@ -3562,14 +3608,38 @@ function flyThenOrbit(opts) { stopOrbit(); map.once('moveend', () => { if (!orbi
 /* Vista del mundo: solo el mapa de calor y los países. El relieve, la grilla y las bodegas de Uruguay
    aparecen recién al entrar al país (clic en el país o acercándose a menos de ~zoom 5,8). */
 const UY_LAYERS = ['deps-fill', 'relief', 'hex-fill', 'hillshade', 'nb-mask', 'neighbors', 'neighbors-line', 'hex-sim', 'hex-line', 'lakes', 'rivers', 'vy-fill', 'vy-line', 'deps-line', 'reg-line', 'reg-sel', 'dep-sel', 'hex-sel', 'columns', 'wineries', 'win-sel'];
-const WORLD_LAYERS = ['countries', 'country-sel', 'borders', 'world-heat-c', 'world-heat', 'world-pts-c', 'world-pts'];
+const WORLD_LAYERS = ['countries', 'country-sel', 'borders', 'world-heat-c', 'world-heat', 'world-pts-c', 'world-pts', 'dog-fill', 'dog-line'];
+// modo del mapa del mundo: vy = calor de viñedos por variedad · do = zonas de denominaciones de origen
+let WMODE = 'vy', WMK = 'all', DOGEO_FC = null;
+function worldMode(m) {
+  if (m) WMODE = m;
+  document.querySelectorAll('[data-wm]').forEach(b => b.classList.toggle('sel', b.dataset.wm === WMODE));
+  $('.wm-vy').hidden = WMODE !== 'vy'; $('.wm-do').hidden = WMODE !== 'do';
+  const w = view === 'world';
+  ['world-heat-c', 'world-heat'].forEach(id => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', w && WMODE === 'vy' ? 'visible' : 'none'));
+  ['dog-fill', 'dog-line'].forEach(id => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', w && WMODE === 'do' ? 'visible' : 'none'));
+  if (WMODE === 'do') { doOn = true; getDO().then(D => { doMarkers(D); doGeoAll(D); }); } else { doOn = $('#doToggle').checked; doVis(); }
+}
+// junta los contornos de todas las DO en una sola capa (se descarga una vez)
+function doGeoAll(D) {
+  const kinds = { all: D.dos.length, do: D.dos.filter(x => !DO_NOT.includes(x.level)).length, ig: D.dos.filter(x => DO_NOT.includes(x.level)).length };
+  $('#wmKinds').innerHTML = ['all', 'do', 'ig'].map(k => '<button data-wk="' + k + '" class="' + (WMK === k ? 'sel' : '') + '">' + esc(t(k === 'all' ? 'do_all' : 'do_kind_' + k)) + ' <b>' + kinds[k] + '</b></button>').join('');
+  $('#wmKinds').querySelectorAll('[data-wk]').forEach(b => b.onclick = () => { WMK = b.dataset.wk; doGeoAll(D); });
+  const ok = x => WMK === 'all' || (WMK === 'do') === !DO_NOT.includes(x.level);
+  doCtry = 'all'; doMk.forEach(k => { const x = doById(D, k.id); k.el.style.display = doOn && view === 'world' && x && ok(x) ? '' : 'none'; });
+  const paint = () => { map.getSource('dogeo').setData({ type: 'FeatureCollection', features: DOGEO_FC.filter(f => { const x = doById(D, f.properties.id); return x && ok(x); }).map(f => { const x = doById(D, f.properties.id); f.properties.name = x.name + ' · ' + lvOf(D, x).label; return f; }) });
+    $('#wmNote').textContent = t('wm_note', { n: DOGEO_FC.length }); };
+  if (DOGEO_FC) return paint();
+  getDOGeo().then(IX => Promise.all(D.dos.filter(x => IX[x.id]).map(x => get('data/do/geo/' + x.id + '.json').then(f => { (f.type === 'FeatureCollection' ? f.features : [f]).forEach(g => { g.properties = { id: x.id, k: DO_NOT.includes(x.level) ? 'ig' : 'do' }; }); return f.type === 'FeatureCollection' ? f.features : [f]; }).catch(() => [])))).then(r => {
+    DOGEO_FC = r.flat().map((f, i) => (f.id = i, f)); paint(); });
+}
 function viewLayers() {
   if (!map.getLayer('hex-fill')) return;
   const uy = view === 'uy';
   UY_LAYERS.forEach(id => map.setLayoutProperty(id, 'visibility', uy ? 'visible' : 'none'));
   WORLD_LAYERS.forEach(id => map.setLayoutProperty(id, 'visibility', uy ? 'none' : 'visible'));
   if (uy) { paintHex(); map.setLayoutProperty('columns', 'visibility', MODE === 'bodegas' ? 'none' : 'visible'); }
-  sealVis(); doVis();
+  sealVis(); doVis(); worldMode();
 }
 const inUY = c => c.lng > UY_BOUNDS[0][0] - 0.3 && c.lng < UY_BOUNDS[1][0] + 0.3 && c.lat > UY_BOUNDS[0][1] - 0.3 && c.lat < UY_BOUNDS[1][1] + 0.3;
 map.on('moveend', () => {
@@ -4507,7 +4577,8 @@ function ctGame(C, B) {
       const sc1 = (ok, sel, half) => done ? (ok ? ' good' : half ? ' half' : sel ? ' bad' : ' off') : '';
       $('#ctG2').innerHTML = '<div class="ct-blind"><div class="ct-stage">' + tiltGlass(kind, toneOk, 1, true) + '</div>' +
         '<h3>1 · ' + esc(G.q_tone) + '</h3><div class="l-chips">' + tones.map((x, i) => '<button class="l-chip' + (A.tone === i ? ' sel' : '') + sc1(i === toneOk, A.tone === i, Math.abs(i - toneOk) === 1 && A.tone === i) + '" data-tone="' + i + '">' + esc(x) + '</button>').join('') + '</div>' +
-        '<h3>2 · ' + esc(G.q_aromas) + '</h3><p class="l-hint">' + esc(t('ct_classify')) + '</p><div class="ct-cls">' + aros.map(([x, st], i) => { const a = A.aro[i]; return '<button class="ct-ab' + (a ? ' ' + a : '') + sc1(a === st, true) + '" data-ab="' + i + '">' + esc(x) + '<small>' + esc(a ? C.nose.layers.find(l => l.k === a).t : '·') + '</small></button>'; }).join('') + '</div>' +
+        '<h3>2 · ' + esc(G.q_aromas) + '</h3>' + (A.sw || done ? '<div class="ct-bsw done' + (A.sw === 1 ? ' rev' : '') + '"><div class="ct-sg">' + glassArt(kind, 7) + '</div><div><p class="l-hint">' + esc(t('ct_classify')) + '</p><div class="ct-cls">' + aros.map(([x, st], i) => { const a = A.aro[i]; return '<button class="ct-ab' + (a ? ' ' + a : '') + sc1(a === st, true) + '" data-ab="' + i + '" style="--d:' + (i * .12) + 's">' + esc(x) + '<small>' + esc(a ? C.nose.layers.find(l => l.k === a).t : '·') + '</small></button>'; }).join('') + '</div></div></div>'
+          : '<div class="ct-bsw"><div class="ct-sg" id="ctSg">' + glassArt(kind, 7) + '</div><div><p class="l-hint">' + esc(C.nose.swirl_txt) + '</p><button class="cta" id="ctSwirl"><span>🌀 ' + esc(C.nose.swirl) + '</span></button></div></div>') +
         '<h3>3 · ' + esc(G.q_mouth) + '</h3><div class="ct-comps">' + mouthK.map(k => { const c = M.find(x => x.k === k), v = A.m[k] ?? 2, ok = sc(P[k]);
           return '<div class="ct-comp"><p class="ct-sense">«' + esc(sense(k, P[k])) + '»</p><div class="ct-ch"><b>' + esc(c.t) + '</b><span class="ct-val">' + esc(c.scale[v]) + (done ? ' → ' + esc(c.scale[ok]) : '') + '</span></div><input type="range" data-mk="' + k + '" min="0" max="4" value="' + v + '"' + (done ? ' disabled class="' + (Math.abs(v - ok) <= 1 ? 'good' : 'bad') + '"' : '') + '></div>'; }).join('') + '</div>' +
         '<h3>4 · ' + esc(G.q_age) + '</h3><div class="l-chips">' + G.age.map((x, i) => '<button class="l-chip' + (A.age === i ? ' sel' : '') + sc1(i === age, A.age === i) + '" data-age="' + i + '">' + esc(x) + '</button>').join('') + '</div>' +
@@ -4518,6 +4589,8 @@ function ctGame(C, B) {
       $('#ctG2').querySelectorAll('[data-ab]').forEach(b => b.onclick = () => { const i = +b.dataset.ab, o = ['primario', 'secundario', 'terciario'], c = A.aro[i]; A.aro[i] = o[(o.indexOf(c) + 1) % 3]; draw(); });
       $('#ctG2').querySelectorAll('[data-mk]').forEach(r => r.oninput = () => { A.m[r.dataset.mk] = +r.value; r.previousElementSibling.querySelector('.ct-val').textContent = M.find(x => x.k === r.dataset.mk).scale[+r.value]; });
       $('#ctG2').querySelectorAll('[data-age]').forEach(b => b.onclick = () => { A.age = +b.dataset.age; draw(); });
+      if (A.sw === 1) A.sw = 2;
+      const sw = $('#ctSwirl'); if (sw) sw.onclick = () => { sw.disabled = true; $('#ctSg').classList.add('spin'); setTimeout(() => { A.sw = 1; const y = $('#learn').scrollTop; draw(); $('#learn').scrollTop = y; }, 1500); };
       $('#ctG2').querySelectorAll('[data-gr]').forEach(b => b.onclick = () => { A.grape = b.dataset.gr; draw(); });
       $('#ctCheck').onclick = () => draw(true);
       $('#ctHint').onclick = () => useHint(() => { if (A.tone !== toneOk) A.tone = toneOk; else { const i = aros.findIndex(([, st], j) => A.aro[j] !== st); if (i >= 0) A.aro[i] = aros[i][1]; else if (A.age !== age) A.age = age; } draw(); });
@@ -5066,6 +5139,15 @@ function renderDOSheet(id) {
 }
 map.on('zoomend', () => document.body.classList.toggle('do-z', map.getZoom() >= 5));
 $('#doToggle').onchange = e => { doOn = e.target.checked; doCtry = 'all'; if (doOn) getDO().then(D => doMarkers(D)); else doVis(); };
+document.querySelectorAll('[data-wm]').forEach(b => b.onclick = () => worldMode(b.dataset.wm));
+// en el globo, los marcadores del otro lado de la Tierra no se ven (si no, aparecen encima del país que estás mirando)
+map.on('move', () => { if (!doMk.length) return; const c = map.getCenter(), r = Math.PI / 180;
+  doMk.forEach(k => { const p = k.m.getLngLat(), dot = Math.sin(p.lat * r) * Math.sin(c.lat * r) + Math.cos(p.lat * r) * Math.cos(c.lat * r) * Math.cos((p.lng - c.lng) * r); k.el.classList.toggle('far', !flat && dot < 0.15); }); });
+// zonas de DO: resaltar al pasar, cartel con el nombre y clic para abrir la ficha
+{ let hov = null; const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, className: 'dog-pop' });
+  map.on('mousemove', 'dog-fill', e => { const f = e.features[0]; if (hov !== null) map.setFeatureState({ source: 'dogeo', id: hov }, { hov: false }); hov = f.id; map.setFeatureState({ source: 'dogeo', id: hov }, { hov: true }); map.getCanvas().style.cursor = 'pointer'; pop.setLngLat(e.lngLat).setText(f.properties.name).addTo(map); });
+  map.on('mouseleave', 'dog-fill', () => { if (hov !== null) map.setFeatureState({ source: 'dogeo', id: hov }, { hov: false }); hov = null; map.getCanvas().style.cursor = ''; pop.remove(); });
+  map.on('click', 'dog-fill', e => { const f = e.features[0]; if (f) learnNav('do-' + f.properties.id); }); }
 $('#learnBtn').onclick = () => { if (coachStep >= 0) coachEnd(); learnNav('index'); };
 [['#grapesBtn', 'uvas'], ['#tasteBtn', 'catar'], ['#doBtn', 'do']].forEach(([b, r]) => { $(b).onclick = () => { if (coachStep >= 0) coachEnd(); learnNav(r); }; });
 addEventListener('hashchange', () => { if (!D) return; const r = routeOfHash(location.hash); if (r) openLearn(r); else if (learnRoute) closeLearn(); });
