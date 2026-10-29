@@ -2878,12 +2878,13 @@ function usePack(X) {
   const sc = $('#arScope'); if (sc) sc.hidden = CC === 'UY';
   buildMarkers(); buildSeals(); buildColumns(); buildUI(); paintHex(); applyFilters(); renderLegend();
   ensureTxt('es'); if (L !== 'es') ensureTxt(L); ensurePrem('es'); if (L !== 'es') ensurePrem(L);
-  if (!X.fotos && X.WIN.some(w => w.photo && w.photo.pk)) X.fotos = get(CTRY[X.cc].base + 'img/fotos.json').then(fp => {
-    X.WIN.forEach(w => { if (w.photo && w.photo.pk && fp[w.slug]) w.photo.src = 'data:image/webp;base64,' + fp[w.slug]; });
+  // fotos en paquetes (fotos_<pk>.json): se bajan en paralelo y cada uno refresca sellos y ficha al llegar
+  if (!X.fotos && X.WIN.some(w => w.photo && w.photo.pk)) X.fotos = [...new Set(X.WIN.filter(w => w.photo && w.photo.pk).map(w => w.photo.pk))].map(pk => get(CTRY[X.cc].base + 'img/fotos_' + pk + '.json').then(fp => {
+    X.WIN.forEach(w => { if (w.photo && w.photo.pk === pk && fp[w.slug]) w.photo.src = 'data:image/webp;base64,' + fp[w.slug]; });
     if (CC !== X.cc) return;
     seals.forEach(x => { if (x.w.photo && x.w.photo.src && !x.w.logo) x.el.innerHTML = sealHTML(x.w) + '<em>' + esc(x.w.name) + '</em>'; });
     if (MODE === 'bodegas') applyBodegas(); if (cardMode === 'win') refreshCard();
-  }).catch(() => {});
+  }).catch(() => {}));
 }
 async function load() {
   const [land, uy] = await Promise.all([get('data/world_land.geojson'), fetchPack('UY')]);
