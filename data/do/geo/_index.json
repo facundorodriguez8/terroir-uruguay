@@ -1,1 +1,802 @@
-{"madiran":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-0.249,43.432,-0.001,43.673]},"chinon":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[0.053,47.071,0.506,47.262]},"saint-emilion":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-0.263,44.833,-0.068,44.952]},"pauillac":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-0.859,45.136,-0.7,45.284]},"chablis":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[3.688,47.731,3.945,47.965]},"meursault":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[4.732,46.951,4.818,46.992]},"bourgogne":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[4.329,46.903,5.101,47.978]},"languedoc":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[2.064,42.405,4.45,43.995]},"pomerol":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-0.263,44.873,-0.174,44.952]},"sancerre":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[2.637,47.199,2.92,47.425]},"pessac-leognan":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-0.759,44.684,-0.478,44.863]},"cote-rotie":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[4.754,45.47,4.861,45.527]},"condrieu":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[4.693,45.336,4.781,45.494]},"champagne":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[3.161,47.924,5.012,49.408]},"chateauneuf-du-pape":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[4.728,43.982,4.944,44.188]},"sauternes":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-0.374,44.508,-0.261,44.632]},"alsace":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[7.051,47.767,8.068,49.058]},"bolgheri":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[10.528,43.098,10.691,43.247]},"barolo":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[7.749,44.556,8.081,44.694]},"brunello-di-montalcino":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[11.35,42.957,11.687,43.178]},"chianti-classico":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[11.08,43.295,11.6,43.708]},"prosecco":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[11.139,45.058,13.919,46.681]},"amarone-della-valpolicella":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[10.804,45.349,11.33,45.689]},"orvieto":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[11.892,42.532,12.411,42.943]},"vin-santo-del-chianti":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[10.464,42.795,12.077,44.1]},"santorini":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[25.196,36.232,25.487,36.482]},"tokaj":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[21.077,48.067,21.706,48.443]},"rias-baixas":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-8.945,41.87,-8.104,42.919]},"vinho-verde":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-8.881,40.763,-7.704,42.154]},"wurttemberg":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[8.452,47.534,10.162,49.791]},"rioja":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-3.134,41.919,-1.679,42.741]},"ribera-del-duero":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-4.426,41.413,-3.1,41.877]},"priorat":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[0.658,41.134,0.923,41.312]},"jerez":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-6.474,36.33,-5.456,37.076]},"cava":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-6.518,38.627,3.1,42.636]},"porto":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-7.914,40.923,-6.749,41.557]},"douro":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[-7.914,40.923,-6.749,41.557]},"mosel":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[6.357,49.453,7.696,50.41]},"rheingau":{"quality":"oficial","source":"Candiago et al. 2022 (figshare, CC0)","bbox":[7.772,49.972,8.467,50.152]},"napa-valley":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-122.647,38.155,-122.061,38.768]},"russian-river-valley":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-123.031,38.301,-122.674,38.652]},"sonoma-coast":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-123.534,38.112,-122.35,38.779]},"willamette-valley":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-123.732,43.576,-122.128,45.767]},"columbia-valley":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-121.297,45.218,-117.039,48.292]},"walla-walla-valley":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-118.754,45.828,-118.098,46.209]},"paso-robles":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-120.946,35.316,-120.195,35.792]},"monticello":{"quality":"oficial","source":"UC Davis Library AVA Project (CC0) / TTB","bbox":[-79.019,37.62,-77.846,38.389]},"cafayate":{"quality":"aprox","source":"Res. INV C.32/2002, C.15/2004 + geoBoundaries gbOpen (CC BY 3.0 IGO)","bbox":[-66.209,-26.352,-65.617,-25.867]},"canelones":{"quality":"oficial-admin","source":"INAVI (Uruguay)","bbox":[-56.493,-34.88,-55.393,-34.207]},"lujan-de-cuyo":{"quality":"aprox","source":"Res. INV C.15/2005 (Ley 25.163) + geoBoundaries gbOpen (CC BY 3.0 IGO)","bbox":[-70.094,-33.392,-68.619,-32.621]},"maldonado":{"quality":"oficial-admin","source":"INAVI (Uruguay)","bbox":[-55.484,-35.029,-54.464,-33.929]},"san-rafael":{"quality":"aprox","source":"Res. INV C.31/2007 (Ley 25.163) + geoBoundaries gbOpen (CC BY 3.0 IGO)","bbox":[-70.235,-36.0,-66.753,-34.1]},"valle-de-casablanca":{"quality":"oficial-admin","source":"Decreto 464/1994 MINAGRI (Chile) + geoBoundaries gbOpen (CC BY 3.0 IGO)","bbox":[-71.708,-33.489,-71.195,-33.155]},"valle-de-colchagua":{"quality":"oficial-admin","source":"Decreto 464/1994 MINAGRI (Chile) + geoBoundaries gbOpen (CC BY 3.0 IGO)","bbox":[-72.056,-35.005,-70.248,-33.904]},"valle-de-uco":{"quality":"oficial-admin","source":"Res. INV C.37/2002 (Ley 25.163) + geoBoundaries gbOpen (CC BY 3.0 IGO)","bbox":[-69.972,-34.7,-68.29,-33.011]},"valle-del-maipo":{"quality":"oficial-admin","source":"Decreto 464/1994 MINAGRI (Chile) + geoBoundaries gbOpen (CC BY 3.0 IGO)","bbox":[-71.714,-34.291,-69.77,-32.922]},"muscat-du-ventoux":{"quality":"oficial","source":"INAO, aire géographique (data.gouv.fr, Licence Ouverte)","bbox":[4.951,43.783,5.608,44.279]},"armagnac":{"quality":"oficial","source":"INAO, aire géographique (data.gouv.fr, Licence Ouverte)","bbox":[-0.715,43.485,0.8,44.227]},"cognac":{"quality":"oficial","source":"INAO, aire géographique (data.gouv.fr, Licence Ouverte)","bbox":[-1.563,45.075,0.517,46.327]},"coonawarra":{"quality":"oficial","source":"Wine Australia, Geographical Indications (CC BY 4.0)","bbox":[140.753,-37.466,140.973,-37.139]},"margaret-river":{"quality":"oficial","source":"Wine Australia, Geographical Indications (CC BY 4.0)","bbox":[114.975,-34.377,115.301,-33.532]},"barossa-valley":{"quality":"oficial","source":"Wine Australia, Geographical Indications (CC BY 4.0)","bbox":[138.825,-34.713,139.123,-34.351]},"eden-valley":{"quality":"oficial","source":"Wine Australia, Geographical Indications (CC BY 4.0)","bbox":[138.938,-34.775,139.194,-34.409]},"hunter":{"quality":"oficial","source":"Wine Australia, Geographical Indications (CC BY 4.0)","bbox":[149.675,-33.139,151.833,-31.603]},"marlborough":{"quality":"oficial","source":"IPONZ, GI register NZGI1004 (generalised boundary)","bbox":[172.719,-42.636,174.443,-40.663]},"central-otago":{"quality":"oficial","source":"IPONZ, GI register NZGI1007 (generalised boundary)","bbox":[168.116,-45.812,170.439,-43.955]},"hawkes-bay":{"quality":"oficial","source":"IPONZ, GI register NZGI1005 (generalised boundary)","bbox":[176.043,-40.431,178.001,-38.584]},"tyrnavos":{"quality":"aprox","source":"geoBoundaries (CC BY 4.0): Tyrnavos municipality; PGI = Tyrnavos, Argyroupoli, Damasi, Ampelonas, Vryotopos, Deleria, Rodia","bbox":[22.063,39.583,22.401,39.916]},"helan-mountain-east":{"quality":"aprox","source":"geoBoundaries (CC BY 4.0): Ningxia counties of the GI sub-regions (Shizuishan, Helan, Yinchuan, Yongning, Qingtongxia, Hongsibao)","bbox":[105.594,37.075,106.965,39.286]},"shacheng":{"quality":"aprox","source":"geoBoundaries (CC BY 4.0): Huailai + Zhuolu counties, GB/T 19265","bbox":[114.923,39.659,115.963,40.588]}}
+{
+ "madiran": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -0.249,
+   43.432,
+   -0.001,
+   43.673
+  ]
+ },
+ "chinon": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   0.053,
+   47.071,
+   0.506,
+   47.262
+  ]
+ },
+ "saint-emilion": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -0.263,
+   44.833,
+   -0.068,
+   44.952
+  ]
+ },
+ "pauillac": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -0.859,
+   45.136,
+   -0.7,
+   45.284
+  ]
+ },
+ "chablis": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   3.688,
+   47.731,
+   3.945,
+   47.965
+  ]
+ },
+ "meursault": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   4.732,
+   46.951,
+   4.818,
+   46.992
+  ]
+ },
+ "bourgogne": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   4.329,
+   46.903,
+   5.101,
+   47.978
+  ]
+ },
+ "languedoc": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   2.064,
+   42.405,
+   4.45,
+   43.995
+  ]
+ },
+ "pomerol": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -0.263,
+   44.873,
+   -0.174,
+   44.952
+  ]
+ },
+ "sancerre": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   2.637,
+   47.199,
+   2.92,
+   47.425
+  ]
+ },
+ "pessac-leognan": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -0.759,
+   44.684,
+   -0.478,
+   44.863
+  ]
+ },
+ "cote-rotie": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   4.754,
+   45.47,
+   4.861,
+   45.527
+  ]
+ },
+ "condrieu": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   4.693,
+   45.336,
+   4.781,
+   45.494
+  ]
+ },
+ "champagne": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   3.161,
+   47.924,
+   5.012,
+   49.408
+  ]
+ },
+ "chateauneuf-du-pape": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   4.728,
+   43.982,
+   4.944,
+   44.188
+  ]
+ },
+ "sauternes": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -0.374,
+   44.508,
+   -0.261,
+   44.632
+  ]
+ },
+ "alsace": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   7.051,
+   47.767,
+   8.068,
+   49.058
+  ]
+ },
+ "bolgheri": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   10.528,
+   43.098,
+   10.691,
+   43.247
+  ]
+ },
+ "barolo": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   7.749,
+   44.556,
+   8.081,
+   44.694
+  ]
+ },
+ "brunello-di-montalcino": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   11.35,
+   42.957,
+   11.687,
+   43.178
+  ]
+ },
+ "chianti-classico": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   11.08,
+   43.295,
+   11.6,
+   43.708
+  ]
+ },
+ "prosecco": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   11.139,
+   45.058,
+   13.919,
+   46.681
+  ]
+ },
+ "amarone-della-valpolicella": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   10.804,
+   45.349,
+   11.33,
+   45.689
+  ]
+ },
+ "orvieto": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   11.892,
+   42.532,
+   12.411,
+   42.943
+  ]
+ },
+ "vin-santo-del-chianti": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   10.464,
+   42.795,
+   12.077,
+   44.1
+  ]
+ },
+ "santorini": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   25.196,
+   36.232,
+   25.487,
+   36.482
+  ]
+ },
+ "tokaj": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   21.077,
+   48.067,
+   21.706,
+   48.443
+  ]
+ },
+ "rias-baixas": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -8.945,
+   41.87,
+   -8.104,
+   42.919
+  ]
+ },
+ "vinho-verde": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -8.881,
+   40.763,
+   -7.704,
+   42.154
+  ]
+ },
+ "wurttemberg": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   8.452,
+   47.534,
+   10.162,
+   49.791
+  ]
+ },
+ "rioja": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -3.134,
+   41.919,
+   -1.679,
+   42.741
+  ]
+ },
+ "ribera-del-duero": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -4.426,
+   41.413,
+   -3.1,
+   41.877
+  ]
+ },
+ "priorat": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   0.658,
+   41.134,
+   0.923,
+   41.312
+  ]
+ },
+ "jerez": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -6.474,
+   36.33,
+   -5.456,
+   37.076
+  ]
+ },
+ "cava": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -6.518,
+   38.627,
+   3.1,
+   42.636
+  ]
+ },
+ "porto": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -7.914,
+   40.923,
+   -6.749,
+   41.557
+  ]
+ },
+ "douro": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   -7.914,
+   40.923,
+   -6.749,
+   41.557
+  ]
+ },
+ "mosel": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   6.357,
+   49.453,
+   7.696,
+   50.41
+  ]
+ },
+ "rheingau": {
+  "quality": "oficial",
+  "source": "Candiago et al. 2022 (figshare, CC0)",
+  "bbox": [
+   7.772,
+   49.972,
+   8.467,
+   50.152
+  ]
+ },
+ "napa-valley": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -122.647,
+   38.155,
+   -122.061,
+   38.768
+  ]
+ },
+ "russian-river-valley": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -123.031,
+   38.301,
+   -122.674,
+   38.652
+  ]
+ },
+ "sonoma-coast": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -123.534,
+   38.112,
+   -122.35,
+   38.779
+  ]
+ },
+ "willamette-valley": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -123.732,
+   43.576,
+   -122.128,
+   45.767
+  ]
+ },
+ "columbia-valley": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -121.297,
+   45.218,
+   -117.039,
+   48.292
+  ]
+ },
+ "walla-walla-valley": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -118.754,
+   45.828,
+   -118.098,
+   46.209
+  ]
+ },
+ "paso-robles": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -120.946,
+   35.316,
+   -120.195,
+   35.792
+  ]
+ },
+ "monticello": {
+  "quality": "oficial",
+  "source": "UC Davis Library AVA Project (CC0) / TTB",
+  "bbox": [
+   -79.019,
+   37.62,
+   -77.846,
+   38.389
+  ]
+ },
+ "cafayate": {
+  "quality": "aprox",
+  "source": "Res. INV C.32/2002, C.15/2004 + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -66.209,
+   -26.352,
+   -65.617,
+   -25.867
+  ]
+ },
+ "canelones": {
+  "quality": "oficial-admin",
+  "source": "INAVI (Uruguay)",
+  "bbox": [
+   -56.493,
+   -34.88,
+   -55.393,
+   -34.207
+  ]
+ },
+ "lujan-de-cuyo": {
+  "quality": "aprox",
+  "source": "Res. INV C.15/2005 (Ley 25.163) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -70.094,
+   -33.392,
+   -68.619,
+   -32.621
+  ]
+ },
+ "maldonado": {
+  "quality": "oficial-admin",
+  "source": "INAVI (Uruguay)",
+  "bbox": [
+   -55.484,
+   -35.029,
+   -54.464,
+   -33.929
+  ]
+ },
+ "san-rafael": {
+  "quality": "aprox",
+  "source": "Res. INV C.31/2007 (Ley 25.163) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -70.235,
+   -36.0,
+   -66.753,
+   -34.1
+  ]
+ },
+ "valle-de-casablanca": {
+  "quality": "oficial-admin",
+  "source": "Decreto 464/1994 MINAGRI (Chile) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -71.708,
+   -33.489,
+   -71.195,
+   -33.155
+  ]
+ },
+ "valle-de-colchagua": {
+  "quality": "oficial-admin",
+  "source": "Decreto 464/1994 MINAGRI (Chile) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -72.056,
+   -35.005,
+   -70.248,
+   -33.904
+  ]
+ },
+ "valle-de-uco": {
+  "quality": "oficial-admin",
+  "source": "Res. INV C.37/2002 (Ley 25.163) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -69.972,
+   -34.7,
+   -68.29,
+   -33.011
+  ]
+ },
+ "valle-del-maipo": {
+  "quality": "oficial-admin",
+  "source": "Decreto 464/1994 MINAGRI (Chile) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -71.714,
+   -34.291,
+   -69.77,
+   -32.922
+  ]
+ },
+ "muscat-du-ventoux": {
+  "quality": "oficial",
+  "source": "INAO, aire géographique (data.gouv.fr, Licence Ouverte)",
+  "bbox": [
+   4.951,
+   43.783,
+   5.608,
+   44.279
+  ]
+ },
+ "armagnac": {
+  "quality": "oficial",
+  "source": "INAO, aire géographique (data.gouv.fr, Licence Ouverte)",
+  "bbox": [
+   -0.715,
+   43.485,
+   0.8,
+   44.227
+  ]
+ },
+ "cognac": {
+  "quality": "oficial",
+  "source": "INAO, aire géographique (data.gouv.fr, Licence Ouverte)",
+  "bbox": [
+   -1.563,
+   45.075,
+   0.517,
+   46.327
+  ]
+ },
+ "coonawarra": {
+  "quality": "oficial",
+  "source": "Wine Australia, Geographical Indications (CC BY 4.0)",
+  "bbox": [
+   140.753,
+   -37.466,
+   140.973,
+   -37.139
+  ]
+ },
+ "margaret-river": {
+  "quality": "oficial",
+  "source": "Wine Australia, Geographical Indications (CC BY 4.0)",
+  "bbox": [
+   114.975,
+   -34.377,
+   115.301,
+   -33.532
+  ]
+ },
+ "barossa-valley": {
+  "quality": "oficial",
+  "source": "Wine Australia, Geographical Indications (CC BY 4.0)",
+  "bbox": [
+   138.825,
+   -34.713,
+   139.123,
+   -34.351
+  ]
+ },
+ "eden-valley": {
+  "quality": "oficial",
+  "source": "Wine Australia, Geographical Indications (CC BY 4.0)",
+  "bbox": [
+   138.938,
+   -34.775,
+   139.194,
+   -34.409
+  ]
+ },
+ "hunter": {
+  "quality": "oficial",
+  "source": "Wine Australia, Geographical Indications (CC BY 4.0)",
+  "bbox": [
+   149.675,
+   -33.139,
+   151.833,
+   -31.603
+  ]
+ },
+ "marlborough": {
+  "quality": "oficial",
+  "source": "IPONZ, GI register NZGI1004 (generalised boundary)",
+  "bbox": [
+   172.719,
+   -42.636,
+   174.443,
+   -40.663
+  ]
+ },
+ "central-otago": {
+  "quality": "oficial",
+  "source": "IPONZ, GI register NZGI1007 (generalised boundary)",
+  "bbox": [
+   168.116,
+   -45.812,
+   170.439,
+   -43.955
+  ]
+ },
+ "hawkes-bay": {
+  "quality": "oficial",
+  "source": "IPONZ, GI register NZGI1005 (generalised boundary)",
+  "bbox": [
+   176.043,
+   -40.431,
+   178.001,
+   -38.584
+  ]
+ },
+ "tyrnavos": {
+  "quality": "aprox",
+  "source": "geoBoundaries (CC BY 4.0): Tyrnavos municipality; PGI = Tyrnavos, Argyroupoli, Damasi, Ampelonas, Vryotopos, Deleria, Rodia",
+  "bbox": [
+   22.063,
+   39.583,
+   22.401,
+   39.916
+  ]
+ },
+ "helan-mountain-east": {
+  "quality": "aprox",
+  "source": "geoBoundaries (CC BY 4.0): Ningxia counties of the GI sub-regions (Shizuishan, Helan, Yinchuan, Yongning, Qingtongxia, Hongsibao)",
+  "bbox": [
+   105.594,
+   37.075,
+   106.965,
+   39.286
+  ]
+ },
+ "shacheng": {
+  "quality": "aprox",
+  "source": "geoBoundaries (CC BY 4.0): Huailai + Zhuolu counties, GB/T 19265",
+  "bbox": [
+   114.923,
+   39.659,
+   115.963,
+   40.588
+  ]
+ },
+ "agrelo": {
+  "quality": "oficial-admin",
+  "source": "Res. INV C.21/2005 (distrito Agrelo) + OpenStreetMap (ODbL), límite del distrito",
+  "bbox": [
+   -69.012,
+   -33.209,
+   -68.828,
+   -33.084
+  ]
+ },
+ "las-compuertas": {
+  "quality": "oficial-admin",
+  "source": "Res. INV C.30/2007 (distrito Las Compuertas) + OpenStreetMap (ODbL), límite del distrito",
+  "bbox": [
+   -69.061,
+   -33.053,
+   -68.921,
+   -32.96
+  ]
+ },
+ "vista-flores": {
+  "quality": "oficial-admin",
+  "source": "Res. INV C.11/2012 (distrito Vista Flores) + OpenStreetMap (ODbL), límite del distrito",
+  "bbox": [
+   -69.224,
+   -33.688,
+   -69.066,
+   -33.598
+  ]
+ },
+ "los-chacayes": {
+  "quality": "aprox",
+  "source": "RESOL-2017-249 INV (distrito Los Chacayes; sin la ampliación de la Res. 20/2023) + OpenStreetMap (ODbL), límite del distrito",
+  "bbox": [
+   -69.885,
+   -33.685,
+   -69.209,
+   -33.496
+  ]
+ },
+ "alto-agrelo": {
+  "quality": "oficial",
+  "source": "RESOL-2025-27-APN-INV#MEC (polígono publicado con la resolución)",
+  "bbox": [
+   -69.034,
+   -33.234,
+   -68.942,
+   -33.141
+  ]
+ },
+ "valles-templados": {
+  "quality": "oficial",
+  "source": "RESOL-2025-28-APN-INV#MEC (polígono publicado con la resolución)",
+  "bbox": [
+   -65.473,
+   -24.597,
+   -64.887,
+   -24.075
+  ]
+ },
+ "barreal": {
+  "quality": "oficial",
+  "source": "Res. INV C.42/2013 (coordenadas de la resolución)",
+  "bbox": [
+   -69.468,
+   -31.672,
+   -69.446,
+   -31.574
+  ]
+ },
+ "valle-de-zonda": {
+  "quality": "oficial",
+  "source": "Res. INV C.04/2015 (coordenadas de la resolución)",
+  "bbox": [
+   -68.794,
+   -31.609,
+   -68.689,
+   -31.509
+  ]
+ },
+ "valle-de-calingasta": {
+  "quality": "aprox",
+  "source": "Res. INV C.32/2002 y C.41/2013 (departamento Calingasta) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -70.569,
+   -32.626,
+   -69.103,
+   -30.274
+  ]
+ },
+ "valles-del-famatina": {
+  "quality": "aprox",
+  "source": "Res. INV C.29/2004 (departamentos que comprende) + geoBoundaries gbOpen (CC BY 3.0 IGO)",
+  "bbox": [
+   -69.63,
+   -29.979,
+   -66.976,
+   -27.707
+  ]
+ }
+}
