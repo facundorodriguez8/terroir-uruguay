@@ -2577,7 +2577,7 @@ async function load() {
   await Promise.all([ensureTxt('es'), ensurePrem('es')]); if (L !== 'es') await Promise.all([ensureTxt(L), ensurePrem(L)]);
   buildMarkers(); buildSeals(); buildColumns(); buildUI(); paintHex(); applyFilters(); renderLegend(); viewLayers();
   const ld = $('#loading'); ld.style.opacity = 0; setTimeout(() => ld.remove(), 550);
-  { const m = location.hash.match(/^#aprender\/?([\w-]*)/); if (m) openLearn(m[1] || 'index'); }
+  { const r = routeOfHash(location.hash); if (r) openLearn(r); }
   // primera visita en este navegador: ayuda de 5 pasos (en la página de pruebas, solo con ?ayuda)
   if (!recall('terroir-ayuda') && (!/_test\.html$/.test(location.pathname) || /ayuda/.test(location.search))) setTimeout(() => coachShow(0), 1400);
 }
@@ -3728,11 +3728,16 @@ function learnStop() { learnSeq++; const lE = $('#learn'); if (lE) lE.onscroll =
 const ROUTES = ['index', 'uvas', 'catar', 'do', 'jugar', 'ideal', 'elaboracion', 'vinedo', 'estilos', 'servicio'];
 const okRoute = r => ROUTES.includes(r) || /^tp-(elaboracion|vinedo|estilos|servicio)-\d+$/.test(r) || /^lec-\d+$/.test(r) || (r.startsWith('do-') && r.length > 3) || LEARN_GRAPES.some(g => g.id === r);
 // navegación iniciada por la persona: deja historial para que "Atrás" funcione
-function learnNav(route) { const h = '#aprender' + (route && route !== 'index' ? '/' + route : ''); if (location.hash !== h) location.hash = h; else openLearn(route); }
+// Uvas, Catar y Denominaciones son secciones propias (fuera de Aprender), con su propia dirección
+const secOf = r => !r ? 'aprender' : r === 'uvas' || LEARN_GRAPES.some(g => g.id === r) ? 'uvas' : r === 'catar' ? 'catar' : r === 'do' || r.startsWith('do-') ? 'do' : 'aprender';
+const hashOf = r => { const s = secOf(r); return s === 'uvas' ? '#uvas' + (r !== 'uvas' ? '/' + r : '') : s === 'catar' ? '#catar' : s === 'do' ? '#denominaciones' + (r !== 'do' ? '/' + r.slice(3) : '') : '#aprender' + (r && r !== 'index' ? '/' + r : ''); };
+const routeOfHash = h => { let m = h.match(/^#aprender\/?([\w-]*)/); if (m) return m[1] || 'index'; m = h.match(/^#uvas\/?([\w-]*)/); if (m) return m[1] || 'uvas'; if (/^#catar\b/.test(h)) return 'catar'; m = h.match(/^#(?:denominaciones|do)\/?([\w-]*)/); if (m) return m[1] ? 'do-' + m[1] : 'do'; return null; };
+function learnNav(route) { const h = hashOf(route); if (location.hash !== h) location.hash = h; else openLearn(route); }
 function openLearn(route, keep) {
   if (!okRoute(route || 'index')) route = 'index';
   learnStop(); stopOrbit(); learnRoute = route || 'index'; seenRoute(learnRoute); const el = $('#learn'); el.hidden = false; document.body.classList.add('learning');
-  if (location.hash !== '#aprender' + (route && route !== 'index' ? '/' + route : '')) history.replaceState(null, '', '#aprender' + (route && route !== 'index' ? '/' + route : ''));
+  if (location.hash !== hashOf(learnRoute)) history.replaceState(null, '', hashOf(learnRoute));
+  document.body.dataset.sec = secOf(learnRoute);
   if (learnRoute === 'index') return renderLearnIndex();
   if (learnRoute === 'uvas') return renderGrapeList();
   if (learnRoute === 'catar') return renderTasting();
@@ -3746,13 +3751,13 @@ function openLearn(route, keep) {
   const id = learnRoute, gk = (LEARN_GRAPES.find(g => g.id === id) || {}).kind || 'red', seq = learnSeq; learnTab = gk;
   el.className = 'theme-' + (gk === 'white' ? 'white' : 'red');
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
-  Promise.all([getUva(id), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => { if (seq === learnSeq) renderGrape(d, id); }).catch(e => { console.error(e); if (seq === learnSeq) learnNav('index'); });
+  Promise.all([getUva(id), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => { if (seq === learnSeq) renderGrape(d, id); }).catch(e => { console.error(e); if (seq === learnSeq) learnNav('uvas'); });
 }
-function closeLearn() { learnStop(); learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (location.hash.startsWith('#aprender')) history.replaceState(null, '', location.pathname + location.search); }
+function closeLearn() { learnStop(); learnRoute = null; $('#learn').hidden = true; document.body.classList.remove('learning'); if (routeOfHash(location.hash)) history.replaceState(null, '', location.pathname + location.search); }
 // sección actual de Aprender (para marcarla en la barra)
 const learnSec = () => { const r = learnRoute || 'index'; return r === 'uvas' || LEARN_GRAPES.some(g => g.id === r) ? 'uvas' : r === 'do' || r.startsWith('do-') ? 'do' : r === 'catar' ? 'catar' : TOPICS.includes(r) ? r : r.startsWith('tp-') ? r.split('-')[1] : r === 'jugar' || r === 'ideal' || r.startsWith('lec-') ? 'jugar' : ''; };
-const learnTabsBar = () => '<nav class="l-sectabs">' + [['elaboracion', 'tab_make', '🛢️'], ['vinedo', 'tab_vine', '🌱'], ['uvas', 'tab_grapes', '🍇'], ['estilos', 'tab_styles', '🍾'], ['catar', 'tab_taste', '👃'], ['servicio', 'tab_service', '🍽️'], ['do', 'tab_do', '🏷️'], ['jugar', 'tab_play', '🎮']].map(([r, k, ic]) => '<button data-l="' + r + '" class="' + (learnSec() === r ? 'sel' : '') + '"><span>' + ic + '</span>' + esc(t(k)) + '</button>').join('') + '</nav>';
-const learnTop = (back) => '<div class="l-top' + (learnRoute && learnRoute !== 'index' ? ' has-tabs' : '') + '">' + (learnRoute && learnRoute !== 'index' ? learnTabsBar() : '') + '<button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : back === 'do' ? 'learn_sub_do' : back === 'jugar' ? 'tab_play' : ({ elaboracion: 'tab_make', vinedo: 'tab_vine', estilos: 'tab_styles', servicio: 'tab_service' }[back] || 'learn_back'))) + '</button><button class="x l-x" aria-label="' + esc(t('close')) + '" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>';
+const learnTabsBar = () => '<nav class="l-sectabs">' + [['elaboracion', 'tab_make', '🛢️'], ['vinedo', 'tab_vine', '🌱'], ['estilos', 'tab_styles', '🍾'], ['servicio', 'tab_service', '🍽️'], ['jugar', 'tab_play', '🎮']].map(([r, k, ic]) => '<button data-l="' + r + '" class="' + (learnSec() === r ? 'sel' : '') + '"><span>' + ic + '</span>' + esc(t(k)) + '</button>').join('') + '</nav>';
+const learnTop = (back) => { const tb = learnRoute && learnRoute !== 'index' && secOf(learnRoute) === 'aprender'; return '<div class="l-top' + (tb ? ' has-tabs' : '') + '">' + (tb ? learnTabsBar() : '') + '<button class="l-back" data-l="' + back + '">← ' + esc(t(back === 'map' ? 'learn_back_map' : back === 'index' ? 'learn_btn' : back === 'do' ? 'learn_sub_do' : back === 'jugar' ? 'tab_play' : ({ elaboracion: 'tab_make', vinedo: 'tab_vine', estilos: 'tab_styles', servicio: 'tab_service' }[back] || 'learn_back'))) + '</button><button class="x l-x" aria-label="' + esc(t('close')) + '" data-l="map"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>' };
 function learnWire(el) { const nv = el.querySelector('.l-sectabs'), sl = nv && nv.querySelector('.sel'); if (sl) nv.scrollLeft = sl.offsetLeft - nv.clientWidth / 2 + sl.offsetWidth / 2; el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => b.dataset.l === 'map' ? closeLearn() : learnNav(b.dataset.l)); }
 // ícono grande de cada subtema (SVG)
 const ICON_GLASS = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 6h24c1 14-3 26-12 27C23 32 19 20 20 6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M21 16h22c-1 9-4 15-11 15s-10-6-11-15z" fill="currentColor" opacity=".55"/><path d="M32 33v20M22 58h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M46 10c4 2 7 6 7 11M50 6c5 3 9 8 9 15" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".6"/></svg>';
@@ -4176,11 +4181,8 @@ function renderLearnIndex() {
     '<button class="lh-first" data-l="jugar">' + MASCOT + '<span><b>' + esc(t(started && nx ? 'cam_resume' : 'learn_first')) + (started && CAMINO[nx] ? '' : '') + '</b><small>' + esc(started ? t('cam_title') + ' · ' + Math.min(CAM.done.length, CAMINO.length) + '/' + CAMINO.length : t('learn_first_d')) + '</small></span><em>→</em></button></div></section>' +
     '<div class="lx-in lh-in"><p class="lh-or">' + esc(t('learn_or')) + '</p><div class="lh-doors">' +
     tpDoor('elaboracion') + tpDoor('vinedo') +
-    door('grapes', 'uvas', '<span class="duo">' + clusterArt('red') + clusterArt('white') + '</span>', 'learn_sub_grapes', 'door_grapes', prog(SEEN.g.filter(id => LEARN_GRAPES.some(g => g.id === id)).length, LEARN_GRAPES.length)) +
     tpDoor('estilos') +
-    door('taste', 'catar', glassArt('red', 4), 'learn_sub_tasting', 'door_taste', prog(SEEN.c.filter(i => i < 4).length, 4)) +
     tpDoor('servicio') +
-    door('do', 'do', ICON_SEAL, 'learn_sub_do', 'door_do', '<span id="lhDo"></span>') +
     door('play', 'jugar', '<span class="lh-path"><i class="d"></i><i class="d"></i><i class="c"></i><i></i></span>', 'tab_play', 'door_play', prog(CAM.done.length, CAMINO.length)) +
     '</div></div>';
   learnWire(el); el.scrollTop = 0;
@@ -4195,7 +4197,7 @@ function renderGrapeList() {
   const el = $('#learn'); el.className = 'theme-' + (learnTab === 'white' ? 'white' : 'red');
   const cards = LEARN_GRAPES.filter(g => g.kind === learnTab).map(g => { const ha = (INAVI.nat || {})[g.name];
     return '<button class="l-gcard ' + g.kind + ' ready" data-l="' + g.id + '"><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc((ha ? nf(ha) + ' ' + t('ha') + ' ' + t('in_uy') + ' · ' : '') + t('learn_open')) + '</small></button>'; }).join('');
-  el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_grapes')) + '</h1><p>' + esc(t('learn_sub_grapes_d')) + '</p></header>' +
+  el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero sm"><h1>' + esc(t('learn_sub_grapes')) + '</h1><p>' + esc(t('learn_sub_grapes_d')) + '</p></header>' +
     '<div class="l-tabs" role="tablist">' + ['red', 'white'].map(k => '<button role="tab" data-tab="' + k + '" class="' + (k === learnTab ? 'sel' : '') + '"><span class="berry ' + k + '"></span>' + esc(t(k === 'red' ? 'learn_reds' : 'learn_whites')) + '</button>').join('') + '</div>' +
     '<div class="l-grid">' + cards + '</div>' +
     '<button class="l-play mini" data-l="jugar"><div><b>🎮 ' + esc(t('g_title')) + '</b><p>' + esc(t('pl_teaser')) + '</p></div><em>' + esc(t('pl_go')) + ' →</em></button></div>';
@@ -4330,7 +4332,7 @@ function renderTasting() {
   getCata().then(C => {
     if (seq !== learnSeq) return;
     const tabs = C.steps_t.concat([C.game.t, C.sheet.t]);
-    el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(C.title) + '</h1><p>' + esc(C.intro) + '</p></header>' +
+    el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero sm"><h1>' + esc(C.title) + '</h1><p>' + esc(C.intro) + '</p></header>' +
       '<nav class="ct-tabs">' + tabs.map((x, i) => '<button data-tab="' + i + '" class="' + (i === CT.tab ? 'sel' : '') + (i > 3 ? ' play' : '') + '"><span>' + (i < 4 ? i + 1 : i === 4 ? '?' : '✎') + '</span>' + esc(x) + '</button>').join('') + '</nav><div id="ctBody"></div>' +
       '<details class="l-src"><summary>' + esc(t('sources_t')) + '</summary><p>' + esc(C.sources) + '</p></details></div>';
     learnWire(el);
@@ -4792,7 +4794,7 @@ function renderDOIndex() {
     if (doFilt !== 'all' && !ctrs.includes(doFilt)) doFilt = 'all';
     const list = pool.filter(x => doFilt === 'all' || x.c === doFilt).sort((a, b) => (b.icon - a.icon) || a.name.localeCompare(b.name));
     const nDO = D.dos.filter(isDO).length;
-    el.innerHTML = learnTop('index') + '<div class="lw"><header class="l-hero sm"><div class="eyebrow">' + esc(t('learn_btn')) + '</div><h1>' + esc(t('learn_sub_do')) + '</h1><p>' + esc(t('do_intro')) + '</p></header>' +
+    el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero sm"><h1>' + esc(t('learn_sub_do')) + '</h1><p>' + esc(t('do_intro')) + '</p></header>' +
       // lista
       '<section class="l-sec" id="doExplore"><div class="do-kinds">' + [['do', nDO], ['ig', D.dos.length - nDO]].map(([k, n]) => '<button data-kind="' + k + '" class="' + (k === doKind ? 'sel' : '') + '"><b>' + esc(t('do_kind_' + k)) + '</b><span>' + nf(n) + '</span></button>').join('') + '</div>' + (doKind === 'ig' ? '<p class="do-note">' + esc(t('do_kind_ig_d')) + '</p>' : '') + '<div class="l-chips">' + ['all'].concat(D.systems.map(s => s.c).filter(c => ctrs.includes(c))).map(c => '<button class="l-chip sm' + (c === doFilt ? ' sel' : '') + '" data-f="' + esc(c) + '">' + esc(c === 'all' ? t('do_all') : sysOf(D, c).name) + '</button>').join('') + '</div>' +
       (doFilt !== 'all' ? '<div id="doCMap" class="do-cmap"></div><p class="l-hint">' + esc(t('do_cmap_hint')) + '</p><div class="do-leg">' + list.slice().sort((a, b) => a.name.localeCompare(b.name)).map((x, i) => '<button data-l="do-' + x.id + '" data-dl="' + x.id + '"><i style="background:' + DO_PAL[i % DO_PAL.length] + '"></i>' + esc(x.name) + '<small>' + esc(lvOf(D, x).label) + '</small></button>').join('') + '</div>' + doCountBox(D, doFilt, list.length) :
@@ -4966,7 +4968,7 @@ map.on('zoomend', () => document.body.classList.toggle('do-z', map.getZoom() >= 
 $('#doToggle').onchange = e => { doOn = e.target.checked; doCtry = 'all'; if (doOn) getDO().then(D => doMarkers(D)); else doVis(); };
 $('#learnBtn').onclick = () => { if (coachStep >= 0) coachEnd(); learnNav('index'); };
 [['#grapesBtn', 'uvas'], ['#tasteBtn', 'catar'], ['#doBtn', 'do']].forEach(([b, r]) => { $(b).onclick = () => { if (coachStep >= 0) coachEnd(); learnNav(r); }; });
-addEventListener('hashchange', () => { if (!D) return; const m = location.hash.match(/^#aprender\/?([\w-]*)/); if (m) openLearn(m[1] || 'index'); else if (learnRoute) closeLearn(); });
+addEventListener('hashchange', () => { if (!D) return; const r = routeOfHash(location.hash); if (r) openLearn(r); else if (learnRoute) closeLearn(); });
 addEventListener('keydown', e => { if (learnRoute && e.key === 'Escape' && coachStep < 0) closeLearn(); });
 
 })();
