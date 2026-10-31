@@ -3030,7 +3030,7 @@ function buildRegMarkers() {
   if (CC === 'UY') return;
   REG.regions.forEach((r, k) => {
     if (!r.pt) return;
-    const set = new Set(r.deps), nw = WIN.filter(w => !w.unconf && set.has(w.dep) && w.lat != null).length, ha = regHa(r);   // igual que la ficha de la región
+    const nw = regWins(r).length, ha = regHa(r);   // igual que la ficha de la región y la lista de Bodegas
     if (!ha && !nw) return;
     const el = document.createElement('button'); el.type = 'button'; el.className = 'reg-label';
     // la provincia, para quien no sabe dónde queda la región (salvo que el nombre ya la diga: "Córdoba y centro del país")
@@ -3044,7 +3044,8 @@ function buildRegMarkers() {
 }
 const REG_Z = 6.9;
 function regVis() {
-  const z = map.getZoom(), on = view === 'uy' && CC !== 'UY' && z < REG_Z;
+  // con un filtro de zona en Bodegas no hacen falta: ya se está mirando una región o un departamento
+  const z = map.getZoom(), on = view === 'uy' && CC !== 'UY' && z < REG_Z && !(MODE === 'bodegas' && B.dep);
   // el panel, la leyenda, la ficha y los botones de arriba cuentan como ocupados
   const kept = [];
   if (on) ['#panel', '#legend', '#card', '#tour'].map(q => $(q)).concat([...document.querySelectorAll('.topbar > *')]).forEach(e => { if (e && !e.hidden && e.dataset.hidden !== 'true' && e.offsetWidth) kept.push(e.getBoundingClientRect()); });
@@ -3536,7 +3537,7 @@ function showRegion(k, fly) {
   selReg = k; selCell = -1; selWin = -1; cardMode = 'reg'; selLine(-1); map.setFilter('win-sel', ['==', ['id'], -1]);
   zoneSel(); refreshCard();
   const r = REG.regions[k];
-  if (fly) { const ws = CC === 'UY' ? [] : regWins(r); if (ws.length >= 2) { flyWins(ws, r); return; } const cam = map.cameraForBounds([[r.bbox[0], r.bbox[1]], [r.bbox[2], r.bbox[3]]], { padding: padding() }); map.flyTo({ center: cam.center, zoom: Math.min(cam.zoom, 9), pitch: is3D ? 50 : 0, bearing: map.getBearing(), duration: 2000, essential: true }); }
+  if (fly) { const ws = CC === 'UY' ? [] : regWins(r).filter(w => w.lat != null); if (ws.length >= 2) { flyWins(ws, r); return; } const cam = map.cameraForBounds([[r.bbox[0], r.bbox[1]], [r.bbox[2], r.bbox[3]]], { padding: padding() }); map.flyTo({ center: cam.center, zoom: Math.min(cam.zoom, 9), pitch: is3D ? 50 : 0, bearing: map.getBearing(), duration: 2000, essential: true }); }
 }
 function regionCard(k) {
   const r = REG.regions[k], set = new Set(r.deps), ha = regHa(r);
@@ -3560,9 +3561,10 @@ function regionCard(k) {
   const best = wins.filter(w => !w.unconf).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999)).slice(0, 6);
   const pctRows = arr => arr.map(([k2, p, lab]) => esc(lab) + ' <span class="num">' + p + ' %</span>').join('<br>');
   let h = '<header><div class="eyebrow">' + esc(t('reg_title')) + '</div><h2>' + esc(rname(r)) + '</h2><div class="zchips">' +
-    '<span class="zc">' + ZI.soil + esc(nf(ha, ha < 10 ? 1 : 0) + ' ' + t('ha')) + '</span><span class="zc">' + ZI.alt + esc(nf(vy) + ' ' + t('reg_vy')) + '</span><span class="zc">' + ZI.rock + esc(nf(wins.length) + ' ' + t('reg_wineries')) + '</span></div>' + X_BTN_() + '</header><div class="body">';
+    '<span class="zc">' + ZI.soil + esc(nf(ha, ha < 10 ? 1 : 0) + ' ' + t('ha')) + '</span><span class="zc">' + ZI.alt + esc(nf(vy) + ' ' + t('reg_vy')) + '</span><span class="zc">' + ZI.rock + esc(nf(CC === 'UY' ? wins.length : regWins(r).length) + ' ' + t('reg_wineries')) + '</span></div>' + X_BTN_() + '</header><div class="body">';
   if (regOut) { h += '<p class="hint out-zone">' + esc(t('out_zone', { dep: regOut })) + '</p>'; regOut = null; }
-  if (wins.length && CC !== 'UY') h += '<button class="cta reg-wins" data-regw="' + k + '">' + esc(t('reg_see_win', { n: nf(wins.length) })) + '</button>';
+  const nrw = CC === 'UY' ? 0 : regWins(r).length;
+  if (nrw) h += '<button class="cta reg-wins" data-regw="' + k + '">' + esc(t('reg_see_win', { n: nf(nrw) })) + '</button>';
   h += '<div class="lead-aporte reg"><div class="la-k">' + ZI.rock + esc(r.deps.join(' · ')) + '</div><p>' + esc(t('reg_desc_' + r.id)) + '</p></div>';
   if (r.note) h += '<p class="hint">' + esc(t('reg_note_' + r.note)) + '</p>';
   if (grapes.length) h += '<div><h4>' + esc(t('reg_grapes')) + '</h4><div class="bars">' + grapes.map(([g, v]) => '<div class="bar"><span>' + gLink(g, gname(g)) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / gm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>';
@@ -3692,7 +3694,8 @@ async function ensureTxt(l) {
 let RDS = { k: '', s: new Set() };
 function regDeps(v) { if (RDS.k !== v + CC) { const r = REG.regions.find(x => x.id === v.slice(4)); RDS = { k: v + CC, s: new Set(r ? r.deps : []) }; } return RDS.s; }
 // bodegas de una región que se ven en el mapa (las mismas que cuenta la etiqueta y la ficha)
-const regWins = r => { const set = new Set(r.deps); return WIN.filter(w => !w.unconf && set.has(w.dep) && w.lat != null); };
+// (también las sin ubicación: van en la lista aunque no tengan punto; el vuelo usa solo las ubicadas)
+const regWins = r => { const set = new Set(r.deps); return WIN.filter(w => !w.unconf && set.has(w.dep)); };
 // ver las bodegas de una región: modo Bodegas, filtro por región y vuelo a donde están
 function showRegWins(k) {
   const r = REG.regions[k]; if (!r) return;
@@ -3700,10 +3703,20 @@ function showRegWins(k) {
   B.dep = 'reg:' + r.id; $('#bDep').value = B.dep; applyBodegas(); flyWins(regWins(r), r);
 }
 function flyWins(ws, r) {
+  ws = ws.filter(w => w.lat != null);
+  // sin las alejadas (una bodega suelta a 300 km no debe alejar todo el mapa): fuera las que están a más del triple de la distancia mediana
+  if (ws.length >= 5) {
+    const med = a => a.slice().sort((x, y) => x - y)[a.length >> 1], cx = med(ws.map(w => w.lng)), cy = med(ws.map(w => w.lat));
+    const d = w => Math.hypot(w.lng - cx, w.lat - cy), md = Math.max(0.15, med(ws.map(d)));
+    const near = ws.filter(w => d(w) <= md * 3); if (near.length >= ws.length * 0.75) ws = near;
+  }
   let b = ws.length ? ws.reduce((a, w) => [Math.min(a[0], w.lng), Math.min(a[1], w.lat), Math.max(a[2], w.lng), Math.max(a[3], w.lat)], [180, 90, -180, -90]) : r.bbox;
   if (b[2] - b[0] < 0.1) b = [b[0] - 0.1, b[1] - 0.08, b[2] + 0.1, b[3] + 0.08];
-  const cam = map.cameraForBounds([[b[0], b[1]], [b[2], b[3]]], { padding: padding() });
-  map.flyTo({ center: cam.center, zoom: Math.min(cam.zoom, 11), pitch: is3D ? 50 : 0, bearing: map.getBearing(), duration: 1800, essential: true });
+  // el encuadre se calcula sin inclinación; con la vista 3D (inclinada) se aleja un poco para que entren todas
+  const p0 = map.getPitch(); map.setPitch(0);
+  const cam = map.cameraForBounds([[b[0], b[1]], [b[2], b[3]]], { padding: padding(), bearing: map.getBearing() });
+  map.setPitch(p0);
+  map.flyTo({ center: cam.center, zoom: Math.min(cam.zoom - (is3D ? 0.6 : 0), 11), pitch: is3D ? 45 : 0, bearing: map.getBearing(), duration: 1800, essential: true });
 }
 const fold = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 function bodegaOk(w) {
@@ -3761,6 +3774,7 @@ const NAME_Z = [0, 6, 9, 9.8, 10.6];     // zoom desde el que se ve el nombre ju
 const ALL_Z = 11.5;                      // zoom desde el que se muestran todos los sellos
 const DOT_Z = 10;                        // zoom desde el que los sellos que no entran quedan como punto
 const TERROIR_TOP = 5;
+const SPARSE_N = 30;                     // con hasta tantas bodegas en pantalla se muestran todas
 const seals = [];
 let sealRaf = 0, lastMt = '', lastSel = -2, lastK = 0, probe = null, bVisN = 0;
 function maxTier(z) { let k = 1; while (k < 4 && z >= TIER_Z[k + 1]) k++; return k; }
@@ -3787,7 +3801,7 @@ function buildSeals() {
     seals.push({ w, el, m, sz, st: 0, nw: 0 });
   });
   if (!buildSeals.on) { buildSeals.on = 1; map.on('move', sealVis); map.on('moveend', sealVis); map.on('resize', sealVis); }
-  if (window.__map) { window.__seals = seals; window.__showWinery = id => showWinery(id, true); }
+  if (window.__map) { window.__seals = seals; window.__showWinery = id => showWinery(id, true); window.__showRegion = k => showRegion(k, true); window.__regs = () => REG.regions.map(r => [r.id, regWins(r).length]); window.__flyRegWins = k => flyWins(regWins(REG.regions[k]), REG.regions[k]); window.__clearB = () => { B.dep = ''; $('#bDep').value = ''; applyBodegas(); }; }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { seals.forEach(x => x.nw = 0); sealVis(); });
 }
 function sealVis() { regVis(); if (!sealRaf) sealRaf = requestAnimationFrame(sealLayout); }
@@ -3797,16 +3811,21 @@ function sealLayout() {
   // progresión como en Google Maps: 6 bodegas desde el globo, 14 en la vista del país (zoom 5,3–6,9),
   // las destacadas de cada departamento desde 6,9 y el resto por niveles de renombre al acercarse
   const z = map.getZoom(), filt = bFiltered(), terroir = MODE !== 'bodegas';
-  const all = filt && (!!B.q || bVisN <= 12);                       // búsqueda o pocos resultados: se ven todos
+  const all = filt && (!!B.q || !!B.dep || bVisN <= 12);           // búsqueda, zona elegida o pocos resultados: se ven todos
   const natN = terroir ? TERROIR_TOP : (filt ? 0 : z < 5.3 ? 6 : z < 6.9 ? 14 : 0);
   const mt = all ? 4 : filt ? Math.min(4, maxTier(z) + 1) : natN ? 0 : maxTier(z);
-  const dots = all || z >= DOT_Z - (filt ? 0.8 : 0);                // puntos sueltos solo de cerca
-  const key = natN + ':' + mt + ':' + dots;
+  // zona con pocas bodegas a la vista (Córdoba, Entre Ríos, Patagonia…): se ven todas aunque sean de renombre bajo
+  const cvs = map.getCanvas(), cw = cvs.clientWidth, chh = cvs.clientHeight;
+  let nIn = 0;
+  if (!terroir && z >= 5.8) for (const x of seals) { const w = x.w; if (!w._v) continue; const p = map.project([w.lng, w.lat]); if (p.x > 0 && p.y > 0 && p.x < cw && p.y < chh && ++nIn > SPARSE_N) break; }
+  const sparse = !terroir && z >= 5.8 && nIn <= SPARSE_N;
+  const dots = all || sparse || z >= DOT_Z - (filt ? 0.8 : 0);   // puntos sueltos de cerca, o con pocas bodegas a la vista
+  const key = natN + ':' + mt + ':' + dots + ':' + sparse;
   if (key !== lastMt || selWin !== lastSel) {
-    map.setFilter('wineries', dots || terroir ? ['any', natN ? ['<=', ['get', 'n'], natN] : ['<=', ['get', 't'], mt], ['==', ['id'], selWin]] : ['==', ['id'], selWin]);
+    map.setFilter('wineries', dots || terroir ? ['any', natN && !sparse ? ['<=', ['get', 'n'], natN] : ['<=', ['get', 't'], sparse ? 4 : mt], ['==', ['id'], selWin]] : ['==', ['id'], selWin]);
     lastMt = key; lastSel = selWin;
   }
-  const visible = w => natN ? (w.nat || 999) <= natN : w.tier <= mt;
+  const visible = w => sparse || (natN ? (w.nat || 999) <= natN : w.tier <= mt);
   const on = view === 'uy';
   // de lejos los sellos se achican para que entren más destacadas
   const k = z < 7 ? 0.68 : z < 8.6 ? 0.82 : 1;
@@ -3883,6 +3902,11 @@ function setMode(m) {
   paintHex();
   map.setLayoutProperty('columns', 'visibility', m === 'bodegas' ? 'none' : 'visible');
   map.setLayoutProperty('vy-fill', 'visibility', 'visible');
+  // si estaba abierta la ficha de una región (Argentina), el modo Bodegas muestra las de esa región
+  // (o la región elegida en el filtro de Terroir); con un departamento elegido, ese departamento
+  if (m === 'bodegas' && !B.dep && S.dep >= 0 && deps[S.dep] && WIN.some(w => w.dep === deps[S.dep].name)) { B.dep = deps[S.dep].name; $('#bDep').value = B.dep; }
+  const rk = cardMode === 'reg' && selReg >= 0 ? selReg : S.reg;
+  if (m === 'bodegas' && CC !== 'UY' && rk >= 0 && REG.regions[rk]) { const r = REG.regions[rk]; B.dep = 'reg:' + r.id; $('#bDep').value = B.dep; applyFilters(); markerVis(); applyBodegas(); renderLegend(); flyWins(regWins(r), r); return; }
   applyFilters(); markerVis(); applyBodegas(); renderLegend();
 }
 
