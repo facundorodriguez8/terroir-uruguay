@@ -1519,6 +1519,7 @@ button, .chip, select, a { touch-action: manipulation; }
 .reg-label b { font: italic 500 13.5px/1.1 var(--f-display); letter-spacing: .01em; }
 .reg-label span { font-size: 11px; color: var(--brass); font-variant-numeric: tabular-nums; }
 .reg-label span em { font-style: normal; color: var(--ink); font-weight: 600; }
+#card .reg-wins { width: 100%; justify-content: center; margin: 2px 0 14px; }
 
 </style>
 </head>
@@ -2587,6 +2588,13 @@ for (const l in T_ADD49) { const [a, b, c, d] = T_ADD49[l]; Object.assign(T[l], 
 // etiquetas de región vista desde lejos (Argentina): cantidad de bodegas
 const T_ADD50 = { es: '{n} bodegas', en: '{n} wineries', pt: '{n} vinícolas', fr: '{n} domaines', de: '{n} Weingüter', ru: 'винодельни: {n}', zh: '{n} 家酒庄', ja: 'ワイナリー {n}軒', ko: '와이너리 {n}곳' };
 for (const l in T_ADD50) T[l].reg_n_win = T_ADD50[l];
+// ver las bodegas de una región (Argentina) y grupos del selector de zona en Bodegas
+const T_ADD51 = {
+  es: ['Ver las {n} bodegas en el mapa', 'Regiones', 'Departamentos'], en: ['See the {n} wineries on the map', 'Regions', 'Departments'],
+  pt: ['Ver as {n} vinícolas no mapa', 'Regiões', 'Departamentos'], fr: ['Voir les {n} domaines sur la carte', 'Régions', 'Départements'],
+  de: ['Die {n} Weingüter auf der Karte zeigen', 'Regionen', 'Departamentos'], ru: ['Показать винодельни на карте ({n})', 'Регионы', 'Департаменты'],
+  zh: ['在地图上查看 {n} 家酒庄', '产区', '省辖区'], ja: ['地図で {n} 軒のワイナリーを見る', '地域', '県（デパルタメント）'], ko: ['지도에서 와이너리 {n}곳 보기', '지역', '주 하위 지역'] };
+for (const l in T_ADD51) { const [a, b, c] = T_ADD51[l]; Object.assign(T[l], { reg_see_win: a, zone_regions_g: b, zone_deps_g: c }); }
 
 (() => {
 'use strict';
@@ -3028,7 +3036,7 @@ function buildRegMarkers() {
     // la provincia, para quien no sabe dónde queda la región (salvo que el nombre ya la diga: "Córdoba y centro del país")
     const pv = r.provs || [r.prov], nm = rname(r), pvTxt = pv.some(p => nm.includes(p)) ? '' : pv.join(', ');
     el.innerHTML = '<b>' + esc(nm) + '</b><span>' + [pvTxt ? '<em>' + esc(pvTxt) + '</em>' : '', ha ? nf(ha) + ' ' + esc(t('ha')) : '', nw ? esc(t('reg_n_win', { n: nw })) : ''].filter(Boolean).join(' · ') + '</span>';
-    el.onclick = e => { e.stopPropagation(); showRegion(k, true); };
+    el.onclick = e => { e.stopPropagation(); if (MODE === 'bodegas') showRegWins(k); else showRegion(k, true); };
     const m = new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat(r.pt).addTo(map);
     regMarkers.push({ r, el, m, ha, nw });
   });
@@ -3204,7 +3212,7 @@ function buildUI() {
   translateStatic(); buildChips(); buildRanges(); buildSelects(); buildSources(); buildBodegaUI();
   $('#tabT').onclick = () => setMode('terroir'); $('#tabB').onclick = () => setMode('bodegas');
   let qT = 0; $('#bQ').oninput = e => { clearTimeout(qT); qT = setTimeout(() => { B.q = e.target.value.trim(); applyBodegas(); }, 120); };
-  $('#bDep').onchange = e => { B.dep = e.target.value; applyBodegas(); const d = depByName[B.dep]; if (d) flyDep(d); };
+  $('#bDep').onchange = e => { B.dep = e.target.value; applyBodegas(); if (B.dep.startsWith('reg:')) { const k = REG.regions.findIndex(r => 'reg:' + r.id === B.dep); if (k >= 0) flyWins(regWins(REG.regions[k]), REG.regions[k]); return; } const d = depByName[B.dep]; if (d) flyDep(d); };
   $('#bGrape').onchange = e => { B.grape = e.target.value; applyBodegas(); };
   $('#bTerroir').onchange = e => { B.inT = e.target.checked; applyBodegas(); };
   $('#bReset').onclick = () => { Object.assign(B, { q: '', dep: '', top: false, prof: false, tours: false, rest: false, lodge: false, grape: '', inT: false, unconf: false }); $('#bQ').value = ''; $('#bTerroir').checked = false; buildBodegaUI(); applyBodegas(); };
@@ -3304,6 +3312,7 @@ function openCard(html) {
   const x = c.querySelector('.x'), bar = document.createElement('div'); bar.className = 'xbar'; bar.appendChild(x); c.prepend(bar);
   x.onclick = closeCard;
   c.querySelectorAll('[data-win]').forEach(b => b.onclick = () => showWinery(+b.dataset.win, true));
+  c.querySelectorAll('[data-regw]').forEach(b => b.onclick = () => showRegWins(+b.dataset.regw));
   c.querySelectorAll('[data-reg]').forEach(b => b.onclick = () => showRegion(+b.dataset.reg, true));
   const sb = c.querySelector('#simBtn'); if (sb) sb.onclick = () => { similar(selCell); refreshCard(); };
   const sc = c.querySelector('#simClear'); if (sc) sc.onclick = () => { clearSim(); refreshCard(); };
@@ -3527,7 +3536,7 @@ function showRegion(k, fly) {
   selReg = k; selCell = -1; selWin = -1; cardMode = 'reg'; selLine(-1); map.setFilter('win-sel', ['==', ['id'], -1]);
   zoneSel(); refreshCard();
   const r = REG.regions[k];
-  if (fly) { const cam = map.cameraForBounds([[r.bbox[0], r.bbox[1]], [r.bbox[2], r.bbox[3]]], { padding: padding() }); map.flyTo({ center: cam.center, zoom: Math.min(cam.zoom, 9), pitch: is3D ? 50 : 0, bearing: map.getBearing(), duration: 2000, essential: true }); }
+  if (fly) { const ws = CC === 'UY' ? [] : regWins(r); if (ws.length >= 2) { flyWins(ws, r); return; } const cam = map.cameraForBounds([[r.bbox[0], r.bbox[1]], [r.bbox[2], r.bbox[3]]], { padding: padding() }); map.flyTo({ center: cam.center, zoom: Math.min(cam.zoom, 9), pitch: is3D ? 50 : 0, bearing: map.getBearing(), duration: 2000, essential: true }); }
 }
 function regionCard(k) {
   const r = REG.regions[k], set = new Set(r.deps), ha = regHa(r);
@@ -3553,6 +3562,7 @@ function regionCard(k) {
   let h = '<header><div class="eyebrow">' + esc(t('reg_title')) + '</div><h2>' + esc(rname(r)) + '</h2><div class="zchips">' +
     '<span class="zc">' + ZI.soil + esc(nf(ha, ha < 10 ? 1 : 0) + ' ' + t('ha')) + '</span><span class="zc">' + ZI.alt + esc(nf(vy) + ' ' + t('reg_vy')) + '</span><span class="zc">' + ZI.rock + esc(nf(wins.length) + ' ' + t('reg_wineries')) + '</span></div>' + X_BTN_() + '</header><div class="body">';
   if (regOut) { h += '<p class="hint out-zone">' + esc(t('out_zone', { dep: regOut })) + '</p>'; regOut = null; }
+  if (wins.length && CC !== 'UY') h += '<button class="cta reg-wins" data-regw="' + k + '">' + esc(t('reg_see_win', { n: nf(wins.length) })) + '</button>';
   h += '<div class="lead-aporte reg"><div class="la-k">' + ZI.rock + esc(r.deps.join(' · ')) + '</div><p>' + esc(t('reg_desc_' + r.id)) + '</p></div>';
   if (r.note) h += '<p class="hint">' + esc(t('reg_note_' + r.note)) + '</p>';
   if (grapes.length) h += '<div><h4>' + esc(t('reg_grapes')) + '</h4><div class="bars">' + grapes.map(([g, v]) => '<div class="bar"><span>' + gLink(g, gname(g)) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / gm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>';
@@ -3678,12 +3688,29 @@ async function ensureTxt(l) {
   try { TXT[k] = await get(CX.base + 'bodegas_txt/' + l + '.json'); } catch (e) { TXT[k] = null; }
   return TXT[k];
 }
+// filtro de bodegas por región (valor 'reg:<id>' en el selector de zona)
+let RDS = { k: '', s: new Set() };
+function regDeps(v) { if (RDS.k !== v + CC) { const r = REG.regions.find(x => x.id === v.slice(4)); RDS = { k: v + CC, s: new Set(r ? r.deps : []) }; } return RDS.s; }
+// bodegas de una región que se ven en el mapa (las mismas que cuenta la etiqueta y la ficha)
+const regWins = r => { const set = new Set(r.deps); return WIN.filter(w => !w.unconf && set.has(w.dep) && w.lat != null); };
+// ver las bodegas de una región: modo Bodegas, filtro por región y vuelo a donde están
+function showRegWins(k) {
+  const r = REG.regions[k]; if (!r) return;
+  if (MODE !== 'bodegas') setMode('bodegas');
+  B.dep = 'reg:' + r.id; $('#bDep').value = B.dep; applyBodegas(); flyWins(regWins(r), r);
+}
+function flyWins(ws, r) {
+  let b = ws.length ? ws.reduce((a, w) => [Math.min(a[0], w.lng), Math.min(a[1], w.lat), Math.max(a[2], w.lng), Math.max(a[3], w.lat)], [180, 90, -180, -90]) : r.bbox;
+  if (b[2] - b[0] < 0.1) b = [b[0] - 0.1, b[1] - 0.08, b[2] + 0.1, b[3] + 0.08];
+  const cam = map.cameraForBounds([[b[0], b[1]], [b[2], b[3]]], { padding: padding() });
+  map.flyTo({ center: cam.center, zoom: Math.min(cam.zoom, 11), pitch: is3D ? 50 : 0, bearing: map.getBearing(), duration: 1800, essential: true });
+}
 const fold = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 function bodegaOk(w) {
   // solo en el registro de INAVI, sin actividad pública: ocultas salvo que se pidan (o se busquen por nombre)
   if (w.unconf && !B.unconf && !B.q) return false;
   if (B.q && !fold(w.name + ' ' + (w.aliases || []).join(' ')).includes(fold(B.q))) return false;
-  if (B.dep && w.dep !== B.dep) return false;
+  if (B.dep && (B.dep.startsWith('reg:') ? !regDeps(B.dep).has(w.dep) : w.dep !== B.dep)) return false;
   if (B.top && w.tier !== 1) return false;
   if (B.prof && !w.profile) return false;
   if (B.tours && !w.svc.tours) return false;
@@ -3835,7 +3862,13 @@ function buildBodegaUI() {
   [['top', 'w_top'], ['prof', 'f_profile'], ['tours', 'svc_tours'], ['rest', 'svc_rest'], ['lodge', 'svc_lodge'], ['unconf', 'unconf']].forEach(([k, lab]) => cs.appendChild(chip(t(lab), null, B[k], () => { B[k] = !B[k]; applyBodegas(); })));
   const ds = $('#bDep'); ds.innerHTML = '<option value="">' + esc(t('all_country')) + '</option>';
   const cnt = {}; WIN.forEach(w => { if (!w.unconf) cnt[w.dep] = (cnt[w.dep] || 0) + 1; });
-  Object.keys(cnt).sort((a, b) => a.localeCompare(b, 'es')).forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d + ' · ' + nf(cnt[d]); ds.appendChild(o); });
+  if (CC !== 'UY') {   // Argentina: primero las regiones, después los departamentos
+    const g1 = document.createElement('optgroup'); g1.label = t('zone_regions_g') || 'Regiones';
+    REG.regions.forEach(r => { const n = regWins(r).length; if (!n) return; const o = document.createElement('option'); o.value = 'reg:' + r.id; o.textContent = rname(r) + ' · ' + nf(n); g1.appendChild(o); });
+    ds.appendChild(g1);
+  }
+  const g2 = CC !== 'UY' ? document.createElement('optgroup') : ds; if (g2 !== ds) { g2.label = t('zone_deps_g') || 'Departamentos'; ds.appendChild(g2); }
+  Object.keys(cnt).sort((a, b) => a.localeCompare(b, 'es')).forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d + ' · ' + nf(cnt[d]); g2.appendChild(o); });
   ds.value = B.dep;
   const gs = $('#bGrape'); gs.innerHTML = '<option value="">' + esc(t('w_any')) + '</option>'; setTimeout(() => learnSelBtn('bGrape'), 0);
   const gc = {}; WIN.forEach(w => { const g = w.profile && w.profile.main_grape; if (g) gc[g] = (gc[g] || 0) + 1; });
