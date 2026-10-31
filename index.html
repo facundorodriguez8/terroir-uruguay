@@ -1518,6 +1518,7 @@ button, .chip, select, a { touch-action: manipulation; }
 .reg-label:hover, .reg-label:focus-visible { border-color: #f0cf8e; background: rgba(40, 22, 24, .92); outline: none; }
 .reg-label b { font: italic 500 13.5px/1.1 var(--f-display); letter-spacing: .01em; }
 .reg-label span { font-size: 11px; color: var(--brass); font-variant-numeric: tabular-nums; }
+.reg-label span em { font-style: normal; color: var(--ink); font-weight: 600; }
 
 </style>
 </head>
@@ -3024,7 +3025,9 @@ function buildRegMarkers() {
     const set = new Set(r.deps), nw = WIN.filter(w => !w.unconf && set.has(w.dep) && w.lat != null).length, ha = regHa(r);   // igual que la ficha de la región
     if (!ha && !nw) return;
     const el = document.createElement('button'); el.type = 'button'; el.className = 'reg-label';
-    el.innerHTML = '<b>' + esc(rname(r)) + '</b><span>' + (ha ? nf(ha) + ' ' + esc(t('ha')) : '') + (ha && nw ? ' · ' : '') + (nw ? esc(t('reg_n_win', { n: nw })) : '') + '</span>';
+    // la provincia, para quien no sabe dónde queda la región (salvo que el nombre ya la diga: "Córdoba y centro del país")
+    const pv = r.provs || [r.prov], nm = rname(r), pvTxt = pv.some(p => nm.includes(p)) ? '' : pv.join(', ');
+    el.innerHTML = '<b>' + esc(nm) + '</b><span>' + [pvTxt ? '<em>' + esc(pvTxt) + '</em>' : '', ha ? nf(ha) + ' ' + esc(t('ha')) : '', nw ? esc(t('reg_n_win', { n: nw })) : ''].filter(Boolean).join(' · ') + '</span>';
     el.onclick = e => { e.stopPropagation(); showRegion(k, true); };
     const m = new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat(r.pt).addTo(map);
     regMarkers.push({ r, el, m, ha, nw });
@@ -3037,11 +3040,16 @@ function regVis() {
   // el panel, la leyenda, la ficha y los botones de arriba cuentan como ocupados
   const kept = [];
   if (on) ['#panel', '#legend', '#card', '#tour'].map(q => $(q)).concat([...document.querySelectorAll('.topbar > *')]).forEach(e => { if (e && !e.hidden && e.dataset.hidden !== 'true' && e.offsetWidth) kept.push(e.getBoundingClientRect()); });
-  regMarkers.slice().sort((a, b) => (MODE === 'bodegas' ? b.nw - a.nw : b.ha - a.ha) || b.ha - a.ha).forEach(({ el }) => {
+  const hit = r => kept.some(k => r.left < k.right + 6 && r.right > k.left - 6 && r.top < k.bottom + 4 && r.bottom > k.top - 4);
+  regMarkers.slice().sort((a, b) => (MODE === 'bodegas' ? b.nw - a.nw : b.ha - a.ha) || b.ha - a.ha).forEach(({ el, m }) => {
     if (!on) { el.style.display = 'none'; return; }
     el.style.display = ''; el.style.visibility = 'hidden';
-    const r = el.getBoundingClientRect();
-    if (!kept.some(k => r.left < k.right + 6 && r.right > k.left - 6 && r.top < k.bottom + 4 && r.bottom > k.top - 4)) { kept.push(r); el.style.visibility = ''; }
+    // si no entra en su lugar (por la leyenda o por otra región), se prueba un poco más abajo, arriba o al costado
+    for (const o of [[0, 0], [0, 44], [0, -44], [90, 0], [-90, 0]]) {
+      m.setOffset(o); const r = el.getBoundingClientRect();
+      if (!hit(r)) { kept.push(r); el.style.visibility = ''; return; }
+    }
+    m.setOffset([0, 0]);
   });
 }
 function buildMarkers() {
