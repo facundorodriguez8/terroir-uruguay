@@ -1513,6 +1513,11 @@ button, .chip, select, a { touch-action: manipulation; }
 @media (max-width: 600px) { #learn .pl-game:last-child:nth-child(odd) { grid-column: 1 / -1; } }
 #learn .l-top { padding-inline: max(20px, calc((100% - 960px) / 2)); }
 #learn.lh .l-top { padding-inline: max(20px, calc((100% - 1100px) / 2)); }
+/* Argentina desde lejos: una etiqueta por región vitivinícola (se toca para abrir la región) */
+.reg-label { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 5px 11px 6px; border-radius: 999px; border: 1px solid rgba(240, 207, 142, .55); background: rgba(22, 14, 15, .78); backdrop-filter: blur(4px); color: var(--ink); cursor: pointer; font: inherit; white-space: nowrap; box-shadow: 0 4px 14px rgba(0, 0, 0, .45); transition: border-color .15s, background .15s; }
+.reg-label:hover, .reg-label:focus-visible { border-color: #f0cf8e; background: rgba(40, 22, 24, .92); outline: none; }
+.reg-label b { font: italic 500 13.5px/1.1 var(--f-display); letter-spacing: .01em; }
+.reg-label span { font-size: 11px; color: var(--brass); font-variant-numeric: tabular-nums; }
 
 </style>
 </head>
@@ -2578,6 +2583,9 @@ const T_ADD49 = {
   ko: ['사양토', '사양토: 배수가 잘되고 쉽게 데워지며 어느 정도 수분도 머금습니다. 향긋하고 타닌이 부드러운 와인.', '사질', '사질 토양: 배수가 매우 빠르고 쉽게 데워집니다. 더 향긋하고 가벼우며 타닌이 섬세한 와인. 세심한 관개가 필요합니다.']
 };
 for (const l in T_ADD49) { const [a, b, c, d] = T_ADD49[l]; Object.assign(T[l], { tex_3__ar: a, ai_tex_3__ar: b, tex_4: c, ai_tex_4: d }); }
+// etiquetas de región vista desde lejos (Argentina): cantidad de bodegas
+const T_ADD50 = { es: '{n} bodegas', en: '{n} wineries', pt: '{n} vinícolas', fr: '{n} domaines', de: '{n} Weingüter', ru: 'винодельни: {n}', zh: '{n} 家酒庄', ja: 'ワイナリー {n}軒', ko: '와이너리 {n}곳' };
+for (const l in T_ADD50) T[l].reg_n_win = T_ADD50[l];
 
 (() => {
 'use strict';
@@ -2616,7 +2624,7 @@ const CTRY = {
     rng: { alt: [0, 450, 10], rain: [1000, 1750, 10], sea: 400, ph: [50, 75] }, wk: [2, 3, 4, 5], major: 50, colKm: 6.5, texN: 4, rock: true, sea: true,
     vars: [['g_main', ['rock', 'tex', 'alt', 'gdd', 'rain', 'sea']], ['advanced', ['cf', 'ph', 'slope', 'asp', 'hug', 'dtr']]],
     ai: { alt: 200, dtr: 90, rainLo: 1150, rainHi: 1450 }, reliefTicks: [0, 250, 500] },
-  AR: { base: 'data/ar/', a2: 'AR', view: 'view_ar', enter: 'enter_ar', hint: 'country_ar_hint', bounds: [[-69.9, -35.5], [-66.8, -30.2]], exag: 1.25, reg: 'INV', relief: 'relief-ar', hs: 'hillshade-ar', dem: 'demar',
+  AR: { base: 'data/ar/', zona: 1, a2: 'AR', view: 'view_ar', enter: 'enter_ar', hint: 'country_ar_hint', bounds: [[-69.9, -35.5], [-66.8, -30.2]], exag: 1.25, reg: 'INV', relief: 'relief-ar', hs: 'hillshade-ar', dem: 'demar',
     grapes: ['Malbec', 'Cereza', 'Bonarda', 'Criolla Grande', 'Cabernet Sauvignon', 'Syrah', 'Pedro Giménez', 'Chardonnay', 'Tempranillo', 'Moscatel Rosado'],
     tour: ['Luján de Cuyo', 'Maipú', 'Tupungato', 'San Carlos', 'San Rafael', 'San Martín', 'Pocito', 'Calingasta', 'Chilecito', 'Cafayate', 'Añelo', 'General Roca'], bear: [-25, 18, -38, 28, -8, 22, -30, 12, -20, 25, -15, 10],
     rng: { alt: [0, 4000, 20], rain: [0, 2000, 10], sea: 0, ph: [45, 90] }, wk: [1, 2, 3, 4, 5], major: 1000, colKm: 9, texN: 5, rock: false, sea: false,
@@ -2738,7 +2746,7 @@ const style = {
   sources: {
     land: { type: 'geojson', data: EMPTY }, landhi: { type: 'geojson', data: EMPTY }, neighbors: { type: 'geojson', data: EMPTY }, deps: { type: 'geojson', data: EMPTY },
     hex: { type: 'geojson', data: EMPTY }, deplines: { type: 'geojson', data: EMPTY }, reglines: { type: 'geojson', data: EMPTY }, selhex: { type: 'geojson', data: EMPTY }, simhex: { type: 'geojson', data: EMPTY }, rivers: { type: 'geojson', data: EMPTY }, lakes: { type: 'geojson', data: EMPTY },
-    vineyards: { type: 'geojson', data: EMPTY }, columns: { type: 'geojson', data: EMPTY }, wineries: { type: 'geojson', data: EMPTY }, world: { type: 'geojson', data: EMPTY }, dogeo: { type: 'geojson', data: EMPTY }, worldc: { type: 'geojson', data: EMPTY }, borders: { type: 'geojson', data: EMPTY }, countries: { type: 'geojson', data: EMPTY },
+    vineyards: { type: 'geojson', data: EMPTY }, columns: { type: 'geojson', data: EMPTY }, wineries: { type: 'geojson', data: EMPTY }, world: { type: 'geojson', data: EMPTY }, dogeo: { type: 'geojson', data: EMPTY }, zona: { type: 'geojson', data: EMPTY }, worldc: { type: 'geojson', data: EMPTY }, borders: { type: 'geojson', data: EMPTY }, countries: { type: 'geojson', data: EMPTY },
     dem: { type: 'raster-dem', tiles: [DEM_URL], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: DEM_BOUNDS },
     demhs: { type: 'raster-dem', tiles: [DEM_URL], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: DEM_BOUNDS },
     demar: { type: 'raster-dem', tiles: ['arpk://{z}/{x}/{y}'], tileSize: 512, encoding: 'terrarium', minzoom: 5, maxzoom: 9, bounds: AR_DEM_BOUNDS },
@@ -2756,6 +2764,10 @@ const style = {
     { id: 'hillshade', type: 'hillshade', source: 'demhs', paint: { 'hillshade-exaggeration': 0.6, 'hillshade-shadow-color': 'rgba(8,4,5,0.6)', 'hillshade-highlight-color': 'rgba(255,238,215,0.2)', 'hillshade-accent-color': 'rgba(0,0,0,0)' } },
     { id: 'hillshade-ar', type: 'hillshade', source: 'demhsar', layout: { visibility: 'none' }, paint: { 'hillshade-exaggeration': 0.45, 'hillshade-shadow-color': 'rgba(8,4,5,0.6)', 'hillshade-highlight-color': 'rgba(255,238,215,0.18)', 'hillshade-accent-color': 'rgba(0,0,0,0)' } },
     { id: 'nb-mask', type: 'fill', source: 'neighbors', filter: ['!=', ['geometry-type'], 'LineString'], paint: { 'fill-color': '#221b1a' } },
+    // zona con viña (Argentina): desde lejos se oscurece un poco el resto del país y la zona lleva un borde dorado; al acercarse se apaga
+    { id: 'zona-dim', type: 'fill', source: 'zona', filter: ['==', ['get', 'k'], 'o'], paint: { 'fill-color': '#0d0909', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7.5, 0.3, 9, 0] } },
+    { id: 'zona-glow', type: 'line', source: 'zona', filter: ['==', ['get', 'k'], 'z'], paint: { 'line-color': '#e2b46a', 'line-width': 7, 'line-blur': 6, 'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.45, 8.5, 0] } },
+    { id: 'zona-line', type: 'line', source: 'zona', filter: ['==', ['get', 'k'], 'z'], paint: { 'line-color': '#f0cf8e', 'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.1, 8, 1.6], 'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.95, 9, 0.25] } },
     // viñedos del mundo: calor amarillo → naranja → rojo según hectáreas de la variedad elegida; se apaga al entrar en Uruguay
     { id: 'countries', type: 'fill', source: 'countries', maxzoom: 7, paint: { 'fill-color': 'rgba(0,0,0,0)' } },
     { id: 'country-sel', type: 'line', source: 'countries', filter: ['==', ['id'], -1], maxzoom: 7, paint: { 'line-color': '#cfa860', 'line-width': 1.8 } },
@@ -2813,7 +2825,8 @@ const PKD = {};   // datos preparados de cada país (se bajan una vez, al entrar
 function fetchPack(cc) {
   return PKD[cc] || (PKD[cc] = (async () => {
     const [hex, depsGj, depPts, nbr, rivers, lakes, vy, geo, win, inavi, regs] = await Promise.all(PACK_FILES.map(f => get(CTRY[cc].base + f)));
-    const n = hex.n, D = {}, X = { cc, INAVI: inavi, units: geo.units, REG: regs, n, AREA: hex.area_km2, CELLS: hex.cells, depsGj, nbr, rivers, lakes, vy, D };
+    const zona = CTRY[cc].zona ? await get(CTRY[cc].base + 'zona.geojson').catch(() => EMPTY) : EMPTY;
+    const n = hex.n, D = {}, X = { cc, zona, INAVI: inavi, units: geo.units, REG: regs, n, AREA: hex.area_km2, CELLS: hex.cells, depsGj, nbr, rivers, lakes, vy, D };
     for (const k of ['alt', 'slope', 'asp', 'rock', 'unit', 'tex', 'clay', 'cf', 'ph', 'gdd', 'hug', 'rain', 'dtr', 'sea', 'dep', 'vyf', 'ar', 'pv']) D[k] = hex[k] ? Int16Array.from(hex[k]) : new Int16Array(n).fill(-1);
     X.PROVS = hex.provs || [];
     X.NZ = hex.nz || n;   // las primeras NZ celdas son la zona con viña (res 7); en Argentina, después viene el resto del país (res 6 y 5)
@@ -2869,7 +2882,7 @@ function usePack(X) {
   $('#bQ').value = ''; $('#bTerroir').checked = false; $('#onlyGrape').checked = false; $('#colsToggle').checked = false;
   map.removeFeatureState({ source: 'hex' }); map.removeFeatureState({ source: 'wineries' });
   map.getSource('neighbors').setData(X.nbr); map.getSource('deps').setData(X.depsGj); map.getSource('deplines').setData(X.deplines);
-  map.getSource('reglines').setData(REG.lines); map.getSource('rivers').setData(X.rivers); map.getSource('lakes').setData(X.lakes);
+  map.getSource('reglines').setData(REG.lines); map.getSource('zona').setData(X.zona); map.getSource('rivers').setData(X.rivers); map.getSource('lakes').setData(X.lakes);
   map.getSource('vineyards').setData(X.vy); map.getSource('hex').setData(X.hexFC); map.getSource('wineries').setData(X.winFC);
   markers.forEach(x => x.m.remove()); markers.length = 0;
   seals.forEach(x => x.m.remove()); seals.length = 0; lastMt = ''; lastSel = -2;
@@ -3001,7 +3014,39 @@ function buildColumns() {
   map.getSource('columns').setData({ type: 'FeatureCollection', features: feats });
   updateMarkers();
 }
+// Argentina: de lejos, una etiqueta por región vitivinícola (hectáreas y bodegas); tocándola se abre la región
+const regMarkers = [];
+function buildRegMarkers() {
+  regMarkers.forEach(x => x.m.remove()); regMarkers.length = 0;
+  if (CC === 'UY') return;
+  REG.regions.forEach((r, k) => {
+    if (!r.pt) return;
+    const set = new Set(r.deps), nw = WIN.filter(w => !w.unconf && set.has(w.dep) && w.lat != null).length, ha = regHa(r);   // igual que la ficha de la región
+    if (!ha && !nw) return;
+    const el = document.createElement('button'); el.type = 'button'; el.className = 'reg-label';
+    el.innerHTML = '<b>' + esc(rname(r)) + '</b><span>' + (ha ? nf(ha) + ' ' + esc(t('ha')) : '') + (ha && nw ? ' · ' : '') + (nw ? esc(t('reg_n_win', { n: nw })) : '') + '</span>';
+    el.onclick = e => { e.stopPropagation(); showRegion(k, true); };
+    const m = new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat(r.pt).addTo(map);
+    regMarkers.push({ r, el, m, ha, nw });
+  });
+  regVis();
+}
+const REG_Z = 6.9;
+function regVis() {
+  const z = map.getZoom(), on = view === 'uy' && CC !== 'UY' && z < REG_Z;
+  // el panel, la leyenda, la ficha y los botones de arriba cuentan como ocupados
+  const kept = [];
+  if (on) ['#panel', '#legend', '#card', '#tour'].map(q => $(q)).concat([...document.querySelectorAll('.topbar > *')]).forEach(e => { if (e && !e.hidden && e.dataset.hidden !== 'true' && e.offsetWidth) kept.push(e.getBoundingClientRect()); });
+  regMarkers.slice().sort((a, b) => (MODE === 'bodegas' ? b.nw - a.nw : b.ha - a.ha) || b.ha - a.ha).forEach(({ el }) => {
+    if (!on) { el.style.display = 'none'; return; }
+    el.style.display = ''; el.style.visibility = 'hidden';
+    const r = el.getBoundingClientRect();
+    if (!kept.some(k => r.left < k.right + 6 && r.right > k.left - 6 && r.top < k.bottom + 4 && r.bottom > k.top - 4)) { kept.push(r); el.style.visibility = ''; }
+  });
+}
 function buildMarkers() {
+  buildRegMarkers();
+  if (!buildRegMarkers.on) { buildRegMarkers.on = 1; map.on('zoom', regVis); map.on('moveend', regVis); }
   deps.forEach(d => {
     if (!d.pt) return;
     const el = document.createElement('div'); el.className = 'dep-label';
@@ -3021,7 +3066,7 @@ function updateMarkers() {
 }
 function markerVis() {
   const z = map.getZoom(), on = view === 'uy' && z < 10.5 && MODE !== 'bodegas';
-  markers.forEach(({ d, el }) => { const ha = grapeHa(d.name, 'all'), major = ha >= CX.major; el.style.display = on && (ha > 0 || CC === 'UY') && z > (major ? 5.2 : 6.2) ? '' : 'none'; });
+  markers.forEach(({ d, el }) => { const ha = grapeHa(d.name, 'all'), major = ha >= CX.major; el.style.display = on && (ha > 0 || CC === 'UY') && z > (CC === 'UY' ? (major ? 5.2 : 6.2) : REG_Z) ? '' : 'none'; });
   declutter();
 }
 function declutter() {
@@ -3710,7 +3755,7 @@ function buildSeals() {
   if (window.__map) { window.__seals = seals; window.__showWinery = id => showWinery(id, true); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { seals.forEach(x => x.nw = 0); sealVis(); });
 }
-function sealVis() { if (!sealRaf) sealRaf = requestAnimationFrame(sealLayout); }
+function sealVis() { regVis(); if (!sealRaf) sealRaf = requestAnimationFrame(sealLayout); }
 function sealLayout() {
   sealRaf = 0;
   if (!seals.length) return;
@@ -3737,6 +3782,8 @@ function sealLayout() {
   ['#panel', '#legend', '#card', '#tour'].forEach(q => { const e = $(q); if (e && !e.hidden && e.dataset.hidden !== 'true' && e.offsetWidth) { const r = e.getBoundingClientRect(); kept.push([r.left, r.top, r.right, r.bottom]); } });
   // en modo Terroir, las etiquetas de departamento también ocupan lugar
   if (terroir) markers.forEach(({ el }) => { if (el.style.display !== 'none' && el.style.visibility !== 'hidden') { const r = el.getBoundingClientRect(); if (r.width) kept.push([r.left, r.top, r.right, r.bottom]); } });
+  // las etiquetas de región (Argentina de lejos) también: se ven primero y los sellos se acomodan alrededor
+  regMarkers.forEach(({ el }) => { if (el.style.display !== 'none' && el.style.visibility !== 'hidden') { const r = el.getBoundingClientRect(); if (r.width) kept.push([r.left, r.top, r.right, r.bottom]); } });
   const uiN = kept.length;   // los primeros rectángulos son el panel, la leyenda y la ficha
   const freeUI = r => { for (let i = 0; i < uiN; i++) { const k = kept[i]; if (r[0] < k[2] && r[2] > k[0] && r[1] < k[3] && r[3] > k[1]) return false; } return true; };
   const free = r => { for (const k of kept) if (r[0] < k[2] + gap && r[2] > k[0] - gap && r[1] < k[3] + gap && r[3] > k[1] - gap) return false; return true; };
@@ -3852,7 +3899,7 @@ function stopOrbit() { if (orbiting) { orbiting = false; map.stop(); } }
 function flyThenOrbit(opts) { stopOrbit(); map.once('moveend', () => { if (!orbiting) orbit(); }); map.flyTo(opts); }
 /* Vista del mundo: solo el mapa de calor y los países. El relieve, la grilla y las bodegas de Uruguay
    aparecen recién al entrar al país (clic en el país o acercándose a menos de ~zoom 5,8). */
-const UY_LAYERS = ['deps-fill', 'relief', 'hex-fill', 'hillshade', 'nb-mask', 'neighbors', 'neighbors-line', 'hex-sim', 'hex-line', 'lakes', 'rivers', 'vy-fill', 'vy-line', 'deps-line', 'reg-line', 'reg-sel', 'dep-sel', 'hex-sel', 'columns', 'wineries', 'win-sel'];
+const UY_LAYERS = ['deps-fill', 'relief', 'hex-fill', 'hillshade', 'nb-mask', 'zona-dim', 'zona-glow', 'zona-line', 'neighbors', 'neighbors-line', 'hex-sim', 'hex-line', 'lakes', 'rivers', 'vy-fill', 'vy-line', 'deps-line', 'reg-line', 'reg-sel', 'dep-sel', 'hex-sel', 'columns', 'wineries', 'win-sel'];
 const WORLD_LAYERS = ['countries', 'country-sel', 'borders', 'world-heat-c', 'world-heat', 'world-pts-c', 'world-pts', 'do-ctry', 'dog-fill', 'dog-line'];
 // modo del mapa del mundo: vy = calor de viñedos por variedad · do = zonas de denominaciones de origen
 let WMODE = 'vy', WMK = 'all', DOGEO_FC = null, doFoc = null, doHovId = null, doSelId = null;
