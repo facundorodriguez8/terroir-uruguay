@@ -546,7 +546,7 @@ body.learning #coach { display: none; }
 #learn .l-seg button { background: none; border: 0; color: var(--l-ink2); padding: 8px 16px; font-size: 14px; cursor: pointer; }
 #learn .l-seg button.sel { background: var(--l-acc); color: #1a1213; }
 #learn .l-radar { width: 100%; color: var(--l-ink); }
-#learn .l-radar .rv { fill: rgba(226,180,106,.35); stroke: var(--l-acc); stroke-width: 2; transition: d .4s ease, fill .4s ease; }
+#learn .l-radar .rp { fill: rgba(226,180,106,.35); stroke: var(--l-acc); stroke-width: 2; transition: d .4s ease, fill .4s ease; }
 #learn .l-radar text { fill: var(--l-ink2); font-size: 9px; }
 #learn .l-detail p { margin: 6px 0 0 !important; font-size: 14.5px !important; }
 #learn .l-detail .l-tags span { border-width: 1.5px; }
@@ -604,8 +604,8 @@ body.learning #coach { display: none; }
 /* v4: blancas, pestañas, comparar, juegos */
 #learn { --l-glass: rgba(255,255,255,.55); }
 #learn.theme-white { --l-glass: rgba(70,50,25,.5); }
-#learn.theme-white .l-radar .rv { fill: rgba(138,100,32,.25); }
-#learn .l-radar .rv2 { fill: rgba(120,170,220,.25); stroke: #6fa8dc; stroke-width: 2; stroke-dasharray: 4 3; }
+#learn.theme-white .l-radar .rp { fill: rgba(138,100,32,.25); }
+#learn .l-radar .rp2 { fill: rgba(120,170,220,.25); stroke: #6fa8dc; stroke-width: 2; stroke-dasharray: 4 3; }
 #learn .l-tabs { display: flex; gap: 8px; margin: 6px 0 18px; }
 #learn .l-tabs button { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--l-line); background: var(--l-card); color: var(--l-ink); font: inherit; font-size: 15px; cursor: pointer; }
 #learn .l-tabs button.sel { background: var(--l-acc); border-color: var(--l-acc); color: #1a1213; font-weight: 600; }
@@ -763,7 +763,7 @@ body.do-z .do-mk span { opacity: 1; }
 #learn .qz-match { margin-top: 10px; color: var(--l-ink2); } #learn .qz-match b { font-size: 26px; color: var(--l-acc); }
 #learn .qz-why { padding-left: 18px; } #learn .qz-why li { margin: 8px 0; font-size: 15px; }
 #learn .k1 { color: #e2b46a; } #learn .k2 { color: #6fa8dc; }
-#learn .qz-res .l-radar .rv { fill: rgba(226,180,106,.3); }
+#learn .qz-res .l-radar .rp { fill: rgba(226,180,106,.3); }
 #learn .g-q { font-size: 16px; color: var(--l-ink); margin: 4px 0 8px; } #learn .g-q.big { font-size: 22px; font-family: 'Bodoni Moda', Georgia, serif; }
 #learn .do-maps .mp .halo { fill: rgba(226,180,106,.18); stroke: #e2b46a; stroke-dasharray: 3 3; stroke-width: 1; animation: none; }
 #learn .do-maps .mp.on circle.halo { fill: rgba(226,180,106,.15); stroke: #e2b46a; stroke-width: 1; stroke-dasharray: 3 3; animation: none; }
@@ -5149,8 +5149,8 @@ function radar(labels, vals, vals2) {
   const ring = r => labels.map((_, i) => pt(i, r).map(x => x.toFixed(1)).join(',')).join(' ');
   return '<svg class="l-radar" viewBox="0 0 200 190">' + [1, 2, 3, 4, 5].map(k => '<polygon points="' + ring(R * k / 5) + '" fill="none" stroke="currentColor" opacity=".15"/>').join('') +
     labels.map((_, i) => { const [x, y] = pt(i, R); return '<line x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="currentColor" opacity=".15"/>'; }).join('') +
-    (vals2 ? '<polygon class="rv2" points="' + vals2.map((v, i) => pt(i, R * v / 5).map(x => x.toFixed(1)).join(',')).join(' ') + '"/>' : '') +
-    '<polygon class="rv" points="' + vals.map((v, i) => pt(i, R * v / 5).map(x => x.toFixed(1)).join(',')).join(' ') + '"/>' +
+    (vals2 ? '<polygon class="rp2" points="' + vals2.map((v, i) => pt(i, R * v / 5).map(x => x.toFixed(1)).join(',')).join(' ') + '"/>' : '') +
+    '<polygon class="rp" points="' + vals.map((v, i) => pt(i, R * v / 5).map(x => x.toFixed(1)).join(',')).join(' ') + '"/>' +
     labels.map((l, i) => { const [x, y] = pt(i, R + 14); return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" text-anchor="middle" dominant-baseline="middle">' + esc(l) + '</text>'; }).join('') + '</svg>';
 }
 // mapa chico de Uruguay con los departamentos coloreados por hectáreas de la uva
