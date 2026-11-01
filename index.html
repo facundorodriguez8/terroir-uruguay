@@ -1520,6 +1520,39 @@ button, .chip, select, a { touch-action: manipulation; }
 .reg-label span { font-size: 11px; color: var(--brass); font-variant-numeric: tabular-nums; }
 .reg-label span em { font-style: normal; color: var(--ink); font-weight: 600; }
 #card .reg-wins { width: 100%; justify-content: center; margin: 2px 0 14px; }
+/* Uvas: lista única (dónde se planta en Uruguay y en Argentina) */
+#learn .l-gcard small.gw { display: flex; flex-wrap: wrap; gap: 2px 10px; }
+#learn .l-gcard small.gw i { font-style: normal; color: var(--l-acc); }
+/* ficha de uva: "Dónde se planta" */
+#learn .wh-world { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 8px; }
+@media (max-width: 760px) { #learn .wh-world { grid-template-columns: 1fr; } }
+#learn .wh-map { margin: 0; }
+#learn .wh-map svg { width: 100%; height: auto; display: block; border-radius: 12px; background: #0d1a22; border: 1px solid var(--l-line); }
+#learn .wh-map path { fill: #2a2224; stroke: #0d1a22; stroke-width: .4; }
+#learn .wh-map path.c1 { fill: #5c3138; } #learn .wh-map path.c2 { fill: #8a3446; } #learn .wh-map path.c3 { fill: #b5465a; } #learn .wh-map path.c4 { fill: #e2b46a; }
+#learn .wh-map path[data-c] { cursor: pointer; } #learn .wh-map path[data-c]:hover { stroke: #fff; stroke-width: 1; }
+#learn .wh-map path.home { stroke: #f0cf8e; stroke-width: 1; }
+#learn .wh-map figcaption { font-size: 12.5px; color: var(--l-ink2); margin-top: 8px; line-height: 1.45; }
+#learn .wh-leg { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; font-size: 12px; color: var(--l-ink2); }
+#learn .wh-leg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+#learn .wh-leg .c1 { background: #5c3138; } #learn .wh-leg .c2 { background: #8a3446; } #learn .wh-leg .c3 { background: #b5465a; } #learn .wh-leg .c4 { background: #e2b46a; }
+#learn .wh-list h3, #learn .wh-c h4 { font-size: 15px !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--l-ink) !important; margin: 0 0 8px !important; }
+#learn .wh-list .bar.home span:first-child { color: var(--l-acc); font-weight: 600; }
+#learn .wh-list .cta { margin-top: 12px; }
+#learn .wh-ctry { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 26px; align-items: start; }
+#learn .wh-ctry + .l-hint { margin-top: 14px !important; }
+#learn .wh-c h4 .num { color: var(--l-muted, inherit); font-weight: 400; }
+@media (max-width: 760px) { #learn .wh-ctry { grid-template-columns: 1fr; } }
+#learn .wh-c { background: var(--l-card); border: 1px solid var(--l-line); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+#learn .wh-c header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+#learn .wh-c h3 { font-family: var(--f-display); font-size: 24px !important; font-weight: 500; margin: 0 !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--l-ink) !important; }
+#learn .wh-c header p { margin: 0 !important; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; font-size: 13px !important; }
+#learn .wh-c header b { font-size: 18px; color: var(--l-acc); font-variant-numeric: tabular-nums; }
+#learn .wh-c .bars .bar { width: 100%; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: 8px; padding: 4px 6px; }
+#learn .wh-c .bars .bar:hover { background: rgba(255,255,255,.05); }
+#learn .wh-c .cta { align-self: flex-start; }
+#learn .wh-c.none { opacity: .75; }
+#learn .wh-c.none p { font-size: 14px !important; }
 
 </style>
 </head>
@@ -2595,6 +2628,18 @@ const T_ADD51 = {
   de: ['Die {n} Weingüter auf der Karte zeigen', 'Regionen', 'Departamentos'], ru: ['Показать винодельни на карте ({n})', 'Регионы', 'Департаменты'],
   zh: ['在地图上查看 {n} 家酒庄', '产区', '省辖区'], ja: ['地図で {n} 軒のワイナリーを見る', '地域', '県（デパルタメント）'], ko: ['지도에서 와이너리 {n}곳 보기', '지역', '주 하위 지역'] };
 for (const l in T_ADD51) { const [a, b, c] = T_ADD51[l]; Object.assign(T[l], { reg_see_win: a, zone_regions_g: b, zone_deps_g: c }); }
+// ficha de uva: "Dónde se planta" (mundo + Uruguay y Argentina) y la lista única de uvas
+const T_ADD52 = {
+  es: { where_t: 'Dónde se planta', where_world: 'En el mundo · {n} ha', where_world_cap: 'Cada país, según qué parte de la superficie mundial de la uva tiene. Tocá un país para verlo en el mapa.', where_pct: '{p} % de la viña del país', where_none: 'No figura en el registro de viñedos de {c} ({s}).', where_map: 'Ver en el mapa de {c}', where_wins: 'Bodegas con esta uva como principal', where_more: 'Y {n} más en el mapa.', where_src: 'Superficie: Univ. of Adelaide (mundo, 2022-23), INAVI (Uruguay, 2023) e INV (Argentina, 2024).', region_btn_ar: 'Ver esta zona en el mapa de Argentina', ctry_short_uy: 'Uruguay', ctry_short_ar: 'Argentina' },
+  en: { where_t: 'Where it grows', where_world: 'Worldwide · {n} ha', where_world_cap: 'Each country shaded by its share of the grape’s world area. Tap a country to see it on the map.', where_pct: '{p} % of the country’s vineyards', where_none: 'Not in {c}’s vineyard register ({s}).', where_map: 'See it on the {c} map', where_wins: 'Wineries with this as their main grape', where_more: 'And {n} more on the map.', where_src: 'Area: Univ. of Adelaide (world, 2022-23), INAVI (Uruguay, 2023) and INV (Argentina, 2024).', region_btn_ar: 'See this area on the Argentina map', ctry_short_uy: 'Uruguay', ctry_short_ar: 'Argentina' },
+  pt: { where_t: 'Onde é plantada', where_world: 'No mundo · {n} ha', where_world_cap: 'Cada país, conforme a parte da área mundial da uva que tem. Toque num país para vê-lo no mapa.', where_pct: '{p} % dos vinhedos do país', where_none: 'Não consta no registro de vinhedos de {c} ({s}).', where_map: 'Ver no mapa de {c}', where_wins: 'Vinícolas com esta uva como principal', where_more: 'E mais {n} no mapa.', where_src: 'Área: Univ. of Adelaide (mundo, 2022-23), INAVI (Uruguai, 2023) e INV (Argentina, 2024).', region_btn_ar: 'Ver esta zona no mapa da Argentina', ctry_short_uy: 'Uruguai', ctry_short_ar: 'Argentina' },
+  fr: { where_t: 'Où on la cultive', where_world: 'Dans le monde · {n} ha', where_world_cap: 'Chaque pays selon sa part de la surface mondiale du cépage. Touchez un pays pour le voir sur la carte.', where_pct: '{p} % du vignoble du pays', where_none: 'Absent du registre viticole de {c} ({s}).', where_map: 'Voir sur la carte : {c}', where_wins: 'Domaines dont c’est le cépage principal', where_more: 'Et {n} de plus sur la carte.', where_src: 'Surface : Univ. of Adelaide (monde, 2022-23), INAVI (Uruguay, 2023) et INV (Argentine, 2024).', region_btn_ar: 'Voir cette zone sur la carte de l’Argentine', ctry_short_uy: 'Uruguay', ctry_short_ar: 'Argentine' },
+  de: { where_t: 'Wo sie wächst', where_world: 'Weltweit · {n} ha', where_world_cap: 'Jedes Land nach seinem Anteil an der weltweiten Rebfläche der Sorte. Tippe auf ein Land, um es auf der Karte zu sehen.', where_pct: '{p} % der Rebfläche des Landes', where_none: 'Nicht im Weinbauregister von {c} ({s}).', where_map: 'Auf der Karte zeigen: {c}', where_wins: 'Weingüter mit dieser Hauptsorte', where_more: 'Und {n} weitere auf der Karte.', where_src: 'Fläche: Univ. of Adelaide (Welt, 2022-23), INAVI (Uruguay, 2023) und INV (Argentinien, 2024).', region_btn_ar: 'Diese Zone auf der Argentinien-Karte zeigen', ctry_short_uy: 'Uruguay', ctry_short_ar: 'Argentinien' },
+  ru: { where_t: 'Где выращивают', where_world: 'В мире · {n} га', where_world_cap: 'Каждая страна окрашена по своей доле мировой площади сорта. Нажмите на страну, чтобы увидеть её на карте.', where_pct: '{p} % виноградников страны', where_none: 'Нет в реестре виноградников: {c} ({s}).', where_map: 'Показать на карте: {c}', where_wins: 'Винодельни, где это главный сорт', where_more: 'И ещё {n} на карте.', where_src: 'Площадь: Univ. of Adelaide (мир, 2022-23), INAVI (Уругвай, 2023) и INV (Аргентина, 2024).', region_btn_ar: 'Показать зону на карте Аргентины', ctry_short_uy: 'Уругвай', ctry_short_ar: 'Аргентина' },
+  zh: { where_t: '种植地', where_world: '全球 · {n} 公顷', where_world_cap: '各国按其占该品种全球面积的比例着色。点击国家可在地图上查看。', where_pct: '占该国葡萄园 {p} %', where_none: '{c} 葡萄园登记中没有（{s}）。', where_map: '在{c}地图上查看', where_wins: '以此为主要品种的酒庄', where_more: '地图上还有 {n} 家。', where_src: '面积：Univ. of Adelaide（全球，2022-23）、INAVI（乌拉圭，2023）、INV（阿根廷，2024）。', region_btn_ar: '在阿根廷地图上查看此产区', ctry_short_uy: '乌拉圭', ctry_short_ar: '阿根廷' },
+  ja: { where_t: '栽培地', where_world: '世界 · {n} ha', where_world_cap: '各国を、この品種の世界の栽培面積に占める割合で色分け。国をタップすると地図で見られます。', where_pct: '国内ブドウ畑の {p} %', where_none: '{c}のブドウ畑登録にはありません（{s}）。', where_map: '{c}の地図で見る', where_wins: 'この品種を主力とするワイナリー', where_more: '地図にあと {n} 軒。', where_src: '面積：Univ. of Adelaide（世界、2022-23）、INAVI（ウルグアイ、2023）、INV（アルゼンチン、2024）。', region_btn_ar: 'この地域をアルゼンチンの地図で見る', ctry_short_uy: 'ウルグアイ', ctry_short_ar: 'アルゼンチン' },
+  ko: { where_t: '재배 지역', where_world: '전 세계 · {n} ha', where_world_cap: '각 나라를 이 품종의 세계 재배 면적 중 차지하는 비율로 색칠했습니다. 나라를 누르면 지도에서 볼 수 있습니다.', where_pct: '국내 포도밭의 {p} %', where_none: '{c} 포도밭 등록에 없습니다({s}).', where_map: '{c} 지도에서 보기', where_wins: '이 품종이 주력인 와이너리', where_more: '지도에 {n}곳 더.', where_src: '면적: Univ. of Adelaide(세계, 2022-23), INAVI(우루과이, 2023), INV(아르헨티나, 2024).', region_btn_ar: '아르헨티나 지도에서 이 지역 보기', ctry_short_uy: '우루과이', ctry_short_ar: '아르헨티나' } };
+for (const l in T_ADD52) Object.assign(T[l], T_ADD52[l]);
 
 (() => {
 'use strict';
@@ -4287,8 +4332,15 @@ const LEARN_GRAPES = [
   { id: 'tannat', name: 'Tannat', kind: 'red' }, { id: 'merlot', name: 'Merlot', kind: 'red' }, { id: 'cabernet-sauvignon', name: 'Cabernet Sauvignon', kind: 'red' },
   { id: 'cabernet-franc', name: 'Cabernet Franc', kind: 'red' }, { id: 'marselan', name: 'Marselan', kind: 'red' }, { id: 'pinot-noir', name: 'Pinot Noir', kind: 'red' },
   { id: 'syrah', name: 'Syrah', kind: 'red' }, { id: 'moscatel-hamburgo', name: 'Moscatel de Hamburgo', kind: 'red' }, { id: 'ugni-blanc', name: 'Ugni Blanc', kind: 'white' },
-  { id: 'sauvignon-blanc', name: 'Sauvignon Blanc', kind: 'white' }, { id: 'albarino', name: 'Albariño', kind: 'white' }, { id: 'chardonnay', name: 'Chardonnay', kind: 'white' }, { id: 'viognier', name: 'Viognier', kind: 'white' }
+  { id: 'sauvignon-blanc', name: 'Sauvignon Blanc', kind: 'white' }, { id: 'albarino', name: 'Albariño', kind: 'white' }, { id: 'chardonnay', name: 'Chardonnay', kind: 'white' }, { id: 'viognier', name: 'Viognier', kind: 'white' },
+  // Argentina
+  { id: 'malbec', name: 'Malbec', kind: 'red' }, { id: 'bonarda', name: 'Bonarda', kind: 'red' }, { id: 'criolla-chica', name: 'Criolla Chica', kind: 'red' },
+  { id: 'torrontes', name: 'Torrontés', key: 'Torrontés Riojano', kind: 'white' }
 ].map(g => Object.assign(g, { ready: true }));
+// dónde se planta cada uva en Uruguay y en Argentina (p24_uvas_paises.py)
+let UVAPAIS = null;
+const getUvaPais = () => UVAPAIS ? Promise.resolve(UVAPAIS) : get('data/uvas_paises.json').then(d => (UVAPAIS = d)).catch(() => (UVAPAIS = {}));
+const gKey = g => g.key || g.name;
 let learnTab = 'red', JUEGOS = null, UVAMUNDO = null;
 const getUva = id => UVA[id] ? Promise.resolve(UVA[id]) : get('data/uvas/' + id + '.json').then(d => (UVA[id] = d));
 const getJuegos = () => JUEGOS ? Promise.resolve(JUEGOS) : get('data/uvas/_juegos.json').then(d => (JUEGOS = d));
@@ -4321,7 +4373,7 @@ function openLearn(route, keep) {
   const id = learnRoute, gk = (LEARN_GRAPES.find(g => g.id === id) || {}).kind || 'red', seq = learnSeq; learnTab = gk;
   el.className = 'theme-' + (gk === 'white' ? 'white' : 'red');
   el.innerHTML = '<div class="lw"><p class="l-load">…</p></div>';
-  Promise.all([getUva(id), getUvaMundo(), getDO().catch(() => null)]).then(([d]) => { if (seq === learnSeq) renderGrape(d, id); }).catch(e => { console.error(e); if (seq === learnSeq) learnNav('uvas'); });
+  Promise.all([getUva(id), getUvaMundo(), getUvaPais(), getCountries().catch(() => null), getDO().catch(() => null)]).then(([d]) => { if (seq === learnSeq) renderGrape(d, id); }).catch(e => { console.error(e); if (seq === learnSeq) learnNav('uvas'); });
 }
 // con Aprender abierto, el mapa y sus controles quedan fuera del recorrido del teclado y de los lectores de pantalla
 let focusBack = null;
@@ -4806,8 +4858,12 @@ function renderLearnIndex() {
 }
 function renderGrapeList() {
   const el = $('#learn'); el.className = 'theme-' + (learnTab === 'white' ? 'white' : 'red');
-  const cards = LEARN_GRAPES.filter(g => g.kind === learnTab).map(g => { const ha = (UYX.INAVI.nat || {})[g.name];
-    return '<button class="l-gcard ' + g.kind + ' ready" data-l="' + g.id + '"><span class="berry"></span><b>' + esc(g.name) + '</b><small>' + esc(ha ? nf(ha) + ' ' + t('ha') + ' ' + t('in_uy') : '') + '</small></button>'; }).join('');
+  if (!UVAPAIS) { getUvaPais().then(() => { if ($('#learn') && learnRoute === 'uvas') renderGrapeList(); }); }
+  // una sola lista para todas las uvas (de Uruguay y de Argentina): primero las más plantadas entre los dos países
+  const P = UVAPAIS || {}, tot = g => ((P[gKey(g)] || {}).UY || {}).ha + 0 || 0, totA = g => (((P[gKey(g)] || {}).AR || {}).ha || 0);
+  const cards = LEARN_GRAPES.filter(g => g.kind === learnTab).sort((a, b) => (tot(b) + totA(b)) - (tot(a) + totA(a))).map(g => { const u = (P[gKey(g)] || {}).UY, a = (P[gKey(g)] || {}).AR;
+    const where = [u ? '<span><i>' + esc(t('ctry_short_uy')) + '</i> ' + nf(u.ha) + ' ' + esc(t('ha')) + '</span>' : '', a ? '<span><i>' + esc(t('ctry_short_ar')) + '</i> ' + nf(a.ha) + ' ' + esc(t('ha')) + '</span>' : ''].filter(Boolean).join('');
+    return '<button class="l-gcard ' + g.kind + ' ready" data-l="' + g.id + '"><span class="berry"></span><b>' + esc(g.name) + '</b><small class="gw">' + where + '</small></button>'; }).join('');
   el.innerHTML = learnTop('map') + '<div class="lw"><header class="l-hero sm"><h1>' + esc(t('learn_sub_grapes')) + '</h1><p>' + esc(t('learn_sub_grapes_d')) + '</p></header>' +
     '<div class="l-tabs" role="tablist">' + ['red', 'white'].map(k => '<button role="tab" data-tab="' + k + '" class="' + (k === learnTab ? 'sel' : '') + '"><span class="berry ' + k + '"></span>' + esc(t(k === 'red' ? 'learn_reds' : 'learn_whites')) + '</button>').join('') + '</div>' +
     '<div class="l-grid">' + cards + '</div>' +
@@ -5115,6 +5171,17 @@ let GLN = 0; const glassSVG = (wine, rim) => { const gid = 'lgW' + (++GLN); retu
 const AGE_COL = [['#3d0a33', '#7c3a8e'], ['#5a0c1e', '#8c1d2f'], ['#5e1a14', '#a5502a'], ['#5a2414', '#b9733f']];
 const AGE_COL_W = [['#e8e2a2', '#f3f0cf'], ['#e4cd72', '#f0e2a6'], ['#d5a845', '#e8c77c'], ['#b8792c', '#d8a35c']];
 const AROMA_COL = { black: '#3b1430', red: '#b3263b', floral: '#8a5cb5', spice: '#b0662c', oak: '#8b5a2b', aged: '#6b4a32', herbal: '#5f8a4a', earth: '#7a5c45', citrus: '#c9b22e', stone: '#d99a4e', tropical: '#e0a32a', mineral: '#8a949a' };
+// mapa del mundo de una uva: cada país pintado según la parte de la superficie mundial que tiene (Univ. of Adelaide)
+function worldChoro(byC, wHa, RA) {
+  if (!COUNTRIES_GJ) return '';
+  const W = 640, H = 300, X = x => (x + 170) / 350 * W, Y = y => (78 - y) / 136 * H;
+  const inv = {}; Object.keys(byC).forEach(c => { inv[RA[c] || c] = c; });
+  const lvl = sh => sh >= 0.2 ? 4 : sh >= 0.05 ? 3 : sh >= 0.01 ? 2 : sh > 0 ? 1 : 0;
+  const paths = COUNTRIES_GJ.features.map(f => { const n = f.properties.n, c = inv[n], v = c ? byC[c].ha : 0, k = lvl(v / wHa);
+    const dd = ringsOf(f.geometry).map(pl => pl.map(r => 'M' + r.map(([x, y]) => X(x).toFixed(1) + ' ' + Y(y).toFixed(1)).join('L') + 'Z').join('')).join('');
+    return '<path class="c' + k + (c === 'Uruguay' || c === 'Argentina' ? ' home' : '') + '" d="' + dd + '"' + (c ? ' data-c="' + esc(c) + '"' : '') + '>' + (c ? '<title>' + esc(countryName(f.properties)) + ' · ' + nf(v) + ' ha</title>' : '') + '</path>'; }).join('');
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(t('where_world_cap')) + '">' + paths + '</svg><div class="wh-leg"><span><i class="c1"></i>&lt;1 %</span><span><i class="c2"></i>1–5 %</span><span><i class="c3"></i>5–20 %</span><span><i class="c4"></i>&gt;20 %</span></div>';
+}
 function renderGrape(all, gid) {
   // textos en el idioma elegido; los datos (coordenadas, modificadores, temperaturas) siempre del español
   const d = all[L] || all.es, E = all.es, id = gid || learnRoute, el = $('#learn');
@@ -5128,6 +5195,9 @@ function renderGrape(all, gid) {
   const top2 = wHa ? (ctry.slice(0, 2).reduce((s, c) => s + c[1].ha, 0) / wHa * 100) : 0;
   const uyHa = (UYX.INAVI.nat || {})[gk] || 0, inGrapes = CTRY.UY.grapes.includes(gk), deps2 = Object.entries((UYX.INAVI.grapes || {})[gk] || {}).sort((a, b) => b[1] - a[1]), dm = deps2.length ? deps2[0][1] : 1;
   const wins = UYX.WIN.filter(w => !w.unconf && w.profile && w.profile.main_grape === gk).sort((a, b) => (a.nat ?? 999) - (b.nat ?? 999));
+  const PAIS = (UVAPAIS || {})[gk] || {};
+  // países del mundo: los 7 con más superficie, y Uruguay y Argentina siempre (marcados) aunque no estén entre ellos
+  const wRows = ctry.slice(0, 7).concat(ctry.slice(7).filter(([c]) => c === 'Uruguay' || c === 'Argentina'));
   // rueda de aromas (dona SVG)
   const n6 = d.aromas.length, R = 92, r0 = 50, seg = (i) => { const a0 = (i / n6) * 2 * Math.PI - Math.PI / 2, a1 = ((i + 1) / n6) * 2 * Math.PI - Math.PI / 2, p = (rr, a) => (100 + rr * Math.cos(a)).toFixed(1) + ' ' + (100 + rr * Math.sin(a)).toFixed(1);
     return 'M' + p(R, a0) + 'A' + R + ' ' + R + ' 0 0 1 ' + p(R, a1) + 'L' + p(r0, a1) + 'A' + r0 + ' ' + r0 + ' 0 0 0 ' + p(r0, a0) + 'Z'; };
@@ -5156,12 +5226,19 @@ function renderGrape(all, gid) {
     '<div class="l-pair"><h3>' + esc(d.pair_t) + '</h3><p class="l-hint">' + esc(d.pair_hint) + '</p><div class="l-chips">' + d.pair.map((p, i) => '<button class="l-chip" data-pr="' + i + '">' + esc(p.label) + '</button>').join('') + '</div><div id="lPair" class="l-verdict" hidden></div></div></div></section>' +
     // 4) estilos: tarjetas que se abren
     '<section class="l-sec"><h2>' + esc(d.styles_t) + '</h2><div class="l-cards flip">' + d.styles.map(s => '<button class="l-card"><b>' + esc(s.label) + '</b><p>' + esc(s.txt) + '</p></button>').join('') + '</div></section>' +
-    // 5) mundo, y Uruguay en detalle si la persona quiere
-    '<section class="l-sec l-map"><h2>' + esc(d.map_t) + '</h2><p class="l-hint">' + esc(d.map_hint) + '</p><div class="bars wbars">' + ctry.slice(0, 7).map(([c, v]) => '<button class="bar" data-c="' + esc(c) + '"><span>' + esc(cName(c)) + '</span><span class="num">' + nf(v.ha) + ' ' + esc(t('ha')) + ' · ' + (v.ha / wHa < .01 ? '<1' : nf(v.ha / wHa * 100, 0)) + ' %</span><span class="b"><i style="width:' + (v.ha / cm * 100).toFixed(1) + '%"></i></span></button>').join('') + '</div>' +
-    '<div class="l-btns"><button class="cta" id="lMapW"><span>' + esc(d.map_btn_world) + '</span></button></div>' +
-    (uyHa ? '<details class="l-uy"><summary>' + esc(d.map_uy_t) + ' · ' + nf(uyHa) + ' ' + esc(t('ha')) + '</summary>' + (deps2.length ? '<div class="l-two map2"><div>' + miniMap(gk) + '<p class="l-hint" id="lMiniTxt">' + esc(t('mini_hint')) + '</p></div><div class="bars">' + deps2.slice(0, 8).map(([dn, v]) => '<div class="bar"><span>' + esc(dn) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / dm * 100).toFixed(1) + '%"></i></span></div>').join('') + '</div></div>' : '<p class="l-hint">' + esc(t('uy_nodep')) + '</p>') +
-      (inGrapes ? '<div class="l-btns"><button class="cta" id="lMapUy"><span>' + esc(d.map_btn_uy) + '</span></button></div>' : '') +
-      (wins.length ? '<h3>' + esc(d.map_wineries) + ' <span class="num">' + nf(wins.length) + '</span></h3><div class="l-wins">' + wins.slice(0, 24).map(w => '<button data-w="' + w.id + '">' + esc(w.name) + '<small>' + esc(w.dep) + '</small></button>').join('') + '</div>' : '') + '</details>' : '') +
+    // 5) dónde se planta: el mundo (mapa + países) y Uruguay y Argentina en detalle, lado a lado
+    '<section class="l-sec l-where"><h2>' + esc(t('where_t')) + '</h2>' +
+    (wHa ? '<div class="wh-world"><figure class="wh-map"><div id="lWorld">' + worldChoro(byC, wHa, RA) + '</div><figcaption>' + esc(t('where_world_cap')) + '</figcaption></figure><div class="wh-list"><h3>' + esc(t('where_world', { n: nf(wHa) })) + '</h3><div class="bars wbars">' +
+      wRows.map(([c, v]) => '<button class="bar' + (c === 'Uruguay' || c === 'Argentina' ? ' home' : '') + '" data-c="' + esc(c) + '"><span>' + esc(cName(c)) + '</span><span class="num">' + nf(v.ha) + ' ' + esc(t('ha')) + ' · ' + (v.ha / wHa < .01 ? '<1' : nf(v.ha / wHa * 100, 0)) + ' %</span><span class="b"><i style="width:' + (v.ha / cm * 100).toFixed(1) + '%"></i></span></button>').join('') +
+      '</div><button class="cta ghost" id="lMapW"><span>' + esc(d.map_btn_world) + '</span></button></div></div>' : '') +
+    '<div class="wh-ctry">' + ['UY', 'AR'].map(cc => { const x = PAIS[cc], cn = cName(cc === 'UY' ? 'Uruguay' : 'Argentina');
+      if (!x) return '<div class="wh-c none"><h3>' + esc(cn) + '</h3><p>' + esc(t('where_none', { c: cn, s: cc === 'UY' ? 'INAVI' : 'INV' })) + '</p></div>';
+      const dm = x.deps.length ? x.deps[0][1] : 1;
+      return '<div class="wh-c"><header><h3>' + esc(cn) + '</h3><p><b>' + nf(x.ha) + ' ' + esc(t('ha')) + '</b><span>' + esc(t('where_pct', { p: nf(x.pct, x.pct < 1 ? 1 : 0) })) + '</span></p></header>' +
+        (x.deps.length ? '<div class="bars">' + x.deps.map(([dn, v]) => '<button class="bar" data-cc="' + cc + '" data-dn="' + esc(dn) + '"><span>' + esc(dn.replace(/\s*\(.*\)$/, '')) + '</span><span class="num">' + nf(v, v < 10 ? 1 : 0) + ' ' + esc(t('ha')) + '</span><span class="b"><i style="width:' + (v / dm * 100).toFixed(1) + '%"></i></span></button>').join('') + '</div>' : '') +
+        '<button class="cta" data-ccmap="' + cc + '"><span>' + esc(t('where_map', { c: cn })) + '</span></button>' +
+        (x.wins.length ? '<h4>' + esc(t('where_wins')) + ' <span class="num">(' + nf(x.nwins) + ')</span></h4><div class="l-wins">' + x.wins.slice(0, 12).map(([wid, wn, wd]) => '<button data-w="' + wid + '" data-cc="' + cc + '">' + esc(wn) + '<small>' + esc(wd.replace(/\s*\(.*\)$/, '')) + '</small></button>').join('') + '</div>' + (x.nwins > 12 ? '<p class="l-hint">' + esc(t('where_more', { n: nf(x.nwins - 12) })) + '</p>' : '') : '') + '</div>'; }).join('') + '</div>' +
+    '<p class="l-hint">' + esc(t('where_src')) + '</p>' +
     '</section><details class="l-src"><summary>' + esc(t('sources_t')) + '</summary><p>' + esc(d.sources) + '</p></details></div>';
   el.innerHTML = h; learnWire(el);
   // perfil
@@ -5199,7 +5276,7 @@ function renderGrape(all, gid) {
       '<div class="l-facts">' + fact('⛰', 'f_alt', s.alt) + fact('☂', 'f_rain', s.rain) + fact('◐', 'f_amp', s.amp) + fact('▦', 'f_soil', s.soil) + fact('☁', 'f_climate', s.climate) + '</div>' +
       '<dl><dt>' + esc(t('learn_eye')) + '</dt><dd>' + esc(ag.color) + '</dd><dt>' + esc(t('learn_nose')) + '</dt><dd>' + esc(ag.nose) + '</dd><dt>' + esc(t('learn_mouth')) + '</dt><dd>' + esc(ag.mouth) + '</dd></dl>' +
       '<div class="l-tags">' + fams.filter(Boolean).map(f => f.items.slice(0, 3).map(x => '<span style="border-color:' + (AROMA_COL[f.k] || '#888') + '">' + esc(x) + '</span>').join('')).join('') + '</div>';
-    $('#lSoilMap span').textContent = e.map === 'uy' ? d.region_btn_uy : d.region_btn_w;
+    $('#lSoilMap span').textContent = e.map === 'ar' ? t('region_btn_ar') : e.map === 'uy' ? d.region_btn_uy : d.region_btn_w;
     const DL = DOD[L] && ((DOD[L].links || {})[id] || {})[e.k], dx = DL && doById(DOD[L], DL);
     if (dx) $('#lSimTxt').insertAdjacentHTML('beforeend', '<button class="do-link" data-l="do-' + dx.id + '"><span>' + esc(lvOf(DOD[L], dx).label) + '</span>' + esc(dx.name) + ' →</button>'), learnWire($('#lSimTxt'));
     el.querySelectorAll('[data-s]').forEach(b => b.classList.toggle('sel', +b.dataset.s === regK));
@@ -5233,11 +5310,17 @@ function renderGrape(all, gid) {
     map.flyTo(center ? { center, zoom, pitch: 0, bearing: 0, duration: 2600, essential: true } : { center: [-30, 0], zoom: flat ? 1.9 : 1.6, pitch: 0, bearing: 0, duration: 2600, essential: true }); };
   $('#lSoilMap').onclick = () => { const e = E.regions[regK];
     if (e.map === 'uy') toUy(() => { S.rock = new Set(e.rock || []); S.wk = new Set(e.wk || []); S.grape = inGrapes ? gk : 'all'; $('#grapeSel').value = S.grape; buildChips(); buildColumns(); renderLegend(); clearSim(); schedule(); });
+    else if (e.map === 'ar') toCtry('AR', () => { withGrape(); map.flyTo({ center: e.pt, zoom: 9, pitch: is3D ? 45 : 0, duration: 2200, essential: true }); });
     else toWorld(e.pt, 6.5); };
-  el.querySelectorAll('.wbars [data-c]').forEach(b => b.onclick = () => { const c = b.dataset.c, v = byC[c]; if (c === 'Uruguay' && inGrapes) return uyCols(); toWorld(v.w ? [v.x / v.w, v.y / v.w] : null, 4.6, c); });
-  $('#lMapW').onclick = () => toWorld();
-  const mu = $('#lMapUy'); if (mu) mu.onclick = uyCols;
-  el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { closeLearn(); (view !== 'uy' || CC !== 'UY' ? goCountry('UY', true) : Promise.resolve()).then(() => { setMode('bodegas'); showWinery(+b.dataset.w, true); }); });
+  el.querySelectorAll('.wbars [data-c]').forEach(b => b.onclick = () => { const c = b.dataset.c, v = byC[c]; if (c === 'Uruguay' || c === 'Argentina') return toCtry(c === 'Uruguay' ? 'UY' : 'AR', withGrape); toWorld(v.w ? [v.x / v.w, v.y / v.w] : null, 4.6, c); });
+  const mw = $('#lMapW'); if (mw) mw.onclick = () => toWorld();
+  // Uruguay o Argentina: el mapa del país con la uva elegida (columnas por departamento), un departamento o una bodega
+  const toCtry = (cc, fn) => { closeLearn(); (view !== 'uy' || CC !== cc ? goCountry(cc, true) : Promise.resolve()).then(() => fn()); };
+  const withGrape = () => { setMode('terroir'); if (CX.grapes.includes(gk)) { S.grape = gk; S.cols = true; $('#grapeSel').value = gk; $('#colsToggle').checked = true; buildColumns(); renderLegend(); schedule(); } };
+  el.querySelectorAll('[data-ccmap]').forEach(b => b.onclick = () => toCtry(b.dataset.ccmap, withGrape));
+  el.querySelectorAll('.wh-c [data-dn]').forEach(b => b.onclick = () => toCtry(b.dataset.cc, () => { withGrape(); const k = deps.findIndex(x => x.name === b.dataset.dn); if (k >= 0) { S.dep = k; S.reg = -1; $('#depSel').value = k; zoneSel(); schedule(); flyDep(deps[k]); } }));
+  el.querySelectorAll('[data-w]').forEach(b => b.onclick = () => toCtry(b.dataset.cc || 'UY', () => { setMode('bodegas'); showWinery(+b.dataset.w, true); }));
+  el.querySelectorAll('.wh-map path[data-c]').forEach(pth => pth.onclick = () => { const c = pth.dataset.c, v = byC[c]; if (!v) return; if (c === 'Uruguay' || c === 'Argentina') return toCtry(c === 'Uruguay' ? 'UY' : 'AR', withGrape); toWorld(v.w ? [v.x / v.w, v.y / v.w] : null, 4.6, c); });
   el.scrollTop = 0;
 }
 /* ---------- Aprender: ¿cuál es tu vino ideal? (quiz de gustos cotidianos + situación) ---------- */
